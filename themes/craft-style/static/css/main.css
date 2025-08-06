@@ -877,9 +877,15 @@ body {
         padding: 20px;
     }
     
-    /* Ensure content panels also have proper padding on mobile */
+    /* Ensure content panels have proper padding on mobile, but not when inside detail panels */
     .content-panel {
         padding: 20px;
+    }
+    
+    /* Remove double padding when content-panel is inside a detail panel */
+    .detail-panel .content-panel,
+    .third-panel .content-panel {
+        padding: 0;
     }
     
     /* Mobile styles for content header card */
