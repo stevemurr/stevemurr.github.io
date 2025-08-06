@@ -1,0 +1,42 @@
+{{ define "main" }}
+<div class="blocks-container">
+    {{ $allPages := .Site.RegularPages }}
+    {{ $featured := where $allPages "Params.featured" true }}
+    {{ $regular := where $allPages "Params.featured" "!=" true }}
+    
+    <!-- Tag Filter Section -->
+     <!-- NOTE: I HAVE INTENTIONALLY DISABLED THIS FOR NOW BUT DONT DELETE IT -->
+    <!-- <div class="tag-filter-section">
+        <div class="tag-filter-container">
+            <button class="filter-tag active" data-tag="all">All Posts</button>
+            {{ $tags := slice }}
+            {{ range $allPages }}
+                {{ range .Params.tags }}
+                    {{ $tags = $tags | append . }}
+                {{ end }}
+            {{ end }}
+            {{ range $tags | uniq }}
+                <button class="filter-tag" data-tag="{{ . }}">{{ . }}</button>
+            {{ end }}
+        </div>
+    </div>
+    
+    <div class="content-separator"></div> -->
+    
+    <div class="blocks-grid">
+        <!-- Display featured posts first -->
+        {{ range $featured }}
+            <div class="block-wrapper" data-tags='{{ .Params.tags | jsonify }}'>
+                {{ partial "block-unified.html" . }}
+            </div>
+        {{ end }}
+        
+        <!-- Then display regular posts -->
+        {{ range $regular }}
+            <div class="block-wrapper" data-tags='{{ .Params.tags | jsonify }}'>
+                {{ partial "block-unified.html" . }}
+            </div>
+        {{ end }}
+    </div>
+</div>
+{{ end }}

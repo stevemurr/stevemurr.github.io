@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}">
+<head>
+    {{ partial "head.html" . }}
+</head>
+<body>
+    <div id="app" class="app-container">
+        <!-- Breadcrumb Navigation Bar -->
+        <div class="breadcrumb-bar" id="breadcrumb-bar">
+            <div class="topbar-container">
+                <!-- Logo/Icon -->
+                <a href="/" class="topbar-logo">
+                    <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="3" y="3" width="7" height="7" rx="1.5" fill="currentColor"/>
+                        <rect x="14" y="3" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.7"/>
+                        <rect x="3" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.7"/>
+                        <rect x="14" y="14" width="7" height="7" rx="1.5" fill="currentColor" opacity="0.5"/>
+                    </svg>
+                    <span class="logo-text">Murr</span>
+                </a>
+                
+                <!-- Breadcrumb Navigation -->
+                <nav class="breadcrumb-nav">
+                    <ol class="breadcrumb-list">
+                        <li class="breadcrumb-item">
+                            <a href="/" class="breadcrumb-link" data-level="0">Home</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Panels Container -->
+        <div id="panels-container" class="panels-container">
+            <!-- Main Panel (Always visible) -->
+            <div class="panel main-panel active" data-level="0" data-path="/">
+                {{ block "main" . }}{{ end }}
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ "js/navigation.js" | relURL }}"></script>
+</body>
+</html>

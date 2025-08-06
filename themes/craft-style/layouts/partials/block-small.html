@@ -1,0 +1,12 @@
+<a href="{{ .RelPermalink }}" class="block block-small" data-url="{{ .RelPermalink }}">
+    <div class="block-content">
+        <h3 class="block-title">{{ .Title }}</h3>
+        {{ with .Params.tags }}
+        <div class="block-tags">
+            {{ range . }}
+            <span class="tag">{{ . }}</span>
+            {{ end }}
+        </div>
+        {{ end }}
+    </div>
+</a>

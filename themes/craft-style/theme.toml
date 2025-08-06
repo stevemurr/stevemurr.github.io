@@ -1,0 +1,12 @@
+name = "Craft Style"
+license = "MIT"
+licenselink = "https://github.com/yourname/yourtheme/blob/master/LICENSE"
+description = "A Craft-inspired sliding panel theme for Hugo"
+homepage = "https://github.com/yourname/yourtheme"
+tags = ["responsive", "sliding-navigation", "modern"]
+features = ["responsive", "ajax-navigation"]
+min_version = "0.41.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yoursite.com"

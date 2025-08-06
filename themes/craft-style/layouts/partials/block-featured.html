@@ -1,0 +1,28 @@
+<a href="{{ .RelPermalink }}" class="block block-featured" data-url="{{ .RelPermalink }}">
+    <div class="featured-content-wrapper">
+        {{ with .Params.thumbnail }}
+        <div class="featured-image">
+            <img src="{{ . }}" alt="{{ $.Title }}" loading="lazy">
+        </div>
+        {{ end }}
+        <div class="featured-content">
+            <span class="featured-badge">Featured</span>
+            <h2 class="featured-title">{{ .Title }}</h2>
+            {{ with .Summary }}
+            <p class="featured-excerpt">{{ . | truncate 200 }}</p>
+            {{ end }}
+            <div class="featured-meta">
+                {{ with .Params.tags }}
+                <div class="featured-tags">
+                    {{ range . }}
+                    <span class="tag">{{ . }}</span>
+                    {{ end }}
+                </div>
+                {{ end }}
+                <time class="featured-date" datetime="{{ .Date.Format "2006-01-02" }}">
+                    {{ .Date.Format "January 2, 2006" }}
+                </time>
+            </div>
+        </div>
+    </div>
+</a>
