@@ -70,14 +70,18 @@ body {
   font-weight: 500;
   text-transform: none;
   letter-spacing: -0.006em;
-  padding: 6px 14px;
+  padding: 6px 16px;
   border-radius: 980px;
-  transition: background 0.2s ease, color 0.2s ease;
+  background: var(--tertiary);
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
 }
 
 #menu a:hover,
 #menu .active {
-  background: var(--tertiary);
+  background: var(--primary);
+  color: var(--theme);
+  border-color: var(--primary);
 }
 
 /* ─── Profile mode ─── */
