@@ -129,6 +129,7 @@ body:not(.list) .main {
 }
 
 .nav {
+  justify-content: flex-start;
   align-items: center;
   margin-top: 12px;
   max-width: min(1080px, calc(100vw - 24px));
@@ -541,7 +542,17 @@ body:not(.list) .main {
 }
 
 .page-header h1 {
+  display: flex;
+  align-items: end;
+  gap: 10px;
+  flex-wrap: wrap;
   font-size: clamp(2.2rem, 5vw, 3.4rem);
+}
+
+.page-header h1 svg {
+  flex: 0 0 auto;
+  width: 0.84em;
+  height: 0.84em;
 }
 
 .page-header__intro,
@@ -1280,6 +1291,245 @@ body:not(.list) .main {
 
   .post-content h3 {
     font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 540px) {
+  body.list .main,
+  body:not(.list) .main {
+    max-width: 100vw;
+    padding: 14px 10px 24px;
+  }
+
+  .nav {
+    gap: 10px 12px;
+    margin-top: 8px;
+    padding: 10px;
+    border-radius: 22px;
+  }
+
+  .logo {
+    width: 100%;
+  }
+
+  .logo a {
+    font-size: 1rem;
+  }
+
+  #menu {
+    width: 100%;
+    gap: 8px;
+    overflow: visible;
+  }
+
+  #menu li {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  #menu a {
+    width: 100%;
+  }
+
+  #menu a span {
+    width: 100%;
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 0.67rem;
+    letter-spacing: 0.13em;
+  }
+
+  .home-hero {
+    gap: 16px;
+  }
+
+  .home-hero__content,
+  .home-section,
+  .page-header,
+  .post-shell {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .home-section {
+    padding-top: 22px;
+    padding-bottom: 24px;
+  }
+
+  .page-header {
+    gap: 4px;
+    margin: 16px 0 14px;
+    padding: 18px 18px 20px;
+  }
+
+  .page-header h1 {
+    gap: 8px;
+    font-size: clamp(2rem, 13vw, 2.8rem);
+  }
+
+  .page-header__intro,
+  .post-description,
+  .home-hero__lede {
+    font-size: 0.95rem;
+    line-height: 1.62;
+  }
+
+  .home-hero__notes {
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .home-note {
+    padding: 14px 15px 15px;
+  }
+
+  .magazine-grid {
+    gap: 14px;
+  }
+
+  .magazine-card {
+    border-radius: 22px;
+  }
+
+  .magazine-card__visual,
+  .main > .magazine-grid .magazine-card--featured .magazine-card__visual,
+  .home-hero__feature .magazine-card--featured .magazine-card__visual {
+    min-height: 170px;
+    padding: 18px;
+  }
+
+  .magazine-card__visual::after {
+    inset: 12px;
+  }
+
+  .magazine-card__icon {
+    top: 18px;
+    right: 18px;
+  }
+
+  .magazine-card__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .magazine-card__pullquote,
+  .magazine-card--featured .magazine-card__pullquote {
+    max-width: 12ch;
+    font-size: 1rem;
+  }
+
+  .magazine-card__body {
+    padding: 16px 18px 18px;
+  }
+
+  .magazine-card__title,
+  .magazine-card--featured .magazine-card__title {
+    max-width: none;
+    font-size: clamp(1.3rem, 7vw, 1.7rem);
+  }
+
+  .magazine-card__summary {
+    margin-bottom: 12px;
+    font-size: 0.92rem;
+    line-height: 1.58;
+  }
+
+  .magazine-card__meta {
+    gap: 8px 10px;
+    font-size: 0.68rem;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .buttons .button + .button {
+    width: auto;
+    flex: 1 1 auto;
+  }
+
+  .post-hero {
+    padding: 22px 18px 24px;
+    border-radius: 28px;
+  }
+
+  .post-hero__rail {
+    align-items: center;
+  }
+
+  .post-hero__back {
+    padding: 8px 12px;
+    font-size: 0.68rem;
+  }
+
+  .post-hero__icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 16px;
+  }
+
+  .post-hero__icon svg {
+    width: 26px;
+    height: 26px;
+  }
+
+  .post-hero__body {
+    gap: 12px;
+    margin-top: 22px;
+  }
+
+  .post-hero__tags {
+    gap: 6px;
+  }
+
+  .post-hero__tags a {
+    padding: 6px 9px;
+    font-size: 0.64rem;
+  }
+
+  .post-title {
+    font-size: clamp(2.15rem, 13vw, 3.1rem);
+  }
+
+  .post-hero__summary {
+    font-size: 0.96rem;
+    line-height: 1.64;
+  }
+
+  .post-hero__pullquote {
+    max-width: none;
+    margin-top: 20px;
+    padding-top: 18px;
+    font-size: 1.12rem;
+  }
+
+  .post-shell {
+    padding: 22px 18px;
+  }
+
+  .post-content {
+    font-size: 0.98rem;
+    line-height: 1.78;
+  }
+
+  .post-content h2 {
+    font-size: 1.62rem;
+  }
+
+  .post-content h3 {
+    font-size: 1.3rem;
+  }
+
+  #searchInput {
+    padding: 13px 16px;
+    font-size: 0.95rem;
+  }
+
+  .top-link {
+    right: 14px;
+    bottom: 14px;
+    width: 40px;
+    height: 40px;
   }
 }
 
