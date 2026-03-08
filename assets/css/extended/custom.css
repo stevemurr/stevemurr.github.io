@@ -533,45 +533,6 @@ body {
   background: color-mix(in srgb, var(--accent) 25%, transparent);
 }
 
-/* ─── Theme toggle ─── */
-
-/* Remove toggle from header flow entirely */
-button#theme-toggle {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  z-index: 100;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 980px;
-  padding: 0;
-  margin: 0;
-  font-size: 18px;
-  background: var(--entry);
-  border: 1px solid var(--border);
-  backdrop-filter: saturate(180%) blur(20px);
-  -webkit-backdrop-filter: saturate(180%) blur(20px);
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.2s ease;
-  cursor: pointer;
-}
-
-button#theme-toggle:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
-}
-
-button#theme-toggle:active {
-  transform: scale(0.95);
-}
-
-button#theme-toggle svg {
-  width: 16px;
-  height: 16px;
-}
 
 /* ─── Top button ─── */
 .top-link {
