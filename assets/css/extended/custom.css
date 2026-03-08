@@ -390,11 +390,8 @@ body {
 }
 
 /* ─── Theme toggle ─── */
-.logo-switches {
-  order: 0;
-}
 
-/* Pull toggle out of logo area and into the nav right side */
+/* Remove toggle from header flow entirely */
 button#theme-toggle {
   position: fixed;
   bottom: 24px;
