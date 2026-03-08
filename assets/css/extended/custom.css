@@ -1302,41 +1302,47 @@ body:not(.list) .main {
   }
 
   .nav {
-    gap: 10px 12px;
+    flex-wrap: nowrap;
+    gap: 10px;
     margin-top: 8px;
     padding: 10px;
     border-radius: 22px;
   }
 
   .logo {
-    width: 100%;
+    flex: 0 1 auto;
+    min-width: 0;
   }
 
   .logo a {
-    font-size: 1rem;
+    display: block;
+    font-size: 0.92rem;
+    white-space: nowrap;
   }
 
   #menu {
-    width: 100%;
-    gap: 8px;
+    width: auto;
+    margin-left: auto;
+    gap: 4px;
     overflow: visible;
+    flex-wrap: nowrap;
   }
 
   #menu li {
-    flex: 1 1 0;
+    flex: 0 0 auto;
     min-width: 0;
   }
 
   #menu a {
-    width: 100%;
+    width: auto;
   }
 
   #menu a span {
-    width: 100%;
-    min-height: 40px;
-    padding: 0 10px;
-    font-size: 0.67rem;
-    letter-spacing: 0.13em;
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 0.58rem;
+    letter-spacing: 0.16em;
+    white-space: nowrap;
   }
 
   .home-hero {
@@ -1530,6 +1536,28 @@ body:not(.list) .main {
     bottom: 14px;
     width: 40px;
     height: 40px;
+  }
+}
+
+@media (max-width: 390px) {
+  .nav {
+    gap: 8px;
+    padding: 9px;
+  }
+
+  .logo a {
+    font-size: 0.84rem;
+  }
+
+  #menu {
+    gap: 2px;
+  }
+
+  #menu a span {
+    min-height: 32px;
+    padding: 0 10px;
+    font-size: 0.54rem;
+    letter-spacing: 0.14em;
   }
 }
 
