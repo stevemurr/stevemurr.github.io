@@ -197,7 +197,13 @@ body:not(.list) .main {
 #menu a span.active {
   background: var(--primary);
   color: var(--surface-strong);
+  border-bottom: 0;
   box-shadow: 0 10px 24px rgba(20, 28, 39, 0.16);
+}
+
+#menu .active {
+  border-bottom: 0;
+  font-weight: inherit;
 }
 
 #menu a:hover span {
