@@ -1,7 +1,7 @@
 :root {
   --gap: 32px;
   --content-gap: 24px;
-  --header-height: 86px;
+  --header-height: 72px;
   --main-width: 1120px;
   --post-width: 760px;
   --radius: 28px;
@@ -113,7 +113,7 @@ a {
 }
 
 body.list .main {
-  max-width: min(1180px, calc(100vw - 24px));
+  max-width: min(1120px, calc(100vw - 24px));
   padding: clamp(20px, 3vw, 36px);
 }
 
@@ -129,46 +129,78 @@ body:not(.list) .main {
 }
 
 .nav {
-  margin-top: 16px;
-  padding: 12px 18px;
+  align-items: center;
+  margin-top: 12px;
+  max-width: min(1080px, calc(100vw - 24px));
+  padding: 10px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
   background: color-mix(in srgb, var(--surface-strong) 76%, transparent);
   box-shadow: var(--shadow-soft);
+  line-height: normal;
   backdrop-filter: blur(20px) saturate(160%);
   -webkit-backdrop-filter: blur(20px) saturate(160%);
 }
 
+.logo,
+#menu {
+  margin: 0;
+}
+
 .logo a {
   font-family: var(--font-display);
-  font-size: 1.16rem;
+  font-size: 1.04rem;
   font-weight: 700;
   letter-spacing: -0.04em;
   color: var(--primary);
 }
 
 #menu {
+  margin-left: auto;
   gap: 8px;
 }
 
+#menu li + li {
+  margin-inline-start: 0;
+}
+
 #menu a {
-  padding: 10px 14px;
-  border-radius: 999px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  padding: 0;
+  color: inherit;
   transition:
-    background 0.2s ease,
     color 0.2s ease,
     transform 0.2s ease;
 }
 
-#menu a:hover,
-#menu .active {
+#menu a span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: var(--secondary);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+#menu a:hover span,
+#menu a span.active {
   background: var(--primary);
   color: var(--surface-strong);
+  box-shadow: 0 10px 24px rgba(20, 28, 39, 0.16);
+}
+
+#menu a:hover span {
   transform: translateY(-1px);
 }
 
@@ -496,22 +528,24 @@ body:not(.list) .main {
 }
 
 .page-header {
-  margin: 28px 0 22px;
-  padding: 28px 30px;
+  display: grid;
+  gap: 6px;
+  margin: 20px 0 18px;
+  padding: 22px 28px 24px;
 }
 
 .page-header h1 {
-  font-size: clamp(2.5rem, 6vw, 4.2rem);
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
 }
 
 .page-header__intro,
 .post-description {
   position: relative;
   z-index: 1;
-  max-width: 46rem;
-  margin: 12px 0 0;
-  font-size: 1rem;
-  line-height: 1.78;
+  max-width: 38rem;
+  margin: 8px 0 0;
+  font-size: 0.98rem;
+  line-height: 1.72;
   color: var(--content);
 }
 
@@ -522,14 +556,14 @@ body:not(.list) .main {
 .magazine-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 20px;
+  gap: 18px;
 }
 
 .magazine-card {
   position: relative;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 24px;
   background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
   box-shadow: var(--shadow-soft);
   transition:
@@ -573,8 +607,8 @@ body:not(.list) .main {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  min-height: 220px;
-  padding: 24px;
+  min-height: 188px;
+  padding: 22px;
 }
 
 .magazine-card__visual::before {
@@ -605,11 +639,11 @@ body:not(.list) .main {
 .magazine-card__pullquote {
   position: relative;
   z-index: 2;
-  max-width: 15ch;
+  max-width: 12ch;
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.24rem;
-  line-height: 1.14;
+  font-size: 1.05rem;
+  line-height: 1.08;
   letter-spacing: -0.04em;
   color: #fff8f0;
   text-wrap: balance;
@@ -618,7 +652,7 @@ body:not(.list) .main {
 .magazine-card__body {
   position: relative;
   z-index: 1;
-  padding: 22px 24px 24px;
+  padding: 18px 22px 20px;
 }
 
 .magazine-card__tags {
@@ -644,31 +678,36 @@ body:not(.list) .main {
 .magazine-card__title {
   margin: 0 0 10px;
   font-family: var(--font-display);
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.32rem, 2.3vw, 1.74rem);
   font-weight: 700;
-  line-height: 1;
+  line-height: 0.98;
   letter-spacing: -0.05em;
   color: var(--primary);
   text-wrap: balance;
 }
 
-.magazine-card--featured .magazine-card__visual {
-  min-height: 290px;
+.main > .magazine-grid .magazine-card--featured .magazine-card__visual {
+  min-height: 228px;
+}
+
+.home-hero__feature .magazine-card--featured .magazine-card__visual {
+  min-height: 268px;
 }
 
 .magazine-card--featured .magazine-card__title {
-  font-size: clamp(1.9rem, 5vw, 2.9rem);
+  max-width: 15ch;
+  font-size: clamp(1.7rem, 3vw, 2.18rem);
 }
 
 .magazine-card--featured .magazine-card__pullquote {
-  max-width: 19ch;
-  font-size: 1.45rem;
+  max-width: 16ch;
+  font-size: 1.22rem;
 }
 
 .magazine-card__summary {
-  margin: 0 0 18px;
-  font-size: 0.98rem;
-  line-height: 1.78;
+  margin: 0 0 14px;
+  font-size: 0.94rem;
+  line-height: 1.64;
   color: var(--content);
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -679,9 +718,9 @@ body:not(.list) .main {
 .magazine-card__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px 16px;
+  gap: 8px 14px;
   color: var(--secondary);
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1162,21 +1201,22 @@ body:not(.list) .main {
 
   .nav {
     margin-top: 10px;
-    padding: 10px 14px;
+    padding: 9px 12px;
     border-radius: 24px;
   }
 
   .logo a {
-    font-size: 1.05rem;
+    font-size: 0.98rem;
   }
 
   #menu {
     gap: 6px;
   }
 
-  #menu a {
-    padding: 9px 12px;
-    font-size: 0.72rem;
+  #menu a span {
+    min-height: 38px;
+    padding: 0 12px;
+    font-size: 0.68rem;
   }
 
   .home-hero__content,
@@ -1213,7 +1253,7 @@ body:not(.list) .main {
 
   .magazine-card--featured .magazine-card__visual,
   .magazine-card__visual {
-    min-height: 210px;
+    min-height: 198px;
   }
 
   .post-hero__rail {
