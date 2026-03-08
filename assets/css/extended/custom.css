@@ -1,18 +1,22 @@
-/* ─── macOS-native feel ─── */
+/* ─── macOS-native feel + Inter typography ─── */
 
 :root {
   --gap: 28px;
-  --content-gap: 24px;
-  --main-width: 680px;
+  --content-gap: 20px;
+  --main-width: 660px;
   --radius: 12px;
   --header-height: 52px;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
 }
 
 body {
-  font-family: "SF Pro Display", "SF Pro Text", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-  letter-spacing: -0.015em;
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "ss02", "cv01", "cv11";
+  letter-spacing: -0.011em;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
 }
 
 /* ─── Light theme ─── */
@@ -22,7 +26,7 @@ body {
   --primary: #1d1d1f;
   --secondary: #86868b;
   --tertiary: rgba(0, 0, 0, 0.04);
-  --content: #1d1d1f;
+  --content: #333;
   --border: rgba(0, 0, 0, 0.08);
   --code-bg: rgba(0, 0, 0, 0.04);
   --code-block-bg: #1c1c1e;
@@ -36,7 +40,7 @@ body {
   --primary: #f5f5f7;
   --secondary: #86868b;
   --tertiary: rgba(255, 255, 255, 0.06);
-  --content: #e8e8ed;
+  --content: #b8b8bd;
   --border: rgba(255, 255, 255, 0.08);
   --code-bg: rgba(255, 255, 255, 0.06);
   --code-block-bg: #1c1c1e;
@@ -52,7 +56,7 @@ body {
 }
 
 .logo a {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -65,7 +69,7 @@ body {
   font-size: 13px;
   font-weight: 500;
   text-transform: none;
-  letter-spacing: 0;
+  letter-spacing: -0.006em;
   padding: 6px 14px;
   border-radius: 980px;
   transition: background 0.2s ease, color 0.2s ease;
@@ -82,10 +86,11 @@ body {
 }
 
 .profile h1 {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   font-weight: 700;
-  letter-spacing: -0.04em;
-  margin-bottom: 6px;
+  letter-spacing: -0.05em;
+  line-height: 1.1;
+  margin-bottom: 10px;
   background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -93,11 +98,12 @@ body {
 }
 
 .profile .subtitle {
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: 1rem;
+  line-height: 1.65;
   color: var(--secondary);
-  max-width: 400px;
+  max-width: 380px;
   font-weight: 400;
+  letter-spacing: -0.006em;
 }
 
 /* ─── Pill buttons ─── */
@@ -107,8 +113,10 @@ body {
 }
 
 .button {
+  font-family: var(--font-sans);
   font-size: 13px;
   font-weight: 500;
+  letter-spacing: -0.006em;
   padding: 10px 24px;
   border-radius: 980px;
   background: var(--primary);
@@ -146,52 +154,75 @@ body {
 }
 
 .entry-header h2 {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   letter-spacing: -0.02em;
+  line-height: 1.35;
 }
 
 .entry-content {
-  font-size: 0.88rem;
+  font-size: 0.85rem;
   color: var(--secondary);
-  line-height: 1.5;
+  line-height: 1.55;
+  letter-spacing: -0.006em;
 }
 
 .post-meta {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
+  font-weight: 450;
   color: var(--secondary);
+  letter-spacing: 0;
 }
 
 /* ─── Post page ─── */
 .post-title {
-  font-size: 1.85rem;
+  font-size: 2rem;
   font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.2;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+  margin-bottom: 8px;
 }
 
 .post-content {
-  font-size: 0.95rem;
+  font-size: 0.935rem;
   line-height: 1.8;
+  letter-spacing: -0.006em;
+  color: var(--content);
+}
+
+.post-content p {
+  margin-bottom: 1.35em;
 }
 
 .post-content h2 {
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-  margin-top: 2.5em;
-  margin-bottom: 0.75em;
+  font-size: 1.35rem;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin-top: 2.75em;
+  margin-bottom: 0.6em;
+  color: var(--primary);
 }
 
 .post-content h3 {
   font-size: 1.1rem;
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  color: var(--primary);
+}
+
+.post-content strong {
+  font-weight: 600;
+  color: var(--primary);
 }
 
 .post-content a {
   color: var(--accent);
   text-decoration: none;
+  font-weight: 450;
   transition: opacity 0.15s;
 }
 
@@ -199,19 +230,62 @@ body {
   opacity: 0.7;
 }
 
-/* ─── Code blocks ─── */
+/* ─── Lists ─── */
+.post-content ul,
+.post-content ol {
+  padding-left: 1.25em;
+}
+
+.post-content li {
+  margin-bottom: 0.4em;
+  line-height: 1.7;
+}
+
+.post-content li strong {
+  font-weight: 600;
+}
+
+/* ─── Blockquotes ─── */
+.post-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1.25em;
+  margin-left: 0;
+  color: var(--secondary);
+  font-style: italic;
+}
+
+/* ─── Horizontal rules ─── */
+.post-content hr {
+  border: none;
+  height: 1px;
+  background: var(--border);
+  margin: 2.5em 0;
+}
+
+/* ─── Code ─── */
 .post-content pre {
   border-radius: 10px;
-  font-size: 0.84rem;
+  font-size: 0.82rem;
+  line-height: 1.65;
   border: 1px solid var(--border);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  padding: 16px 20px;
+}
+
+.post-content pre code {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: -0.02em;
+  font-feature-settings: "liga" 1, "calt" 1;
 }
 
 .post-content code {
-  font-family: "SF Mono", SFMono-Regular, ui-monospace, Menlo, monospace;
-  font-size: 0.84em;
+  font-family: var(--font-mono);
+  font-size: 0.82em;
+  font-weight: 400;
   border-radius: 6px;
-  padding: 2px 6px;
+  padding: 2px 7px;
+  letter-spacing: -0.02em;
 }
 
 .highlight pre {
@@ -220,8 +294,9 @@ body {
 
 /* ─── Tags as pills ─── */
 .post-tags a {
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 500;
+  letter-spacing: 0.01em;
   border-radius: 980px;
   padding: 4px 12px;
   background: var(--tertiary);
@@ -237,9 +312,11 @@ body {
 /* ─── Footer ─── */
 .footer {
   font-size: 0.72rem;
+  font-weight: 400;
   color: var(--secondary);
   border-top: none;
-  opacity: 0.7;
+  opacity: 0.6;
+  letter-spacing: 0;
 }
 
 /* ─── Social icons ─── */
@@ -255,14 +332,17 @@ body {
 
 /* ─── Search ─── */
 #searchInput {
+  font-family: var(--font-sans);
   border-radius: 980px;
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 400;
   padding: 12px 20px;
   border: 1px solid var(--border);
   background: var(--entry);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: all 0.2s ease;
+  letter-spacing: -0.006em;
 }
 
 #searchInput:focus {
@@ -280,6 +360,8 @@ body {
   border: 1px solid var(--border);
   background: var(--entry);
   transition: all 0.2s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
 .paginav a:hover {
