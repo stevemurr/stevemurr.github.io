@@ -2,18 +2,31 @@ baseURL = 'https://stevemurr.github.io/'
 languageCode = 'en-us'
 title = 'Steve Murr'
 theme = 'PaperMod'
+[pagination]
+  pagerSize = 5
 
 [params]
   defaultTheme = "auto"
   showReadingTime = true
   showShareButtons = false
   showPostNavLinks = true
-  showBreadCrumbs = true
+  showBreadCrumbs = false
   showCodeCopyButtons = true
+  disableSpecial1stPost = true
+  hideDescription = false
 
-  [params.homeInfoParams]
-    Title = "Hi, I'm Steve"
-    Content = "I build things with code. Mostly AI, browsers, audio tools, and whatever else seems interesting."
+  [params.profileMode]
+    enabled = true
+    title = "Steve Murr"
+    subtitle = "Software engineer in San Jose. I build AI tools, browsers, search engines, and the occasional game."
+
+    [[params.profileMode.buttons]]
+      name = "Writing"
+      url = "/posts/"
+
+    [[params.profileMode.buttons]]
+      name = "GitHub"
+      url = "https://github.com/stevemurr"
 
   [[params.socialIcons]]
     name = "github"
@@ -22,19 +35,14 @@ theme = 'PaperMod'
 [menu]
   [[menu.main]]
     identifier = "posts"
-    name = "Posts"
+    name = "Writing"
     url = "/posts/"
     weight = 10
-  [[menu.main]]
-    identifier = "archives"
-    name = "Archives"
-    url = "/archives/"
-    weight = 20
   [[menu.main]]
     identifier = "search"
     name = "Search"
     url = "/search/"
-    weight = 30
+    weight = 20
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]
