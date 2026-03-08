@@ -131,6 +131,7 @@ body:not(.list) .main {
 .nav {
   justify-content: flex-start;
   align-items: center;
+  isolation: isolate;
   margin-top: 12px;
   max-width: min(1080px, calc(100vw - 24px));
   padding: 10px 16px;
@@ -179,6 +180,7 @@ body:not(.list) .main {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   min-height: 42px;
   padding: 0 16px;
   border-radius: 999px;
@@ -199,7 +201,7 @@ body:not(.list) .main {
   background: var(--primary);
   color: var(--surface-strong);
   border-bottom: 0;
-  box-shadow: 0 10px 24px rgba(20, 28, 39, 0.16);
+  box-shadow: none;
 }
 
 #menu .active {
