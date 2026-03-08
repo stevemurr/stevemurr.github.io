@@ -12,8 +12,8 @@ theme = 'PaperMod'
   showCodeCopyButtons = true
 
   [params.homeInfoParams]
-    Title = "Hey there"
-    Content = "Welcome to my blog"
+    Title = "Hi, I'm Steve"
+    Content = "I build things with code. Mostly AI, browsers, audio tools, and whatever else seems interesting."
 
   [[params.socialIcons]]
     name = "github"
