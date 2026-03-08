@@ -1303,21 +1303,38 @@ body:not(.list) .main {
 
   .nav {
     flex-wrap: nowrap;
-    gap: 10px;
+    gap: 8px;
     margin-top: 8px;
-    padding: 10px;
-    border-radius: 22px;
+    padding: 8px 10px;
+    border-radius: 20px;
   }
 
   .logo {
-    flex: 0 1 auto;
-    min-width: 0;
+    flex: 0 0 auto;
   }
 
   .logo a {
-    display: block;
-    font-size: 0.92rem;
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--primary);
+    color: transparent;
+    box-shadow: 0 8px 20px rgba(20, 28, 39, 0.14);
     white-space: nowrap;
+  }
+
+  .logo a::before {
+    content: "SM";
+    color: var(--surface-strong);
+    font-family: var(--font-body);
+    font-size: 0.66rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 
   #menu {
@@ -1338,10 +1355,10 @@ body:not(.list) .main {
   }
 
   #menu a span {
-    min-height: 34px;
-    padding: 0 12px;
+    min-height: 32px;
+    padding: 0 11px;
     font-size: 0.58rem;
-    letter-spacing: 0.16em;
+    letter-spacing: 0.14em;
     white-space: nowrap;
   }
 
@@ -1541,12 +1558,18 @@ body:not(.list) .main {
 
 @media (max-width: 390px) {
   .nav {
-    gap: 8px;
+    gap: 6px;
     padding: 9px;
   }
 
   .logo a {
-    font-size: 0.84rem;
+    width: 34px;
+    height: 34px;
+  }
+
+  .logo a::before {
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
   }
 
   #menu {
@@ -1555,9 +1578,9 @@ body:not(.list) .main {
 
   #menu a span {
     min-height: 32px;
-    padding: 0 10px;
+    padding: 0 9px;
     font-size: 0.54rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
   }
 }
 
