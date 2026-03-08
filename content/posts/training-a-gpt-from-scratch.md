@@ -4,6 +4,10 @@ date: 2026-03-05
 draft: false
 tags: ["python", "ai", "machine-learning", "transformers"]
 summary: "Building YAGPT — a clean, modern GPT implementation for learning the full LLM pipeline."
+params:
+  pullquote: "The gap between reading a paper and implementing it correctly is larger than you'd expect."
+  cardGradient: "135deg, #2d1b69, #5b21b6, #7c3aed"
+  cardIcon: "brain"
 ---
 
 ## Why Build Yet Another GPT?
