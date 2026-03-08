@@ -1,89 +1,147 @@
 {{- define "main" }}
 
-{{- if (and site.Params.profileMode.enabled .IsHome) }}
-{{- partial "index_profile.html" . }}
-{{- else }} {{/* if not profileMode */}}
+{{- $homePages := where site.RegularPages "Section" "posts" }}
+{{- $homePages = where $homePages "Params.hiddenInHomeList" "!=" true }}
+{{- $homePages = $homePages.ByDate.Reverse }}
+{{- $hasFeatured := gt (len $homePages) 0 }}
 
-{{- if not .IsHome | and .Title }}
+{{- if .IsHome }}
+{{- $recentPosts := slice }}
+{{- if gt (len $homePages) 1 }}
+  {{- $recentPosts = first 3 (after 1 $homePages) }}
+{{- end }}
+
+<section class="home-hero">
+  <div class="home-hero__content reveal">
+    <p class="home-eyebrow">Technical writing from San Jose</p>
+    <h1 class="home-hero__title">{{ site.Params.profileMode.title | default site.Title | markdownify }}</h1>
+    <p class="home-hero__lede">{{ site.Params.profileMode.subtitle | default site.Title | markdownify }}</p>
+
+    {{- with site.Params.profileMode.buttons }}
+    <div class="buttons">
+      {{- range . }}
+      <a class="button" href="{{ trim .url " " }}" rel="noopener" title="{{ .name }}">
+        <span class="button-inner">
+          {{ .name }}
+          {{- if (findRE "://" .url) }}
+          <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+            stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="14" width="14">
+            <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+            <path d="M15 3h6v6"></path>
+            <path d="M10 14L21 3"></path>
+          </svg>
+          {{- end }}
+        </span>
+      </a>
+      {{- end }}
+    </div>
+    {{- end }}
+
+    {{- partial "social_icons.html" -}}
+
+    <div class="home-hero__notes">
+      <div class="home-note">
+        <span>Focus</span>
+        <p>AI products, local-first software, search systems, and smaller side projects.</p>
+      </div>
+      <div class="home-note">
+        <span>Writing</span>
+        <p>{{ len $homePages }} posts so far, mixing build logs, architecture notes, and postmortems.</p>
+      </div>
+      <div class="home-note">
+        <span>Latest</span>
+        {{- if $hasFeatured }}
+        {{- with index $homePages 0 }}
+        <p>{{ .Date.Format "January 2, 2006" }}: {{ .Title }}</p>
+        {{- end }}
+        {{- else }}
+        <p>Fresh work ships here whenever something worth documenting is done.</p>
+        {{- end }}
+      </div>
+    </div>
+  </div>
+
+  {{- if $hasFeatured }}
+  {{- with index $homePages 0 }}
+  <div class="home-hero__feature reveal reveal--late">
+    <p class="home-feature__label">Latest article</p>
+    {{ partial "magazine_card.html" (dict "page" . "featured" true) }}
+  </div>
+  {{- end }}
+  {{- end }}
+</section>
+
+{{- with site.Taxonomies.tags }}
+{{- $topTags := first 6 .ByCount }}
+{{- if gt (len $topTags) 0 }}
+<section class="home-section reveal reveal--late">
+  <div class="section-heading">
+    <p class="section-heading__eyebrow">Topics</p>
+    <h2>Recurring threads across the blog.</h2>
+  </div>
+  <div class="topic-cloud">
+    {{- range $topTags }}
+    <a class="topic-chip" href="{{ .Page.RelPermalink }}">
+      <span>{{ .Name }}</span>
+      <strong>{{ .Count }} {{ if eq (int .Count) 1 }}post{{ else }}posts{{ end }}</strong>
+    </a>
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+{{- end }}
+
+{{- if gt (len $recentPosts) 0 }}
+<section class="home-section reveal reveal--latest">
+  <div class="section-heading section-heading--split">
+    <div>
+      <p class="section-heading__eyebrow">Recent writing</p>
+      <h2>Technical notes with a bias toward things built and learned the hard way.</h2>
+    </div>
+    <a class="section-link" href="/posts/">Browse all writing</a>
+  </div>
+  <div class="magazine-grid">
+    {{- range $recentPosts }}
+    {{ partial "magazine_card.html" (dict "page" . "featured" false) }}
+    {{- end }}
+  </div>
+</section>
+{{- end }}
+
+{{- else }}
+
+{{- if .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
-  <h1>
-    {{ .Title }}
-  </h1>
-  {{- if .Description }}
-  <div class="post-description">
-    {{ .Description | markdownify }}
-  </div>
+  {{- if .Section }}
+  <p class="page-header__eyebrow">{{ .Section | humanize }}</p>
+  {{- end }}
+  <h1>{{ .Title }}</h1>
+  {{- if and (eq .Section "posts") (eq .Title "Posts") }}
+  <p class="page-header__intro">Notes on AI products, browsers, local-first search, and the occasional strange side quest.</p>
+  {{- else if .Description }}
+  <div class="post-description">{{ .Description | markdownify }}</div>
   {{- end }}
 </header>
 {{- end }}
 
 {{- if .Content }}
-<div class="post-content">
-  {{- if not (.Param "disableAnchoredHeadings") }}
-  {{- partial "anchored_headings.html" .Content -}}
-  {{- else }}{{ .Content }}{{ end }}
+<div class="post-shell">
+  <div class="post-content">
+    {{- if not (.Param "disableAnchoredHeadings") }}
+    {{- partial "anchored_headings.html" .Content -}}
+    {{- else }}{{ .Content }}{{ end }}
+  </div>
 </div>
 {{- end }}
 
 {{- $pages := union .RegularPages .Sections }}
-
-{{- if .IsHome }}
-{{- $pages = where site.RegularPages "Type" "in" site.Params.mainSections }}
-{{- $pages = where $pages "Params.hiddenInHomeList" "!=" "true"  }}
-{{- end }}
-
 {{- $paginator := .Paginate $pages }}
 
-{{- if and .IsHome site.Params.homeInfoParams (eq $paginator.PageNumber 1) }}
-{{- partial "home_info.html" . }}
-{{- end }}
-
 <div class="magazine-grid">
-{{- range $index, $page := $paginator.Pages }}
-  {{- $gradient := .Params.cardGradient | default "135deg, #333, #555, #777" }}
-  {{- $pullquote := .Params.pullquote }}
-  {{- $icon := .Params.cardIcon | default "file" }}
-
-  <article class="magazine-card{{ if eq $index 0 }} magazine-card--featured{{ end }}">
-    <a href="{{ .Permalink }}" class="magazine-card__link">
-      <div class="magazine-card__visual" style="background: linear-gradient({{ $gradient }});">
-        <div class="magazine-card__icon">
-          {{ if eq $icon "globe" }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
-          {{ else if eq $icon "brain" }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg>
-          {{ else if eq $icon "search" }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          {{ else if eq $icon "gamepad" }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="2"/></svg>
-          {{ else if eq $icon "cpu" }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
-          {{ else }}
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
-          {{ end }}
-        </div>
-        {{- if $pullquote }}
-        <blockquote class="magazine-card__pullquote">
-          &#8220;{{ $pullquote }}&#8221;
-        </blockquote>
-        {{- end }}
-      </div>
-      <div class="magazine-card__body">
-        <div class="magazine-card__tags">
-          {{- range .Params.tags }}
-          <span class="magazine-card__tag">{{ . }}</span>
-          {{- end }}
-        </div>
-        <h2 class="magazine-card__title">{{ .Title }}</h2>
-        <p class="magazine-card__summary">{{ .Summary | plainify | htmlUnescape }}{{ if .Truncated }}...{{ end }}</p>
-        <div class="magazine-card__meta">
-          {{- partial "post_meta.html" . -}}
-        </div>
-      </div>
-    </a>
-  </article>
-{{- end }}
+  {{- range $index, $page := $paginator.Pages }}
+  {{ partial "magazine_card.html" (dict "page" $page "featured" (eq $index 0)) }}
+  {{- end }}
 </div>
 
 {{- if gt $paginator.TotalPages 1 }}
@@ -103,6 +161,6 @@
 </footer>
 {{- end }}
 
-{{- end }}{{/* end profileMode */}}
+{{- end }}
 
 {{- end }}{{- /* end main */ -}}
