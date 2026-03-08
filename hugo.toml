@@ -1,12 +1,40 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://stevemurr.github.io/'
 languageCode = 'en-us'
-title = 'My Blog'
-theme = 'craft-style'
+title = 'Steve Murr'
+theme = 'PaperMod'
 
 [params]
-  description = "A Hugo site with Craft-inspired navigation"
+  defaultTheme = "auto"
+  showReadingTime = true
+  showShareButtons = false
+  showPostNavLinks = true
+  showBreadCrumbs = true
+  showCodeCopyButtons = true
 
-[markup]
-  [markup.goldmark]
-    [markup.goldmark.renderer]
-      unsafe = true
+  [params.homeInfoParams]
+    Title = "Hey there"
+    Content = "Welcome to my blog"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/stevemurr"
+
+[menu]
+  [[menu.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menu.main]]
+    identifier = "archives"
+    name = "Archives"
+    url = "/archives/"
+    weight = 20
+  [[menu.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 30
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
