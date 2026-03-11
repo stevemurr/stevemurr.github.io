@@ -27,8 +27,6 @@ hero:
       text: "Build real software, open source the interesting bits, and write up the engineering tradeoffs."
 githubActivity:
   username: "stevemurr"
-  eyebrow: "Live from GitHub"
-  title: "What I am actually working on lately."
   limit: 4
 featuredProjects:
   - name: "Wheel"

@@ -1816,6 +1816,12 @@ body:not(.list) .main {
     grid-template-columns: 1fr;
   }
 
+  .resume-home__projects,
+  .resume-home__rail,
+  .resume-home__writing {
+    grid-column: auto;
+  }
+
   .resume-home__rail {
     position: static;
   }
@@ -2635,15 +2641,37 @@ body::after {
 }
 
 .resume-home__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.75fr);
   gap: 22px;
+  align-items: start;
 }
 
 .resume-home__rail {
+  display: grid;
+  gap: 22px;
+  grid-column: 2;
   top: 84px;
+}
+
+.resume-home__projects {
+  grid-column: 1;
+}
+
+.resume-home__writing {
+  grid-column: 1 / -1;
 }
 
 .resume-panel {
   padding: 22px 22px 20px;
+}
+
+.resume-panel__header--compact {
+  margin-bottom: 14px;
+}
+
+.resume-panel__header--compact h2 {
+  display: none;
 }
 
 .resume-project {
@@ -2700,6 +2728,10 @@ body::after {
   gap: 0;
 }
 
+.github-activity .resume-panel__header {
+  margin-bottom: 12px;
+}
+
 .github-activity__status {
   margin: 0;
   color: var(--content);
@@ -2737,7 +2769,7 @@ body::after {
 
 .github-activity__title {
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.02rem;
   font-weight: 700;
   letter-spacing: -0.01em;
 }
@@ -3040,6 +3072,16 @@ body::after {
 
   .resume-panel__header h2 {
     font-size: 1.3rem;
+  }
+
+  .resume-home__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .resume-home__projects,
+  .resume-home__rail,
+  .resume-home__writing {
+    grid-column: auto;
   }
 
   .resume-project__title {

@@ -5,13 +5,10 @@
 {{- $heroLede := default $page.Summary $page.Params.hero.lede }}
 {{- $heroButtons := default (slice) $page.Params.hero.buttons }}
 {{- $heroNotes := default (slice) $page.Params.hero.notes }}
-{{- $featuredProjects := default (slice) $page.Params.featuredProjects }}
 {{- $profiles := default (slice) $page.Params.profiles }}
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
 {{- $githubLimit := default 4 $githubActivity.limit }}
-{{- $githubEyebrow := default "Live from GitHub" $githubActivity.eyebrow }}
-{{- $githubTitle := default "What I am actually touching right now." $githubActivity.title }}
 {{- $recentPosts := first 5 $posts }}
 
 <section class="resume-home reveal">
@@ -55,83 +52,26 @@
   </header>
 
   <div class="resume-home__grid">
-    <div class="resume-home__main">
-      {{- if gt (len $featuredProjects) 0 }}
-      <section id="selected-work" class="resume-panel reveal reveal--late">
-        <div class="resume-panel__header">
-          <div>
-            <p class="section-heading__eyebrow">Selected work</p>
-            <h2>Selected projects.</h2>
-          </div>
-        </div>
+    {{- if $githubUser }}
+    <section class="resume-panel reveal reveal--late github-activity resume-home__projects"
+      data-github-activity
+      data-github-user="{{ $githubUser }}"
+      data-github-limit="{{ $githubLimit }}">
+      <div class="resume-panel__header resume-panel__header--compact">
+        <p class="section-heading__eyebrow">Projects</p>
+      </div>
 
-        <div class="resume-projects">
-          {{- range $featuredProjects }}
-          <article class="resume-project">
-            <h3 class="resume-project__title">{{ .name }}</h3>
-            {{- with .summary }}
-            <p class="resume-project__summary">{{ . }}</p>
-            {{- end }}
+      <div class="github-activity__list" data-github-activity-body>
+        <p class="github-activity__status">Loading projects.</p>
+      </div>
+    </section>
+    {{- end }}
 
-            {{- with .impact }}
-            <p class="resume-project__impact">{{ . }}</p>
-            {{- end }}
-
-            {{- with .stack }}
-            <ul class="resume-project__stack">
-              {{- range . }}
-              <li>{{ . }}</li>
-              {{- end }}
-            </ul>
-            {{- end }}
-
-            {{- with .links }}
-            <div class="resume-project__links">
-              {{- range . }}
-              <a href="{{ .url }}"{{ if (findRE "://" .url) }} rel="noopener"{{ end }}>{{ .label }}</a>
-              {{- end }}
-            </div>
-            {{- end }}
-          </article>
-          {{- end }}
-        </div>
-      </section>
-      {{- end }}
-
-      {{- if gt (len $recentPosts) 0 }}
-      <section class="resume-panel reveal reveal--latest">
-        <div class="resume-panel__header resume-panel__header--split">
-          <div>
-            <p class="section-heading__eyebrow">Writing</p>
-            <h2>Architecture notes, build logs, and postmortems.</h2>
-          </div>
-          <a class="section-link" href="/posts/">All writing</a>
-        </div>
-
-        <div class="resume-writing">
-          {{- range $recentPosts }}
-          <a class="resume-writing__item" href="{{ .RelPermalink }}">
-            <span class="resume-writing__date">{{ .Date.Format "Mar 2, 2006" }}</span>
-            <span class="resume-writing__body">
-              <strong>{{ .Title }}</strong>
-              <small>{{ .Params.summary | default (.Summary | plainify | htmlUnescape) }}</small>
-            </span>
-            <span class="resume-writing__cta">Read</span>
-          </a>
-          {{- end }}
-        </div>
-      </section>
-      {{- end }}
-    </div>
-
+    {{- if gt (len $profiles) 0 }}
     <aside class="resume-home__rail">
-      {{- if gt (len $profiles) 0 }}
-      <section class="resume-panel reveal reveal--late">
+      <section class="resume-panel reveal reveal--late resume-home__info">
         <div class="resume-panel__header">
-          <div>
-            <p class="section-heading__eyebrow">Profiles</p>
-            <h2>Quick links and context.</h2>
-          </div>
+          <p class="section-heading__eyebrow">Info</p>
         </div>
 
         <div class="resume-profiles">
@@ -148,25 +88,29 @@
           {{- end }}
         </div>
       </section>
-      {{- end }}
-
-      {{- if $githubUser }}
-      <section class="resume-panel reveal reveal--late github-activity"
-        data-github-activity
-        data-github-user="{{ $githubUser }}"
-        data-github-limit="{{ $githubLimit }}">
-        <div class="resume-panel__header">
-          <div>
-            <p class="section-heading__eyebrow">{{ $githubEyebrow }}</p>
-            <h2>{{ $githubTitle }}</h2>
-          </div>
-        </div>
-
-        <div class="github-activity__list" data-github-activity-body>
-          <p class="github-activity__status">Loading recent repository activity from GitHub.</p>
-        </div>
-      </section>
-      {{- end }}
     </aside>
+    {{- end }}
+
+    {{- if gt (len $recentPosts) 0 }}
+    <section class="resume-panel reveal reveal--latest resume-home__writing">
+      <div class="resume-panel__header resume-panel__header--compact resume-panel__header--split">
+        <p class="section-heading__eyebrow">Writing</p>
+        <a class="section-link" href="/posts/">All writing</a>
+      </div>
+
+      <div class="resume-writing">
+        {{- range $recentPosts }}
+        <a class="resume-writing__item" href="{{ .RelPermalink }}">
+          <span class="resume-writing__date">{{ .Date.Format "Mar 2, 2006" }}</span>
+          <span class="resume-writing__body">
+            <strong>{{ .Title }}</strong>
+            <small>{{ .Params.summary | default (.Summary | plainify | htmlUnescape) }}</small>
+          </span>
+          <span class="resume-writing__cta">Read</span>
+        </a>
+        {{- end }}
+      </div>
+    </section>
+    {{- end }}
   </div>
 </section>
