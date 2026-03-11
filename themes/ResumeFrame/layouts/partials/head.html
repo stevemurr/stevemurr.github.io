@@ -3,6 +3,7 @@
 {{- $base := resources.Get "css/base.css" -}}
 {{- $custom := resources.Get "css/extended/custom.css" -}}
 {{- $styles := slice $base $custom | resources.Concat "css/site.css" | minify | fingerprint -}}
+{{- $script := resources.Get "js/site.js" | minify | fingerprint -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{{ $title }}</title>
@@ -17,6 +18,7 @@
 <meta name="twitter:title" content="{{ .Title | default site.Title }}">
 <meta name="twitter:description" content="{{ $description }}">
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
+<script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
 {{- with .OutputFormats.Get "RSS" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
 {{- end }}

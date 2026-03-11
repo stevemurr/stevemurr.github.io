@@ -2695,6 +2695,102 @@ body::after {
   border-left: 0;
 }
 
+.github-activity__list {
+  display: grid;
+  gap: 0;
+}
+
+.github-activity__status {
+  margin: 0;
+  color: var(--content);
+  line-height: 1.6;
+}
+
+.github-activity__status--error {
+  color: var(--secondary);
+}
+
+.github-activity__item {
+  display: grid;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(23, 33, 44, 0.08);
+}
+
+.github-activity__item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.github-activity__top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.github-activity__title,
+.github-activity__profile {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.github-activity__title {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.github-activity__stamp {
+  color: var(--secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.github-activity__summary {
+  margin: 0;
+  color: var(--content);
+  font-size: 0.94rem;
+  line-height: 1.58;
+}
+
+.github-activity__metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.github-activity__metric {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(26, 39, 53, 0.06);
+  color: var(--secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.github-activity__metric--link {
+  color: var(--accent-strong);
+  text-decoration: none;
+}
+
+.github-activity__profile {
+  display: inline-flex;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
 .resume-writing__item,
 .resume-profile,
 .resume-timeline__item,
@@ -2952,6 +3048,12 @@ body::after {
 
   .resume-project__links {
     gap: 14px;
+  }
+
+  .github-activity__top {
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .resume-hero,

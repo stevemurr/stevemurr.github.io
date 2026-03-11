@@ -25,22 +25,11 @@ hero:
       text: "Mostly Swift, Rust, and Python, with the occasional Godot side quest."
     - label: "Style"
       text: "Build real software, open source the interesting bits, and write up the engineering tradeoffs."
-timeline:
-  eyebrow: "Recently shipped"
-  title: "What I’ve been working on lately"
-  items:
-    - date: "March 2026"
-      title: "LanguageModelContextKit"
-      text: "Context windows, logical threads, compaction, and durable sessions for Apple Foundation Models."
-    - date: "March 2026"
-      title: "YAGPT"
-      text: "A readable GPT implementation covering pre-training, SFT, alignment, and evaluation."
-    - date: "March 2026"
-      title: "DIndex"
-      text: "A decentralized semantic search engine in Rust with hybrid retrieval and libp2p networking."
-    - date: "March 2026"
-      title: "Wheel"
-      text: "An AI-native browser for macOS with on-device chat, semantic history, and agent workflows."
+githubActivity:
+  username: "stevemurr"
+  eyebrow: "Live from GitHub"
+  title: "What I am actually working on lately."
+  limit: 4
 featuredProjects:
   - name: "Wheel"
     period: "2026"
@@ -107,15 +96,6 @@ featuredProjects:
         url: "/posts/training-a-gpt-from-scratch/"
       - label: "GitHub"
         url: "https://github.com/stevemurr/yagpt"
-focusAreas:
-  - title: "AI-native product design"
-    text: "Products where the model is part of the interface and workflow, not bolted on as a sidebar."
-  - title: "On-device and local-first systems"
-    text: "Keep inference, data, and retrieval close to the user when privacy, latency, or cost control matter."
-  - title: "Search and retrieval infrastructure"
-    text: "Hybrid retrieval, semantic indexing, token-aware chunking, and interfaces that work for both humans and agents."
-  - title: "Systems with taste"
-    text: "I care about the engine and the UX. Useful software needs solid internals and a point of view."
 profiles:
   - label: "GitHub"
     value: "github.com/stevemurr"

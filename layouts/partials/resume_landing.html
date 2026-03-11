@@ -5,12 +5,13 @@
 {{- $heroLede := default $page.Summary $page.Params.hero.lede }}
 {{- $heroButtons := default (slice) $page.Params.hero.buttons }}
 {{- $heroNotes := default (slice) $page.Params.hero.notes }}
-{{- $timelineItems := default (slice) $page.Params.timeline.items }}
-{{- $timelineEyebrow := default "Recently shipped" $page.Params.timeline.eyebrow }}
-{{- $timelineTitle := default "What I’ve been working on lately" $page.Params.timeline.title }}
 {{- $featuredProjects := default (slice) $page.Params.featuredProjects }}
-{{- $focusAreas := default (slice) $page.Params.focusAreas }}
 {{- $profiles := default (slice) $page.Params.profiles }}
+{{- $githubActivity := default dict $page.Params.githubActivity }}
+{{- $githubUser := default "" $githubActivity.username }}
+{{- $githubLimit := default 4 $githubActivity.limit }}
+{{- $githubEyebrow := default "Live from GitHub" $githubActivity.eyebrow }}
+{{- $githubTitle := default "What I am actually touching right now." $githubActivity.title }}
 {{- $recentPosts := first 5 $posts }}
 
 <section class="resume-home reveal">
@@ -124,47 +125,6 @@
     </div>
 
     <aside class="resume-home__rail">
-      {{- if gt (len $timelineItems) 0 }}
-      <section class="resume-panel reveal reveal--late">
-        <div class="resume-panel__header">
-          <div>
-            <p class="section-heading__eyebrow">{{ $timelineEyebrow }}</p>
-            <h2>{{ $timelineTitle }}</h2>
-          </div>
-        </div>
-
-        <div class="resume-timeline">
-          {{- range $timelineItems }}
-          <article class="resume-timeline__item">
-            <span class="resume-timeline__date">{{ .date }}</span>
-            <h3>{{ .title }}</h3>
-            <p>{{ .text }}</p>
-          </article>
-          {{- end }}
-        </div>
-      </section>
-      {{- end }}
-
-      {{- if gt (len $focusAreas) 0 }}
-      <section class="resume-panel reveal reveal--late">
-        <div class="resume-panel__header">
-          <div>
-            <p class="section-heading__eyebrow">Focus</p>
-            <h2>The problems I want more of.</h2>
-          </div>
-        </div>
-
-        <div class="resume-focus">
-          {{- range $focusAreas }}
-          <article class="resume-focus__item">
-            <h3>{{ .title }}</h3>
-            <p>{{ .text }}</p>
-          </article>
-          {{- end }}
-        </div>
-      </section>
-      {{- end }}
-
       {{- if gt (len $profiles) 0 }}
       <section class="resume-panel reveal reveal--late">
         <div class="resume-panel__header">
@@ -186,6 +146,24 @@
             {{- end }}
           </div>
           {{- end }}
+        </div>
+      </section>
+      {{- end }}
+
+      {{- if $githubUser }}
+      <section class="resume-panel reveal reveal--late github-activity"
+        data-github-activity
+        data-github-user="{{ $githubUser }}"
+        data-github-limit="{{ $githubLimit }}">
+        <div class="resume-panel__header">
+          <div>
+            <p class="section-heading__eyebrow">{{ $githubEyebrow }}</p>
+            <h2>{{ $githubTitle }}</h2>
+          </div>
+        </div>
+
+        <div class="github-activity__list" data-github-activity-body>
+          <p class="github-activity__status">Loading recent repository activity from GitHub.</p>
         </div>
       </section>
       {{- end }}
