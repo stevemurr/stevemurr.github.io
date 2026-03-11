@@ -225,9 +225,10 @@ function renderProjectMetrics(card, entry) {
   }
 
   metrics.textContent = "";
+  metrics.hidden = false;
 
   if (!entry) {
-    metrics.appendChild(createMetric("No recent public GitHub activity", "resume-project__metric--quiet"));
+    metrics.hidden = true;
     return;
   }
 
@@ -249,7 +250,8 @@ function updateProjectCard(card, entry) {
   const stamp = card.querySelector("[data-project-stamp]");
 
   if (stamp) {
-    stamp.textContent = entry ? `Active ${formatRelativeTime(entry.lastActiveAt)}` : "Quiet lately";
+    stamp.textContent = entry ? `Active ${formatRelativeTime(entry.lastActiveAt)}` : "";
+    stamp.hidden = !entry;
   }
 
   renderProjectMetrics(card, entry);
@@ -258,7 +260,8 @@ function updateProjectCard(card, entry) {
 function markProjectCardUnavailable(card) {
   const stamp = card.querySelector("[data-project-stamp]");
   if (stamp) {
-    stamp.textContent = "GitHub unavailable";
+    stamp.textContent = "";
+    stamp.hidden = true;
   }
 
   const metrics = card.querySelector("[data-project-metrics]");
@@ -267,7 +270,7 @@ function markProjectCardUnavailable(card) {
   }
 
   metrics.textContent = "";
-  metrics.appendChild(createMetric("GitHub unavailable", "resume-project__metric--quiet"));
+  metrics.hidden = true;
 }
 
 function sortProjectCards(list, entryMap) {

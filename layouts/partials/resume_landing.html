@@ -108,18 +108,23 @@
           <div class="resume-project__writing">
             <span class="resume-project__section">Writing</span>
             <div class="resume-project__articles">
-              {{- range first 3 $relatedPosts }}
+              {{- range $articleIndex, $relatedPost := first 3 $relatedPosts }}
+              {{- $articleSummary := $relatedPost.Params.summary | default ($relatedPost.Summary | plainify | htmlUnescape) }}
+              {{- if and (eq $articleIndex 0) $project.impact }}
+              {{- $articleSummary = $project.impact }}
+              {{- end }}
               <a class="resume-project__article" href="{{ .RelPermalink }}">
                 <span class="resume-project__article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
-                <span class="resume-project__article-title">{{ .Title }}</span>
+                <span class="resume-project__article-body">
+                  <span class="resume-project__article-title">{{ .Title }}</span>
+                  {{- with $articleSummary }}
+                  <span class="resume-project__article-summary">{{ . }}</span>
+                  {{- end }}
+                </span>
               </a>
               {{- end }}
             </div>
           </div>
-          {{- end }}
-
-          {{- with $project.impact }}
-          <p class="resume-project__impact">{{ . }}</p>
           {{- end }}
         </article>
         {{- end }}

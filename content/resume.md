@@ -78,12 +78,6 @@ info:
     url: "https://github.com/stevemurr"
   - label: "Based in"
     value: "San Jose, California"
-  - label: "Current arc"
-    value: "On-device AI, browser UX, semantic retrieval, and local-first systems."
-  - label: "Primary stack"
-    value: "Swift, Rust, Python, plus the occasional Godot detour."
-  - label: "Build style"
-    value: "Real software first, open source the interesting parts, write up the tradeoffs."
 ---
 
 ## Snapshot
