@@ -39,9 +39,9 @@
 {{- $pages := union .RegularPages .Sections }}
 {{- $paginator := .Paginate $pages }}
 
-<div class="magazine-grid">
+<div class="post-strip-list">
   {{- range $index, $page := $paginator.Pages }}
-  {{ partial "magazine_card.html" (dict "page" $page "featured" (eq $index 0)) }}
+  {{ partial "post_strip.html" (dict "page" $page "featured" (eq $index 0)) }}
   {{- end }}
 </div>
 

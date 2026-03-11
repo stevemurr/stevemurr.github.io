@@ -1,0 +1,34 @@
+{{- $page := .page -}}
+{{- $icon := $page.Params.cardIcon | default "file" -}}
+{{- $summary := $page.Params.summary | default ($page.Summary | plainify | htmlUnescape) -}}
+
+<article class="post-strip">
+  <a class="post-strip__link" href="{{ $page.RelPermalink }}">
+    <div class="post-strip__rail">
+      <span class="post-strip__date">{{ $page.Date.Format "Jan 2, 2006" }}</span>
+      {{- if site.Params.showReadingTime }}
+      <span class="post-strip__read">{{ $page.ReadingTime }} min read</span>
+      {{- end }}
+    </div>
+
+    <div class="post-strip__body">
+      {{- with $page.Params.tags }}
+      <div class="post-strip__tags">
+        {{- range first 3 . }}
+        <span>{{ . }}</span>
+        {{- end }}
+      </div>
+      {{- end }}
+
+      <h2>{{ $page.Title }}</h2>
+
+      {{- if $summary }}
+      <p>{{ $summary }}</p>
+      {{- end }}
+    </div>
+
+    <div class="post-strip__icon">
+      {{ partial "card_icon.html" $icon }}
+    </div>
+  </a>
+</article>
