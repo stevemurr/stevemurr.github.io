@@ -23,11 +23,15 @@ theme = 'PaperMod'
   [params.profileMode]
     enabled = true
     title = "Steve Murr"
-    subtitle = "Software engineer in San Jose. I build AI tools, browsers, search engines, and the occasional game."
+    subtitle = "Software engineer in San Jose building AI-native products, local-first search systems, and developer tooling."
 
     [[params.profileMode.buttons]]
-      name = "Writing"
-      url = "/posts/"
+      name = "Selected Work"
+      url = "/#selected-work"
+
+    [[params.profileMode.buttons]]
+      name = "Resume"
+      url = "/resume/"
 
     [[params.profileMode.buttons]]
       name = "GitHub"
@@ -39,14 +43,14 @@ theme = 'PaperMod'
 
 [menu]
   [[menu.main]]
+    identifier = "resume"
+    name = "Resume"
+    url = "/resume/"
+    weight = 10
+  [[menu.main]]
     identifier = "posts"
     name = "Writing"
     url = "/posts/"
-    weight = 10
-  [[menu.main]]
-    identifier = "search"
-    name = "Search"
-    url = "/search/"
     weight = 20
 
 [outputs]

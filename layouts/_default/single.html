@@ -6,18 +6,25 @@
 {{- $summary := .Params.summary | default (.Summary | plainify | htmlUnescape) }}
 {{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
 {{- $tagTerms := $.GetTerms $tags }}
+{{- $defaultBackURL := cond (eq .Section "posts") "/posts/" "/" }}
+{{- $defaultBackLabel := cond (eq .Section "posts") "Writing" "Home" }}
+{{- $backURL := .Params.backUrl | default $defaultBackURL }}
+{{- $backLabel := .Params.backLabel | default $defaultBackLabel }}
+{{- $eyebrow := .Params.eyebrow | default (cond (ne .Section "") (.Section | humanize) "Page") }}
 
 <article class="post-single post-single--editorial reveal">
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
-      <a class="post-hero__back" href="/posts/">Writing</a>
+      {{- if not (.Param "hideBackLink") }}
+      <a class="post-hero__back" href="{{ $backURL }}">{{ $backLabel }}</a>
+      {{- end }}
       <div class="post-hero__icon">
         {{ partial "card_icon.html" $icon }}
       </div>
     </div>
 
     <div class="post-hero__body">
-      <p class="post-hero__eyebrow">{{ .Section | humanize }}</p>
+      <p class="post-hero__eyebrow">{{ $eyebrow }}</p>
 
       {{- with $tagTerms }}
       <div class="post-hero__tags">
