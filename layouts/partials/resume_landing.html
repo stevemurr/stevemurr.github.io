@@ -113,7 +113,7 @@
               {{- if and (eq $articleIndex 0) $project.impact }}
               {{- $articleSummary = $project.impact }}
               {{- end }}
-              <a class="resume-project__article" href="{{ .RelPermalink }}" data-article-drawer-link>
+              <a class="resume-project__article" href="{{ .RelPermalink }}">
                 <span class="resume-project__article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
                 <span class="resume-project__article-body">
                   <span class="resume-project__article-title">{{ .Title }}</span>
@@ -141,7 +141,7 @@
 
       <div class="resume-writing">
         {{- range $recentPosts }}
-        <a class="resume-writing__item" href="{{ .RelPermalink }}" data-article-drawer-link>
+        <a class="resume-writing__item" href="{{ .RelPermalink }}">
           <span class="resume-writing__date">{{ .Date.Format "Mar 2, 2006" }}</span>
           <span class="resume-writing__body">
             <strong>{{ .Title }}</strong>
@@ -155,36 +155,4 @@
     {{- end }}
   </div>
 
-  <div class="resume-article-drawer" data-article-drawer hidden>
-    <button class="resume-article-drawer__backdrop" type="button" aria-label="Close article" data-article-drawer-close></button>
-    <aside class="resume-article-drawer__panel" role="dialog" aria-modal="true" aria-labelledby="resume-article-drawer-title" tabindex="-1">
-      <div class="resume-article-drawer__topbar">
-        <span class="resume-article-drawer__eyebrow">Article</span>
-        <div class="resume-article-drawer__actions">
-          <a class="resume-article-drawer__open" href="/" target="_blank" rel="noopener" data-article-drawer-open>
-            Open page
-          </a>
-          <button class="resume-article-drawer__close" type="button" aria-label="Close article" data-article-drawer-close>
-            Close
-          </button>
-        </div>
-      </div>
-
-      <div class="resume-article-drawer__scroll">
-        <div class="resume-article-drawer__paper">
-          <header class="resume-article-drawer__header">
-            <p class="resume-article-drawer__meta">
-              <span data-article-drawer-date></span>
-            </p>
-            <h2 class="resume-article-drawer__title" id="resume-article-drawer-title" data-article-drawer-title>Loading article</h2>
-            <p class="resume-article-drawer__summary" data-article-drawer-summary hidden></p>
-          </header>
-
-          <article class="post-content resume-article-drawer__body" data-article-drawer-body>
-            <p class="resume-article-drawer__status" data-article-drawer-status>Select an article to read it here.</p>
-          </article>
-        </div>
-      </div>
-    </aside>
-  </div>
 </section>
