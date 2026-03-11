@@ -2460,6 +2460,8 @@ body::after {
 }
 
 .nav {
+  display: grid;
+  justify-items: center;
   max-width: min(var(--main-width), calc(100vw - 28px));
   padding: 12px 14px;
   border-radius: 0 0 18px 18px;
@@ -2471,12 +2473,15 @@ body::after {
 .logo a {
   font-size: 1.36rem;
   letter-spacing: -0.03em;
+  text-decoration: none;
 }
 
 #menu {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
+  margin-left: 0;
   margin-bottom: 0;
   padding: 0;
   border: 0;
@@ -2663,6 +2668,19 @@ body::after {
 .resume-profile a,
 .section-link {
   color: var(--accent-strong);
+}
+
+.resume-project__links {
+  gap: 14px;
+}
+
+.resume-project__links a::after {
+  content: none;
+}
+
+.resume-project__links a + a {
+  padding-left: 14px;
+  border-left: 1px solid var(--border);
 }
 
 .resume-writing__item,
@@ -2906,6 +2924,10 @@ body::after {
   #menu a span {
     padding: 8px 8px 6px;
     font-size: 0.58rem;
+  }
+
+  .resume-project__links a + a {
+    padding-left: 10px;
   }
 
   .resume-hero,
