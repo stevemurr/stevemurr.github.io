@@ -1,7 +1,7 @@
 baseURL = 'https://stevemurr.github.io/'
 languageCode = 'en-us'
 title = 'Steve Murr'
-theme = 'PaperMod'
+theme = 'ResumeFrame'
 [pagination]
   pagerSize = 5
 
@@ -15,6 +15,7 @@ theme = 'PaperMod'
   showCodeCopyButtons = true
   disableSpecial1stPost = true
   hideDescription = false
+  mainSections = ["posts"]
 
   [params.assets]
     theme_color = "#f6efe6"

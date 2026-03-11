@@ -1,0 +1,19 @@
+<header class="header">
+  <nav class="nav">
+    <div class="logo">
+      <a href="{{ "/" | absLangURL }}" accesskey="h" title="{{ site.Title }} (Alt + H)">{{ site.Title }}</a>
+    </div>
+    <ul id="menu">
+      {{- $currentURL := .RelPermalink | absLangURL -}}
+      {{- range site.Menus.main }}
+      {{- $targetURL := .URL | absLangURL -}}
+      {{- $isResumePage := and (eq .Identifier "resume") (eq $.Layout "resume") -}}
+      <li>
+        <a href="{{ $targetURL }}" title="{{ .Title | default .Name }}">
+          <span{{ if or (eq $targetURL $currentURL) $isResumePage }} class="active"{{ end }}>{{ .Name }}</span>
+        </a>
+      </li>
+      {{- end }}
+    </ul>
+  </nav>
+</header>

@@ -1,0 +1,10 @@
+{{- $parts := slice -}}
+{{- if not .Date.IsZero -}}
+  {{- $parts = $parts | append (printf "<span>%s</span>" (.Date.Format "Jan 2, 2006")) -}}
+{{- end -}}
+{{- if (.Param "ShowReadingTime") -}}
+  {{- $parts = $parts | append (printf "<span>%d min read</span>" .ReadingTime) -}}
+{{- end -}}
+{{- with $parts -}}
+{{- delimit . "&nbsp;·&nbsp;" | safeHTML -}}
+{{- end -}}

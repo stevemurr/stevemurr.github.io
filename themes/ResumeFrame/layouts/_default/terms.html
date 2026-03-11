@@ -1,0 +1,17 @@
+{{- define "main" }}
+<section class="home-section">
+  <header class="page-header">
+    <p class="page-header__eyebrow">{{ .Data.Plural | humanize }}</p>
+    <h1>{{ .Title }}</h1>
+  </header>
+
+  <div class="topic-cloud">
+    {{- range .Data.Terms.Alphabetical }}
+    <a class="topic-chip" href="{{ .Page.RelPermalink }}">
+      <span>{{ .Page.LinkTitle }}</span>
+      <strong>{{ .Count }} {{ if eq (int .Count) 1 }}post{{ else }}posts{{ end }}</strong>
+    </a>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

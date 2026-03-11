@@ -1,0 +1,18 @@
+{{- $pages := where site.RegularPages "Section" "posts" -}}
+{{- $pages = $pages.ByDate.Reverse -}}
+{{- if and (gt (len $pages) 1) (in $pages .) }}
+<nav class="paginav">
+  {{- with $pages.Next . }}
+  <a class="prev" href="{{ .Permalink }}">
+    <span class="title">Previous</span>
+    <span>{{ .Title }}</span>
+  </a>
+  {{- end }}
+  {{- with $pages.Prev . }}
+  <a class="next" href="{{ .Permalink }}">
+    <span class="title">Next</span>
+    <span>{{ .Title }}</span>
+  </a>
+  {{- end }}
+</nav>
+{{- end }}

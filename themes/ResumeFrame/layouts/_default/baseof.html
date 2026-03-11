@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="{{ site.Language.LanguageCode | default site.Language.Lang | default "en" }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  {{- $bodyClass := "" -}}
+  {{- if or .IsHome (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") (eq .Layout "resume") -}}
+    {{- $bodyClass = "list" -}}
+  {{- end -}}
+  <body{{ if ne $bodyClass "" }} class="{{ $bodyClass }}"{{ end }} id="top">
+    {{ partial "header.html" . }}
+    <main class="main">
+      {{ block "main" . }}{{ end }}
+    </main>
+    {{ partial "footer.html" . }}
+  </body>
+</html>

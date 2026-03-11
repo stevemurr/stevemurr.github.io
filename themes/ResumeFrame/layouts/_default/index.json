@@ -1,0 +1,14 @@
+{{- $pages := where site.RegularPages "Section" "posts" -}}
+{{- $pages = where $pages "Params.hiddenInHomeList" "!=" true -}}
+[
+{{- range $index, $page := $pages -}}
+  {{- if gt $index 0 }},{{ end }}
+  {
+    "title": {{ $page.Title | jsonify }},
+    "summary": {{ ($page.Params.summary | default ($page.Summary | plainify | htmlUnescape)) | jsonify }},
+    "permalink": {{ $page.Permalink | jsonify }},
+    "content": {{ ($page.Plain | htmlUnescape) | jsonify }},
+    "date": {{ $page.Date.Format "2006-01-02" | jsonify }}
+  }
+{{- end -}}
+]

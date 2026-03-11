@@ -1,0 +1,9 @@
+{{- $page := . -}}
+{{- $isHidden := false -}}
+{{- with .cxt }}{{- $page = . -}}{{- end -}}
+{{- with .isHidden }}{{- $isHidden = . -}}{{- end -}}
+{{- if and $page.Params.cover.image (not $isHidden) }}
+<figure class="entry-cover">
+  <img src="{{ $page.Params.cover.image | absURL }}" alt="{{ $page.Params.cover.alt | default $page.Title }}">
+</figure>
+{{- end }}

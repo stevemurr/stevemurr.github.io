@@ -1,0 +1,13 @@
+{{- define "main" }}
+<section class="search-shell">
+  <header class="page-header">
+    <p class="page-header__eyebrow">Search</p>
+    <h1>{{ .Title }}</h1>
+    {{- with .Description }}
+    <div class="post-description">{{ . | markdownify }}</div>
+    {{- else }}
+    <div class="post-description">Browse the writing archive directly. Search is not wired into this theme yet.</div>
+    {{- end }}
+  </header>
+</section>
+{{- end }}

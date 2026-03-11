@@ -1,0 +1,9 @@
+name = "ResumeFrame"
+license = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "Minimal Hugo theme for a resume-first personal site."
+homepage = ""
+min_version = "0.152.0"
+
+[author]
+  name = "Codex"
