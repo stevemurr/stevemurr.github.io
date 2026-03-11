@@ -8,6 +8,7 @@ const ACTIVITY_EVENT_TYPES = new Set([
   "IssueCommentEvent",
   "CommitCommentEvent",
 ]);
+const ARTICLE_CACHE = new Map();
 
 function normalizeRepo(value) {
   return String(value || "").trim().toLowerCase();
@@ -352,9 +353,278 @@ async function loadProjectFeed(container) {
   }
 }
 
+function shouldBypassDrawer(event, link) {
+  return event.defaultPrevented
+    || event.button !== 0
+    || event.metaKey
+    || event.ctrlKey
+    || event.shiftKey
+    || event.altKey
+    || link.hasAttribute("download")
+    || link.target === "_blank";
+}
+
+function normalizeFetchedArticleContent(content, baseUrl) {
+  content.querySelectorAll("script, .anchor").forEach((node) => {
+    node.remove();
+  });
+
+  content.querySelectorAll("[id]").forEach((node) => {
+    node.removeAttribute("id");
+  });
+
+  content.querySelectorAll("a[href]").forEach((link) => {
+    const href = link.getAttribute("href");
+    if (!href) {
+      return;
+    }
+
+    if (href.startsWith("#")) {
+      link.removeAttribute("href");
+      return;
+    }
+
+    if (!href.startsWith("/") && !href.startsWith("http://") && !href.startsWith("https://")) {
+      link.setAttribute("href", new URL(href, baseUrl).toString());
+    }
+
+    const linkUrl = new URL(link.href, window.location.origin);
+    if (linkUrl.origin !== window.location.origin) {
+      link.setAttribute("target", "_blank");
+      link.setAttribute("rel", "noopener");
+    }
+  });
+
+  content.querySelectorAll("img[src]").forEach((image) => {
+    const src = image.getAttribute("src");
+    if (src && !src.startsWith("/") && !src.startsWith("http://") && !src.startsWith("https://")) {
+      image.setAttribute("src", new URL(src, baseUrl).toString());
+    }
+  });
+}
+
+function fetchArticlePayload(url) {
+  const articleUrl = String(url);
+
+  if (!ARTICLE_CACHE.has(articleUrl)) {
+    ARTICLE_CACHE.set(
+      articleUrl,
+      fetch(articleUrl, {
+        headers: {
+          Accept: "text/html",
+        },
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Article request failed: ${response.status}`);
+          }
+
+          return response.text();
+        })
+        .then((html) => {
+          const parsed = new DOMParser().parseFromString(html, "text/html");
+          const content = parsed.querySelector(".post-content");
+
+          if (!content) {
+            throw new Error("Article content not found");
+          }
+
+          const normalizedContent = content.cloneNode(true);
+          normalizeFetchedArticleContent(normalizedContent, articleUrl);
+
+          const metaParts = Array.from(parsed.querySelectorAll(".post-hero__meta span"))
+            .map((element) => element.textContent.trim())
+            .filter(Boolean);
+
+          return {
+            title: (parsed.querySelector(".post-title") || {}).textContent?.trim() || "Article",
+            summary: (parsed.querySelector(".post-hero__summary") || {}).textContent?.trim() || "",
+            date: metaParts[0] || "",
+            bodyHTML: normalizedContent.innerHTML,
+            canonicalUrl: (parsed.querySelector('link[rel="canonical"]') || {}).href || articleUrl,
+          };
+        })
+        .catch((error) => {
+          ARTICLE_CACHE.delete(articleUrl);
+          throw error;
+        }),
+    );
+  }
+
+  return ARTICLE_CACHE.get(articleUrl);
+}
+
+function setDrawerLinkState(links, activeLink) {
+  links.forEach((link) => {
+    link.classList.toggle("is-active", link === activeLink);
+  });
+}
+
+function setDrawerStatus(drawer, title, message) {
+  const titleElement = drawer.querySelector("[data-article-drawer-title]");
+  const summaryElement = drawer.querySelector("[data-article-drawer-summary]");
+  const dateElement = drawer.querySelector("[data-article-drawer-date]");
+  const bodyElement = drawer.querySelector("[data-article-drawer-body]");
+
+  if (titleElement) {
+    titleElement.textContent = title;
+  }
+
+  if (summaryElement) {
+    summaryElement.textContent = "";
+    summaryElement.hidden = true;
+  }
+
+  if (dateElement) {
+    dateElement.textContent = "";
+  }
+
+  if (bodyElement) {
+    bodyElement.innerHTML = "";
+    bodyElement.appendChild(createElement(document, "p", "resume-article-drawer__status", message));
+  }
+}
+
+function renderDrawerArticle(drawer, payload) {
+  const titleElement = drawer.querySelector("[data-article-drawer-title]");
+  const summaryElement = drawer.querySelector("[data-article-drawer-summary]");
+  const dateElement = drawer.querySelector("[data-article-drawer-date]");
+  const bodyElement = drawer.querySelector("[data-article-drawer-body]");
+  const openElement = drawer.querySelector("[data-article-drawer-open]");
+  const scrollElement = drawer.querySelector(".resume-article-drawer__scroll");
+
+  if (titleElement) {
+    titleElement.textContent = payload.title;
+  }
+
+  if (summaryElement) {
+    summaryElement.textContent = payload.summary;
+    summaryElement.hidden = !payload.summary;
+  }
+
+  if (dateElement) {
+    dateElement.textContent = payload.date;
+  }
+
+  if (bodyElement) {
+    bodyElement.innerHTML = payload.bodyHTML;
+  }
+
+  if (openElement) {
+    openElement.href = payload.canonicalUrl;
+  }
+
+  if (scrollElement) {
+    scrollElement.scrollTop = 0;
+  }
+}
+
+function openArticleDrawer(drawer, link, links) {
+  const panel = drawer.querySelector(".resume-article-drawer__panel");
+  const openElement = drawer.querySelector("[data-article-drawer-open]");
+  const previewTitle = link.querySelector(".resume-project__article-title, .resume-writing__body strong");
+  const previewSummary = link.querySelector(".resume-project__article-summary, .resume-writing__body small");
+  const previewDate = link.querySelector(".resume-project__article-date, .resume-writing__date");
+  const targetUrl = new URL(link.href, window.location.origin).toString();
+
+  drawer.hidden = false;
+  drawer.dataset.activeUrl = targetUrl;
+  drawer._lastTrigger = link;
+  document.body.classList.add("has-article-drawer");
+  setDrawerLinkState(links, link);
+
+  if (openElement) {
+    openElement.href = targetUrl;
+  }
+
+  setDrawerStatus(
+    drawer,
+    previewTitle ? previewTitle.textContent.trim() : "Loading article",
+    "Loading article...",
+  );
+
+  const summaryElement = drawer.querySelector("[data-article-drawer-summary]");
+  const dateElement = drawer.querySelector("[data-article-drawer-date]");
+  if (summaryElement) {
+    summaryElement.textContent = previewSummary ? previewSummary.textContent.trim() : "";
+    summaryElement.hidden = !summaryElement.textContent;
+  }
+  if (dateElement) {
+    dateElement.textContent = previewDate ? previewDate.textContent.trim() : "";
+  }
+
+  if (panel) {
+    panel.focus();
+  }
+
+  fetchArticlePayload(targetUrl)
+    .then((payload) => {
+      if (drawer.dataset.activeUrl !== targetUrl) {
+        return;
+      }
+
+      renderDrawerArticle(drawer, payload);
+    })
+    .catch(() => {
+      window.location.assign(targetUrl);
+    });
+}
+
+function closeArticleDrawer(drawer, links) {
+  if (drawer.hidden) {
+    return;
+  }
+
+  drawer.hidden = true;
+  delete drawer.dataset.activeUrl;
+  document.body.classList.remove("has-article-drawer");
+  setDrawerLinkState(links, null);
+
+  if (drawer._lastTrigger instanceof HTMLElement) {
+    drawer._lastTrigger.focus();
+  }
+}
+
+function initArticleDrawer() {
+  const drawer = document.querySelector("[data-article-drawer]");
+  const links = Array.from(document.querySelectorAll("[data-article-drawer-link]"));
+
+  if (!drawer || !links.length) {
+    return;
+  }
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("[data-article-drawer-link]");
+    if (!link || !links.includes(link) || shouldBypassDrawer(event, link)) {
+      return;
+    }
+
+    const targetUrl = new URL(link.href, window.location.origin);
+    if (targetUrl.origin !== window.location.origin) {
+      return;
+    }
+
+    event.preventDefault();
+    openArticleDrawer(drawer, link, links);
+  });
+
+  drawer.querySelectorAll("[data-article-drawer-close]").forEach((button) => {
+    button.addEventListener("click", () => {
+      closeArticleDrawer(drawer, links);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeArticleDrawer(drawer, links);
+    }
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const containers = document.querySelectorAll("[data-project-feed]");
   containers.forEach((container) => {
     loadProjectFeed(container);
   });
+  initArticleDrawer();
 });
