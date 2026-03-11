@@ -7,7 +7,6 @@
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
 {{- $githubExcluded := default (slice) $githubActivity.excludeRepos }}
-{{- $recentPosts := first 5 $posts }}
 
 <section class="resume-home reveal">
   <header class="resume-hero">
@@ -132,27 +131,6 @@
     </section>
     {{- end }}
 
-    {{- if gt (len $recentPosts) 0 }}
-    <section class="resume-panel reveal reveal--latest resume-home__writing">
-      <div class="resume-panel__header resume-panel__header--compact resume-panel__header--split">
-        <p class="section-heading__eyebrow">Writing</p>
-        <a class="section-link" href="/posts/">All writing</a>
-      </div>
-
-      <div class="resume-writing">
-        {{- range $recentPosts }}
-        <a class="resume-writing__item" href="{{ .RelPermalink }}">
-          <span class="resume-writing__date">{{ .Date.Format "Mar 2, 2006" }}</span>
-          <span class="resume-writing__body">
-            <strong>{{ .Title }}</strong>
-            <small>{{ .Params.summary | default (.Summary | plainify | htmlUnescape) }}</small>
-          </span>
-          <span class="resume-writing__cta">Read</span>
-        </a>
-        {{- end }}
-      </div>
-    </section>
-    {{- end }}
   </div>
 
 </section>
