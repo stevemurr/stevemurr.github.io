@@ -2570,6 +2570,10 @@ body::after {
   font-size: clamp(3rem, 7vw, 4.8rem);
 }
 
+.resume-home {
+  margin-top: 0;
+}
+
 .resume-hero {
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
   padding: 30px 32px;
@@ -2577,6 +2581,12 @@ body::after {
   border: 0;
   background: linear-gradient(135deg, #16212d 0%, #1f3445 58%, #214e64 100%);
   box-shadow: 0 26px 52px rgba(16, 25, 36, 0.18);
+}
+
+.resume-hero__main {
+  display: grid;
+  align-content: center;
+  gap: 18px;
 }
 
 .resume-hero::before {
@@ -2594,8 +2604,9 @@ body::after {
 }
 
 .resume-hero__title {
+  margin: 0;
   color: #f7f4ef;
-  max-width: 8ch;
+  max-width: none;
   font-size: clamp(3.3rem, 7vw, 5.4rem);
   letter-spacing: -0.045em;
 }
@@ -2603,6 +2614,10 @@ body::after {
 .resume-hero__lede {
   color: rgba(247, 244, 239, 0.8);
   max-width: 33rem;
+}
+
+.resume-hero__actions {
+  margin-top: 0;
 }
 
 .resume-hero__actions .button {
@@ -2640,22 +2655,27 @@ body::after {
   color: #f7f4ef;
 }
 
+.resume-fact__value {
+  color: #f7f4ef;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.58;
+  text-decoration: none;
+}
+
+.resume-fact__value:hover {
+  color: #ffffff;
+}
+
 .resume-home__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(260px, 0.75fr);
+  grid-template-columns: 1fr;
   gap: 22px;
   align-items: start;
 }
 
-.resume-home__rail {
-  display: grid;
-  gap: 22px;
-  grid-column: 2;
-  top: 84px;
-}
-
 .resume-home__projects {
-  grid-column: 1;
+  grid-column: 1 / -1;
 }
 
 .resume-home__writing {
@@ -2686,6 +2706,25 @@ body::after {
   gap: 16px;
 }
 
+.resume-project__title a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.resume-project__title svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  opacity: 0.7;
+}
+
+.resume-project__title a:hover {
+  color: var(--accent-strong);
+}
+
 .resume-panel__header h2 {
   max-width: 22ch;
   font-family: var(--font-body);
@@ -2701,7 +2740,7 @@ body::after {
 
 .resume-project__summary {
   margin-top: -2px;
-  max-width: 42rem;
+  max-width: 54rem;
   font-size: 1rem;
   line-height: 1.56;
 }
@@ -2754,13 +2793,15 @@ body::after {
 
 .resume-project__articles {
   display: grid;
-  gap: 10px;
+  gap: 0;
 }
 
 .resume-project__article {
   display: grid;
-  gap: 3px;
-  padding-top: 10px;
+  grid-template-columns: 108px minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding-top: 12px;
   border-top: 1px solid rgba(23, 33, 44, 0.08);
   text-decoration: none;
 }
@@ -2770,62 +2811,26 @@ body::after {
   border-top: 0;
 }
 
-.resume-project__article-title {
-  color: var(--primary);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+.resume-project__article-date {
+  color: var(--secondary);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
-.resume-project__article-meta {
-  color: var(--secondary);
-  font-size: 0.72rem;
+.resume-project__article-title {
+  color: var(--primary);
+  font-size: 0.98rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: -0.01em;
 }
 
 .resume-project__article:hover .resume-project__article-title {
   color: var(--accent-strong);
 }
-
-.resume-project__links a,
-.resume-profile a,
 .section-link {
   color: var(--accent-strong);
-}
-
-.resume-project__links {
-  align-items: center;
-  gap: 18px;
-  margin-top: 4px;
-}
-
-.resume-project__links a {
-  font-size: 0.82rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: none;
-}
-
-.resume-project__links a + a {
-  padding-left: 0;
-  border-left: 0;
-}
-
-.resume-home__info .resume-panel__header {
-  margin-bottom: 12px;
-}
-
-.resume-profile {
-  grid-template-columns: 96px minmax(0, 1fr);
-  gap: 12px;
-}
-
-.resume-profile a,
-.resume-profile strong {
-  font-size: 0.96rem;
-  line-height: 1.55;
 }
 
 .github-activity__list {
@@ -3179,16 +3184,6 @@ body::after {
     font-size: 1.3rem;
   }
 
-  .resume-home__grid {
-    grid-template-columns: 1fr;
-  }
-
-  .resume-home__projects,
-  .resume-home__rail,
-  .resume-home__writing {
-    grid-column: auto;
-  }
-
   .resume-project__title {
     font-size: 1.5rem;
   }
@@ -3202,8 +3197,9 @@ body::after {
     padding-top: 0;
   }
 
-  .resume-project__links {
-    gap: 14px;
+  .resume-project__article {
+    grid-template-columns: 1fr;
+    gap: 4px;
   }
 
   .github-activity__top {

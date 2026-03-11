@@ -1,10 +1,7 @@
 {{- $page := .page -}}
 {{- $posts := .posts | default (slice) -}}
 {{- $heroTitle := default site.Title $page.Params.hero.title }}
-{{- $heroEyebrow := default "Software engineer in San Jose" $page.Params.hero.eyebrow }}
-{{- $heroLede := default $page.Summary $page.Params.hero.lede }}
 {{- $heroButtons := default (slice) $page.Params.hero.buttons }}
-{{- $heroNotes := default (slice) $page.Params.hero.notes }}
 {{- $projects := default (slice) $page.Params.projects }}
 {{- $infoItems := default (slice) $page.Params.info }}
 {{- $githubActivity := default dict $page.Params.githubActivity }}
@@ -15,9 +12,7 @@
 <section class="resume-home reveal">
   <header class="resume-hero">
     <div class="resume-hero__main">
-      <p class="home-eyebrow">{{ $heroEyebrow }}</p>
       <h1 class="resume-hero__title">{{ $heroTitle | markdownify }}</h1>
-      <p class="resume-hero__lede">{{ $heroLede | markdownify }}</p>
 
       {{- with $heroButtons }}
       <div class="buttons resume-hero__actions">
@@ -40,12 +35,17 @@
       {{- end }}
     </div>
 
-    {{- if gt (len $heroNotes) 0 }}
+    {{- if gt (len $infoItems) 0 }}
     <div class="resume-hero__facts">
-      {{- range $heroNotes }}
+      {{- range $infoItems }}
+      {{- $item := . }}
       <div class="resume-fact">
-        <span>{{ .label }}</span>
-        <p>{{ .text }}</p>
+        <span>{{ $item.label }}</span>
+        {{- with $item.url }}
+        <a class="resume-fact__value" href="{{ . }}"{{ if (findRE "://" .) }} rel="noopener"{{ end }}>{{ $item.value }}</a>
+        {{- else }}
+        <strong class="resume-fact__value">{{ $item.value }}</strong>
+        {{- end }}
       </div>
       {{- end }}
     </div>
@@ -81,7 +81,18 @@
           {{- with $projectRepo }} data-project-repo="{{ . }}"{{- end }}>
           <div class="resume-project__header">
             <div>
-              <h3 class="resume-project__title">{{ $project.name }}</h3>
+              <h3 class="resume-project__title">
+                {{- with $projectRepoRaw }}
+                <a href="{{ printf "https://github.com/%s" . }}" rel="noopener">
+                  {{ $project.name }}
+                  <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                    <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.22 1.87.88 2.33.67.07-.52.28-.88.51-1.08-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path>
+                  </svg>
+                </a>
+                {{- else }}
+                {{ $project.name }}
+                {{- end }}
+              </h3>
               {{- with $project.summary }}
               <p class="resume-project__summary">{{ . }}</p>
               {{- end }}
@@ -95,12 +106,12 @@
 
           {{- if gt (len $relatedPosts) 0 }}
           <div class="resume-project__writing">
-            <span class="resume-project__section">Articles</span>
+            <span class="resume-project__section">Writing</span>
             <div class="resume-project__articles">
               {{- range first 3 $relatedPosts }}
               <a class="resume-project__article" href="{{ .RelPermalink }}">
+                <span class="resume-project__article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
                 <span class="resume-project__article-title">{{ .Title }}</span>
-                <span class="resume-project__article-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
               </a>
               {{- end }}
             </div>
@@ -110,48 +121,10 @@
           {{- with $project.impact }}
           <p class="resume-project__impact">{{ . }}</p>
           {{- end }}
-
-          {{- with $project.stack }}
-          <ul class="resume-project__stack">
-            {{- range . }}
-            <li>{{ . }}</li>
-            {{- end }}
-          </ul>
-          {{- end }}
-
-          {{- with $projectRepoRaw }}
-          <div class="resume-project__links">
-            <a href="{{ printf "https://github.com/%s" . }}" rel="noopener">GitHub</a>
-          </div>
-          {{- end }}
         </article>
         {{- end }}
       </div>
     </section>
-    {{- end }}
-
-    {{- if gt (len $infoItems) 0 }}
-    <aside class="resume-home__rail">
-      <section class="resume-panel reveal reveal--late resume-home__info">
-        <div class="resume-panel__header">
-          <p class="section-heading__eyebrow">Info</p>
-        </div>
-
-        <div class="resume-profiles">
-          {{- range $infoItems }}
-          {{- $profile := . }}
-          <div class="resume-profile">
-            <span>{{ $profile.label }}</span>
-            {{- with $profile.url }}
-            <a href="{{ . }}"{{ if (findRE "://" .) }} rel="noopener"{{ end }}>{{ $profile.value }}</a>
-            {{- else }}
-            <strong>{{ $profile.value }}</strong>
-            {{- end }}
-          </div>
-          {{- end }}
-        </div>
-      </section>
-    </aside>
     {{- end }}
 
     {{- if gt (len $recentPosts) 0 }}

@@ -10,21 +10,12 @@ backUrl: "/"
 hideMeta: true
 showToc: false
 hero:
-  eyebrow: "Software engineer in San Jose"
   title: "Steve Murr"
-  lede: "I build AI-native products, local-first search systems, and developer tooling. Recent work spans an AI-native browser, on-device context management for Apple Foundation Models, decentralized retrieval, and a from-scratch GPT training stack."
   buttons:
     - name: "Writing"
       url: "/posts/"
     - name: "GitHub"
       url: "https://github.com/stevemurr"
-  notes:
-    - label: "Current arc"
-      text: "On-device AI, browser UX, semantic retrieval, and local-first systems."
-    - label: "Stack"
-      text: "Mostly Swift, Rust, and Python, with the occasional Godot side quest."
-    - label: "Style"
-      text: "Build real software, open source the interesting bits, and write up the engineering tradeoffs."
 githubActivity:
   username: "stevemurr"
   excludeRepos:
