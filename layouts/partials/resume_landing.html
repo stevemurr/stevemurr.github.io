@@ -60,29 +60,17 @@
         <div class="resume-panel__header">
           <div>
             <p class="section-heading__eyebrow">Selected work</p>
-            <h2>Recent projects that show how I like to build.</h2>
+            <h2>Selected projects.</h2>
           </div>
         </div>
 
         <div class="resume-projects">
           {{- range $featuredProjects }}
           <article class="resume-project">
-            <div class="resume-project__top">
-              <div>
-                <h3 class="resume-project__title">{{ .name }}</h3>
-                {{- with .summary }}
-                <p class="resume-project__summary">{{ . }}</p>
-                {{- end }}
-              </div>
-              <div class="resume-project__meta">
-                {{- with .status }}
-                <span>{{ . }}</span>
-                {{- end }}
-                {{- with .period }}
-                <span>{{ . }}</span>
-                {{- end }}
-              </div>
-            </div>
+            <h3 class="resume-project__title">{{ .name }}</h3>
+            {{- with .summary }}
+            <p class="resume-project__summary">{{ . }}</p>
+            {{- end }}
 
             {{- with .impact }}
             <p class="resume-project__impact">{{ . }}</p>
