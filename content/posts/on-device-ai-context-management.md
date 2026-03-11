@@ -4,6 +4,7 @@ date: 2026-03-08
 draft: false
 tags: ["swift", "ai", "apple", "open-source"]
 summary: "LanguageModelContextKit — managing context windows for Apple's on-device Foundation Models."
+projects: ["language-model-context-kit"]
 params:
   pullquote: "On-device models have limited context windows and no built-in session management."
   cardGradient: "135deg, #1e3a5f, #0369a1, #0ea5e9"

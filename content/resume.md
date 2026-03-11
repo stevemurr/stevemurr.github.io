@@ -27,12 +27,12 @@ hero:
       text: "Build real software, open source the interesting bits, and write up the engineering tradeoffs."
 githubActivity:
   username: "stevemurr"
-  limit: 4
-featuredProjects:
-  - name: "Wheel"
-    period: "2026"
-    status: "Flagship project"
-    icon: "globe"
+  excludeRepos:
+    - "stevemurr/stevemurr.github.io"
+projects:
+  - slug: "wheel"
+    name: "Wheel"
+    repo: "stevemurr/wheel"
     summary: "A macOS browser built from scratch in Swift with AI baked into navigation, search, reading, and automation."
     impact: "Combines an OmniBar with chat, semantic history search, agent mode, an MCP server, and an LLM-generated widget dashboard."
     stack:
@@ -41,15 +41,9 @@ featuredProjects:
       - "WebKit"
       - "Foundation Models"
       - "MCP"
-    links:
-      - label: "Write-up"
-        url: "/posts/building-an-ai-native-browser/"
-      - label: "GitHub"
-        url: "https://github.com/stevemurr/wheel"
-  - name: "LanguageModelContextKit"
-    period: "2026"
-    status: "Open-source package"
-    icon: "cpu"
+  - slug: "language-model-context-kit"
+    name: "LanguageModelContextKit"
+    repo: "stevemurr/LanguageModelContextKit"
     summary: "A Swift package for managing context windows and sessions when building on-device AI apps with Apple Foundation Models."
     impact: "Handles token budgeting, logical threads, progressive compaction, session restoration, and file-based persistence."
     stack:
@@ -57,15 +51,9 @@ featuredProjects:
       - "Foundation Models"
       - "Token budgeting"
       - "Persistence"
-    links:
-      - label: "Write-up"
-        url: "/posts/on-device-ai-context-management/"
-      - label: "GitHub"
-        url: "https://github.com/stevemurr/LanguageModelContextKit"
-  - name: "DIndex"
-    period: "2026"
-    status: "Distributed systems"
-    icon: "search"
+  - slug: "dindex"
+    name: "DIndex"
+    repo: "stevemurr/dindex"
     summary: "A decentralized semantic search engine in Rust designed for both human and LLM-driven queries."
     impact: "Uses HNSW plus BM25 with Reciprocal Rank Fusion, semantic routing via LSH, and libp2p protocols including Kademlia, GossipSub, and QUIC."
     stack:
@@ -73,15 +61,9 @@ featuredProjects:
       - "libp2p"
       - "Tantivy"
       - "USearch"
-    links:
-      - label: "Write-up"
-        url: "/posts/decentralized-semantic-search/"
-      - label: "GitHub"
-        url: "https://github.com/stevemurr/dindex"
-  - name: "YAGPT"
-    period: "2026"
-    status: "ML systems"
-    icon: "brain"
+  - slug: "yagpt"
+    name: "YAGPT"
+    repo: "stevemurr/yagpt"
     summary: "A modern GPT implementation meant to make the full LLM pipeline understandable without dumbing it down."
     impact: "Covers pre-training, SFT, LoRA and QLoRA, DPO and GRPO alignment, plus evaluation with a clean command-line interface."
     stack:
@@ -89,20 +71,28 @@ featuredProjects:
       - "PyTorch"
       - "Transformers"
       - "Alignment"
-    links:
-      - label: "Write-up"
-        url: "/posts/training-a-gpt-from-scratch/"
-      - label: "GitHub"
-        url: "https://github.com/stevemurr/yagpt"
-profiles:
+  - slug: "tic-tac-uh-oh"
+    name: "Tic-Tac-Uh-Oh"
+    repo: "stevemurr/tic-tac-uh-oh"
+    summary: "A Godot tactics side quest where tic-tac-toe keeps escalating after every draw."
+    impact: "Uses stackable complications like gravity, bombs, infection, and board growth to turn a solved game into managed chaos."
+    stack:
+      - "Godot"
+      - "GDScript"
+      - "Game systems"
+      - "UI polish"
+info:
   - label: "GitHub"
     value: "github.com/stevemurr"
     url: "https://github.com/stevemurr"
-  - label: "Location"
+  - label: "Based in"
     value: "San Jose, California"
-  - label: "Writing"
-    value: "Technical notes and build logs"
-    url: "/posts/"
+  - label: "Current arc"
+    value: "On-device AI, browser UX, semantic retrieval, and local-first systems."
+  - label: "Primary stack"
+    value: "Swift, Rust, Python, plus the occasional Godot detour."
+  - label: "Build style"
+    value: "Real software first, open source the interesting parts, write up the tradeoffs."
 ---
 
 ## Snapshot

@@ -9,6 +9,10 @@ const ACTIVITY_EVENT_TYPES = new Set([
   "CommitCommentEvent",
 ]);
 
+function normalizeRepo(value) {
+  return String(value || "").trim().toLowerCase();
+}
+
 function formatRelativeTime(value) {
   if (!value) {
     return "recently";
@@ -28,23 +32,22 @@ function formatRelativeTime(value) {
   const month = 30 * day;
   const year = 365 * day;
 
-  let valueUnit;
+  let unit;
   if (absMs < hour) {
-    valueUnit = [Math.round(elapsed / minute), "minute"];
+    unit = [Math.round(elapsed / minute), "minute"];
   } else if (absMs < day) {
-    valueUnit = [Math.round(elapsed / hour), "hour"];
+    unit = [Math.round(elapsed / hour), "hour"];
   } else if (absMs < week) {
-    valueUnit = [Math.round(elapsed / day), "day"];
+    unit = [Math.round(elapsed / day), "day"];
   } else if (absMs < month) {
-    valueUnit = [Math.round(elapsed / week), "week"];
+    unit = [Math.round(elapsed / week), "week"];
   } else if (absMs < year) {
-    valueUnit = [Math.round(elapsed / month), "month"];
+    unit = [Math.round(elapsed / month), "month"];
   } else {
-    valueUnit = [Math.round(elapsed / year), "year"];
+    unit = [Math.round(elapsed / year), "year"];
   }
 
-  const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-  return formatter.format(valueUnit[0], valueUnit[1]);
+  return new Intl.RelativeTimeFormat("en", { numeric: "auto" }).format(unit[0], unit[1]);
 }
 
 function describeActivity(entry) {
@@ -110,18 +113,24 @@ function getFreshnessScore(dateValue) {
   return 0;
 }
 
-function buildActivityEntries(repositories, events, username, limit) {
-  const lowerUser = username.toLowerCase();
+function buildActivityEntries(repositories, events, username, excludedRepos) {
+  const lowerUser = String(username || "").toLowerCase();
+  const excluded = new Set((excludedRepos || []).map(normalizeRepo));
   const ownedRepositories = repositories.filter((repository) => {
-    return !repository.fork && repository.owner && repository.owner.login.toLowerCase() === lowerUser;
+    const owner = repository.owner && repository.owner.login
+      ? repository.owner.login.toLowerCase()
+      : "";
+    const fullName = normalizeRepo(repository.full_name);
+
+    return !repository.fork && owner === lowerUser && !excluded.has(fullName);
   });
   const repositoryMap = new Map(
-    ownedRepositories.map((repository) => [repository.full_name.toLowerCase(), repository]),
+    ownedRepositories.map((repository) => [normalizeRepo(repository.full_name), repository]),
   );
   const activityMap = new Map();
 
   function ensureEntry(repository) {
-    const key = repository.full_name.toLowerCase();
+    const key = normalizeRepo(repository.full_name);
     if (!activityMap.has(key)) {
       activityMap.set(key, {
         repository,
@@ -137,9 +146,9 @@ function buildActivityEntries(repositories, events, username, limit) {
     return activityMap.get(key);
   }
 
-  ownedRepositories.slice(0, Math.max(limit * 3, 8)).forEach((repository, index) => {
+  ownedRepositories.forEach((repository, index) => {
     const entry = ensureEntry(repository);
-    entry.score += Math.max(0, 6 - index);
+    entry.score += Math.max(0, 10 - index * 0.35);
   });
 
   events.forEach((event, index) => {
@@ -147,7 +156,12 @@ function buildActivityEntries(repositories, events, username, limit) {
       return;
     }
 
-    const repository = repositoryMap.get((event.repo && event.repo.name || "").toLowerCase());
+    const repoName = normalizeRepo(event.repo && event.repo.name);
+    if (excluded.has(repoName)) {
+      return;
+    }
+
+    const repository = repositoryMap.get(repoName);
     if (!repository) {
       return;
     }
@@ -157,10 +171,10 @@ function buildActivityEntries(repositories, events, username, limit) {
     entry.lastActiveAt = entry.lastActiveAt && new Date(entry.lastActiveAt) > new Date(event.created_at)
       ? entry.lastActiveAt
       : event.created_at;
-    entry.score += getFreshnessScore(event.created_at) + Math.max(0, 5 - index * 0.2);
+    entry.score += getFreshnessScore(event.created_at) + Math.max(0, 6 - index * 0.15);
 
     if (event.type === "PushEvent") {
-      entry.pushes += Math.max(1, event.payload && event.payload.size || 0);
+      entry.pushes += Math.max(1, (event.payload && event.payload.size) || 0);
       entry.score += 4;
     } else if (event.type === "PullRequestEvent") {
       entry.pullRequests += 1;
@@ -173,15 +187,13 @@ function buildActivityEntries(repositories, events, username, limit) {
     }
   });
 
-  return Array.from(activityMap.values())
-    .sort((left, right) => {
-      if (right.score !== left.score) {
-        return right.score - left.score;
-      }
+  return Array.from(activityMap.values()).sort((left, right) => {
+    if (right.score !== left.score) {
+      return right.score - left.score;
+    }
 
-      return new Date(right.lastActiveAt || 0) - new Date(left.lastActiveAt || 0);
-    })
-    .slice(0, limit);
+    return new Date(right.lastActiveAt || 0) - new Date(left.lastActiveAt || 0);
+  });
 }
 
 function createElement(documentRef, tagName, className, textContent) {
@@ -191,111 +203,117 @@ function createElement(documentRef, tagName, className, textContent) {
     element.className = className;
   }
 
-  if (textContent) {
+  if (typeof textContent === "string") {
     element.textContent = textContent;
   }
 
   return element;
 }
 
-function renderActivity(container, entries, username) {
-  const body = container.querySelector("[data-github-activity-body]");
-  if (!body) {
+function createMetric(text, modifier) {
+  const className = modifier
+    ? `resume-project__metric ${modifier}`
+    : "resume-project__metric";
+
+  return createElement(document, "span", className, text);
+}
+
+function renderProjectMetrics(card, entry) {
+  const metrics = card.querySelector("[data-project-metrics]");
+  if (!metrics) {
     return;
   }
 
-  body.textContent = "";
+  metrics.textContent = "";
 
-  if (!entries.length) {
-    const empty = createElement(document, "p", "github-activity__status", "No recent public GitHub activity found.");
-    body.appendChild(empty);
+  if (!entry) {
+    metrics.appendChild(createMetric("No recent public GitHub activity", "resume-project__metric--quiet"));
     return;
   }
 
-  const fragment = document.createDocumentFragment();
+  if (entry.repository.language) {
+    metrics.appendChild(createMetric(entry.repository.language));
+  }
 
-  entries.forEach((entry) => {
-    const item = createElement(document, "article", "github-activity__item");
-    const top = createElement(document, "div", "github-activity__top");
-    const title = createElement(document, "a", "github-activity__title", entry.repository.name);
-    const stamp = createElement(document, "span", "github-activity__stamp", formatRelativeTime(entry.lastActiveAt));
-    const summary = createElement(
-      document,
-      "p",
-      "github-activity__summary",
-      entry.repository.description || "Recently active repository on GitHub.",
-    );
-    const metrics = createElement(document, "div", "github-activity__metrics");
-    const repoLink = createElement(document, "a", "github-activity__metric github-activity__metric--link", "Repository");
+  const activitySummary = describeActivity(entry);
+  if (activitySummary) {
+    metrics.appendChild(createMetric(activitySummary));
+  }
 
-    title.href = entry.repository.html_url;
-    title.rel = "noopener";
-    repoLink.href = entry.repository.html_url;
-    repoLink.rel = "noopener";
+  metrics.appendChild(
+    createMetric(`updated ${formatRelativeTime(entry.repository.pushed_at || entry.repository.updated_at)}`),
+  );
+}
 
-    top.appendChild(title);
-    top.appendChild(stamp);
+function updateProjectCard(card, entry) {
+  const stamp = card.querySelector("[data-project-stamp]");
 
-    if (entry.repository.language) {
-      metrics.appendChild(createElement(document, "span", "github-activity__metric", entry.repository.language));
+  if (stamp) {
+    stamp.textContent = entry ? `Active ${formatRelativeTime(entry.lastActiveAt)}` : "Quiet lately";
+  }
+
+  renderProjectMetrics(card, entry);
+}
+
+function markProjectCardUnavailable(card) {
+  const stamp = card.querySelector("[data-project-stamp]");
+  if (stamp) {
+    stamp.textContent = "GitHub unavailable";
+  }
+
+  const metrics = card.querySelector("[data-project-metrics]");
+  if (!metrics) {
+    return;
+  }
+
+  metrics.textContent = "";
+  metrics.appendChild(createMetric("GitHub unavailable", "resume-project__metric--quiet"));
+}
+
+function sortProjectCards(list, entryMap) {
+  const cards = Array.from(list.querySelectorAll("[data-project-card]"));
+
+  cards.sort((left, right) => {
+    const leftEntry = entryMap.get(normalizeRepo(left.dataset.projectRepo));
+    const rightEntry = entryMap.get(normalizeRepo(right.dataset.projectRepo));
+
+    if (leftEntry && rightEntry && rightEntry.score !== leftEntry.score) {
+      return rightEntry.score - leftEntry.score;
     }
 
-    const activitySummary = describeActivity(entry);
-    if (activitySummary) {
-      metrics.appendChild(createElement(document, "span", "github-activity__metric", activitySummary));
+    if (leftEntry && !rightEntry) {
+      return -1;
     }
 
-    metrics.appendChild(
-      createElement(
-        document,
-        "span",
-        "github-activity__metric",
-        `updated ${formatRelativeTime(entry.repository.pushed_at || entry.repository.updated_at)}`,
-      ),
-    );
-    metrics.appendChild(repoLink);
+    if (!leftEntry && rightEntry) {
+      return 1;
+    }
 
-    item.appendChild(top);
-    item.appendChild(summary);
-    item.appendChild(metrics);
-    fragment.appendChild(item);
+    return Number(left.dataset.projectOrder || 0) - Number(right.dataset.projectOrder || 0);
   });
 
-  const footer = createElement(document, "a", "github-activity__profile", `View all activity on @${username}`);
-  footer.href = `https://github.com/${username}`;
-  footer.rel = "noopener";
-
-  body.appendChild(fragment);
-  body.appendChild(footer);
+  cards.forEach((card) => {
+    list.appendChild(card);
+  });
 }
 
-function renderError(container, username) {
-  const body = container.querySelector("[data-github-activity-body]");
-  if (!body) {
+async function loadProjectFeed(container) {
+  const username = container.dataset.githubUser;
+  const list = container.querySelector("[data-project-list]");
+  const cards = Array.from(container.querySelectorAll("[data-project-card]"));
+  const excludedRepos = (container.dataset.githubExclude || "")
+    .split(",")
+    .map(normalizeRepo)
+    .filter(Boolean);
+
+  if (!list || !cards.length) {
     return;
   }
 
-  body.textContent = "";
-  body.appendChild(
-    createElement(
-      document,
-      "p",
-      "github-activity__status github-activity__status--error",
-      "GitHub activity could not be loaded right now.",
-    ),
-  );
-
-  const fallback = createElement(document, "a", "github-activity__profile", `Open @${username} on GitHub`);
-  fallback.href = `https://github.com/${username}`;
-  fallback.rel = "noopener";
-  body.appendChild(fallback);
-}
-
-async function loadGitHubActivity(container) {
-  const username = container.dataset.githubUser;
-  const limit = Number.parseInt(container.dataset.githubLimit || "4", 10);
-
   if (!username) {
+    cards.forEach((card) => {
+      updateProjectCard(card, null);
+    });
     return;
   }
 
@@ -305,7 +323,6 @@ async function loadGitHubActivity(container) {
     );
 
     let events = [];
-
     try {
       events = await fetchJSON(
         `${GITHUB_API_ROOT}/users/${encodeURIComponent(username)}/events/public?per_page=100`,
@@ -314,16 +331,27 @@ async function loadGitHubActivity(container) {
       events = [];
     }
 
-    const entries = buildActivityEntries(repositories, events, username, limit);
-    renderActivity(container, entries, username);
+    const entries = buildActivityEntries(repositories, events, username, excludedRepos);
+    const entryMap = new Map(
+      entries.map((entry) => [normalizeRepo(entry.repository.full_name), entry]),
+    );
+
+    cards.forEach((card) => {
+      const repoName = normalizeRepo(card.dataset.projectRepo);
+      updateProjectCard(card, entryMap.get(repoName) || null);
+    });
+
+    sortProjectCards(list, entryMap);
   } catch (_error) {
-    renderError(container, username);
+    cards.forEach((card) => {
+      markProjectCardUnavailable(card);
+    });
   }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  const containers = document.querySelectorAll("[data-github-activity]");
+  const containers = document.querySelectorAll("[data-project-feed]");
   containers.forEach((container) => {
-    loadGitHubActivity(container);
+    loadProjectFeed(container);
   });
 });

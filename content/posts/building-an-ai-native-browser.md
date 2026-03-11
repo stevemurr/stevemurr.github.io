@@ -4,6 +4,7 @@ date: 2026-03-01
 draft: false
 tags: ["swift", "ai", "macos", "browser"]
 summary: "How I built Wheel, a macOS browser with on-device AI baked into every layer."
+projects: ["wheel"]
 params:
   pullquote: "What if the browser was designed from day one with AI as a first-class citizen?"
   cardGradient: "135deg, #1a1a2e, #16213e, #0f3460"

@@ -5,10 +5,11 @@
 {{- $heroLede := default $page.Summary $page.Params.hero.lede }}
 {{- $heroButtons := default (slice) $page.Params.hero.buttons }}
 {{- $heroNotes := default (slice) $page.Params.hero.notes }}
-{{- $profiles := default (slice) $page.Params.profiles }}
+{{- $projects := default (slice) $page.Params.projects }}
+{{- $infoItems := default (slice) $page.Params.info }}
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
-{{- $githubLimit := default 4 $githubActivity.limit }}
+{{- $githubExcluded := default (slice) $githubActivity.excludeRepos }}
 {{- $recentPosts := first 5 $posts }}
 
 <section class="resume-home reveal">
@@ -52,22 +53,84 @@
   </header>
 
   <div class="resume-home__grid">
-    {{- if $githubUser }}
-    <section class="resume-panel reveal reveal--late github-activity resume-home__projects"
-      data-github-activity
+    {{- if gt (len $projects) 0 }}
+    <section class="resume-panel reveal reveal--late resume-home__projects"
+      data-project-feed
       data-github-user="{{ $githubUser }}"
-      data-github-limit="{{ $githubLimit }}">
+      data-github-exclude="{{ delimit $githubExcluded "," }}"
+      data-project-count="{{ len $projects }}">
       <div class="resume-panel__header resume-panel__header--compact">
         <p class="section-heading__eyebrow">Projects</p>
       </div>
 
-      <div class="github-activity__list" data-github-activity-body>
-        <p class="github-activity__status">Loading projects.</p>
+      <div class="resume-projects" data-project-list>
+        {{- range $index, $project := $projects }}
+        {{- $projectSlug := default (urlize $project.name) $project.slug }}
+        {{- $projectRepoRaw := default "" $project.repo }}
+        {{- $projectRepo := lower $projectRepoRaw }}
+        {{- $relatedPosts := slice }}
+        {{- range $posts }}
+        {{- $postProjects := .Params.projects | default (slice) }}
+        {{- if in $postProjects $projectSlug }}
+        {{- $relatedPosts = $relatedPosts | append . }}
+        {{- end }}
+        {{- end }}
+        <article class="resume-project"
+          data-project-card
+          data-project-order="{{ $index }}"
+          {{- with $projectRepo }} data-project-repo="{{ . }}"{{- end }}>
+          <div class="resume-project__header">
+            <div>
+              <h3 class="resume-project__title">{{ $project.name }}</h3>
+              {{- with $project.summary }}
+              <p class="resume-project__summary">{{ . }}</p>
+              {{- end }}
+            </div>
+            <span class="resume-project__stamp" data-project-stamp>Loading activity</span>
+          </div>
+
+          <div class="resume-project__metrics" data-project-metrics>
+            <span class="resume-project__metric resume-project__metric--placeholder">GitHub activity</span>
+          </div>
+
+          {{- if gt (len $relatedPosts) 0 }}
+          <div class="resume-project__writing">
+            <span class="resume-project__section">Articles</span>
+            <div class="resume-project__articles">
+              {{- range first 3 $relatedPosts }}
+              <a class="resume-project__article" href="{{ .RelPermalink }}">
+                <span class="resume-project__article-title">{{ .Title }}</span>
+                <span class="resume-project__article-meta">{{ .Date.Format "Jan 2, 2006" }}</span>
+              </a>
+              {{- end }}
+            </div>
+          </div>
+          {{- end }}
+
+          {{- with $project.impact }}
+          <p class="resume-project__impact">{{ . }}</p>
+          {{- end }}
+
+          {{- with $project.stack }}
+          <ul class="resume-project__stack">
+            {{- range . }}
+            <li>{{ . }}</li>
+            {{- end }}
+          </ul>
+          {{- end }}
+
+          {{- with $projectRepoRaw }}
+          <div class="resume-project__links">
+            <a href="{{ printf "https://github.com/%s" . }}" rel="noopener">GitHub</a>
+          </div>
+          {{- end }}
+        </article>
+        {{- end }}
       </div>
     </section>
     {{- end }}
 
-    {{- if gt (len $profiles) 0 }}
+    {{- if gt (len $infoItems) 0 }}
     <aside class="resume-home__rail">
       <section class="resume-panel reveal reveal--late resume-home__info">
         <div class="resume-panel__header">
@@ -75,7 +138,7 @@
         </div>
 
         <div class="resume-profiles">
-          {{- range $profiles }}
+          {{- range $infoItems }}
           {{- $profile := . }}
           <div class="resume-profile">
             <span>{{ $profile.label }}</span>

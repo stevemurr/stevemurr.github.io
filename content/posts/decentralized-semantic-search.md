@@ -4,6 +4,7 @@ date: 2026-03-02
 draft: false
 tags: ["rust", "search", "p2p", "ai"]
 summary: "DIndex: building a decentralized semantic search engine in Rust designed for the age of LLMs."
+projects: ["dindex"]
 params:
   pullquote: "31,000 lines of Rust, 500 tests, zero concurrency bugs in production."
   cardGradient: "135deg, #1a3a2a, #065f46, #059669"
