@@ -1,0 +1,9 @@
+{{- define "main" }}
+
+{{- $posts := where site.RegularPages "Section" "posts" }}
+{{- $posts = where $posts "Params.hiddenInHomeList" "!=" true }}
+{{- $posts = $posts.ByDate.Reverse }}
+
+{{ partial "resume_landing.html" (dict "page" . "posts" $posts) }}
+
+{{- end }}{{- /* end main */ -}}

@@ -26,12 +26,8 @@ theme = 'PaperMod'
     subtitle = "Software engineer in San Jose building AI-native products, local-first search systems, and developer tooling."
 
     [[params.profileMode.buttons]]
-      name = "Selected Work"
-      url = "/#selected-work"
-
-    [[params.profileMode.buttons]]
-      name = "Resume"
-      url = "/resume/"
+      name = "Writing"
+      url = "/posts/"
 
     [[params.profileMode.buttons]]
       name = "GitHub"
@@ -45,7 +41,7 @@ theme = 'PaperMod'
   [[menu.main]]
     identifier = "resume"
     name = "Resume"
-    url = "/resume/"
+    url = "/"
     weight = 10
   [[menu.main]]
     identifier = "posts"

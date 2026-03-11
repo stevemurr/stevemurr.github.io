@@ -1,0 +1,206 @@
+{{- $page := .page -}}
+{{- $posts := .posts | default (slice) -}}
+{{- $heroTitle := default site.Title $page.Params.hero.title }}
+{{- $heroEyebrow := default "Software engineer in San Jose" $page.Params.hero.eyebrow }}
+{{- $heroLede := default $page.Summary $page.Params.hero.lede }}
+{{- $heroButtons := default (slice) $page.Params.hero.buttons }}
+{{- $heroNotes := default (slice) $page.Params.hero.notes }}
+{{- $timelineItems := default (slice) $page.Params.timeline.items }}
+{{- $timelineEyebrow := default "Recently shipped" $page.Params.timeline.eyebrow }}
+{{- $timelineTitle := default "What I’ve been working on lately" $page.Params.timeline.title }}
+{{- $featuredProjects := default (slice) $page.Params.featuredProjects }}
+{{- $focusAreas := default (slice) $page.Params.focusAreas }}
+{{- $profiles := default (slice) $page.Params.profiles }}
+{{- $recentPosts := first 5 $posts }}
+
+<section class="resume-home reveal">
+  <header class="resume-hero">
+    <div class="resume-hero__main">
+      <p class="home-eyebrow">{{ $heroEyebrow }}</p>
+      <h1 class="resume-hero__title">{{ $heroTitle | markdownify }}</h1>
+      <p class="resume-hero__lede">{{ $heroLede | markdownify }}</p>
+
+      {{- with $heroButtons }}
+      <div class="buttons resume-hero__actions">
+        {{- range . }}
+        <a class="button" href="{{ trim .url " " }}"{{ if (findRE "://" .url) }} rel="noopener"{{ end }} title="{{ .name }}">
+          <span class="button-inner">
+            {{ .name }}
+            {{- if (findRE "://" .url) }}
+            <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+              stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" height="14" width="14">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+              <path d="M15 3h6v6"></path>
+              <path d="M10 14L21 3"></path>
+            </svg>
+            {{- end }}
+          </span>
+        </a>
+        {{- end }}
+      </div>
+      {{- end }}
+    </div>
+
+    {{- if gt (len $heroNotes) 0 }}
+    <div class="resume-hero__facts">
+      {{- range $heroNotes }}
+      <div class="resume-fact">
+        <span>{{ .label }}</span>
+        <p>{{ .text }}</p>
+      </div>
+      {{- end }}
+    </div>
+    {{- end }}
+  </header>
+
+  <div class="resume-home__grid">
+    <div class="resume-home__main">
+      {{- if gt (len $featuredProjects) 0 }}
+      <section id="selected-work" class="resume-panel reveal reveal--late">
+        <div class="resume-panel__header">
+          <div>
+            <p class="section-heading__eyebrow">Selected work</p>
+            <h2>Recent projects that show how I like to build.</h2>
+          </div>
+        </div>
+
+        <div class="resume-projects">
+          {{- range $featuredProjects }}
+          <article class="resume-project">
+            <div class="resume-project__top">
+              <div>
+                <h3 class="resume-project__title">{{ .name }}</h3>
+                {{- with .summary }}
+                <p class="resume-project__summary">{{ . }}</p>
+                {{- end }}
+              </div>
+              <div class="resume-project__meta">
+                {{- with .status }}
+                <span>{{ . }}</span>
+                {{- end }}
+                {{- with .period }}
+                <span>{{ . }}</span>
+                {{- end }}
+              </div>
+            </div>
+
+            {{- with .impact }}
+            <p class="resume-project__impact">{{ . }}</p>
+            {{- end }}
+
+            {{- with .stack }}
+            <ul class="resume-project__stack">
+              {{- range . }}
+              <li>{{ . }}</li>
+              {{- end }}
+            </ul>
+            {{- end }}
+
+            {{- with .links }}
+            <div class="resume-project__links">
+              {{- range . }}
+              <a href="{{ .url }}"{{ if (findRE "://" .url) }} rel="noopener"{{ end }}>{{ .label }}</a>
+              {{- end }}
+            </div>
+            {{- end }}
+          </article>
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+
+      {{- if gt (len $recentPosts) 0 }}
+      <section class="resume-panel reveal reveal--latest">
+        <div class="resume-panel__header resume-panel__header--split">
+          <div>
+            <p class="section-heading__eyebrow">Writing</p>
+            <h2>Architecture notes, build logs, and postmortems.</h2>
+          </div>
+          <a class="section-link" href="/posts/">All writing</a>
+        </div>
+
+        <div class="resume-writing">
+          {{- range $recentPosts }}
+          <a class="resume-writing__item" href="{{ .RelPermalink }}">
+            <span class="resume-writing__date">{{ .Date.Format "Mar 2, 2006" }}</span>
+            <span class="resume-writing__body">
+              <strong>{{ .Title }}</strong>
+              <small>{{ .Params.summary | default (.Summary | plainify | htmlUnescape) }}</small>
+            </span>
+            <span class="resume-writing__cta">Read</span>
+          </a>
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+    </div>
+
+    <aside class="resume-home__rail">
+      {{- if gt (len $timelineItems) 0 }}
+      <section class="resume-panel reveal reveal--late">
+        <div class="resume-panel__header">
+          <div>
+            <p class="section-heading__eyebrow">{{ $timelineEyebrow }}</p>
+            <h2>{{ $timelineTitle }}</h2>
+          </div>
+        </div>
+
+        <div class="resume-timeline">
+          {{- range $timelineItems }}
+          <article class="resume-timeline__item">
+            <span class="resume-timeline__date">{{ .date }}</span>
+            <h3>{{ .title }}</h3>
+            <p>{{ .text }}</p>
+          </article>
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+
+      {{- if gt (len $focusAreas) 0 }}
+      <section class="resume-panel reveal reveal--late">
+        <div class="resume-panel__header">
+          <div>
+            <p class="section-heading__eyebrow">Focus</p>
+            <h2>The problems I want more of.</h2>
+          </div>
+        </div>
+
+        <div class="resume-focus">
+          {{- range $focusAreas }}
+          <article class="resume-focus__item">
+            <h3>{{ .title }}</h3>
+            <p>{{ .text }}</p>
+          </article>
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+
+      {{- if gt (len $profiles) 0 }}
+      <section class="resume-panel reveal reveal--late">
+        <div class="resume-panel__header">
+          <div>
+            <p class="section-heading__eyebrow">Profiles</p>
+            <h2>Quick links and context.</h2>
+          </div>
+        </div>
+
+        <div class="resume-profiles">
+          {{- range $profiles }}
+          {{- $profile := . }}
+          <div class="resume-profile">
+            <span>{{ $profile.label }}</span>
+            {{- with $profile.url }}
+            <a href="{{ . }}"{{ if (findRE "://" .) }} rel="noopener"{{ end }}>{{ $profile.value }}</a>
+            {{- else }}
+            <strong>{{ $profile.value }}</strong>
+            {{- end }}
+          </div>
+          {{- end }}
+        </div>
+      </section>
+      {{- end }}
+    </aside>
+  </div>
+</section>
