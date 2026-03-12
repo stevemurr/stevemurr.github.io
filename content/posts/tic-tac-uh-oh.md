@@ -4,7 +4,7 @@ date: 2026-03-07
 draft: false
 tags: ["godot", "gamedev", "gdscript"]
 summary: "A tic-tac-toe variant where the board fights back."
-projects: ["tic-tac-uh-oh"]
+projects: ["stevemurr/tic-tac-uh-oh"]
 params:
   pullquote: "12 stackable complications. Gravity, bombs, infection, decay -- pure chaos."
   cardGradient: "135deg, #7c2d12, #c2410c, #ea580c"

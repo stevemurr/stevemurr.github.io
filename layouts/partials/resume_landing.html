@@ -7,6 +7,32 @@
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
 {{- $githubExcluded := default (slice) $githubActivity.excludeRepos }}
+{{- $projectRepos := slice }}
+{{- $validation := newScratch }}
+{{- $validation.Set "hasProjectErrors" false }}
+
+{{- range $index, $project := $projects }}
+{{- $projectName := default (printf "project %d" (add $index 1)) $project.name }}
+{{- $projectRepoRaw := default "" $project.repo }}
+{{- $projectRepo := lower (trim $projectRepoRaw " ") }}
+{{- if not $projectRepo }}
+  {{- errorf "Project %q on %q is missing a repo value" $projectName $page.File.Path }}
+  {{- $validation.Set "hasProjectErrors" true }}
+{{- end }}
+{{- $projectRepos = $projectRepos | append $projectRepo }}
+{{- end }}
+
+{{- if not ($validation.Get "hasProjectErrors") }}
+{{- range $post := $posts }}
+{{- $postProjects := $post.Params.projects | default (slice) }}
+{{- range $postProject := $postProjects }}
+{{- $postProjectKey := lower (trim . " ") }}
+{{- if and $postProjectKey (not (in $projectRepos $postProjectKey)) }}
+  {{- errorf "Post %q (%s) references unknown project repo %q" $post.Title $post.RelPermalink $postProjectKey }}
+{{- end }}
+{{- end }}
+{{- end }}
+{{- end }}
 
 <section class="resume-home reveal">
   <header class="resume-hero">
@@ -64,13 +90,21 @@
 
       <div class="resume-projects" data-project-list>
         {{- range $index, $project := $projects }}
-        {{- $projectSlug := default (urlize $project.name) $project.slug }}
         {{- $projectRepoRaw := default "" $project.repo }}
-        {{- $projectRepo := lower $projectRepoRaw }}
+        {{- $projectRepo := lower (trim $projectRepoRaw " ") }}
         {{- $relatedPosts := slice }}
         {{- range $posts }}
         {{- $postProjects := .Params.projects | default (slice) }}
-        {{- if in $postProjects $projectSlug }}
+        {{- $postProjectKeysScratch := newScratch }}
+        {{- $postProjectKeysScratch.Set "values" (slice) }}
+        {{- range $postProjects }}
+        {{- $postProjectKey := lower (trim . " ") }}
+        {{- if $postProjectKey }}
+        {{- $postProjectKeysScratch.Add "values" (slice $postProjectKey) }}
+        {{- end }}
+        {{- end }}
+        {{- $postProjectKeys := $postProjectKeysScratch.Get "values" }}
+        {{- if in $postProjectKeys $projectRepo }}
         {{- $relatedPosts = $relatedPosts | append . }}
         {{- end }}
         {{- end }}
