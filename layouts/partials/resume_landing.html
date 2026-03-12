@@ -179,7 +179,8 @@
           data-project-order="{{ $index }}"
           {{- with $projectRepo }} data-project-repo="{{ . }}"{{- end }}>
           <div class="resume-project__header">
-            <div>
+            <div class="resume-project__intro">
+              <div class="resume-project__topline">
               <h3 class="resume-project__title">
                 {{- with $projectRepoRaw }}
                 <a href="{{ printf "https://github.com/%s" . }}" rel="noopener">
@@ -192,20 +193,23 @@
                 {{ $project.name }}
                 {{- end }}
               </h3>
+              <div class="resume-project__metrics" data-project-metrics>
+                <span class="resume-project__metric resume-project__metric--placeholder">GitHub activity</span>
+              </div>
+              <span class="resume-project__stamp" data-project-stamp>Loading activity</span>
+              </div>
               {{- with $project.summary }}
               <p class="resume-project__summary">{{ . }}</p>
               {{- end }}
             </div>
-            <span class="resume-project__stamp" data-project-stamp>Loading activity</span>
-          </div>
-
-          <div class="resume-project__metrics" data-project-metrics>
-            <span class="resume-project__metric resume-project__metric--placeholder">GitHub activity</span>
           </div>
 
           {{- if gt (len $relatedPosts) 0 }}
           <div class="resume-project__writing">
-            <span class="resume-project__section">Writing</span>
+            <div class="resume-project__writing-header">
+              <span class="resume-project__section">Related writing</span>
+              <span class="resume-project__section-note">Posts about building this project</span>
+            </div>
             <div class="resume-project__articles">
               {{- range $articleIndex, $relatedPost := first 3 $relatedPosts }}
               {{- $articleSummary := $relatedPost.Params.summary | default ($relatedPost.Summary | plainify | htmlUnescape) }}
