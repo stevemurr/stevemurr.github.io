@@ -16,7 +16,12 @@
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
       {{- if not (.Param "hideBackLink") }}
-      <a class="post-hero__back" href="{{ $backURL }}">{{ $backLabel }}</a>
+      <a class="post-hero__back" href="{{ $backURL }}" aria-label="Back to {{ $backLabel }}" title="{{ $backLabel }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M15 18l-6-6 6-6"></path>
+          <path d="M21 12H9"></path>
+        </svg>
+      </a>
       {{- end }}
       <div class="post-hero__icon">
         {{ partial "card_icon.html" $icon }}

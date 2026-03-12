@@ -1136,24 +1136,31 @@ body:not(.list) .main {
 }
 
 .post-hero__back {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 999px;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 14px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: rgba(255, 250, 244, 0.88);
   text-decoration: none;
-  font-size: 0.76rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
 .post-hero__back::before {
-  content: "<-";
+  content: none;
+}
+
+.post-hero__back svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
 }
 
 .post-hero__icon {
@@ -2301,8 +2308,9 @@ body:not(.list) .main {
   }
 
   .post-hero__back {
-    padding: 8px 12px;
-    font-size: 0.68rem;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
   }
 
   .post-hero__icon {
@@ -3367,7 +3375,7 @@ body::after {
 }
 
 .post-hero__back {
-  border-radius: 999px;
+  border-radius: 14px;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.74);
   color: var(--secondary);
