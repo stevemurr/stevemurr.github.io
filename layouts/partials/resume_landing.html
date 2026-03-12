@@ -206,24 +206,12 @@
 
           {{- if gt (len $relatedPosts) 0 }}
           <div class="resume-project__writing">
-            <div class="resume-project__writing-header">
-              <span class="resume-project__section">Related writing</span>
-              <span class="resume-project__section-note">Posts about building this project</span>
-            </div>
+            <span class="resume-project__section">Related writing</span>
             <div class="resume-project__articles">
-              {{- range $articleIndex, $relatedPost := first 3 $relatedPosts }}
-              {{- $articleSummary := $relatedPost.Params.summary | default ($relatedPost.Summary | plainify | htmlUnescape) }}
-              {{- if and (eq $articleIndex 0) $project.impact }}
-              {{- $articleSummary = $project.impact }}
-              {{- end }}
+              {{- range first 3 $relatedPosts }}
               <a class="resume-project__article" href="{{ .RelPermalink }}">
-                <span class="resume-project__article-date">{{ .Date.Format "Jan 2, 2006" }}</span>
-                <span class="resume-project__article-body">
-                  <span class="resume-project__article-title">{{ .Title }}</span>
-                  {{- with $articleSummary }}
-                  <span class="resume-project__article-summary">{{ . }}</span>
-                  {{- end }}
-                </span>
+                <span class="resume-project__article-date">{{ .Date.Format "Jan 2" }}</span>
+                <span class="resume-project__article-title">{{ .Title }}</span>
               </a>
               {{- end }}
             </div>

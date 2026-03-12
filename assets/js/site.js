@@ -242,18 +242,12 @@ function renderProjectMetrics(card, entry) {
     return;
   }
 
-  if (entry.repository.language) {
-    metrics.appendChild(createMetric(entry.repository.language));
-  }
-
   const activitySummary = describeActivity(entry);
   if (activitySummary) {
     metrics.appendChild(createMetric(activitySummary));
   }
 
-  metrics.appendChild(
-    createMetric(`updated ${formatRelativeTime(entry.repository.pushed_at || entry.repository.updated_at)}`),
-  );
+  metrics.hidden = metrics.childElementCount === 0;
 }
 
 function updateProjectCard(card, entry) {
