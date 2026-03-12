@@ -13,6 +13,7 @@ import urllib.request
 from collections import Counter
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -24,6 +25,7 @@ CALENDAR_DAYS = 90
 RECENT_COMMIT_COUNT = 5
 LOCAL_RECENT_FETCH_LIMIT = 120
 API_RECENT_FETCH_LIMIT = 10
+PACIFIC_TZ = ZoneInfo("America/Los_Angeles")
 
 
 def parse_scalar(value: str) -> str:
@@ -555,6 +557,7 @@ def prepare_recent_commits(commits: list[dict[str, str]], now: datetime) -> list
     result: list[dict[str, str]] = []
     for commit in sorted_commits:
         timestamp = parse_iso_datetime(commit["date"])
+        pacific_timestamp = timestamp.astimezone(PACIFIC_TZ)
         cleaned_refs = ", ".join(
             part.strip() for part in commit.get("refs", "").split(",") if part.strip()
         )
@@ -562,8 +565,8 @@ def prepare_recent_commits(commits: list[dict[str, str]], now: datetime) -> list
             {
                 **commit,
                 "refs": cleaned_refs,
-                "displayDate": timestamp.strftime("%b %-d"),
-                "displayDateTime": timestamp.strftime("%b %-d, %-I:%M %p"),
+                "displayDate": pacific_timestamp.strftime("%b %-d"),
+                "displayDateTime": pacific_timestamp.strftime("%b %-d, %-I:%M %p PT"),
                 "relativeTime": format_relative_time(commit["date"], now),
             }
         )
