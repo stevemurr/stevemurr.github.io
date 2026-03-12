@@ -218,6 +218,16 @@ function createMetric(text, modifier) {
   return createElement(document, "span", className, text);
 }
 
+function getProjectSortDate(entry) {
+  if (!entry) {
+    return 0;
+  }
+
+  const sortDate = entry.repository.pushed_at || entry.repository.updated_at || entry.lastActiveAt;
+  const timestamp = new Date(sortDate).getTime();
+  return Number.isNaN(timestamp) ? 0 : timestamp;
+}
+
 function renderProjectMetrics(card, entry) {
   const metrics = card.querySelector("[data-project-metrics]");
   if (!metrics) {
@@ -279,6 +289,13 @@ function sortProjectCards(list, entryMap) {
   cards.sort((left, right) => {
     const leftEntry = entryMap.get(normalizeRepo(left.dataset.projectRepo));
     const rightEntry = entryMap.get(normalizeRepo(right.dataset.projectRepo));
+
+    const leftSortDate = getProjectSortDate(leftEntry);
+    const rightSortDate = getProjectSortDate(rightEntry);
+
+    if (rightSortDate !== leftSortDate) {
+      return rightSortDate - leftSortDate;
+    }
 
     if (leftEntry && rightEntry && rightEntry.score !== leftEntry.score) {
       return rightEntry.score - leftEntry.score;
