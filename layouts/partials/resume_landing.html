@@ -7,6 +7,11 @@
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
 {{- $githubExcluded := default (slice) $githubActivity.excludeRepos }}
+{{- $devActivity := site.Data.dev_activity | default dict }}
+{{- $contributions := default dict $devActivity.contributions }}
+{{- $contributionWeeks := default (slice) $contributions.weeks }}
+{{- $monthLabels := default (slice) $contributions.monthLabels }}
+{{- $recentCommits := default (slice) $devActivity.recentCommits }}
 {{- $projectRepos := slice }}
 {{- $validation := newScratch }}
 {{- $validation.Set "hasProjectErrors" false }}
@@ -36,6 +41,37 @@
 
 <section class="resume-home reveal">
   <header class="resume-hero">
+    {{- if gt (len $contributionWeeks) 0 }}
+    <div class="resume-hero__activity" aria-hidden="true">
+      <div class="resume-heatmap" style="--heatmap-columns: {{ len $contributionWeeks }}">
+        {{- if gt (len $monthLabels) 0 }}
+        <div class="resume-heatmap__months">
+          {{- range $monthLabels }}
+          <span style="grid-column: {{ add .column 1 }}">{{ .label }}</span>
+          {{- end }}
+        </div>
+        {{- end }}
+
+        <div class="resume-heatmap__grid">
+          {{- range $contributionWeeks }}
+          <div class="resume-heatmap__week">
+            {{- range .days }}
+            <span
+              class="resume-heatmap__cell{{ if not .inRange }} resume-heatmap__cell--void{{ else }} resume-heatmap__cell--level-{{ .level }}{{ end }}"{{ if .inRange }}
+              title="{{ .date }} · {{ .count }} commit{{ if ne .count 1 }}s{{ end }}"{{ end }}></span>
+            {{- end }}
+          </div>
+          {{- end }}
+        </div>
+
+        <div class="resume-heatmap__caption">
+          <span>Last {{ default 90 $contributions.windowDays }} days</span>
+          <strong>{{ default 0 $contributions.total }} commits</strong>
+        </div>
+      </div>
+    </div>
+    {{- end }}
+
     <div class="resume-hero__main">
       <h1 class="resume-hero__title">{{ $heroTitle | markdownify }}</h1>
 
@@ -76,6 +112,36 @@
     </div>
     {{- end }}
   </header>
+
+  {{- if gt (len $recentCommits) 0 }}
+  <section class="resume-panel reveal reveal--late resume-home__commits">
+    <div class="resume-panel__header resume-panel__header--compact">
+      <p class="section-heading__eyebrow">Recent commits</p>
+    </div>
+
+    <div class="resume-commit-list">
+      {{- range first 5 $recentCommits }}
+      <a class="resume-commit" href="{{ .url }}" rel="noopener" title="{{ .repo }} · {{ .fullHash }}">
+        <span class="resume-commit__graph" aria-hidden="true"></span>
+
+        <div class="resume-commit__body">
+          <div class="resume-commit__meta">
+            <span class="resume-commit__repo">{{ .repoName }}</span>
+            <code class="resume-commit__hash">{{ .shortHash }}</code>
+            {{- with .refs }}
+            <span class="resume-commit__refs">{{ . }}</span>
+            {{- end }}
+          </div>
+
+          <strong class="resume-commit__message">{{ .message }}</strong>
+        </div>
+
+        <time class="resume-commit__when" datetime="{{ .date }}" title="{{ .relativeTime }}">{{ .displayDateTime }}</time>
+      </a>
+      {{- end }}
+    </div>
+  </section>
+  {{- end }}
 
   <div class="resume-home__grid">
     {{- if gt (len $projects) 0 }}
