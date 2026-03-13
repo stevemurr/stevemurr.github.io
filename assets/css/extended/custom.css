@@ -2338,7 +2338,7 @@ body:not(.list) .main {
   }
 
   .post-title {
-    font-size: clamp(2.35rem, 12vw, 3.3rem);
+    font-size: clamp(2.15rem, 11vw, 3rem);
   }
 
   .post-hero__summary {
@@ -3467,7 +3467,7 @@ body:not(.list) .nav {
 .post-title {
   color: #f7f4ef;
   font-family: var(--font-body);
-  font-size: clamp(3rem, 6.8vw, 5rem);
+  font-size: clamp(2.7rem, 6vw, 4.4rem);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 0.94;
@@ -3509,7 +3509,7 @@ body:not(.list) .nav {
 }
 
 .post-hero--with-pullquote .post-hero__pullquote {
-  align-self: end;
+  align-self: center;
   max-width: none;
   margin-top: 0;
   padding-top: 0;
