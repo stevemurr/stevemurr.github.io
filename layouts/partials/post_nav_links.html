@@ -1,0 +1,23 @@
+{{- $current := . -}}
+{{- with .GetTerms "series" }}
+{{- $seriesPage := index . 0 }}
+{{- $seriesPages := $seriesPage.Pages }}
+{{- if and (gt (len $seriesPages) 1) (in $seriesPages $current) }}
+<nav class="paginav">
+  {{- with $seriesPages.Next $current }}
+  <a class="prev" href="{{ .Permalink }}">
+    <span class="title">« {{ i18n "prev_page" }}</span>
+    <br>
+    <span>{{- .Name -}}</span>
+  </a>
+  {{- end }}
+  {{- with $seriesPages.Prev $current }}
+  <a class="next" href="{{ .Permalink }}">
+    <span class="title">{{ i18n "next_page" }} »</span>
+    <br>
+    <span>{{- .Name -}}</span>
+  </a>
+  {{- end }}
+</nav>
+{{- end }}
+{{- end }}

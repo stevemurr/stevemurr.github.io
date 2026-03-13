@@ -2,6 +2,11 @@ baseURL = 'https://stevemurr.github.io/'
 languageCode = 'en-us'
 title = 'Steve Murr'
 theme = 'ResumeFrame'
+
+[taxonomies]
+  tag = 'tags'
+  series = 'series'
+
 [pagination]
   pagerSize = 5
 

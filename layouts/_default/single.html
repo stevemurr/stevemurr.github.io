@@ -4,12 +4,16 @@
 {{- $pullquote := .Params.pullquote }}
 {{- $icon := .Params.cardIcon | default "file" }}
 {{- $summary := .Params.summary | default (.Summary | plainify | htmlUnescape) }}
-{{- $tags := .Language.Params.Taxonomies.tag | default "tags" }}
-{{- $tagTerms := $.GetTerms $tags }}
 {{- $defaultBackURL := cond (eq .Section "posts") "/posts/" "/" }}
 {{- $defaultBackLabel := cond (eq .Section "posts") "Writing" "Home" }}
 {{- $backURL := .Params.backUrl | default $defaultBackURL }}
 {{- $backLabel := .Params.backLabel | default $defaultBackLabel }}
+{{- $shareEnabled := and site.Params.ShowShareButtons (ne .Params.disableShare true) }}
+{{- $showSeriesNav := false }}
+{{- with .GetTerms "series" }}
+{{- $seriesPage := index . 0 }}
+{{- $showSeriesNav = and ($.Param "ShowPostNavLinks") (gt (len $seriesPage.Pages) 1) }}
+{{- end }}
 
 <article class="post-single post-single--editorial reveal">
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
@@ -72,23 +76,17 @@
     {{- end }}
   </div>
 
+  {{- if or $showSeriesNav $shareEnabled }}
   <footer class="post-footer">
-    {{- with $tagTerms }}
-    <ul class="post-tags">
-      {{- range . }}
-      <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
-      {{- end }}
-    </ul>
-    {{- end }}
-
-    {{- if (.Param "ShowPostNavLinks") }}
+    {{- if $showSeriesNav }}
     {{- partial "post_nav_links.html" . }}
     {{- end }}
 
-    {{- if (and site.Params.ShowShareButtons (ne .Params.disableShare true)) }}
+    {{- if $shareEnabled }}
     {{- partial "share_icons.html" . -}}
     {{- end }}
   </footer>
+  {{- end }}
 
   {{- if (.Param "comments") }}
   {{- partial "comments.html" . }}
