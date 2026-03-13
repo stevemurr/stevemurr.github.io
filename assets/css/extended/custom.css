@@ -3534,6 +3534,11 @@ body:not(.list) .nav {
   letter-spacing: -0.01em;
 }
 
+.post-content img {
+  display: block;
+  margin: 1rem auto;
+}
+
 .post-content h1,
 .post-content h2,
 .post-content h3,
