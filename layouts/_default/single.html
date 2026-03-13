@@ -16,7 +16,7 @@
 {{- end }}
 
 <article class="post-single post-single--editorial reveal">
-  <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
+  <header class="post-hero{{ if $pullquote }} post-hero--with-pullquote{{ end }}" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
       {{- if not (.Param "hideBackLink") }}
       <a class="post-hero__back" href="{{ $backURL }}" aria-label="Back to {{ $backLabel }}" title="{{ $backLabel }}">

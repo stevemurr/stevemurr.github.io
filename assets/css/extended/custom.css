@@ -2329,6 +2329,14 @@ body:not(.list) .main {
     margin-top: 18px;
   }
 
+  .post-hero--with-pullquote {
+    display: block;
+  }
+
+  .post-hero--with-pullquote .post-hero__body {
+    margin-top: 18px;
+  }
+
   .post-title {
     font-size: clamp(2.35rem, 12vw, 3.3rem);
   }
@@ -2343,6 +2351,12 @@ body:not(.list) .main {
     margin-top: 14px;
     padding-top: 14px;
     font-size: 1.02rem;
+  }
+
+  .post-hero--with-pullquote .post-hero__pullquote {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .post-shell {
@@ -3434,6 +3448,22 @@ body:not(.list) .nav {
   max-width: 40rem;
 }
 
+.post-hero--with-pullquote {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.44fr);
+  gap: 22px 34px;
+  align-items: start;
+}
+
+.post-hero--with-pullquote .post-hero__rail {
+  grid-column: 1 / -1;
+}
+
+.post-hero--with-pullquote .post-hero__body {
+  margin-top: 0;
+  max-width: none;
+}
+
 .post-title {
   color: #f7f4ef;
   font-family: var(--font-body);
@@ -3476,6 +3506,16 @@ body:not(.list) .nav {
   letter-spacing: -0.03em;
   font-size: clamp(1.1rem, 2.3vw, 1.45rem);
   line-height: 1.18;
+}
+
+.post-hero--with-pullquote .post-hero__pullquote {
+  align-self: end;
+  max-width: none;
+  margin-top: 0;
+  padding-top: 0;
+  padding-left: 24px;
+  border-top: 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .post-shell,
