@@ -1,7 +1,6 @@
 {{- define "main" }}
 
 {{- $gradient := .Params.cardGradient | default "160deg, #243042, #3b556f, #0f6d9c" }}
-{{- $pullquote := .Params.pullquote }}
 {{- $icon := .Params.cardIcon | default "file" }}
 {{- $summary := .Params.summary | default (.Summary | plainify | htmlUnescape) }}
 {{- $defaultBackURL := cond (eq .Section "posts") "/posts/" "/" }}
@@ -16,7 +15,7 @@
 {{- end }}
 
 <article class="post-single post-single--editorial reveal">
-  <header class="post-hero{{ if $pullquote }} post-hero--with-pullquote{{ end }}" style="--post-gradient: linear-gradient({{ $gradient }});">
+  <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
       {{- if not (.Param "hideBackLink") }}
       <a class="post-hero__back" href="{{ $backURL }}" aria-label="Back to {{ $backLabel }}" title="{{ $backLabel }}">
@@ -46,17 +45,7 @@
       {{- if $summary }}
       <p class="post-hero__summary">{{ $summary }}</p>
       {{- end }}
-
-      {{- if not (.Param "hideMeta") }}
-      <div class="post-hero__meta">
-        {{- partial "post_meta.html" . -}}
-      </div>
-      {{- end }}
     </div>
-
-    {{- if $pullquote }}
-    <blockquote class="post-hero__pullquote">&#8220;{{ $pullquote }}&#8221;</blockquote>
-    {{- end }}
   </header>
 
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
