@@ -3,7 +3,6 @@
 {{- $heroTitle := default site.Title $page.Params.hero.title }}
 {{- $heroButtons := default (slice) $page.Params.hero.buttons }}
 {{- $projects := default (slice) $page.Params.projects }}
-{{- $infoItems := default (slice) $page.Params.info }}
 {{- $githubActivity := default dict $page.Params.githubActivity }}
 {{- $githubUser := default "" $githubActivity.username }}
 {{- $githubExcluded := default (slice) $githubActivity.excludeRepos }}
@@ -95,22 +94,6 @@
       </div>
       {{- end }}
     </div>
-
-    {{- if gt (len $infoItems) 0 }}
-    <div class="resume-hero__facts">
-      {{- range $infoItems }}
-      {{- $item := . }}
-      <div class="resume-fact">
-        <span>{{ $item.label }}</span>
-        {{- with $item.url }}
-        <a class="resume-fact__value" href="{{ . }}"{{ if (findRE "://" .) }} rel="noopener"{{ end }}>{{ $item.value }}</a>
-        {{- else }}
-        <strong class="resume-fact__value">{{ $item.value }}</strong>
-        {{- end }}
-      </div>
-      {{- end }}
-    </div>
-    {{- end }}
   </header>
 
   {{- if or (gt (len $recentCommits) 0) $githubUser }}
