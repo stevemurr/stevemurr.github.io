@@ -113,8 +113,13 @@
     {{- end }}
   </header>
 
-  {{- if gt (len $recentCommits) 0 }}
-  <section class="resume-panel reveal reveal--late resume-home__commits">
+  {{- if or (gt (len $recentCommits) 0) $githubUser }}
+  <section
+    class="resume-panel reveal reveal--late resume-home__commits"
+    data-recent-commits
+    data-github-user="{{ $githubUser }}"
+    data-github-exclude="{{ delimit $githubExcluded "," }}"
+    data-commit-count="5">
     <div class="resume-panel__header resume-panel__header--compact">
       <p class="section-heading__eyebrow">Recent commits</p>
     </div>

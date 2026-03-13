@@ -1,4 +1,6 @@
 const GITHUB_API_ROOT = "https://api.github.com";
+const RECENT_COMMIT_PAGE_LIMIT = 100;
+const RECENT_COMMIT_MAX_PAGES = 3;
 const ACTIVITY_EVENT_TYPES = new Set([
   "PushEvent",
   "PullRequestEvent",
@@ -74,6 +76,7 @@ function describeActivity(entry) {
 
 function fetchJSON(url) {
   return fetch(url, {
+    cache: "no-store",
     headers: {
       Accept: "application/vnd.github+json",
     },
@@ -216,6 +219,149 @@ function createMetric(text, modifier) {
     : "resume-project__metric";
 
   return createElement(document, "span", className, text);
+}
+
+function formatPacificDateTime(value) {
+  if (!value) {
+    return "Recently";
+  }
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    return "Recently";
+  }
+
+  return `${new Intl.DateTimeFormat("en-US", {
+    timeZone: "America/Los_Angeles",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  }).format(date)} PT`;
+}
+
+function extractRefLabel(value) {
+  const ref = String(value || "").trim();
+  if (!ref) {
+    return "";
+  }
+
+  if (ref.startsWith("refs/heads/")) {
+    return ref.slice("refs/heads/".length);
+  }
+
+  if (ref.startsWith("refs/tags/")) {
+    return ref.slice("refs/tags/".length);
+  }
+
+  return ref.replace(/^refs\//, "");
+}
+
+function buildRecentCommitEntries(events, excludedRepos) {
+  const excluded = new Set((excludedRepos || []).map(normalizeRepo));
+  const seen = new Set();
+  const entries = [];
+
+  events.forEach((event, eventIndex) => {
+    if (!event || event.type !== "PushEvent") {
+      return;
+    }
+
+    const repoFullName = String(event.repo && event.repo.name || "").trim();
+    const repoKey = normalizeRepo(repoFullName);
+    if (!repoKey || excluded.has(repoKey)) {
+      return;
+    }
+
+    const commits = Array.isArray(event.payload && event.payload.commits)
+      ? [...event.payload.commits].reverse()
+      : [];
+    const refs = extractRefLabel(event.payload && event.payload.ref);
+
+    commits.forEach((commit, commitIndex) => {
+      const sha = String(commit && commit.sha || "").trim();
+      const message = String(commit && commit.message || "").split("\n")[0].trim();
+      const uniqueKey = `${repoKey}:${sha}`;
+
+      if (!sha || !message || seen.has(uniqueKey)) {
+        return;
+      }
+
+      seen.add(uniqueKey);
+      entries.push({
+        repo: repoFullName,
+        repoName: repoFullName.split("/").pop() || repoFullName,
+        fullHash: sha,
+        shortHash: sha.slice(0, 7),
+        date: event.created_at,
+        message,
+        refs,
+        url: `https://github.com/${repoFullName}/commit/${sha}`,
+        displayDateTime: formatPacificDateTime(event.created_at),
+        relativeTime: formatRelativeTime(event.created_at),
+        sortEventIndex: eventIndex,
+        sortCommitIndex: commitIndex,
+      });
+    });
+  });
+
+  return entries
+    .sort((left, right) => {
+      const dateDelta = new Date(right.date || 0) - new Date(left.date || 0);
+      if (dateDelta !== 0) {
+        return dateDelta;
+      }
+
+      if (left.sortEventIndex !== right.sortEventIndex) {
+        return left.sortEventIndex - right.sortEventIndex;
+      }
+
+      return left.sortCommitIndex - right.sortCommitIndex;
+    })
+    .map(({ sortEventIndex, sortCommitIndex, ...entry }) => entry);
+}
+
+function createCommitItem(entry) {
+  const link = createElement(document, "a", "resume-commit");
+  link.href = entry.url;
+  link.rel = "noopener";
+  link.title = `${entry.repo} · ${entry.fullHash}`;
+
+  const graph = createElement(document, "span", "resume-commit__graph");
+  graph.setAttribute("aria-hidden", "true");
+  link.appendChild(graph);
+
+  const body = createElement(document, "div", "resume-commit__body");
+  const meta = createElement(document, "div", "resume-commit__meta");
+  meta.appendChild(createElement(document, "span", "resume-commit__repo", entry.repoName));
+  meta.appendChild(createElement(document, "code", "resume-commit__hash", entry.shortHash));
+
+  if (entry.refs) {
+    meta.appendChild(createElement(document, "span", "resume-commit__refs", entry.refs));
+  }
+
+  body.appendChild(meta);
+  body.appendChild(createElement(document, "strong", "resume-commit__message", entry.message));
+  link.appendChild(body);
+
+  const time = createElement(
+    document,
+    "time",
+    "resume-commit__when",
+    entry.displayDateTime || entry.relativeTime || "Recently",
+  );
+
+  if (entry.date) {
+    time.dateTime = entry.date;
+  }
+
+  if (entry.relativeTime) {
+    time.title = entry.relativeTime;
+  }
+
+  link.appendChild(time);
+  return link;
 }
 
 function getProjectSortDate(entry) {
@@ -363,7 +509,62 @@ async function loadProjectFeed(container) {
   }
 }
 
+async function loadRecentCommits(container) {
+  const username = container.dataset.githubUser;
+  const list = container.querySelector(".resume-commit-list");
+  const excludedRepos = (container.dataset.githubExclude || "")
+    .split(",")
+    .map(normalizeRepo)
+    .filter(Boolean);
+  const limit = Math.max(1, Number(container.dataset.commitCount || 5));
+
+  if (!username || !list) {
+    return;
+  }
+
+  try {
+    const events = [];
+    let recentCommits = [];
+
+    for (let page = 1; page <= RECENT_COMMIT_MAX_PAGES; page += 1) {
+      const batch = await fetchJSON(
+        `${GITHUB_API_ROOT}/users/${encodeURIComponent(username)}/events/public?per_page=${RECENT_COMMIT_PAGE_LIMIT}&page=${page}`,
+      );
+
+      if (!Array.isArray(batch) || batch.length === 0) {
+        break;
+      }
+
+      events.push(...batch);
+      recentCommits = buildRecentCommitEntries(events, excludedRepos);
+
+      if (recentCommits.length >= limit || batch.length < RECENT_COMMIT_PAGE_LIMIT) {
+        break;
+      }
+    }
+
+    if (!recentCommits.length) {
+      return;
+    }
+
+    const fragment = document.createDocumentFragment();
+    recentCommits.slice(0, limit).forEach((entry) => {
+      fragment.appendChild(createCommitItem(entry));
+    });
+
+    list.textContent = "";
+    list.appendChild(fragment);
+  } catch (_error) {
+    // Keep the build-time list in place as a fallback when GitHub is unavailable.
+  }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+  const recentCommitContainers = document.querySelectorAll("[data-recent-commits]");
+  recentCommitContainers.forEach((container) => {
+    loadRecentCommits(container);
+  });
+
   const containers = document.querySelectorAll("[data-project-feed]");
   containers.forEach((container) => {
     loadProjectFeed(container);
