@@ -118,7 +118,7 @@ body.list .main {
 }
 
 body:not(.list) .main {
-  max-width: min(calc(var(--post-width) + 72px), calc(100vw - 24px));
+  max-width: min(var(--main-width), calc(100vw - 24px));
   padding: clamp(20px, 3vw, 36px);
 }
 
@@ -2495,7 +2495,7 @@ body.list .nav {
 
 body:not(.list) .nav {
   width: min(
-    calc((var(--post-width) + 72px) - (clamp(20px, 3vw, 36px) * 2)),
+    calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
     calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
   );
 }
@@ -3360,7 +3360,11 @@ body:not(.list) .nav {
 }
 
 .post-single--editorial {
-  margin-top: 24px;
+  margin-top: 0;
+}
+
+.main > .post-single--editorial {
+  margin-top: -10px;
 }
 
 .post-hero {
@@ -3643,6 +3647,10 @@ body:not(.list) .nav {
   }
 
   .main > .resume-home {
+    margin-top: -4px;
+  }
+
+  .main > .post-single--editorial {
     margin-top: -4px;
   }
 
