@@ -2299,7 +2299,7 @@ body:not(.list) .main {
   }
 
   .post-hero {
-    padding: 22px 18px 24px;
+    padding: 18px 16px 20px;
     border-radius: 28px;
   }
 
@@ -2308,54 +2308,45 @@ body:not(.list) .main {
   }
 
   .post-hero__back {
-    width: 40px;
-    height: 40px;
-    border-radius: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
   }
 
   .post-hero__icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 14px;
   }
 
   .post-hero__icon svg {
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
   }
 
   .post-hero__body {
-    gap: 12px;
-    margin-top: 22px;
-  }
-
-  .post-hero__tags {
-    gap: 6px;
-  }
-
-  .post-hero__tags a {
-    padding: 6px 9px;
-    font-size: 0.64rem;
+    gap: 10px;
+    margin-top: 16px;
   }
 
   .post-title {
-    font-size: clamp(2.15rem, 13vw, 3.1rem);
+    font-size: clamp(2rem, 12vw, 2.85rem);
   }
 
   .post-hero__summary {
-    font-size: 0.96rem;
-    line-height: 1.64;
+    font-size: 0.92rem;
+    line-height: 1.56;
   }
 
   .post-hero__pullquote {
     max-width: none;
-    margin-top: 20px;
-    padding-top: 18px;
-    font-size: 1.12rem;
+    margin-top: 16px;
+    padding-top: 14px;
+    font-size: 1.02rem;
   }
 
   .post-shell {
-    padding: 22px 18px;
+    padding: 18px 16px;
   }
 
   .post-content {
@@ -2486,10 +2477,6 @@ body::after {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  width: min(
-    calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
-    calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
-  );
   max-width: 100%;
   margin: 12px auto 0;
   padding: 10px 18px;
@@ -2497,6 +2484,20 @@ body::after {
   border-top: 0;
   background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(238, 243, 247, 0.92));
   box-shadow: 0 14px 34px rgba(17, 27, 38, 0.07);
+}
+
+body.list .nav {
+  width: min(
+    calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
+    calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
+  );
+}
+
+body:not(.list) .nav {
+  width: min(
+    calc((var(--post-width) + 72px) - (clamp(20px, 3vw, 36px) * 2)),
+    calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
+  );
 }
 
 .logo a {
@@ -3365,6 +3366,7 @@ body::after {
 .post-hero {
   border: 1px solid var(--border);
   border-radius: 20px;
+  padding: clamp(24px, 3vw, 34px);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(248, 250, 252, 0.76));
   box-shadow: none;
   color: var(--primary);
@@ -3374,23 +3376,48 @@ body::after {
   background: linear-gradient(90deg, var(--accent), var(--accent-cool)) top left / 128px 2px no-repeat;
 }
 
+.post-hero__rail {
+  gap: 12px;
+}
+
 .post-hero__back {
-  border-radius: 14px;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.74);
   color: var(--secondary);
 }
 
+.post-hero__back svg {
+  width: 16px;
+  height: 16px;
+}
+
 .post-hero__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
   background: linear-gradient(135deg, var(--accent), var(--accent-cool));
   border: 0;
   color: #fff7ef;
 }
 
+.post-hero__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.post-hero__body {
+  gap: 12px;
+  margin-top: clamp(18px, 2.4vw, 26px);
+  max-width: 38rem;
+}
+
 .post-title {
   color: var(--primary);
   font-family: var(--font-body);
-  font-size: clamp(3rem, 8vw, 5.2rem);
+  font-size: clamp(2.7rem, 7.2vw, 4.6rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.98;
@@ -3399,9 +3426,9 @@ body::after {
 .post-hero__summary {
   color: var(--content);
   font-family: var(--font-body);
-  max-width: 39rem;
-  font-size: 1.02rem;
-  line-height: 1.72;
+  max-width: 36rem;
+  font-size: 0.98rem;
+  line-height: 1.62;
 }
 
 .post-hero__meta,
@@ -3419,17 +3446,25 @@ body::after {
 }
 
 .post-hero__pullquote {
+  max-width: 22rem;
+  margin-top: 18px;
+  padding-top: 16px;
   border-top: 1px solid var(--border);
   color: var(--primary);
   font-family: var(--font-body);
   font-weight: 700;
   letter-spacing: -0.03em;
-  line-height: 1.2;
+  font-size: clamp(1.1rem, 2.3vw, 1.45rem);
+  line-height: 1.16;
 }
 
 .post-shell,
 .post-footer {
   box-shadow: none;
+}
+
+.post-shell {
+  padding: clamp(22px, 3vw, 30px);
 }
 
 .post-content {
@@ -3449,16 +3484,31 @@ body::after {
 }
 
 .post-content h1 {
+  margin-top: 2.1em;
+  margin-bottom: 0.6em;
   line-height: 1.02;
 }
 
 .post-content h2 {
+  margin-top: 1.6em;
+  margin-bottom: 0.55em;
   font-size: 1.85rem;
   line-height: 1.08;
 }
 
 .post-content h3 {
+  margin-top: 1.4em;
+  margin-bottom: 0.5em;
   line-height: 1.16;
+}
+
+.post-content h4 {
+  margin-top: 1.2em;
+  margin-bottom: 0.45em;
+}
+
+.post-content > :first-child {
+  margin-top: 0;
 }
 
 .post-content strong {

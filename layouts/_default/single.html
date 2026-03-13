@@ -10,7 +10,6 @@
 {{- $defaultBackLabel := cond (eq .Section "posts") "Writing" "Home" }}
 {{- $backURL := .Params.backUrl | default $defaultBackURL }}
 {{- $backLabel := .Params.backLabel | default $defaultBackLabel }}
-{{- $eyebrow := .Params.eyebrow | default (cond (ne .Section "") (.Section | humanize) "Page") }}
 
 <article class="post-single post-single--editorial reveal">
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
@@ -29,16 +28,6 @@
     </div>
 
     <div class="post-hero__body">
-      <p class="post-hero__eyebrow">{{ $eyebrow }}</p>
-
-      {{- with $tagTerms }}
-      <div class="post-hero__tags">
-        {{- range . }}
-        <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
-        {{- end }}
-      </div>
-      {{- end }}
-
       <h1 class="post-title entry-hint-parent">
         {{ .Title }}
         {{- if .Draft }}
