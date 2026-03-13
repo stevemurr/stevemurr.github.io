@@ -49,11 +49,6 @@ theme = 'ResumeFrame'
     name = "Resume"
     url = "/"
     weight = 10
-  [[menu.main]]
-    identifier = "posts"
-    name = "Writing"
-    url = "/posts/"
-    weight = 20
 
 [outputs]
   home = ["HTML", "RSS", "JSON"]

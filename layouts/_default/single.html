@@ -3,8 +3,8 @@
 {{- $gradient := .Params.cardGradient | default "160deg, #243042, #3b556f, #0f6d9c" }}
 {{- $icon := .Params.cardIcon | default "file" }}
 {{- $summary := .Params.summary | default (.Summary | plainify | htmlUnescape) }}
-{{- $defaultBackURL := cond (eq .Section "posts") "/posts/" "/" }}
-{{- $defaultBackLabel := cond (eq .Section "posts") "Writing" "Home" }}
+{{- $defaultBackURL := "/" }}
+{{- $defaultBackLabel := "Resume" }}
 {{- $backURL := .Params.backUrl | default $defaultBackURL }}
 {{- $backLabel := .Params.backLabel | default $defaultBackLabel }}
 {{- $shareEnabled := and site.Params.ShowShareButtons (ne .Params.disableShare true) }}
