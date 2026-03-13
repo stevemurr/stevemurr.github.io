@@ -8,6 +8,7 @@
   --radius-sm: 14px;
   --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
   --theme: #f6efe6;
   --entry: rgba(255, 250, 244, 0.86);
@@ -2364,16 +2365,16 @@ body:not(.list) .main {
   }
 
   .post-content {
-    font-size: 0.98rem;
-    line-height: 1.78;
+    font-size: 1.02rem;
+    line-height: 1.66;
   }
 
   .post-content h2 {
-    font-size: 1.62rem;
+    font-size: 1.72rem;
   }
 
   .post-content h3 {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
   }
 
   #searchInput {
@@ -2437,6 +2438,7 @@ body:not(.list) .main {
 :root {
   --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
   --theme: #edf1f4;
   --entry: rgba(255, 255, 255, 0.82);
   --surface-strong: rgba(255, 255, 255, 0.92);
@@ -3528,10 +3530,12 @@ body:not(.list) .nav {
 }
 
 .post-content {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.8;
-  letter-spacing: -0.01em;
+  font-family: var(--font-reading);
+  font-size: 1.08rem;
+  line-height: 1.7;
+  letter-spacing: 0;
+  font-feature-settings: "liga" 1, "kern" 1;
+  text-rendering: optimizeLegibility;
 }
 
 .post-content img {
@@ -3543,48 +3547,87 @@ body:not(.list) .nav {
 .post-content h2,
 .post-content h3,
 .post-content h4 {
-  font-family: var(--font-body);
-  font-weight: 750;
-  letter-spacing: -0.038em;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  color: var(--primary);
 }
 
 .post-content h1 {
-  margin-top: 2.1em;
-  margin-bottom: 0.6em;
-  line-height: 1.02;
+  margin-top: 1.8em;
+  margin-bottom: 0.42em;
+  font-size: 2.4rem;
+  line-height: 0.98;
 }
 
 .post-content h2 {
-  margin-top: 1.6em;
-  margin-bottom: 0.55em;
-  font-size: 1.85rem;
-  line-height: 1.08;
+  margin-top: 1.38em;
+  margin-bottom: 0.42em;
+  font-size: 2.05rem;
+  line-height: 1.02;
 }
 
 .post-content h3 {
-  margin-top: 1.4em;
-  margin-bottom: 0.5em;
-  line-height: 1.16;
+  margin-top: 1.18em;
+  margin-bottom: 0.38em;
+  font-size: 1.56rem;
+  line-height: 1.08;
 }
 
 .post-content h4 {
-  margin-top: 1.2em;
-  margin-bottom: 0.45em;
+  margin-top: 1.05em;
+  margin-bottom: 0.34em;
+  font-size: 1.22rem;
+  line-height: 1.14;
 }
 
 .post-content > :first-child {
   margin-top: 0;
 }
 
+.post-content p,
+.post-content ul,
+.post-content ol,
+.post-content figure,
+.post-content table {
+  margin-bottom: 1.2em;
+}
+
+.post-content p,
+.post-content li,
+.post-content figcaption,
+.post-content figure > figcaption > p {
+  font-family: var(--font-reading);
+}
+
 .post-content strong {
-  font-weight: 700;
+  font-weight: 600;
+  color: var(--primary);
 }
 
 .post-content blockquote {
-  font-family: var(--font-body);
-  font-weight: 650;
-  letter-spacing: -0.022em;
-  line-height: 1.42;
+  font-family: var(--font-reading);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.22rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-inline-start: 1.1em;
+}
+
+.post-content li {
+  margin-top: 0.3em;
+}
+
+.post-content figure > figcaption,
+.post-content figure > figcaption > p {
+  color: var(--secondary);
+  font-size: 0.92rem;
+  line-height: 1.55;
 }
 
 .post-content code,
