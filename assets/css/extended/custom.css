@@ -3830,6 +3830,36 @@ body:not(.list) .nav {
     font-size: clamp(2.5rem, 15vw, 3.4rem);
   }
 
+  .post-hero {
+    padding: 20px 16px;
+  }
+
+  .post-title {
+    font-size: clamp(2rem, 12vw, 2.8rem);
+    text-wrap: balance;
+  }
+
+  .post-hero--with-pullquote {
+    display: block;
+  }
+
+  .post-hero--with-pullquote .post-hero__body {
+    margin-top: 16px;
+  }
+
+  .post-hero__pullquote {
+    margin-top: 14px;
+    padding-top: 14px;
+    font-size: 0.98rem;
+  }
+
+  .post-hero--with-pullquote .post-hero__pullquote {
+    align-self: auto;
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
   .resume-panel,
   .page-header,
   .post-shell,
