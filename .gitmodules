@@ -3,5 +3,5 @@
 	url = https://github.com/adityatelange/hugo-PaperMod.git
 [submodule "external/marriage-composer"]
 	path = external/marriage-composer
-	url = /Users/murr/Code/github.com/stevemurr/marriage-composer
+	url = https://github.com/stevemurr/marriage-composer.git
 	branch = main
