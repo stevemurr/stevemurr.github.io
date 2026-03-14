@@ -37,6 +37,10 @@ def parse_scalar(value: str) -> str:
     return value
 
 
+def normalize_repo_slug(value: str) -> str:
+    return value.strip().lower()
+
+
 def load_front_matter(path: Path) -> dict[str, object]:
     content = path.read_text(encoding="utf-8")
     parts = content.split("---", 2)
@@ -161,6 +165,21 @@ def discover_local_repositories(username: str) -> list[dict[str, str]]:
             repositories[slug_lower] = candidate
 
     return list(repositories.values())
+
+
+def filter_excluded_repositories(
+    repositories: list[dict[str, str]],
+    excluded_repos: list[str],
+) -> list[dict[str, str]]:
+    excluded = {normalize_repo_slug(repo) for repo in excluded_repos if repo.strip()}
+    if not excluded:
+        return repositories
+
+    return [
+        repository
+        for repository in repositories
+        if repository["slug_lower"] not in excluded
+    ]
 
 
 def get_local_identity() -> dict[str, str]:
@@ -577,6 +596,7 @@ def prepare_recent_commits(commits: list[dict[str, str]], now: datetime) -> list
 def main() -> int:
     config = load_front_matter(RESUME_PATH)
     username = str(config["username"])
+    exclude_repos = [str(repo) for repo in config.get("exclude_repos", [])]
     token = os.environ.get("GITHUB_TOKEN")
     end_date = date.today()
     now = datetime.now(timezone.utc)
@@ -603,6 +623,14 @@ def main() -> int:
         for repository in local_repositories
         if not public_repo_lookup or repository["slug_lower"] in public_repo_lookup
     ]
+    recent_commit_local_repositories = filter_excluded_repositories(
+        verified_local_repositories,
+        exclude_repos,
+    )
+    recent_commit_public_repositories = filter_excluded_repositories(
+        public_repositories,
+        exclude_repos,
+    )
 
     repositories: list[dict[str, str]]
     commits: list[dict[str, str]]
@@ -612,7 +640,7 @@ def main() -> int:
     try:
         if len(verified_local_repositories) >= 3:
             repositories = verified_local_repositories
-            commits = load_local_commits(repositories, username, identity)
+            commits = load_local_commits(recent_commit_local_repositories, username, identity)
             contribution_counts = load_local_contribution_counts(
                 repositories,
                 username,
@@ -621,7 +649,7 @@ def main() -> int:
             )
         elif token:
             repositories = public_repositories
-            commits = load_api_commits(repositories, username, token)
+            commits = load_api_commits(recent_commit_public_repositories, username, token)
             contribution_counts = load_api_contributions(
                 username,
                 token,
@@ -631,7 +659,7 @@ def main() -> int:
             source = "github"
         else:
             repositories = verified_local_repositories
-            commits = load_local_commits(repositories, username, identity)
+            commits = load_local_commits(recent_commit_local_repositories, username, identity)
             contribution_counts = load_local_contribution_counts(
                 repositories,
                 username,
