@@ -3875,19 +3875,6 @@ body:not(.list) .nav {
     text-wrap: balance;
   }
 
-  .post-content blockquote {
-    padding: 18px 18px 18px 60px;
-    border-radius: 20px;
-  }
-
-  .post-content blockquote::before {
-    top: 16px;
-    left: 16px;
-    width: 34px;
-    height: 34px;
-    font-size: 1.55rem;
-  }
-
   .post-hero--with-pullquote {
     display: block;
   }
@@ -3941,5 +3928,18 @@ body:not(.list) .nav {
   .resume-project__impact {
     font-size: 0.92rem;
     line-height: 1.56;
+  }
+
+  .post-content blockquote {
+    padding: 18px 18px 18px 60px;
+    border-radius: 20px;
+  }
+
+  .post-content blockquote::before {
+    top: 16px;
+    left: 16px;
+    width: 34px;
+    height: 34px;
+    font-size: 1.55rem;
   }
 }

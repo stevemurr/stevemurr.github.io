@@ -1,3 +1,7 @@
 [submodule "themes/PaperMod"]
 	path = themes/PaperMod
 	url = https://github.com/adityatelange/hugo-PaperMod.git
+[submodule "external/marriage-composer"]
+	path = external/marriage-composer
+	url = /Users/murr/Code/github.com/stevemurr/marriage-composer
+	branch = main
