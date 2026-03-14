@@ -12,8 +12,6 @@ showToc: false
 hero:
   title: "Steve Murr"
   buttons:
-    - name: "Writing"
-      url: "/posts/"
     - name: "GitHub"
       url: "https://github.com/stevemurr"
 githubActivity:
