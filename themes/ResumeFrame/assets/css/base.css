@@ -1,5 +1,13 @@
 :root {
+  color-scheme: light dark;
+}
+
+:root[data-theme="light"] {
   color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
 }
 
 *,
@@ -93,9 +101,10 @@ figure {
 .toc {
   margin-top: 22px;
   padding: 18px 20px;
-  border: 1px solid rgba(31, 39, 52, 0.12);
+  border: 1px solid var(--border);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.45);
+  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  box-shadow: var(--shadow-soft);
 }
 
 .toc summary {
@@ -143,9 +152,10 @@ h6:hover .anchor {
 .search-shell {
   margin-top: 28px;
   padding: 22px 24px;
-  border: 1px solid rgba(31, 39, 52, 0.12);
+  border: 1px solid var(--border);
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.7);
+  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  box-shadow: var(--shadow-soft);
 }
 
 .search-shell p {

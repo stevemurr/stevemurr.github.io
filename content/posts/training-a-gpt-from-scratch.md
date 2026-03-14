@@ -1,7 +1,7 @@
 ---
 title: "Training a GPT from Scratch"
 date: 2026-03-05
-draft: false
+draft: true
 tags: ["python", "ai", "machine-learning", "transformers"]
 summary: "Building YAGPT — a clean, modern GPT implementation for learning the full LLM pipeline."
 projects: ["stevemurr/yagpt"]

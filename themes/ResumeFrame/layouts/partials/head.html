@@ -1,5 +1,7 @@
 {{- $title := cond .IsHome site.Title (printf "%s | %s" .Title site.Title) -}}
 {{- $description := .Description | default .Summary | default site.Params.profileMode.subtitle | default site.Title -}}
+{{- $lightThemeChrome := "#edf1f4" -}}
+{{- $darkThemeChrome := "#0e1722" -}}
 {{- $base := resources.Get "css/base.css" -}}
 {{- $custom := resources.Get "css/extended/custom.css" -}}
 {{- $styles := slice $base $custom | resources.Concat "css/site.css" | minify | fingerprint -}}
@@ -17,9 +19,50 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="{{ .Title | default site.Title }}">
 <meta name="twitter:description" content="{{ $description }}">
+<meta name="color-scheme" content="light dark">
+<meta id="theme-color-meta" name="theme-color" content="{{ $lightThemeChrome }}">
+<meta id="msapplication-tile-color-meta" name="msapplication-TileColor" content="{{ $lightThemeChrome }}">
+{{- partial "extend_head.html" . -}}
+<script>
+  (function() {
+    var lightChrome = "{{ $lightThemeChrome }}";
+    var darkChrome = "{{ $darkThemeChrome }}";
+    var root = document.documentElement;
+    var themeColor = document.getElementById("theme-color-meta");
+    var msTileColor = document.getElementById("msapplication-tile-color-meta");
+    var query = window.matchMedia("(prefers-color-scheme: dark)");
+
+    function applyTheme(isDark) {
+      var theme = isDark ? "dark" : "light";
+      var chrome = isDark ? darkChrome : lightChrome;
+
+      root.dataset.theme = theme;
+      root.style.colorScheme = theme;
+
+      if (themeColor) {
+        themeColor.setAttribute("content", chrome);
+      }
+
+      if (msTileColor) {
+        msTileColor.setAttribute("content", chrome);
+      }
+    }
+
+    applyTheme(query.matches);
+
+    if (typeof query.addEventListener === "function") {
+      query.addEventListener("change", function(event) {
+        applyTheme(event.matches);
+      });
+    } else if (typeof query.addListener === "function") {
+      query.addListener(function(event) {
+        applyTheme(event.matches);
+      });
+    }
+  })();
+</script>
 <link rel="stylesheet" href="{{ $styles.RelPermalink }}" integrity="{{ $styles.Data.Integrity }}">
 <script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}"></script>
 {{- with .OutputFormats.Get "RSS" }}
 <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ site.Title }}">
 {{- end }}
-{{- partial "extend_head.html" . -}}

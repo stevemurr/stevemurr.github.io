@@ -1,7 +1,7 @@
 ---
 title: "On-Device AI Context Management"
 date: 2026-03-08
-draft: false
+draft: true
 tags: ["swift", "ai", "apple", "open-source"]
 summary: "LanguageModelContextKit — managing context windows for Apple's on-device Foundation Models."
 projects: ["stevemurr/LanguageModelContextKit"]

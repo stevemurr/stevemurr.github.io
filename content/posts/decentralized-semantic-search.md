@@ -1,7 +1,7 @@
 ---
 title: "Decentralized Semantic Search in Rust"
 date: 2026-03-02
-draft: false
+draft: true
 tags: ["rust", "search", "p2p", "ai"]
 summary: "DIndex: building a decentralized semantic search engine in Rust designed for the age of LLMs."
 projects: ["stevemurr/dindex"]

@@ -4,47 +4,133 @@
   --header-height: 72px;
   --main-width: 1040px;
   --post-width: 760px;
-  --radius: 22px;
-  --radius-sm: 14px;
+  --radius: 16px;
+  --radius-sm: 10px;
   --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono", "SF Mono", SFMono-Regular, ui-monospace, monospace;
-  --theme: #f6efe6;
-  --entry: rgba(255, 250, 244, 0.86);
-  --surface-strong: #fffaf4;
-  --surface-muted: rgba(255, 255, 255, 0.54);
-  --primary: #1f2734;
-  --secondary: #647082;
-  --tertiary: rgba(31, 39, 52, 0.08);
-  --content: #3d4859;
-  --border: rgba(31, 39, 52, 0.12);
-  --code-bg: rgba(31, 39, 52, 0.08);
-  --code-block-bg: #1a2431;
-  --accent: #cf6b36;
-  --accent-strong: #ac4e27;
-  --accent-cool: #0f6d9c;
-  --shadow-soft: 0 10px 28px rgba(20, 28, 39, 0.08);
-  --shadow-strong: 0 18px 44px rgba(20, 28, 39, 0.14);
+  --theme: #edf1f4;
+  --entry: rgba(255, 255, 255, 0.82);
+  --surface-strong: rgba(255, 255, 255, 0.92);
+  --surface-muted: rgba(255, 255, 255, 0.58);
+  --primary: #17212c;
+  --secondary: #617285;
+  --tertiary: rgba(23, 33, 44, 0.08);
+  --content: #415062;
+  --border: rgba(23, 33, 44, 0.11);
+  --code-bg: rgba(23, 33, 44, 0.08);
+  --code-block-bg: #16212d;
+  --accent: #e15b34;
+  --accent-strong: #be4b29;
+  --accent-cool: #15727e;
+  --shadow-soft: 0 10px 30px rgba(17, 27, 38, 0.08);
+  --shadow-strong: 0 20px 46px rgba(17, 27, 38, 0.12);
+  --line-subtle: rgba(23, 33, 44, 0.08);
+  --line-strong: rgba(23, 33, 44, 0.1);
+  --body-background: linear-gradient(180deg, #edf1f4 0%, #f4efe8 100%);
+  --body-overlay-primary: linear-gradient(135deg, rgba(21, 114, 126, 0.12), transparent 36%);
+  --body-overlay-secondary: radial-gradient(circle at top right, rgba(225, 91, 52, 0.14), transparent 24%);
+  --body-overlay-tertiary: radial-gradient(circle at 65% 12%, rgba(255, 255, 255, 0.65), transparent 22%);
+  --grid-line: rgba(23, 33, 44, 0.05);
+  --nav-background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(238, 243, 247, 0.92));
+  --panel-background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.68));
+  --card-background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.54));
+  --chip-background: rgba(26, 39, 53, 0.06);
+  --chip-background-quiet: rgba(26, 39, 53, 0.04);
+  --hero-gradient: linear-gradient(135deg, #16212d 0%, #1f3445 58%, #214e64 100%);
+  --hero-overlay: linear-gradient(140deg, rgba(255, 255, 255, 0.12), transparent 34%), radial-gradient(circle at top right, rgba(225, 91, 52, 0.24), transparent 24%);
+  --hero-shadow: 0 26px 52px rgba(16, 25, 36, 0.18);
+  --hero-text-strong: #f7f4ef;
+  --hero-text: rgba(247, 244, 239, 0.82);
+  --hero-text-muted: rgba(247, 244, 239, 0.68);
+  --hero-text-subtle: rgba(244, 238, 228, 0.62);
+  --hero-eyebrow: rgba(244, 238, 228, 0.78);
+  --hero-surface: rgba(255, 255, 255, 0.06);
+  --hero-surface-border: rgba(255, 255, 255, 0.16);
+  --hero-surface-border-strong: rgba(255, 255, 255, 0.14);
+  --hero-rule: rgba(255, 255, 255, 0.12);
+  --hero-accent-gradient: linear-gradient(135deg, #f2d1b8, #79d2d9);
+  --heatmap-panel-border: rgba(255, 255, 255, 0.08);
+  --heatmap-panel-background: linear-gradient(180deg, rgba(7, 14, 22, 0.24), rgba(255, 255, 255, 0.03)), radial-gradient(circle at top right, rgba(124, 242, 154, 0.08), transparent 34%);
+  --heatmap-empty: rgba(255, 255, 255, 0.05);
+  --heatmap-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --commit-panel-background: linear-gradient(180deg, rgba(18, 28, 39, 0.94), rgba(24, 37, 50, 0.9)), radial-gradient(circle at top right, rgba(126, 208, 243, 0.14), transparent 30%);
+  --commit-panel-overlay: linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 22%), radial-gradient(circle at top left, rgba(207, 107, 54, 0.14), transparent 28%);
+  --commit-panel-shadow: 0 22px 46px rgba(11, 18, 26, 0.18);
+  --commit-line: rgba(255, 255, 255, 0.08);
+  --commit-track: linear-gradient(180deg, rgba(126, 208, 243, 0.66), rgba(255, 255, 255, 0.06));
+  --commit-chip-background: rgba(255, 255, 255, 0.08);
+  --commit-chip-text: #f5f8fb;
+  --commit-hash-background: rgba(126, 208, 243, 0.14);
+  --commit-hash-text: #c3eeff;
+  --commit-meta: rgba(232, 240, 248, 0.6);
+  --commit-meta-quiet: rgba(232, 240, 248, 0.44);
+  --demo-background: linear-gradient(180deg, color-mix(in srgb, var(--entry) 92%, white) 0%, var(--theme) 100%);
+  --demo-frame-background: #ffffff;
+  --demo-frame-inset: rgba(15, 23, 42, 0.08);
 }
 
 :root[data-theme="dark"] {
-  --theme: #0f161f;
-  --entry: rgba(22, 30, 40, 0.9);
-  --surface-strong: #121b24;
-  --surface-muted: rgba(255, 255, 255, 0.03);
-  --primary: #f3e8d8;
-  --secondary: #99a6b9;
-  --tertiary: rgba(243, 232, 216, 0.07);
-  --content: #d4dce6;
-  --border: rgba(185, 199, 214, 0.14);
-  --code-bg: rgba(243, 232, 216, 0.08);
-  --code-block-bg: #0b1219;
-  --accent: #f49d62;
-  --accent-strong: #ffbe7a;
-  --accent-cool: #7ed0f3;
-  --shadow-soft: 0 12px 34px rgba(0, 0, 0, 0.24);
-  --shadow-strong: 0 20px 52px rgba(0, 0, 0, 0.34);
+  --theme: #0e1722;
+  --entry: rgba(18, 28, 41, 0.84);
+  --surface-strong: rgba(19, 30, 44, 0.92);
+  --surface-muted: rgba(22, 34, 48, 0.74);
+  --primary: #edf3f8;
+  --secondary: #95a7ba;
+  --tertiary: rgba(226, 236, 246, 0.08);
+  --content: #c8d4df;
+  --border: rgba(152, 173, 193, 0.16);
+  --code-bg: rgba(189, 206, 223, 0.12);
+  --code-block-bg: #09111a;
+  --accent: #f19367;
+  --accent-strong: #ffc09e;
+  --accent-cool: #67c2cf;
+  --shadow-soft: 0 14px 34px rgba(0, 0, 0, 0.24);
+  --shadow-strong: 0 24px 52px rgba(0, 0, 0, 0.38);
+  --line-subtle: rgba(226, 236, 246, 0.1);
+  --line-strong: rgba(226, 236, 246, 0.12);
+  --body-background: linear-gradient(180deg, #0e1722 0%, #0b121a 100%);
+  --body-overlay-primary: linear-gradient(135deg, rgba(103, 194, 207, 0.14), transparent 36%);
+  --body-overlay-secondary: radial-gradient(circle at top right, rgba(241, 147, 103, 0.16), transparent 24%);
+  --body-overlay-tertiary: radial-gradient(circle at 65% 12%, rgba(255, 255, 255, 0.04), transparent 22%);
+  --grid-line: rgba(236, 243, 249, 0.04);
+  --nav-background: linear-gradient(180deg, rgba(17, 27, 40, 0.96), rgba(12, 20, 31, 0.92));
+  --panel-background: linear-gradient(180deg, rgba(19, 29, 42, 0.84), rgba(12, 19, 30, 0.72));
+  --card-background: linear-gradient(180deg, rgba(18, 28, 41, 0.82), rgba(12, 20, 31, 0.7));
+  --chip-background: rgba(170, 194, 217, 0.08);
+  --chip-background-quiet: rgba(170, 194, 217, 0.05);
+  --hero-gradient: linear-gradient(135deg, #122030 0%, #183247 56%, #1d4d63 100%);
+  --hero-overlay: linear-gradient(140deg, rgba(255, 255, 255, 0.06), transparent 34%), radial-gradient(circle at top right, rgba(241, 147, 103, 0.18), transparent 24%);
+  --hero-shadow: 0 24px 50px rgba(0, 0, 0, 0.34);
+  --hero-text-strong: #f4f1eb;
+  --hero-text: rgba(244, 241, 235, 0.84);
+  --hero-text-muted: rgba(223, 232, 241, 0.68);
+  --hero-text-subtle: rgba(223, 232, 241, 0.6);
+  --hero-eyebrow: rgba(223, 232, 241, 0.78);
+  --hero-surface: rgba(255, 255, 255, 0.05);
+  --hero-surface-border: rgba(255, 255, 255, 0.14);
+  --hero-surface-border-strong: rgba(255, 255, 255, 0.12);
+  --hero-rule: rgba(255, 255, 255, 0.08);
+  --hero-accent-gradient: linear-gradient(135deg, #ffd0b1, #79d2d9);
+  --heatmap-panel-border: rgba(255, 255, 255, 0.08);
+  --heatmap-panel-background: linear-gradient(180deg, rgba(5, 10, 16, 0.26), rgba(255, 255, 255, 0.02)), radial-gradient(circle at top right, rgba(103, 194, 207, 0.08), transparent 34%);
+  --heatmap-empty: rgba(255, 255, 255, 0.05);
+  --heatmap-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --commit-panel-background: linear-gradient(180deg, rgba(9, 17, 26, 0.94), rgba(14, 24, 37, 0.92)), radial-gradient(circle at top right, rgba(103, 194, 207, 0.16), transparent 30%);
+  --commit-panel-overlay: linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 22%), radial-gradient(circle at top left, rgba(241, 147, 103, 0.14), transparent 28%);
+  --commit-panel-shadow: 0 22px 46px rgba(0, 0, 0, 0.28);
+  --commit-line: rgba(255, 255, 255, 0.08);
+  --commit-track: linear-gradient(180deg, rgba(103, 194, 207, 0.66), rgba(255, 255, 255, 0.06));
+  --commit-chip-background: rgba(255, 255, 255, 0.08);
+  --commit-chip-text: #f5f8fb;
+  --commit-hash-background: rgba(103, 194, 207, 0.14);
+  --commit-hash-text: #c5f1ff;
+  --commit-meta: rgba(223, 232, 241, 0.62);
+  --commit-meta-quiet: rgba(223, 232, 241, 0.46);
+  --demo-background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 88%, transparent) 0%, color-mix(in srgb, var(--theme) 92%, transparent) 100%);
+  --demo-frame-background: #0c1520;
+  --demo-frame-inset: rgba(214, 228, 241, 0.1);
 }
 
 html {
@@ -87,19 +173,6 @@ body::after {
     linear-gradient(90deg, rgba(31, 39, 52, 0.035) 1px, transparent 1px);
   background-size: 44px 44px;
   mask-image: radial-gradient(circle at center, rgba(0, 0, 0, 0.42), transparent 80%);
-}
-
-:root[data-theme="dark"] body::before {
-  background:
-    radial-gradient(circle at top left, rgba(244, 157, 98, 0.12), transparent 32%),
-    radial-gradient(circle at 82% 16%, rgba(126, 208, 243, 0.14), transparent 26%),
-    radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.04), transparent 34%);
-}
-
-:root[data-theme="dark"] body::after {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
 }
 
 .header,
@@ -936,7 +1009,7 @@ body:not(.list) .main {
   content: "";
   position: absolute;
   inset: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid var(--hero-surface-border-strong);
   border-radius: 22px;
 }
 
@@ -945,7 +1018,7 @@ body:not(.list) .main {
   top: 24px;
   right: 24px;
   z-index: 2;
-  color: rgba(255, 248, 240, 0.7);
+  color: var(--hero-text-muted);
 }
 
 .magazine-card__pullquote {
@@ -957,7 +1030,7 @@ body:not(.list) .main {
   font-size: 1.05rem;
   line-height: 1.08;
   letter-spacing: -0.04em;
-  color: #fff8f0;
+  color: var(--hero-text-strong);
   text-wrap: balance;
 }
 
@@ -2458,46 +2531,22 @@ body:not(.list) .main {
 
 /* Theme reset: technical dossier */
 
-:root {
-  --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
-  --theme: #edf1f4;
-  --entry: rgba(255, 255, 255, 0.82);
-  --surface-strong: rgba(255, 255, 255, 0.92);
-  --surface-muted: rgba(255, 255, 255, 0.58);
-  --primary: #17212c;
-  --secondary: #617285;
-  --tertiary: rgba(23, 33, 44, 0.08);
-  --content: #415062;
-  --border: rgba(23, 33, 44, 0.11);
-  --code-bg: rgba(23, 33, 44, 0.08);
-  --code-block-bg: #16212d;
-  --accent: #e15b34;
-  --accent-strong: #be4b29;
-  --accent-cool: #15727e;
-  --shadow-soft: 0 10px 30px rgba(17, 27, 38, 0.08);
-  --shadow-strong: 0 20px 46px rgba(17, 27, 38, 0.12);
-  --radius: 16px;
-  --radius-sm: 10px;
-}
-
 body {
-  background: linear-gradient(180deg, #edf1f4 0%, #f4efe8 100%);
+  background: var(--body-background);
 }
 
 body::before {
   background:
-    linear-gradient(135deg, rgba(21, 114, 126, 0.12), transparent 36%),
-    radial-gradient(circle at top right, rgba(225, 91, 52, 0.14), transparent 24%),
-    radial-gradient(circle at 65% 12%, rgba(255, 255, 255, 0.65), transparent 22%);
+    var(--body-overlay-primary),
+    var(--body-overlay-secondary),
+    var(--body-overlay-tertiary);
 }
 
 body::after {
   opacity: 0.12;
   background-image:
-    linear-gradient(rgba(23, 33, 44, 0.05) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(23, 33, 44, 0.05) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
   background-size: 28px 28px;
   mask-image: none;
 }
@@ -2521,8 +2570,8 @@ body::after {
   padding: 10px 18px;
   border-radius: 16px;
   border-top: 0;
-  background: linear-gradient(180deg, rgba(248, 250, 252, 0.98), rgba(238, 243, 247, 0.92));
-  box-shadow: 0 14px 34px rgba(17, 27, 38, 0.07);
+  background: var(--nav-background);
+  box-shadow: var(--shadow-soft);
 }
 
 body.list .nav {
@@ -2602,7 +2651,7 @@ body:not(.list) .nav {
 .resume-panel {
   border-radius: 18px;
   border: 1px solid var(--border);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.68));
+  background: var(--panel-background);
   box-shadow: none;
 }
 
@@ -2639,8 +2688,8 @@ body:not(.list) .nav {
   padding: 30px 32px;
   border-radius: 24px;
   border: 0;
-  background: linear-gradient(135deg, #16212d 0%, #1f3445 58%, #214e64 100%);
-  box-shadow: 0 26px 52px rgba(16, 25, 36, 0.18);
+  background: var(--hero-gradient);
+  box-shadow: var(--hero-shadow);
   isolation: isolate;
 }
 
@@ -2652,9 +2701,7 @@ body:not(.list) .nav {
 }
 
 .resume-hero::before {
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.12), transparent 34%),
-    radial-gradient(circle at top right, rgba(225, 91, 52, 0.24), transparent 24%);
+  background: var(--hero-overlay);
 }
 
 .resume-hero__activity {
@@ -2672,12 +2719,10 @@ body:not(.list) .nav {
   gap: 10px;
   width: min(100%, 420px);
   padding: 14px 16px 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--heatmap-panel-border);
   border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(7, 14, 22, 0.24), rgba(255, 255, 255, 0.03)),
-    radial-gradient(circle at top right, rgba(124, 242, 154, 0.08), transparent 34%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: var(--heatmap-panel-background);
+  box-shadow: var(--heatmap-shadow);
   opacity: 0.9;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -2688,7 +2733,7 @@ body:not(.list) .nav {
   display: grid;
   grid-template-columns: repeat(var(--heatmap-columns), minmax(0, 1fr));
   column-gap: 5px;
-  color: rgba(244, 238, 228, 0.62);
+  color: var(--hero-text-subtle);
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -2716,8 +2761,8 @@ body:not(.list) .nav {
   width: 12px;
   height: 12px;
   border-radius: 3px;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  background: var(--heatmap-empty);
+  box-shadow: var(--heatmap-shadow);
 }
 
 .resume-heatmap__cell--void {
@@ -2746,7 +2791,7 @@ body:not(.list) .nav {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  color: rgba(244, 238, 228, 0.6);
+  color: var(--hero-text-subtle);
   font-size: 0.62rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -2754,28 +2799,28 @@ body:not(.list) .nav {
 }
 
 .resume-heatmap__caption strong {
-  color: rgba(247, 244, 239, 0.88);
+  color: var(--hero-text);
   font-weight: 800;
 }
 
 .resume-hero .home-eyebrow {
-  color: rgba(244, 238, 228, 0.78);
+  color: var(--hero-eyebrow);
 }
 
 .resume-hero .home-eyebrow::before {
-  background: linear-gradient(135deg, #f2d1b8, #79d2d9);
+  background: var(--hero-accent-gradient);
 }
 
 .resume-hero__title {
   margin: 0;
-  color: #f7f4ef;
+  color: var(--hero-text-strong);
   max-width: none;
   font-size: clamp(3.3rem, 7vw, 5.4rem);
   letter-spacing: -0.045em;
 }
 
 .resume-hero__lede {
-  color: rgba(247, 244, 239, 0.8);
+  color: var(--hero-text);
   max-width: 33rem;
 }
 
@@ -2785,25 +2830,25 @@ body:not(.list) .nav {
 
 .resume-hero__actions .button {
   background: var(--accent);
-  color: #fff7f0;
+  color: var(--hero-text-strong);
 }
 
 .resume-hero__actions .button + .button {
-  background: rgba(255, 255, 255, 0.06);
-  color: #f7f4ef;
-  border-color: rgba(255, 255, 255, 0.16);
+  background: var(--hero-surface);
+  color: var(--hero-text-strong);
+  border-color: var(--hero-surface-border);
 }
 
 .resume-hero__facts {
   gap: 12px;
   padding-left: 20px;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid var(--hero-rule);
   z-index: 1;
 }
 
 .resume-fact {
   padding: 14px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid var(--hero-rule);
 }
 
 .resume-fact:first-child {
@@ -2812,15 +2857,15 @@ body:not(.list) .nav {
 }
 
 .resume-fact span {
-  color: rgba(244, 238, 228, 0.56);
+  color: var(--hero-text-subtle);
 }
 
 .resume-fact p {
-  color: #f7f4ef;
+  color: var(--hero-text-strong);
 }
 
 .resume-fact__value {
-  color: #f7f4ef;
+  color: var(--hero-text-strong);
   font-size: 1rem;
   font-weight: 600;
   line-height: 1.58;
@@ -2828,7 +2873,7 @@ body:not(.list) .nav {
 }
 
 .resume-fact__value:hover {
-  color: #ffffff;
+  color: color-mix(in srgb, var(--hero-text-strong) 88%, white);
 }
 
 .resume-home__grid {
@@ -2865,20 +2910,16 @@ body:not(.list) .nav {
 
 .resume-home__commits {
   border: 0;
-  background:
-    linear-gradient(180deg, rgba(18, 28, 39, 0.94), rgba(24, 37, 50, 0.9)),
-    radial-gradient(circle at top right, rgba(126, 208, 243, 0.14), transparent 30%);
-  box-shadow: 0 22px 46px rgba(11, 18, 26, 0.18);
+  background: var(--commit-panel-background);
+  box-shadow: var(--commit-panel-shadow);
 }
 
 .resume-home__commits::before {
-  background:
-    linear-gradient(90deg, rgba(255, 255, 255, 0.04), transparent 22%),
-    radial-gradient(circle at top left, rgba(207, 107, 54, 0.14), transparent 28%);
+  background: var(--commit-panel-overlay);
 }
 
 .resume-home__commits .section-heading__eyebrow {
-  color: rgba(234, 241, 248, 0.62);
+  color: var(--commit-meta);
 }
 
 .resume-commit-list {
@@ -2892,7 +2933,7 @@ body:not(.list) .nav {
   gap: 14px;
   align-items: start;
   padding-top: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-top: 1px solid var(--commit-line);
   color: inherit;
   text-decoration: none;
 }
@@ -2915,7 +2956,7 @@ body:not(.list) .nav {
   top: 0;
   bottom: -14px;
   width: 1px;
-  background: linear-gradient(180deg, rgba(126, 208, 243, 0.66), rgba(255, 255, 255, 0.06));
+  background: var(--commit-track);
 }
 
 .resume-commit:last-child .resume-commit__graph::before {
@@ -2946,7 +2987,7 @@ body:not(.list) .nav {
   gap: 8px;
   align-items: center;
   min-width: 0;
-  color: rgba(232, 240, 248, 0.6);
+  color: var(--commit-meta);
   font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.12em;
@@ -2959,8 +3000,8 @@ body:not(.list) .nav {
   min-height: 24px;
   padding: 4px 8px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
-  color: #f5f8fb;
+  background: var(--commit-chip-background);
+  color: var(--commit-chip-text);
 }
 
 .resume-commit__hash {
@@ -2969,8 +3010,8 @@ body:not(.list) .nav {
   min-height: 24px;
   padding: 4px 8px;
   border-radius: 999px;
-  background: rgba(126, 208, 243, 0.14);
-  color: #c3eeff;
+  background: var(--commit-hash-background);
+  color: var(--commit-hash-text);
   font-family: var(--font-mono);
   font-size: 0.72rem;
   font-weight: 500;
@@ -2981,11 +3022,11 @@ body:not(.list) .nav {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  color: rgba(232, 240, 248, 0.44);
+  color: var(--commit-meta-quiet);
 }
 
 .resume-commit__message {
-  color: #f7fafc;
+  color: var(--hero-text-strong);
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -2994,7 +3035,7 @@ body:not(.list) .nav {
 
 .resume-commit__when {
   padding-top: 4px;
-  color: rgba(232, 240, 248, 0.54);
+  color: var(--commit-meta);
   font-size: 0.68rem;
   font-weight: 800;
   letter-spacing: 0.12em;
@@ -3003,12 +3044,12 @@ body:not(.list) .nav {
 }
 
 .resume-commit:hover .resume-commit__message {
-  color: #ffd5ba;
+  color: color-mix(in srgb, var(--accent-strong) 72%, white);
 }
 
 .resume-commit:hover .resume-commit__hash {
-  background: rgba(244, 157, 98, 0.18);
-  color: #fff4ea;
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  color: color-mix(in srgb, var(--hero-text-strong) 86%, var(--accent) 14%);
 }
 
 .resume-project {
@@ -3016,9 +3057,9 @@ body:not(.list) .nav {
   position: relative;
   gap: 16px;
   padding: 20px 20px 18px 24px;
-  border: 1px solid rgba(23, 33, 44, 0.1);
+  border: 1px solid var(--line-strong);
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.54));
+  background: var(--card-background);
 }
 
 .resume-project::before {
@@ -3034,7 +3075,7 @@ body:not(.list) .nav {
 
 .resume-project:first-child {
   padding-top: 20px;
-  border-top: 1px solid rgba(23, 33, 44, 0.1);
+  border-top: 1px solid var(--line-strong);
 }
 
 .resume-project__header {
@@ -3124,7 +3165,7 @@ body:not(.list) .nav {
   min-height: 26px;
   padding: 5px 10px;
   border-radius: 999px;
-  background: rgba(26, 39, 53, 0.06);
+  background: var(--chip-background);
   color: var(--secondary);
   font-size: 0.68rem;
   font-weight: 700;
@@ -3134,7 +3175,7 @@ body:not(.list) .nav {
 
 .resume-project__metric--placeholder,
 .resume-project__metric--quiet {
-  background: rgba(26, 39, 53, 0.04);
+  background: var(--chip-background-quiet);
   color: var(--secondary);
 }
 
@@ -3147,7 +3188,7 @@ body:not(.list) .nav {
 .resume-project__articles {
   display: grid;
   gap: 0;
-  border-top: 1px solid rgba(23, 33, 44, 0.08);
+  border-top: 1px solid var(--line-subtle);
 }
 
 .resume-project__article {
@@ -3156,7 +3197,7 @@ body:not(.list) .nav {
   gap: 14px;
   align-items: baseline;
   padding: 10px 0;
-  border-top: 1px solid rgba(23, 33, 44, 0.08);
+  border-top: 1px solid var(--line-subtle);
   text-decoration: none;
 }
 
@@ -3211,7 +3252,7 @@ body:not(.list) .nav {
   display: grid;
   gap: 10px;
   padding-top: 16px;
-  border-top: 1px solid rgba(23, 33, 44, 0.08);
+  border-top: 1px solid var(--line-subtle);
 }
 
 .github-activity__item:first-child {
@@ -3267,7 +3308,7 @@ body:not(.list) .nav {
   min-height: 28px;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(26, 39, 53, 0.06);
+  background: var(--chip-background);
   color: var(--secondary);
   font-size: 0.68rem;
   font-weight: 700;
@@ -3304,7 +3345,7 @@ body:not(.list) .nav {
 .resume-profile,
 .resume-timeline__item,
 .resume-focus__item {
-  border-top-color: rgba(23, 33, 44, 0.08);
+  border-top-color: var(--line-subtle);
 }
 
 .resume-writing__cta {
@@ -3320,7 +3361,7 @@ body:not(.list) .nav {
 .post-strip {
   border: 1px solid var(--border);
   border-radius: 18px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.68));
+  background: var(--panel-background);
   box-shadow: none;
   overflow: hidden;
 }
@@ -3382,7 +3423,7 @@ body:not(.list) .nav {
   height: 52px;
   border-radius: 14px;
   background: linear-gradient(135deg, var(--accent), var(--accent-cool));
-  color: #fff8f0;
+  color: var(--hero-text-strong);
 }
 
 .post-strip__icon svg {
@@ -3410,16 +3451,14 @@ body:not(.list) .nav {
   border: 0;
   border-radius: 24px;
   padding: 30px 32px;
-  background: linear-gradient(135deg, #16212d 0%, #1f3445 58%, #214e64 100%);
-  box-shadow: 0 26px 52px rgba(16, 25, 36, 0.18);
-  color: #f7f4ef;
+  background: var(--hero-gradient);
+  box-shadow: var(--hero-shadow);
+  color: var(--hero-text-strong);
   isolation: isolate;
 }
 
 .post-hero::before {
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.12), transparent 34%),
-    radial-gradient(circle at top right, rgba(225, 91, 52, 0.24), transparent 24%);
+  background: var(--hero-overlay);
 }
 
 .post-hero::after {
@@ -3439,10 +3478,10 @@ body:not(.list) .nav {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(247, 244, 239, 0.88);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--hero-surface-border);
+  background: var(--hero-surface);
+  color: var(--hero-text);
+  box-shadow: inset 0 1px 0 var(--hero-surface-border);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
@@ -3457,9 +3496,9 @@ body:not(.list) .nav {
   height: 46px;
   border-radius: 14px;
   background: var(--post-gradient);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  color: #fff7ef;
+  border: 1px solid var(--hero-surface-border-strong);
+  box-shadow: inset 0 1px 0 var(--hero-surface-border);
+  color: var(--hero-text-strong);
 }
 
 .post-hero__icon svg {
@@ -3490,7 +3529,7 @@ body:not(.list) .nav {
 }
 
 .post-title {
-  color: #f7f4ef;
+  color: var(--hero-text-strong);
   font-family: var(--font-body);
   font-size: clamp(2.7rem, 6vw, 4.4rem);
   font-weight: 800;
@@ -3499,7 +3538,7 @@ body:not(.list) .nav {
 }
 
 .post-hero__summary {
-  color: rgba(247, 244, 239, 0.82);
+  color: var(--hero-text);
   font-family: var(--font-body);
   max-width: 34rem;
   font-size: 1rem;
@@ -3511,11 +3550,11 @@ body:not(.list) .nav {
 .post-hero__meta a,
 .post-hero__utility,
 .post-hero__utility a {
-  color: rgba(247, 244, 239, 0.68);
+  color: var(--hero-text-muted);
 }
 
 .post-hero__tags a {
-  background: rgba(23, 33, 44, 0.05);
+  background: color-mix(in srgb, var(--surface-strong) 18%, transparent);
   border: 1px solid var(--border);
   color: var(--secondary);
 }
@@ -3524,8 +3563,8 @@ body:not(.list) .nav {
   max-width: 24rem;
   margin-top: 18px;
   padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
-  color: rgba(247, 244, 239, 0.94);
+  border-top: 1px solid var(--hero-rule);
+  color: var(--hero-text-strong);
   font-family: var(--font-body);
   font-weight: 700;
   letter-spacing: -0.03em;
@@ -3540,7 +3579,7 @@ body:not(.list) .nav {
   padding-top: 0;
   padding-left: 24px;
   border-top: 0;
-  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid var(--hero-rule);
 }
 
 .post-shell,
@@ -3727,7 +3766,7 @@ body:not(.list) .nav {
     padding-left: 0;
     padding-top: 18px;
     border-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid var(--hero-rule);
   }
 
   .post-strip__link {
@@ -3893,7 +3932,7 @@ body:not(.list) .nav {
     align-self: auto;
     padding-left: 0;
     border-left: 0;
-    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid var(--hero-rule);
   }
 
   .resume-panel,
@@ -3949,8 +3988,7 @@ body:not(.list) .nav {
   padding: 14px;
   border-radius: 18px;
   border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--entry) 92%, white) 0%, var(--theme) 100%);
+  background: var(--demo-background);
   box-shadow: 0 22px 50px -38px rgba(15, 23, 42, 0.55);
 }
 
@@ -3980,8 +4018,8 @@ body:not(.list) .nav {
   width: 100%;
   border: 0;
   border-radius: 14px;
-  background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.08);
+  background: var(--demo-frame-background);
+  box-shadow: inset 0 0 0 1px var(--demo-frame-inset);
 }
 
 @media (max-width: 700px) {

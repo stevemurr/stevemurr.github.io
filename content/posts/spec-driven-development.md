@@ -1,7 +1,7 @@
 ---
 title: "Spec Driven Development"
 date: 2026-03-01
-draft: false
+draft: true
 tags: ["python", "ai", "spec"]
 summary: "AI agents are great at generating code but bad at reasoning about correctness. TLAForge constrains an LLM to a Python builder API so it can only produce syntactically valid TLA+ formal specifications."
 projects: ["stevemurr/tlaforge"]
