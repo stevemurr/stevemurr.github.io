@@ -364,16 +364,6 @@ function createCommitItem(entry) {
   return link;
 }
 
-function getProjectSortDate(entry) {
-  if (!entry) {
-    return 0;
-  }
-
-  const sortDate = entry.repository.pushed_at || entry.repository.updated_at || entry.lastActiveAt;
-  const timestamp = new Date(sortDate).getTime();
-  return Number.isNaN(timestamp) ? 0 : timestamp;
-}
-
 function renderProjectMetrics(card, entry) {
   const metrics = card.querySelector("[data-project-metrics]");
   if (!metrics) {
@@ -423,65 +413,70 @@ function markProjectCardUnavailable(card) {
   metrics.hidden = true;
 }
 
-function sortProjectCards(list, entryMap) {
-  const cards = Array.from(list.querySelectorAll("[data-project-card]"));
+const GITHUB_ICON_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.22 1.87.88 2.33.67.07-.52.28-.88.51-1.08-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>';
 
-  cards.sort((left, right) => {
-    const leftPinned = left.dataset.projectPinned === "true";
-    const rightPinned = right.dataset.projectPinned === "true";
+function createProjectCard(entry) {
+  const repo = entry.repository;
+  const repoName = repo.name || repo.full_name.split("/").pop();
+  const article = createElement(document, "article", "resume-project");
+  article.setAttribute("data-project-card", "");
+  article.setAttribute("data-project-pinned", "false");
+  article.setAttribute("data-project-repo", normalizeRepo(repo.full_name));
 
-    if (leftPinned !== rightPinned) {
-      return leftPinned ? -1 : 1;
-    }
+  const header = createElement(document, "div", "resume-project__header");
+  const intro = createElement(document, "div", "resume-project__intro");
+  const topline = createElement(document, "div", "resume-project__topline");
 
-    const leftEntry = entryMap.get(normalizeRepo(left.dataset.projectRepo));
-    const rightEntry = entryMap.get(normalizeRepo(right.dataset.projectRepo));
+  const title = createElement(document, "h3", "resume-project__title");
+  const link = createElement(document, "a");
+  link.href = repo.html_url || `https://github.com/${repo.full_name}`;
+  link.rel = "noopener";
+  link.textContent = repoName;
+  link.insertAdjacentHTML("beforeend", GITHUB_ICON_SVG);
+  title.appendChild(link);
 
-    const leftSortDate = getProjectSortDate(leftEntry);
-    const rightSortDate = getProjectSortDate(rightEntry);
+  const metrics = createElement(document, "div", "resume-project__metrics");
+  metrics.setAttribute("data-project-metrics", "");
+  const stamp = createElement(document, "span", "resume-project__stamp");
+  stamp.setAttribute("data-project-stamp", "");
 
-    if (rightSortDate !== leftSortDate) {
-      return rightSortDate - leftSortDate;
-    }
+  topline.appendChild(title);
+  topline.appendChild(metrics);
+  topline.appendChild(stamp);
 
-    if (leftEntry && rightEntry && rightEntry.score !== leftEntry.score) {
-      return rightEntry.score - leftEntry.score;
-    }
+  intro.appendChild(topline);
 
-    if (leftEntry && !rightEntry) {
-      return -1;
-    }
+  if (repo.description) {
+    intro.appendChild(createElement(document, "p", "resume-project__summary", repo.description));
+  }
 
-    if (!leftEntry && rightEntry) {
-      return 1;
-    }
+  header.appendChild(intro);
+  article.appendChild(header);
 
-    return Number(left.dataset.projectOrder || 0) - Number(right.dataset.projectOrder || 0);
-  });
+  updateProjectCard(article, entry);
 
-  cards.forEach((card) => {
-    list.appendChild(card);
-  });
+  return article;
 }
 
 async function loadProjectFeed(container) {
   const username = container.dataset.githubUser;
   const list = container.querySelector("[data-project-list]");
-  const cards = Array.from(container.querySelectorAll("[data-project-card]"));
+  const limit = Math.max(1, Number(container.dataset.projectLimit || 5));
+  const pinnedCards = Array.from(container.querySelectorAll("[data-project-card]"));
+  const pinnedRepoNames = (container.dataset.pinnedRepos || "")
+    .split(",")
+    .map(normalizeRepo)
+    .filter(Boolean);
+  const pinnedSet = new Set(pinnedRepoNames);
   const excludedRepos = (container.dataset.githubExclude || "")
     .split(",")
     .map(normalizeRepo)
     .filter(Boolean);
 
-  if (!list || !cards.length) {
-    return;
-  }
-
-  if (!username) {
-    cards.forEach((card) => {
+  if (!list || !username) {
+    pinnedCards.forEach((card) => {
       updateProjectCard(card, null);
     });
-    sortProjectCards(list, new Map());
     return;
   }
 
@@ -504,17 +499,23 @@ async function loadProjectFeed(container) {
       entries.map((entry) => [normalizeRepo(entry.repository.full_name), entry]),
     );
 
-    cards.forEach((card) => {
+    pinnedCards.forEach((card) => {
       const repoName = normalizeRepo(card.dataset.projectRepo);
       updateProjectCard(card, entryMap.get(repoName) || null);
     });
 
-    sortProjectCards(list, entryMap);
+    const dynamicSlots = limit - pinnedCards.length;
+    const dynamicEntries = entries
+      .filter((entry) => !pinnedSet.has(normalizeRepo(entry.repository.full_name)))
+      .slice(0, dynamicSlots);
+
+    dynamicEntries.forEach((entry) => {
+      list.appendChild(createProjectCard(entry));
+    });
   } catch (_error) {
-    cards.forEach((card) => {
+    pinnedCards.forEach((card) => {
       markProjectCardUnavailable(card);
     });
-    sortProjectCards(list, new Map());
   }
 }
 

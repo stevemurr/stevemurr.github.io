@@ -11,30 +11,12 @@
 {{- $contributionWeeks := default (slice) $contributions.weeks }}
 {{- $monthLabels := default (slice) $contributions.monthLabels }}
 {{- $recentCommits := default (slice) $devActivity.recentCommits }}
-{{- $projectRepos := slice }}
-{{- $validation := newScratch }}
-{{- $validation.Set "hasProjectErrors" false }}
-
-{{- range $index, $project := $projects }}
-{{- $projectName := default (printf "project %d" (add $index 1)) $project.name }}
-{{- $projectRepoRaw := default "" $project.repo }}
-{{- $projectRepo := lower (trim $projectRepoRaw " ") }}
-{{- if not $projectRepo }}
-  {{- errorf "Project %q on %q is missing a repo value" $projectName $page.File.Path }}
-  {{- $validation.Set "hasProjectErrors" true }}
-{{- end }}
-{{- $projectRepos = $projectRepos | append $projectRepo }}
-{{- end }}
-
-{{- if not ($validation.Get "hasProjectErrors") }}
-{{- range $post := $posts }}
-{{- $postProjects := $post.Params.projects | default (slice) }}
-{{- range $postProject := $postProjects }}
-{{- $postProjectKey := lower (trim . " ") }}
-{{- if and $postProjectKey (not (in $projectRepos $postProjectKey)) }}
-  {{- errorf "Post %q (%s) references unknown project repo %q" $post.Title $post.RelPermalink $postProjectKey }}
-{{- end }}
-{{- end }}
+{{- $pinnedProjects := slice }}
+{{- $pinnedRepos := slice }}
+{{- range $project := $projects }}
+{{- if $project.pinned }}
+{{- $pinnedProjects = $pinnedProjects | append $project }}
+{{- $pinnedRepos = $pinnedRepos | append (lower (trim (default "" $project.repo) " ")) }}
 {{- end }}
 {{- end }}
 
@@ -132,41 +114,25 @@
   {{- end }}
 
   <div class="resume-home__grid">
-    {{- if gt (len $projects) 0 }}
+    {{- if $githubUser }}
     <section class="resume-panel reveal reveal--late resume-home__projects"
       data-project-feed
       data-github-user="{{ $githubUser }}"
       data-github-exclude="{{ delimit $githubExcluded "," }}"
-      data-project-count="{{ len $projects }}">
+      data-project-limit="5"
+      data-pinned-repos="{{ delimit $pinnedRepos "," }}">
       <div class="resume-panel__header resume-panel__header--compact">
         <p class="section-heading__eyebrow">Projects</p>
       </div>
 
       <div class="resume-projects" data-project-list>
-        {{- range $index, $project := $projects }}
+        {{- range $index, $project := $pinnedProjects }}
         {{- $projectRepoRaw := default "" $project.repo }}
         {{- $projectRepo := lower (trim $projectRepoRaw " ") }}
-        {{- $projectPinned := default false $project.pinned }}
-        {{- $relatedPosts := slice }}
-        {{- range $posts }}
-        {{- $postProjects := .Params.projects | default (slice) }}
-        {{- $postProjectKeysScratch := newScratch }}
-        {{- $postProjectKeysScratch.Set "values" (slice) }}
-        {{- range $postProjects }}
-        {{- $postProjectKey := lower (trim . " ") }}
-        {{- if $postProjectKey }}
-        {{- $postProjectKeysScratch.Add "values" (slice $postProjectKey) }}
-        {{- end }}
-        {{- end }}
-        {{- $postProjectKeys := $postProjectKeysScratch.Get "values" }}
-        {{- if in $postProjectKeys $projectRepo }}
-        {{- $relatedPosts = $relatedPosts | append . }}
-        {{- end }}
-        {{- end }}
         <article class="resume-project"
           data-project-card
           data-project-order="{{ $index }}"
-          data-project-pinned="{{ if $projectPinned }}true{{ else }}false{{ end }}"
+          data-project-pinned="true"
           {{- with $projectRepo }} data-project-repo="{{ . }}"{{- end }}>
           <div class="resume-project__header">
             <div class="resume-project__intro">
@@ -193,20 +159,6 @@
               {{- end }}
             </div>
           </div>
-
-          {{- if gt (len $relatedPosts) 0 }}
-          <div class="resume-project__writing">
-            <span class="resume-project__section">Related writing</span>
-            <div class="resume-project__articles">
-              {{- range first 3 $relatedPosts }}
-              <a class="resume-project__article" href="{{ .RelPermalink }}">
-                <span class="resume-project__article-date">{{ .Date.Format "Jan 2" }}</span>
-                <span class="resume-project__article-title">{{ .Title }}</span>
-              </a>
-              {{- end }}
-            </div>
-          </div>
-          {{- end }}
         </article>
         {{- end }}
       </div>
