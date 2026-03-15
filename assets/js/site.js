@@ -909,6 +909,40 @@ function setChatFeedback(state, message, tone = "error", retryable = false) {
   }
 }
 
+function describeTurnstileError(errorCode) {
+  const code = String(errorCode || "").trim();
+
+  if (!code) {
+    return "Verification failed to initialize. Reload and try again.";
+  }
+
+  if (code === "110200") {
+    return `Turnstile rejected this hostname (${code}). Add stevemurr.github.io in Turnstile Hostname Management.`;
+  }
+
+  if (code === "200500") {
+    return `Turnstile iframe failed to load (${code}). Check blockers, privacy tools, or network filtering on challenges.cloudflare.com.`;
+  }
+
+  if (code.startsWith("110")) {
+    return `Turnstile widget configuration failed (${code}). Check the site key, hostname list, and widget settings in Cloudflare.`;
+  }
+
+  if (code.startsWith("200")) {
+    return `Turnstile hit a browser or cache problem (${code}). Reload the page or try a private window.`;
+  }
+
+  if (code.startsWith("300") || code.startsWith("600")) {
+    return `Turnstile challenge failed (${code}). Retry or try another browser/network.`;
+  }
+
+  if (code.startsWith("400")) {
+    return `Turnstile rejected the widget (${code}). Recheck the site key and whether the widget is enabled.`;
+  }
+
+  return `Turnstile failed (${code}). Check the widget configuration and retry.`;
+}
+
 function resetTurnstile(state) {
   state.turnstileToken = "";
 
@@ -938,9 +972,19 @@ function ensureTurnstileRendered(state, attempt = 0) {
         state.turnstileToken = "";
         setChatFeedback(state, "Verification expired. Please confirm again.", "muted", false);
       },
-      "error-callback"() {
+      "timeout-callback"() {
         state.turnstileToken = "";
-        setChatFeedback(state, "Verification widget failed to load cleanly. Disable blockers and retry.", "error", false);
+        setChatFeedback(state, "Verification timed out. Please try again.", "muted", false);
+      },
+      "unsupported-callback"() {
+        state.turnstileToken = "";
+        setChatFeedback(state, "This browser is not supported by Turnstile. Try another browser.", "error", false);
+        return true;
+      },
+      "error-callback"(errorCode) {
+        state.turnstileToken = "";
+        setChatFeedback(state, describeTurnstileError(errorCode), "error", false);
+        return true;
       },
     });
 
