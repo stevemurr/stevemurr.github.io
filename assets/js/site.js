@@ -1,6 +1,9 @@
 const GITHUB_API_ROOT = "https://github-api-proxy.gh-murr-proxy.workers.dev";
+const LLM_METRICS_API_ROOT = "https://llm-metrics-proxy.gh-murr-proxy.workers.dev";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
+const LLM_METRICS_CACHE_TTL_MS = 60 * 1000; // 1 minute
+const SVG_NS = "http://www.w3.org/2000/svg";
 const ACTIVITY_EVENT_TYPES = new Set([
   "PushEvent",
   "PullRequestEvent",
@@ -76,12 +79,12 @@ function describeActivity(entry) {
 
 const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
-function getCached(key) {
+function getCached(key, ttlMs = CACHE_TTL_MS) {
   try {
     const raw = localStorage.getItem(key);
     if (!raw) return null;
     const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL_MS) {
+    if (Date.now() - ts > ttlMs) {
       localStorage.removeItem(key);
       return null;
     }
@@ -111,6 +114,27 @@ function fetchJSON(url) {
   }).then((response) => {
     if (!response.ok) {
       throw new Error(`GitHub request failed: ${response.status}`);
+    }
+
+    return response.json().then((data) => {
+      setCache(cacheKey, data);
+      return data;
+    });
+  });
+}
+
+function fetchMetricsJSON(url) {
+  const cacheKey = `llm:${url}`;
+  const cached = getCached(cacheKey, LLM_METRICS_CACHE_TTL_MS);
+  if (cached) return Promise.resolve(cached);
+
+  return fetch(url, {
+    headers: {
+      Accept: "application/json",
+    },
+  }).then((response) => {
+    if (!response.ok) {
+      throw new Error(`Metrics request failed: ${response.status}`);
     }
 
     return response.json().then((data) => {
@@ -494,6 +518,306 @@ function createProjectCard(entry) {
   return article;
 }
 
+function createSVGElement(tagName, className) {
+  const element = document.createElementNS(SVG_NS, tagName);
+
+  if (className) {
+    element.setAttribute("class", className);
+  }
+
+  return element;
+}
+
+function formatWindowLabel(value) {
+  const raw = String(value || "").trim().toLowerCase();
+  const match = raw.match(/^(\d+)(m|h|d)$/);
+
+  if (!match) {
+    return "recent window";
+  }
+
+  const amount = Number(match[1]);
+  const unitMap = {
+    m: amount === 1 ? "minute" : "minutes",
+    h: amount === 1 ? "hour" : "hours",
+    d: amount === 1 ? "day" : "days",
+  };
+
+  return `${amount} ${unitMap[match[2]]}`;
+}
+
+function formatRateValue(value) {
+  if (!Number.isFinite(value)) {
+    return "—";
+  }
+
+  const abs = Math.abs(value);
+  let maximumFractionDigits = 0;
+
+  if (abs > 0 && abs < 1) {
+    maximumFractionDigits = 2;
+  } else if (abs < 10) {
+    maximumFractionDigits = 1;
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    maximumFractionDigits,
+    minimumFractionDigits: abs > 0 && abs < 1 ? 2 : 0,
+  }).format(value);
+}
+
+function formatRuntimeValue(metricKey, value) {
+  if (!Number.isFinite(value)) {
+    return "—";
+  }
+
+  if (metricKey === "ttftP95Seconds") {
+    if (value < 1) {
+      return `${Math.round(value * 1000)} ms`;
+    }
+
+    return `${formatRateValue(value)} s`;
+  }
+
+  return formatRateValue(value);
+}
+
+function formatLegendValue(graphKey, seriesKey, value) {
+  if (!Number.isFinite(value)) {
+    return null;
+  }
+
+  if (graphKey === "tokenThroughput") {
+    return `${formatRateValue(value)} tok/s`;
+  }
+
+  if (graphKey === "concurrentRequests") {
+    return formatRateValue(value);
+  }
+
+  return formatRateValue(value);
+}
+
+function normalizeSeriesPoints(points) {
+  if (!Array.isArray(points)) {
+    return [];
+  }
+
+  return points
+    .map((point) => {
+      if (!Array.isArray(point) || point.length < 2) {
+        return null;
+      }
+
+      const timestamp = Number(point[0]);
+      const value = Number(point[1]);
+
+      if (!Number.isFinite(timestamp) || !Number.isFinite(value)) {
+        return null;
+      }
+
+      return [timestamp, value];
+    })
+    .filter(Boolean);
+}
+
+function getLatestSeriesValue(points) {
+  for (let index = points.length - 1; index >= 0; index -= 1) {
+    const point = points[index];
+    if (point && Number.isFinite(point[1])) {
+      return point[1];
+    }
+  }
+
+  return null;
+}
+
+function buildLinePath(points, width, height, padding, minValue, maxValue) {
+  if (!points.length) {
+    return "";
+  }
+
+  const innerWidth = width - padding.left - padding.right;
+  const innerHeight = height - padding.top - padding.bottom;
+  const range = Math.max(maxValue - minValue, 0.001);
+
+  return points.map((point, index) => {
+    const ratioX = points.length === 1 ? 0 : index / (points.length - 1);
+    const x = padding.left + (ratioX * innerWidth);
+    const y = padding.top + ((1 - ((point[1] - minValue) / range)) * innerHeight);
+    return `${index === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join(" ");
+}
+
+function buildAreaPath(points, width, height, padding, minValue, maxValue) {
+  const linePath = buildLinePath(points, width, height, padding, minValue, maxValue);
+
+  if (!linePath) {
+    return "";
+  }
+
+  const innerWidth = width - padding.left - padding.right;
+  const baselineY = height - padding.bottom;
+  const firstX = padding.left;
+  const lastX = padding.left + (points.length === 1 ? 0 : innerWidth);
+
+  return `${linePath} L${lastX.toFixed(2)},${baselineY.toFixed(2)} L${firstX.toFixed(2)},${baselineY.toFixed(2)} Z`;
+}
+
+function renderChartGrid(gridGroup, width, height, padding) {
+  gridGroup.textContent = "";
+
+  const lineCount = 4;
+  for (let index = 0; index < lineCount; index += 1) {
+    const ratio = lineCount === 1 ? 0 : index / (lineCount - 1);
+    const y = padding.top + (ratio * (height - padding.top - padding.bottom));
+    const line = createSVGElement("line", "resume-runtime__grid-line");
+    line.setAttribute("x1", padding.left);
+    line.setAttribute("x2", width - padding.right);
+    line.setAttribute("y1", y.toFixed(2));
+    line.setAttribute("y2", y.toFixed(2));
+    gridGroup.appendChild(line);
+  }
+}
+
+function setRuntimeStatus(container, message, state) {
+  container.dataset.runtimeState = state;
+
+  const status = container.querySelector("[data-llm-status]");
+  if (status) {
+    status.textContent = message;
+  }
+}
+
+function updateRuntimeCards(container, summary) {
+  const cards = container.querySelectorAll("[data-llm-card]");
+  cards.forEach((card) => {
+    const metricKey = card.dataset.llmCard;
+    const valueNode = card.querySelector("[data-llm-value]");
+    const value = summary && metricKey in summary ? Number(summary[metricKey]) : NaN;
+
+    if (valueNode) {
+      valueNode.textContent = formatRuntimeValue(metricKey, value);
+    }
+
+    if (Number.isFinite(value)) {
+      card.dataset.runtimeValue = String(value);
+    } else {
+      delete card.dataset.runtimeValue;
+    }
+  });
+}
+
+function updateRuntimeLegend(graph, graphKey, pointsBySeries) {
+  const legendItems = graph.querySelectorAll("[data-llm-legend-key]");
+
+  legendItems.forEach((item) => {
+    const seriesKey = item.dataset.llmLegendKey;
+    const points = normalizeSeriesPoints(pointsBySeries && pointsBySeries[seriesKey]);
+    const latestValue = getLatestSeriesValue(points);
+    const label = item.textContent.split(" · ")[0].trim();
+    const formattedValue = formatLegendValue(graphKey, seriesKey, latestValue);
+
+    item.textContent = formattedValue ? `${label} · ${formattedValue}` : label;
+  });
+}
+
+function renderRuntimeGraph(container, graphKey, pointsBySeries) {
+  const graph = container.querySelector(`[data-llm-graph="${graphKey}"]`);
+  if (!graph) {
+    return;
+  }
+
+  const svg = graph.querySelector("svg");
+  const gridGroup = graph.querySelector("[data-llm-grid]");
+  const seriesGroup = graph.querySelector("[data-llm-series]");
+
+  if (!svg || !gridGroup || !seriesGroup) {
+    return;
+  }
+
+  const width = 360;
+  const height = 180;
+  const padding = { top: 12, right: 12, bottom: 18, left: 12 };
+  const seriesOrder = graphKey === "tokenThroughput"
+    ? ["generation", "prompt"]
+    : ["running", "waiting"];
+  const pointSets = seriesOrder.map((seriesKey) => ({
+    seriesKey,
+    points: normalizeSeriesPoints(pointsBySeries && pointsBySeries[seriesKey]),
+  }));
+  const values = pointSets.flatMap((entry) => entry.points.map((point) => point[1]));
+  const maxValue = Math.max(1, ...values, 0);
+
+  renderChartGrid(gridGroup, width, height, padding);
+  seriesGroup.textContent = "";
+
+  pointSets.forEach((entry, index) => {
+    if (!entry.points.length) {
+      return;
+    }
+
+    if (index === 0) {
+      const area = createSVGElement("path", `resume-runtime__area resume-runtime__area--${entry.seriesKey}`);
+      area.setAttribute("d", buildAreaPath(entry.points, width, height, padding, 0, maxValue));
+      seriesGroup.appendChild(area);
+    }
+
+    const path = createSVGElement("path", `resume-runtime__line resume-runtime__line--${entry.seriesKey}`);
+    path.setAttribute("d", buildLinePath(entry.points, width, height, padding, 0, maxValue));
+    seriesGroup.appendChild(path);
+
+    const latestPoint = entry.points[entry.points.length - 1];
+    if (latestPoint) {
+      const ratioX = entry.points.length === 1 ? 0 : (entry.points.length - 1) / (entry.points.length - 1);
+      const x = padding.left + (ratioX * (width - padding.left - padding.right));
+      const y = padding.top + ((1 - (latestPoint[1] / Math.max(maxValue, 0.001))) * (height - padding.top - padding.bottom));
+      const dot = createSVGElement("circle", `resume-runtime__dot resume-runtime__dot--${entry.seriesKey}`);
+      dot.setAttribute("cx", x.toFixed(2));
+      dot.setAttribute("cy", y.toFixed(2));
+      dot.setAttribute("r", "4");
+      seriesGroup.appendChild(dot);
+    }
+  });
+
+  updateRuntimeLegend(graph, graphKey, pointsBySeries);
+}
+
+async function loadLLMMetrics(container) {
+  const modelName = container.dataset.modelName || "nemotron3-nano";
+  const windowValue = container.dataset.metricsWindow || "1h";
+  const dashboardLink = container.querySelector(".resume-runtime__dashboard");
+  const endpoint = `${LLM_METRICS_API_ROOT}/api/llm/${encodeURIComponent(modelName)}?window=${encodeURIComponent(windowValue)}`;
+
+  setRuntimeStatus(container, `Fetching the latest ${formatWindowLabel(windowValue)} of traces.`, "loading");
+
+  try {
+    const payload = await fetchMetricsJSON(endpoint);
+    const summary = payload && payload.summary ? payload.summary : {};
+    const series = payload && payload.series ? payload.series : {};
+    const updatedAt = payload && payload.updatedAt ? payload.updatedAt : new Date().toISOString();
+
+    updateRuntimeCards(container, summary);
+    renderRuntimeGraph(container, "tokenThroughput", series.tokenThroughput || {});
+    renderRuntimeGraph(container, "concurrentRequests", series.concurrentRequests || {});
+
+    if (dashboardLink && payload && payload.dashboardUrl) {
+      dashboardLink.href = payload.dashboardUrl;
+    }
+
+    setRuntimeStatus(
+      container,
+      `Updated ${formatRelativeTime(updatedAt)} · showing the last ${formatWindowLabel(windowValue)}.`,
+      "ready",
+    );
+  } catch (_error) {
+    updateRuntimeCards(container, null);
+    renderRuntimeGraph(container, "tokenThroughput", {});
+    renderRuntimeGraph(container, "concurrentRequests", {});
+    setRuntimeStatus(container, "Telemetry temporarily unavailable. Try the full dashboard.", "error");
+  }
+}
+
 async function loadProjectFeed(container) {
   const username = container.dataset.githubUser;
   const list = container.querySelector("[data-project-list]");
@@ -606,6 +930,11 @@ async function loadRecentCommits(container) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  const llmMetricsContainers = document.querySelectorAll("[data-llm-metrics]");
+  llmMetricsContainers.forEach((container) => {
+    loadLLMMetrics(container);
+  });
+
   const recentCommitContainers = document.querySelectorAll("[data-recent-commits]");
   recentCommitContainers.forEach((container) => {
     loadRecentCommits(container);

@@ -78,6 +78,123 @@
     </div>
   </header>
 
+  <section
+    class="resume-panel reveal reveal--late resume-runtime"
+    data-llm-metrics
+    data-model-name="nemotron3-nano"
+    data-metrics-window="1h">
+    <div class="resume-panel__header resume-runtime__header">
+      <div class="resume-runtime__heading">
+        <p class="section-heading__eyebrow">LLM runtime</p>
+        <h2>Nemotron3 Nano on DGX Spark</h2>
+      </div>
+
+      <a
+        class="resume-runtime__dashboard"
+        href="https://gra.auto2putt.com/d/vllm-nemotron3/vllm-e28094-nemotron3-nano"
+        rel="noopener">
+        Full dashboard
+        <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
+          stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" height="14" width="14" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
+          <path d="M15 3h6v6"></path>
+          <path d="M10 14L21 3"></path>
+        </svg>
+      </a>
+    </div>
+
+    <div class="resume-runtime__intro">
+      <p class="resume-runtime__lede">
+        Live inference telemetry from the box running my local <code>nemotron3-nano</code> deployment.
+      </p>
+      <p class="resume-runtime__status" data-llm-status>Fetching the latest hour of traces.</p>
+    </div>
+
+    <div class="resume-runtime__stats">
+      <article class="resume-runtime__card" data-llm-card="generationTokensPerSecond">
+        <p class="resume-runtime__card-label">Generation tok/s</p>
+        <p class="resume-runtime__card-value" data-llm-value>--</p>
+        <p class="resume-runtime__card-meta">1m rate</p>
+      </article>
+
+      <article class="resume-runtime__card" data-llm-card="promptTokensPerSecond">
+        <p class="resume-runtime__card-label">Prompt tok/s</p>
+        <p class="resume-runtime__card-value" data-llm-value>--</p>
+        <p class="resume-runtime__card-meta">1m rate</p>
+      </article>
+
+      <article class="resume-runtime__card" data-llm-card="requestsPerSecond">
+        <p class="resume-runtime__card-label">Requests/s</p>
+        <p class="resume-runtime__card-value" data-llm-value>--</p>
+        <p class="resume-runtime__card-meta">1m rate</p>
+      </article>
+
+      <article class="resume-runtime__card" data-llm-card="ttftP95Seconds">
+        <p class="resume-runtime__card-label">TTFT p95</p>
+        <p class="resume-runtime__card-value" data-llm-value>--</p>
+        <p class="resume-runtime__card-meta">5m quantile</p>
+      </article>
+    </div>
+
+    <div class="resume-runtime__graphs">
+      <article class="resume-runtime__graph" data-llm-graph="tokenThroughput">
+        <div class="resume-runtime__graph-header">
+          <div>
+            <p class="resume-runtime__graph-label">Token throughput</p>
+            <h3>Generation vs prompt</h3>
+          </div>
+
+          <div class="resume-runtime__legend">
+            <span class="resume-runtime__legend-item resume-runtime__legend-item--generation" data-llm-legend-key="generation">Generation</span>
+            <span class="resume-runtime__legend-item resume-runtime__legend-item--prompt" data-llm-legend-key="prompt">Prompt</span>
+          </div>
+        </div>
+
+        <div class="resume-runtime__chart-shell">
+          <svg
+            class="resume-runtime__chart"
+            viewBox="0 0 360 180"
+            preserveAspectRatio="none"
+            role="img"
+            aria-label="Token throughput chart">
+            <g data-llm-grid></g>
+            <g data-llm-series></g>
+          </svg>
+        </div>
+
+        <p class="resume-runtime__graph-caption">Last 60 minutes · 60 second step</p>
+      </article>
+
+      <article class="resume-runtime__graph" data-llm-graph="concurrentRequests">
+        <div class="resume-runtime__graph-header">
+          <div>
+            <p class="resume-runtime__graph-label">Scheduler depth</p>
+            <h3>Running vs waiting</h3>
+          </div>
+
+          <div class="resume-runtime__legend">
+            <span class="resume-runtime__legend-item resume-runtime__legend-item--running" data-llm-legend-key="running">Running</span>
+            <span class="resume-runtime__legend-item resume-runtime__legend-item--waiting" data-llm-legend-key="waiting">Waiting</span>
+          </div>
+        </div>
+
+        <div class="resume-runtime__chart-shell">
+          <svg
+            class="resume-runtime__chart"
+            viewBox="0 0 360 180"
+            preserveAspectRatio="none"
+            role="img"
+            aria-label="Concurrent requests chart">
+            <g data-llm-grid></g>
+            <g data-llm-series></g>
+          </svg>
+        </div>
+
+        <p class="resume-runtime__graph-caption">Last 60 minutes · 60 second step</p>
+      </article>
+    </div>
+  </section>
+
   {{- if or (gt (len $recentCommits) 0) $githubUser }}
   <section
     class="resume-panel reveal reveal--late resume-home__commits"
