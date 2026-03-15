@@ -1,4 +1,4 @@
-const GITHUB_API_ROOT = "https://gh-murr-proxy.workers.dev";
+const GITHUB_API_ROOT = "https://github-api-proxy.gh-murr-proxy.workers.dev";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
 const ACTIVITY_EVENT_TYPES = new Set([
