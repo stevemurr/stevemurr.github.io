@@ -3117,28 +3117,34 @@ body.has-llm-chat-open {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(11, 18, 23, 0.54);
-  backdrop-filter: blur(12px);
+  background: rgba(11, 18, 23, 0.64);
+  backdrop-filter: blur(16px);
 }
 
 .resume-runtime__chat-shell {
   position: relative;
   z-index: 1;
+  isolation: isolate;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto auto;
-  gap: 14px;
-  width: min(100%, 760px);
-  max-height: min(86vh, 860px);
-  padding: 20px;
+  gap: 12px;
+  width: min(100%, 820px);
+  max-height: min(84vh, 720px);
+  padding: 22px;
   border: 1px solid color-mix(in srgb, var(--accent-cool) 20%, var(--line-strong));
-  border-radius: 24px;
+  border-radius: 26px;
   background:
-    radial-gradient(circle at top right, rgba(21, 114, 126, 0.14), transparent 26%),
-    radial-gradient(circle at 14% 0%, rgba(225, 91, 52, 0.14), transparent 24%),
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, transparent), color-mix(in srgb, var(--card-background) 98%, transparent));
+    radial-gradient(circle at top right, rgba(21, 114, 126, 0.12), transparent 28%),
+    radial-gradient(circle at 14% 0%, rgba(225, 91, 52, 0.12), transparent 24%),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--surface-strong) 96%, var(--card-background) 4%),
+      color-mix(in srgb, var(--card-background) 94%, var(--surface-strong) 6%)
+    );
   box-shadow:
-    0 28px 72px rgba(6, 12, 16, 0.24),
+    0 28px 72px rgba(6, 12, 16, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  overflow: hidden;
 }
 
 .resume-runtime__chat-header {
@@ -3185,9 +3191,8 @@ body.has-llm-chat-open {
 .resume-runtime__chat-stream {
   display: grid;
   gap: 12px;
-  min-height: 240px;
-  max-height: 52vh;
-  padding-right: 4px;
+  min-height: 132px;
+  padding: 2px 6px 2px 2px;
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -3253,6 +3258,7 @@ body.has-llm-chat-open {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  min-height: 24px;
 }
 
 .resume-runtime__chat-feedback {
@@ -3287,17 +3293,19 @@ body.has-llm-chat-open {
 
 .resume-runtime__chat-form {
   display: grid;
-  gap: 12px;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid color-mix(in srgb, var(--line-subtle) 92%, transparent);
 }
 
 .resume-runtime__chat-input {
   width: 100%;
-  min-height: 98px;
-  max-height: 220px;
-  padding: 14px 16px;
+  min-height: 76px;
+  max-height: 180px;
+  padding: 12px 14px;
   border: 1px solid color-mix(in srgb, var(--line-strong) 96%, transparent);
   border-radius: 18px;
-  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 94%, var(--card-background) 6%);
   color: var(--primary);
   font: inherit;
   line-height: 1.58;
@@ -3318,17 +3326,22 @@ body.has-llm-chat-open {
 }
 
 .resume-runtime__chat-actions {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
   gap: 12px;
-  flex-wrap: wrap;
 }
 
 .resume-runtime__chat-turnstile {
   display: flex;
   align-items: center;
-  min-height: 66px;
+  justify-content: flex-start;
+  min-height: 0;
+  max-width: 320px;
+}
+
+.resume-runtime__chat-turnstile:empty {
+  display: none;
 }
 
 .resume-runtime__chat-buttons {
@@ -4474,7 +4487,7 @@ body.has-llm-chat-open {
 
   .resume-runtime__chat-shell {
     width: min(100%, 100%);
-    max-height: 90vh;
+    max-height: min(88vh, 720px);
   }
 
   .resume-runtime__chat-message {
@@ -4597,7 +4610,6 @@ body.has-llm-chat-open {
 
   .resume-runtime__chat-stream {
     min-height: 0;
-    max-height: none;
   }
 
   .resume-runtime__chat-message {

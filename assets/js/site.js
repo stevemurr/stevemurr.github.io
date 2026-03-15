@@ -963,7 +963,9 @@ function ensureTurnstileRendered(state, attempt = 0) {
   if (window.turnstile && typeof window.turnstile.render === "function") {
     state.turnstileWidgetId = window.turnstile.render(state.turnstileContainer, {
       sitekey: state.siteKey,
+      size: "flexible",
       theme: "auto",
+      appearance: "interaction-only",
       callback(token) {
         state.turnstileToken = token;
         setChatFeedback(state, "", "info", false);
