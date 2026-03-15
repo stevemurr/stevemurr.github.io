@@ -1,10 +1,13 @@
+{{- $src := .Get "src" -}}
 {{- $slug := .Get "slug" -}}
-{{- if not $slug -}}
-  {{- errorf "demo shortcode requires a slug parameter: %s" .Position -}}
+{{- if and (not $src) (not $slug) -}}
+  {{- errorf "demo shortcode requires either a src or slug parameter: %s" .Position -}}
 {{- end -}}
 {{- $title := .Get "title" | default ($slug | replace "-" " " | title) -}}
 {{- $height := .Get "height" | default "720px" -}}
-{{- $src := relURL (printf "demos/%s/" $slug) -}}
+{{- if not $src -}}
+  {{- $src = relURL (printf "demos/%s/" $slug) -}}
+{{- end -}}
 
 <figure class="demo-embed">
   <div class="demo-embed__chrome">
@@ -14,11 +17,10 @@
 
   <iframe
     class="demo-embed__frame"
-    data-demo-iframe
     src="{{ $src }}"
     title="{{ $title }}"
     loading="lazy"
-    sandbox="allow-scripts allow-same-origin"
+    sandbox="allow-scripts"
     referrerpolicy="strict-origin-when-cross-origin"
     style="height: {{ $height }};"></iframe>
 
@@ -26,31 +28,3 @@
     <p><a href="{{ $src }}">Open {{ $title }}</a></p>
   </noscript>
 </figure>
-
-<script>
-(() => {
-  if (window.__demoEmbedResizeBound) {
-    return;
-  }
-
-  window.__demoEmbedResizeBound = true;
-
-  window.addEventListener("message", (event) => {
-    if (event.origin !== window.location.origin) {
-      return;
-    }
-
-    const data = event.data;
-    if (!data || data.type !== "demo:resize" || typeof data.height !== "number") {
-      return;
-    }
-
-    for (const frame of document.querySelectorAll("iframe[data-demo-iframe]")) {
-      if (frame.contentWindow === event.source) {
-        frame.style.height = `${Math.max(320, Math.ceil(data.height))}px`;
-        break;
-      }
-    }
-  });
-})();
-</script>

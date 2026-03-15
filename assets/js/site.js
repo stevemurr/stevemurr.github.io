@@ -427,6 +427,13 @@ function sortProjectCards(list, entryMap) {
   const cards = Array.from(list.querySelectorAll("[data-project-card]"));
 
   cards.sort((left, right) => {
+    const leftPinned = left.dataset.projectPinned === "true";
+    const rightPinned = right.dataset.projectPinned === "true";
+
+    if (leftPinned !== rightPinned) {
+      return leftPinned ? -1 : 1;
+    }
+
     const leftEntry = entryMap.get(normalizeRepo(left.dataset.projectRepo));
     const rightEntry = entryMap.get(normalizeRepo(right.dataset.projectRepo));
 
@@ -474,6 +481,7 @@ async function loadProjectFeed(container) {
     cards.forEach((card) => {
       updateProjectCard(card, null);
     });
+    sortProjectCards(list, new Map());
     return;
   }
 
@@ -506,6 +514,7 @@ async function loadProjectFeed(container) {
     cards.forEach((card) => {
       markProjectCardUnavailable(card);
     });
+    sortProjectCards(list, new Map());
   }
 }
 

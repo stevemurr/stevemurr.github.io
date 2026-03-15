@@ -46,25 +46,9 @@ jobs:
         with:
           fetch-depth: 0
           submodules: recursive
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Refresh tracked submodules
-        run: |
-          git submodule sync --recursive
-          git submodule update --init --recursive
-          git submodule update --remote --merge external/marriage-composer
-      - name: Install Node.js dependencies
-        run: npm ci
-      - name: Build demo bundles
-        env:
-          NODE_ENV: production
-        run: npm run build:demos
       - name: Generate GitHub activity data
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

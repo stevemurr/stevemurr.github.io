@@ -146,6 +146,7 @@
         {{- range $index, $project := $projects }}
         {{- $projectRepoRaw := default "" $project.repo }}
         {{- $projectRepo := lower (trim $projectRepoRaw " ") }}
+        {{- $projectPinned := default false $project.pinned }}
         {{- $relatedPosts := slice }}
         {{- range $posts }}
         {{- $postProjects := .Params.projects | default (slice) }}
@@ -165,6 +166,7 @@
         <article class="resume-project"
           data-project-card
           data-project-order="{{ $index }}"
+          data-project-pinned="{{ if $projectPinned }}true{{ else }}false{{ end }}"
           {{- with $projectRepo }} data-project-repo="{{ . }}"{{- end }}>
           <div class="resume-project__header">
             <div class="resume-project__intro">
