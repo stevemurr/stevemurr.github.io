@@ -1394,6 +1394,10 @@ function initializeLLMChat(root) {
     turnstileToken: "",
   };
 
+  if (overlay.parentNode !== document.body) {
+    document.body.appendChild(overlay);
+  }
+
   restoreChatShell(state);
 
   openButtons.forEach((button) => {
