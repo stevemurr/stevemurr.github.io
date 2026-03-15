@@ -1,4 +1,4 @@
-const GITHUB_API_ROOT = "https://api.github.com";
+const GITHUB_API_ROOT = "https://gh-murr-proxy.workers.dev";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
 const ACTIVITY_EVENT_TYPES = new Set([
@@ -74,9 +74,37 @@ function describeActivity(entry) {
   return parts.join(" · ");
 }
 
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+
+function getCached(key) {
+  try {
+    const raw = localStorage.getItem(key);
+    if (!raw) return null;
+    const { ts, data } = JSON.parse(raw);
+    if (Date.now() - ts > CACHE_TTL_MS) {
+      localStorage.removeItem(key);
+      return null;
+    }
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function setCache(key, data) {
+  try {
+    localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+  } catch {
+    // storage full or unavailable — ignore
+  }
+}
+
 function fetchJSON(url) {
+  const cacheKey = `gh:${url}`;
+  const cached = getCached(cacheKey);
+  if (cached) return Promise.resolve(cached);
+
   return fetch(url, {
-    cache: "no-store",
     headers: {
       Accept: "application/vnd.github+json",
     },
@@ -85,7 +113,10 @@ function fetchJSON(url) {
       throw new Error(`GitHub request failed: ${response.status}`);
     }
 
-    return response.json();
+    return response.json().then((data) => {
+      setCache(cacheKey, data);
+      return data;
+    });
   });
 }
 
