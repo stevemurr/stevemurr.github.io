@@ -1,8 +1,14 @@
 const GITHUB_API_ROOT = "https://github-api-proxy.gh-murr-proxy.workers.dev";
 const LLM_METRICS_API_ROOT = "https://llm-metrics-proxy.gh-murr-proxy.workers.dev";
+const LLM_CHAT_API_ROOT = "https://llm-chat-proxy.gh-murr-proxy.workers.dev";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
 const LLM_METRICS_CACHE_TTL_MS = 60 * 1000; // 1 minute
+const LLM_CHAT_MAX_HISTORY_MESSAGES = 8;
+const LLM_CHAT_TURNSTILE_POLL_MS = 250;
+const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
+const LLM_CHAT_BODY_OPEN_CLASS = "has-llm-chat-open";
+const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a minute.";
 const SVG_NS = "http://www.w3.org/2000/svg";
 const ACTIVITY_EVENT_TYPES = new Set([
   "PushEvent",
@@ -818,6 +824,597 @@ async function loadLLMMetrics(container) {
   }
 }
 
+function isEditableElement(target) {
+  if (!(target instanceof Element)) {
+    return false;
+  }
+
+  return Boolean(target.closest("input, textarea, select, [contenteditable='true'], [contenteditable=''], [role='textbox']"));
+}
+
+function getChatRoleLabel(role) {
+  if (role === "user") {
+    return "You";
+  }
+
+  if (role === "assistant") {
+    return "DGX";
+  }
+
+  return "System";
+}
+
+function createChatMessage(documentRef, role, text, options = {}) {
+  const article = createElement(
+    documentRef,
+    "article",
+    `resume-runtime__chat-message resume-runtime__chat-message--${role}`,
+  );
+
+  if (options.pending) {
+    article.classList.add("resume-runtime__chat-message--pending");
+  }
+
+  if (options.error) {
+    article.classList.add("resume-runtime__chat-message--error");
+  }
+
+  const roleNode = createElement(
+    documentRef,
+    "p",
+    "resume-runtime__chat-message-role",
+    getChatRoleLabel(role),
+  );
+  const copyNode = createElement(
+    documentRef,
+    "p",
+    "resume-runtime__chat-message-copy",
+    typeof text === "string" ? text : "",
+  );
+
+  article.appendChild(roleNode);
+  article.appendChild(copyNode);
+
+  return { article, copyNode };
+}
+
+function scrollChatToBottom(state) {
+  window.requestAnimationFrame(() => {
+    state.messagesContainer.scrollTop = state.messagesContainer.scrollHeight;
+  });
+}
+
+function updateChatSendState(state) {
+  if (!state.sendButton || !state.input) {
+    return;
+  }
+
+  const hasValue = Boolean(state.input.value.trim());
+  state.sendButton.disabled = state.isStreaming || !hasValue;
+}
+
+function setChatFeedback(state, message, tone = "error", retryable = false) {
+  if (!state.feedback || !state.feedbackRow) {
+    return;
+  }
+
+  const text = String(message || "").trim();
+  state.feedbackRow.hidden = !text;
+  state.feedback.hidden = !text;
+  state.feedback.dataset.tone = tone;
+  state.feedback.textContent = text;
+
+  if (state.retryButton) {
+    state.retryButton.hidden = !(retryable && text);
+  }
+}
+
+function resetTurnstile(state) {
+  state.turnstileToken = "";
+
+  if (
+    state.turnstileWidgetId !== null
+    && window.turnstile
+    && typeof window.turnstile.reset === "function"
+  ) {
+    window.turnstile.reset(state.turnstileWidgetId);
+  }
+}
+
+function ensureTurnstileRendered(state, attempt = 0) {
+  if (!state.turnstileContainer || !state.siteKey || state.turnstileWidgetId !== null) {
+    return;
+  }
+
+  if (window.turnstile && typeof window.turnstile.render === "function") {
+    state.turnstileWidgetId = window.turnstile.render(state.turnstileContainer, {
+      sitekey: state.siteKey,
+      theme: "auto",
+      callback(token) {
+        state.turnstileToken = token;
+        setChatFeedback(state, "", "info", false);
+      },
+      "expired-callback"() {
+        state.turnstileToken = "";
+        setChatFeedback(state, "Verification expired. Please confirm again.", "muted", false);
+      },
+      "error-callback"() {
+        state.turnstileToken = "";
+        setChatFeedback(state, "Verification widget failed to load cleanly. Disable blockers and retry.", "error", false);
+      },
+    });
+
+    return;
+  }
+
+  if (attempt >= LLM_CHAT_TURNSTILE_MAX_ATTEMPTS) {
+    setChatFeedback(state, "Verification widget did not load. Disable blockers and reopen chat.", "error", false);
+    return;
+  }
+
+  window.setTimeout(() => {
+    ensureTurnstileRendered(state, attempt + 1);
+  }, LLM_CHAT_TURNSTILE_POLL_MS);
+}
+
+function setChatBusy(state, isBusy) {
+  state.isStreaming = isBusy;
+
+  if (state.root) {
+    state.root.dataset.chatBusy = isBusy ? "true" : "false";
+  }
+
+  if (state.input) {
+    state.input.disabled = isBusy;
+  }
+
+  if (state.stopButton) {
+    state.stopButton.hidden = !isBusy;
+  }
+
+  updateChatSendState(state);
+}
+
+function appendChatMessage(state, role, text, options = {}) {
+  const message = createChatMessage(document, role, text, options);
+  state.messagesContainer.appendChild(message.article);
+  scrollChatToBottom(state);
+  return message;
+}
+
+function removeChatMessage(message) {
+  if (message && message.article && message.article.parentNode) {
+    message.article.parentNode.removeChild(message.article);
+  }
+}
+
+function restoreChatShell(state) {
+  state.messages = [];
+  state.lastRequestSnapshot = null;
+  state.pendingAssistant = null;
+  state.pendingAssistantText = "";
+  state.messagesContainer.innerHTML = state.initialMessagesMarkup;
+  state.input.value = "";
+  setChatFeedback(state, "", "info", false);
+  setChatBusy(state, false);
+  resetTurnstile(state);
+}
+
+function openChat(state) {
+  if (!state.overlay || !state.input) {
+    return;
+  }
+
+  state.overlay.hidden = false;
+  document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
+  state.isOpen = true;
+  ensureTurnstileRendered(state);
+  updateChatSendState(state);
+  window.requestAnimationFrame(() => {
+    state.input.focus({ preventScroll: true });
+  });
+}
+
+function closeChat(state) {
+  if (!state.overlay) {
+    return;
+  }
+
+  if (state.abortController) {
+    state.abortController.abort();
+  }
+
+  state.overlay.hidden = true;
+  document.body.classList.remove(LLM_CHAT_BODY_OPEN_CLASS);
+  state.isOpen = false;
+  restoreChatShell(state);
+}
+
+function getChatRequestMessages(messages) {
+  return messages
+    .slice(-LLM_CHAT_MAX_HISTORY_MESSAGES)
+    .map((entry) => ({
+      role: entry.role,
+      content: entry.content,
+    }));
+}
+
+async function parseChatError(response) {
+  const contentType = response.headers.get("content-type") || "";
+
+  try {
+    if (contentType.includes("application/json")) {
+      const payload = await response.json();
+      if (payload && typeof payload.error === "string") {
+        return payload.error;
+      }
+
+      if (payload && payload.error && typeof payload.error.message === "string") {
+        return payload.error.message;
+      }
+    }
+
+    const text = await response.text();
+    return text || LLM_CHAT_DEFAULT_ERROR;
+  } catch {
+    return LLM_CHAT_DEFAULT_ERROR;
+  }
+}
+
+function parseSSEBlock(block) {
+  const lines = String(block || "").split("\n");
+  let eventName = "message";
+  const dataLines = [];
+
+  lines.forEach((line) => {
+    if (line.startsWith("event:")) {
+      eventName = line.slice("event:".length).trim() || eventName;
+      return;
+    }
+
+    if (line.startsWith("data:")) {
+      dataLines.push(line.slice("data:".length).trimStart());
+    }
+  });
+
+  if (!dataLines.length) {
+    return null;
+  }
+
+  const rawData = dataLines.join("\n");
+
+  if (!rawData) {
+    return { eventName, data: null };
+  }
+
+  try {
+    return {
+      eventName,
+      data: JSON.parse(rawData),
+    };
+  } catch {
+    return {
+      eventName,
+      data: rawData,
+    };
+  }
+}
+
+async function readEventStream(response, onEvent) {
+  if (!response.body) {
+    throw new Error("Streaming response missing body.");
+  }
+
+  const reader = response.body.getReader();
+  const decoder = new TextDecoder();
+  let buffer = "";
+
+  while (true) {
+    const { value, done } = await reader.read();
+
+    buffer += decoder.decode(value || new Uint8Array(), { stream: !done });
+    buffer = buffer.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+
+    let boundaryIndex = buffer.indexOf("\n\n");
+    while (boundaryIndex !== -1) {
+      const rawBlock = buffer.slice(0, boundaryIndex).trim();
+      buffer = buffer.slice(boundaryIndex + 2);
+
+      if (rawBlock) {
+        const parsed = parseSSEBlock(rawBlock);
+        if (parsed) {
+          onEvent(parsed);
+        }
+      }
+
+      boundaryIndex = buffer.indexOf("\n\n");
+    }
+
+    if (done) {
+      break;
+    }
+  }
+
+  const tail = buffer.trim();
+  if (tail) {
+    const parsed = parseSSEBlock(tail);
+    if (parsed) {
+      onEvent(parsed);
+    }
+  }
+}
+
+function markPendingAssistant(state, options = {}) {
+  if (!state.pendingAssistant) {
+    return;
+  }
+
+  state.pendingAssistant.article.classList.remove("resume-runtime__chat-message--pending");
+
+  if (options.error) {
+    state.pendingAssistant.article.classList.add("resume-runtime__chat-message--error");
+  }
+}
+
+async function streamChatRequest(state, requestMessages) {
+  state.lastRequestSnapshot = requestMessages.slice();
+  setChatFeedback(state, "", "info", false);
+  setChatBusy(state, true);
+  state.pendingAssistantText = "";
+  state.pendingAssistant = appendChatMessage(state, "assistant", "Thinking…", { pending: true });
+  state.abortController = new AbortController();
+
+  try {
+    const response = await fetch(`${LLM_CHAT_API_ROOT}/api/chat`, {
+      method: "POST",
+      headers: {
+        Accept: "text/event-stream",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: getChatRequestMessages(requestMessages),
+        captchaToken: state.turnstileToken,
+      }),
+      signal: state.abortController.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseChatError(response));
+    }
+
+    await readEventStream(response, ({ eventName, data }) => {
+      if (eventName === "start") {
+        if (state.pendingAssistant) {
+          state.pendingAssistant.copyNode.textContent = "";
+        }
+        return;
+      }
+
+      if (eventName === "delta") {
+        const text = typeof data === "string"
+          ? data
+          : String((data && data.text) || "");
+
+        if (!text || !state.pendingAssistant) {
+          return;
+        }
+
+        if (!state.pendingAssistantText) {
+          state.pendingAssistant.copyNode.textContent = "";
+        }
+
+        state.pendingAssistantText += text;
+        state.pendingAssistant.copyNode.textContent = state.pendingAssistantText;
+        markPendingAssistant(state, { error: false });
+        scrollChatToBottom(state);
+        return;
+      }
+
+      if (eventName === "error") {
+        const message = typeof data === "string"
+          ? data
+          : String((data && (data.error || data.message)) || LLM_CHAT_DEFAULT_ERROR);
+        throw new Error(message);
+      }
+    });
+
+    markPendingAssistant(state, { error: false });
+
+    if (state.pendingAssistantText.trim()) {
+      state.messages.push({
+        role: "assistant",
+        content: state.pendingAssistantText,
+      });
+    } else {
+      removeChatMessage(state.pendingAssistant);
+      state.pendingAssistant = null;
+      throw new Error("The model returned an empty response.");
+    }
+
+    setChatFeedback(state, "", "info", false);
+  } catch (error) {
+    const aborted = error instanceof Error && error.name === "AbortError";
+    const message = aborted
+      ? "Response stopped."
+      : error instanceof Error && error.message
+        ? error.message
+        : LLM_CHAT_DEFAULT_ERROR;
+
+    if (state.pendingAssistant && !state.pendingAssistantText.trim()) {
+      removeChatMessage(state.pendingAssistant);
+      state.pendingAssistant = null;
+    } else {
+      markPendingAssistant(state, { error: !aborted });
+    }
+
+    if (!state.isOpen) {
+      return;
+    }
+
+    setChatFeedback(state, message, aborted ? "muted" : "error", Boolean(state.lastRequestSnapshot && state.lastRequestSnapshot.length));
+  } finally {
+    state.abortController = null;
+    state.pendingAssistant = null;
+    state.pendingAssistantText = "";
+    setChatBusy(state, false);
+    resetTurnstile(state);
+    updateChatSendState(state);
+
+    if (state.isOpen) {
+      state.input.focus({ preventScroll: true });
+    }
+  }
+}
+
+async function submitChat(state) {
+  const content = state.input.value.trim();
+  if (!content || state.isStreaming) {
+    return;
+  }
+
+  if (!state.turnstileToken) {
+    setChatFeedback(state, "Complete the verification challenge before sending.", "muted", false);
+    return;
+  }
+
+  state.messages.push({
+    role: "user",
+    content,
+  });
+
+  appendChatMessage(state, "user", content);
+  state.input.value = "";
+  updateChatSendState(state);
+
+  await streamChatRequest(state, state.messages);
+}
+
+async function retryChat(state) {
+  if (state.isStreaming || !state.lastRequestSnapshot || !state.lastRequestSnapshot.length) {
+    return;
+  }
+
+  if (!state.turnstileToken) {
+    setChatFeedback(state, "Complete the verification challenge before retrying.", "muted", false);
+    return;
+  }
+
+  await streamChatRequest(state, state.lastRequestSnapshot);
+}
+
+function initializeLLMChat(root) {
+  const overlay = root.querySelector("[data-llm-chat-overlay]");
+  const messagesContainer = root.querySelector("[data-llm-chat-messages]");
+  const feedbackRow = root.querySelector("[data-llm-chat-feedback-row]");
+  const feedback = root.querySelector("[data-llm-chat-feedback]");
+  const form = root.querySelector("[data-llm-chat-form]");
+  const input = root.querySelector("[data-llm-chat-input]");
+  const turnstileContainer = root.querySelector("[data-llm-chat-turnstile]");
+  const sendButton = root.querySelector("[data-llm-chat-send]");
+  const stopButton = root.querySelector("[data-llm-chat-stop]");
+  const retryButton = root.querySelector("[data-llm-chat-retry]");
+  const openButtons = Array.from(root.querySelectorAll("[data-llm-chat-open]"));
+  const closeButtons = Array.from(root.querySelectorAll("[data-llm-chat-close]"));
+  const siteKey = root.dataset.turnstileSiteKey || "";
+
+  if (!overlay || !messagesContainer || !form || !input || !sendButton || !stopButton) {
+    return;
+  }
+
+  const state = {
+    root,
+    overlay,
+    messagesContainer,
+    feedbackRow,
+    feedback,
+    form,
+    input,
+    turnstileContainer,
+    sendButton,
+    stopButton,
+    retryButton,
+    openButtons,
+    closeButtons,
+    siteKey,
+    initialMessagesMarkup: messagesContainer.innerHTML,
+    isOpen: false,
+    isStreaming: false,
+    messages: [],
+    lastRequestSnapshot: null,
+    pendingAssistant: null,
+    pendingAssistantText: "",
+    abortController: null,
+    turnstileWidgetId: null,
+    turnstileToken: "",
+  };
+
+  restoreChatShell(state);
+
+  openButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      openChat(state);
+    });
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      closeChat(state);
+    });
+  });
+
+  if (retryButton) {
+    retryButton.addEventListener("click", () => {
+      retryChat(state);
+    });
+  }
+
+  stopButton.addEventListener("click", () => {
+    if (state.abortController) {
+      state.abortController.abort();
+    }
+  });
+
+  input.addEventListener("input", () => {
+    setChatFeedback(state, "", "info", false);
+    updateChatSendState(state);
+  });
+
+  input.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      submitChat(state);
+    }
+  });
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+    submitChat(state);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    const isShortcut = (event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k";
+    if (isShortcut) {
+      if (!state.isOpen && isEditableElement(event.target)) {
+        return;
+      }
+
+      event.preventDefault();
+      if (state.isOpen) {
+        state.input.focus({ preventScroll: true });
+      } else {
+        openChat(state);
+      }
+
+      return;
+    }
+
+    if (event.key === "Escape" && state.isOpen) {
+      event.preventDefault();
+      closeChat(state);
+    }
+  });
+}
+
 async function loadProjectFeed(container) {
   const username = container.dataset.githubUser;
   const list = container.querySelector("[data-project-list]");
@@ -933,6 +1530,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const llmMetricsContainers = document.querySelectorAll("[data-llm-metrics]");
   llmMetricsContainers.forEach((container) => {
     loadLLMMetrics(container);
+  });
+
+  const llmChatContainers = document.querySelectorAll("[data-llm-chat]");
+  llmChatContainers.forEach((container) => {
+    initializeLLMChat(container);
   });
 
   const recentCommitContainers = document.querySelectorAll("[data-recent-commits]");
