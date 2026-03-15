@@ -132,12 +132,13 @@
 
         <section class="resume-runtime__chat-shell" role="dialog" aria-modal="true" aria-labelledby="llm-chat-title">
           <header class="resume-runtime__chat-header">
-            <div>
-              <p class="section-heading__eyebrow">Ask the DGX</p>
-              <h3 id="llm-chat-title">General chat from my Nemotron box</h3>
-              <p class="resume-runtime__chat-subtitle">
-                Running on DGX Spark through a tiny worker and a pinned LiteLLM route.
-              </p>
+            <div class="resume-runtime__chat-bar">
+              <h3 id="llm-chat-title" class="sr-only">Ask the DGX</h3>
+              <span class="resume-runtime__chat-badge">
+                <span class="resume-runtime__chat-badge-dot" aria-hidden="true"></span>
+                Ask the DGX
+              </span>
+              <span class="resume-runtime__chat-meta">Live on DGX Spark</span>
             </div>
 
             <button class="resume-runtime__chat-close" type="button" aria-label="Close chat" data-llm-chat-close>
@@ -150,10 +151,10 @@
           </header>
 
           <div class="resume-runtime__chat-stream" data-llm-chat-messages>
-            <article class="resume-runtime__chat-message resume-runtime__chat-message--system">
-              <p class="resume-runtime__chat-message-role">System</p>
+            <article class="resume-runtime__chat-message resume-runtime__chat-message--assistant resume-runtime__chat-message--welcome">
+              <p class="resume-runtime__chat-message-role">DGX</p>
               <p class="resume-runtime__chat-message-copy">
-                Ask about anything. This is a public, ephemeral thread and it will not persist after you close the overlay.
+                Ask about local inference, side projects, or anything else.
               </p>
             </article>
           </div>
