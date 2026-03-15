@@ -9,6 +9,8 @@ const LLM_CHAT_TURNSTILE_POLL_MS = 250;
 const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
 const LLM_CHAT_BODY_OPEN_CLASS = "has-llm-chat-open";
 const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a minute.";
+const LLM_CHAT_OPEN_ANIMATION_MS = 260;
+const LLM_CHAT_BACKDROP_ANIMATION_MS = 180;
 const SVG_NS = "http://www.w3.org/2000/svg";
 const ACTIVITY_EVENT_TYPES = new Set([
   "PushEvent",
@@ -838,10 +840,23 @@ function getChatRoleLabel(role) {
   }
 
   if (role === "assistant") {
-    return "DGX";
+    return "nemotron3-nano";
   }
 
   return "System";
+}
+
+function setChatMessageText(message, text) {
+  if (!message || !message.copyNode) {
+    return;
+  }
+
+  const value = typeof text === "string" ? text : "";
+  message.copyNode.textContent = value;
+
+  if (message.article) {
+    message.article.dataset.chatMessageContent = value;
+  }
 }
 
 function createChatMessage(documentRef, role, text, options = {}) {
@@ -850,6 +865,7 @@ function createChatMessage(documentRef, role, text, options = {}) {
     "article",
     `resume-runtime__chat-message resume-runtime__chat-message--${role}`,
   );
+  article.dataset.chatMessageRole = role;
 
   if (options.pending) {
     article.classList.add("resume-runtime__chat-message--pending");
@@ -859,12 +875,48 @@ function createChatMessage(documentRef, role, text, options = {}) {
     article.classList.add("resume-runtime__chat-message--error");
   }
 
-  const roleNode = createElement(
-    documentRef,
-    "p",
-    "resume-runtime__chat-message-role",
-    getChatRoleLabel(role),
-  );
+  if (options.welcome) {
+    article.classList.add("resume-runtime__chat-message--welcome");
+  }
+
+  const showMessageHead = role !== "user";
+  let roleNode = null;
+  let stampNode = null;
+  let actions = null;
+  let copyButton = null;
+  let regenerateButton = null;
+
+  if (showMessageHead) {
+    const head = createElement(documentRef, "div", "resume-runtime__chat-message-head");
+    const avatar = createElement(
+      documentRef,
+      "span",
+      "resume-runtime__chat-avatar",
+      role === "assistant" ? "AI" : "SYS",
+    );
+    avatar.setAttribute("aria-hidden", "true");
+
+    const metaStack = createElement(documentRef, "div", "resume-runtime__chat-meta-stack");
+    roleNode = createElement(
+      documentRef,
+      "p",
+      "resume-runtime__chat-message-role",
+      options.roleLabel || getChatRoleLabel(role),
+    );
+    stampNode = createElement(
+      documentRef,
+      "p",
+      "resume-runtime__chat-message-stamp",
+      options.stamp || (role === "assistant" ? "Live on DGX Spark" : "System"),
+    );
+
+    metaStack.appendChild(roleNode);
+    metaStack.appendChild(stampNode);
+    head.appendChild(avatar);
+    head.appendChild(metaStack);
+    article.appendChild(head);
+  }
+
   const copyNode = createElement(
     documentRef,
     "p",
@@ -872,10 +924,37 @@ function createChatMessage(documentRef, role, text, options = {}) {
     typeof text === "string" ? text : "",
   );
 
-  article.appendChild(roleNode);
   article.appendChild(copyNode);
 
-  return { article, copyNode };
+  if (role === "assistant" && !options.welcome) {
+    actions = createElement(documentRef, "div", "resume-runtime__chat-message-tools");
+    actions.hidden = options.pending || options.hideActions || false;
+
+    copyButton = createElement(documentRef, "button", "resume-runtime__chat-tool", "Copy");
+    copyButton.type = "button";
+    copyButton.setAttribute("data-llm-chat-copy", "");
+
+    regenerateButton = createElement(documentRef, "button", "resume-runtime__chat-tool", "Regenerate");
+    regenerateButton.type = "button";
+    regenerateButton.setAttribute("data-llm-chat-regenerate", "");
+    regenerateButton.hidden = true;
+
+    actions.appendChild(copyButton);
+    actions.appendChild(regenerateButton);
+    article.appendChild(actions);
+  }
+
+  setChatMessageText({ article, copyNode }, text);
+
+  return {
+    article,
+    copyNode,
+    roleNode,
+    stampNode,
+    actions,
+    copyButton,
+    regenerateButton,
+  };
 }
 
 function scrollChatToBottom(state) {
@@ -1022,8 +1101,13 @@ function setChatBusy(state, isBusy) {
 }
 
 function appendChatMessage(state, role, text, options = {}) {
-  const message = createChatMessage(document, role, text, options);
+  const message = createChatMessage(document, role, text, {
+    modelLabel: state.modelLabel,
+    roleLabel: role === "assistant" ? state.modelLabel : options.roleLabel,
+    ...options,
+  });
   state.messagesContainer.appendChild(message.article);
+  updateAssistantMessageActions(state);
   scrollChatToBottom(state);
   return message;
 }
@@ -1046,14 +1130,132 @@ function restoreChatShell(state) {
   resetTurnstile(state);
 }
 
-function openChat(state) {
-  if (!state.overlay || !state.input) {
+function updateAssistantMessageActions(state) {
+  const assistantMessages = Array.from(
+    state.messagesContainer.querySelectorAll(".resume-runtime__chat-message--assistant:not(.resume-runtime__chat-message--welcome)"),
+  );
+
+  assistantMessages.forEach((message, index) => {
+    const actions = message.querySelector(".resume-runtime__chat-message-tools");
+    const regenerateButton = message.querySelector("[data-llm-chat-regenerate]");
+
+    if (actions && message.classList.contains("resume-runtime__chat-message--pending")) {
+      actions.hidden = true;
+    } else if (actions) {
+      actions.hidden = false;
+    }
+
+    if (regenerateButton) {
+      regenerateButton.hidden = index !== assistantMessages.length - 1;
+      regenerateButton.disabled = state.isStreaming;
+    }
+  });
+}
+
+async function copyChatMessage(state, article) {
+  const text = String(article && article.dataset.chatMessageContent || "").trim();
+  if (!text) {
+    return;
+  }
+
+  try {
+    if (navigator.clipboard && typeof navigator.clipboard.writeText === "function") {
+      await navigator.clipboard.writeText(text);
+      setChatFeedback(state, "Copied response.", "muted", false);
+      return;
+    }
+  } catch {
+    // fall through to textarea fallback
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "absolute";
+  textarea.style.left = "-9999px";
+  document.body.appendChild(textarea);
+  textarea.select();
+
+  try {
+    document.execCommand("copy");
+    setChatFeedback(state, "Copied response.", "muted", false);
+  } catch {
+    setChatFeedback(state, "Copy failed. Try selecting the response directly.", "error", false);
+  } finally {
+    document.body.removeChild(textarea);
+  }
+}
+
+function prefersReducedMotion() {
+  return Boolean(
+    window.matchMedia
+    && typeof window.matchMedia === "function"
+    && window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
+}
+
+function animateChatOpen(state, sourceElement) {
+  if (
+    !state.shell
+    || !state.backdrop
+    || !sourceElement
+    || prefersReducedMotion()
+    || typeof state.shell.animate !== "function"
+    || typeof state.backdrop.animate !== "function"
+  ) {
+    return;
+  }
+
+  const sourceRect = sourceElement.getBoundingClientRect();
+  const shellRect = state.shell.getBoundingClientRect();
+
+  if (!sourceRect.width || !sourceRect.height || !shellRect.width || !shellRect.height) {
+    return;
+  }
+
+  const deltaX = (sourceRect.left + (sourceRect.width / 2)) - (shellRect.left + (shellRect.width / 2));
+  const deltaY = (sourceRect.top + (sourceRect.height / 2)) - (shellRect.top + (shellRect.height / 2));
+  const scaleX = Math.max(0.18, Math.min(1, sourceRect.width / shellRect.width));
+  const scaleY = Math.max(0.08, Math.min(1, sourceRect.height / shellRect.height));
+
+  state.backdrop.animate(
+    [
+      { opacity: 0 },
+      { opacity: 1 },
+    ],
+    {
+      duration: LLM_CHAT_BACKDROP_ANIMATION_MS,
+      easing: "ease-out",
+    },
+  );
+
+  state.shell.animate(
+    [
+      {
+        transform: `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`,
+        opacity: 0.3,
+      },
+      {
+        transform: "translate(0, 0) scale(1, 1)",
+        opacity: 1,
+      },
+    ],
+    {
+      duration: LLM_CHAT_OPEN_ANIMATION_MS,
+      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+    },
+  );
+}
+
+function openChat(state, sourceElement = null) {
+  if (!state.overlay || !state.input || state.isOpen) {
     return;
   }
 
   state.overlay.hidden = false;
   document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = true;
+  animateChatOpen(state, sourceElement || state.openButtons[0] || null);
   ensureTurnstileRendered(state);
   updateChatSendState(state);
   window.requestAnimationFrame(() => {
@@ -1200,6 +1402,10 @@ function markPendingAssistant(state, options = {}) {
   if (options.error) {
     state.pendingAssistant.article.classList.add("resume-runtime__chat-message--error");
   }
+
+  if (state.pendingAssistant.actions) {
+    state.pendingAssistant.actions.hidden = Boolean(options.error);
+  }
 }
 
 async function streamChatRequest(state, requestMessages) {
@@ -1231,7 +1437,7 @@ async function streamChatRequest(state, requestMessages) {
     await readEventStream(response, ({ eventName, data }) => {
       if (eventName === "start") {
         if (state.pendingAssistant) {
-          state.pendingAssistant.copyNode.textContent = "";
+          setChatMessageText(state.pendingAssistant, "");
         }
         return;
       }
@@ -1246,12 +1452,13 @@ async function streamChatRequest(state, requestMessages) {
         }
 
         if (!state.pendingAssistantText) {
-          state.pendingAssistant.copyNode.textContent = "";
+          setChatMessageText(state.pendingAssistant, "");
         }
 
         state.pendingAssistantText += text;
-        state.pendingAssistant.copyNode.textContent = state.pendingAssistantText;
+        setChatMessageText(state.pendingAssistant, state.pendingAssistantText);
         markPendingAssistant(state, { error: false });
+        updateAssistantMessageActions(state);
         scrollChatToBottom(state);
         return;
       }
@@ -1267,10 +1474,16 @@ async function streamChatRequest(state, requestMessages) {
     markPendingAssistant(state, { error: false });
 
     if (state.pendingAssistantText.trim()) {
+      if (state.pendingAssistant.actions) {
+        state.pendingAssistant.actions.hidden = false;
+      }
+
       state.messages.push({
         role: "assistant",
         content: state.pendingAssistantText,
       });
+
+      updateAssistantMessageActions(state);
     } else {
       removeChatMessage(state.pendingAssistant);
       state.pendingAssistant = null;
@@ -1304,6 +1517,7 @@ async function streamChatRequest(state, requestMessages) {
     state.pendingAssistantText = "";
     setChatBusy(state, false);
     resetTurnstile(state);
+    updateAssistantMessageActions(state);
     updateChatSendState(state);
 
     if (state.isOpen) {
@@ -1350,6 +1564,8 @@ async function retryChat(state) {
 
 function initializeLLMChat(root) {
   const overlay = root.querySelector("[data-llm-chat-overlay]");
+  const backdrop = root.querySelector(".resume-runtime__chat-backdrop");
+  const shell = root.querySelector(".resume-runtime__chat-shell");
   const messagesContainer = root.querySelector("[data-llm-chat-messages]");
   const feedbackRow = root.querySelector("[data-llm-chat-feedback-row]");
   const feedback = root.querySelector("[data-llm-chat-feedback]");
@@ -1370,6 +1586,8 @@ function initializeLLMChat(root) {
   const state = {
     root,
     overlay,
+    backdrop,
+    shell,
     messagesContainer,
     feedbackRow,
     feedback,
@@ -1382,6 +1600,7 @@ function initializeLLMChat(root) {
     openButtons,
     closeButtons,
     siteKey,
+    modelLabel: root.dataset.chatModel || "nemotron3-nano",
     initialMessagesMarkup: messagesContainer.innerHTML,
     isOpen: false,
     isStreaming: false,
@@ -1402,7 +1621,7 @@ function initializeLLMChat(root) {
 
   openButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      openChat(state);
+      openChat(state, button);
     });
   });
 
@@ -1417,6 +1636,27 @@ function initializeLLMChat(root) {
       retryChat(state);
     });
   }
+
+  messagesContainer.addEventListener("click", (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+    if (!target) {
+      return;
+    }
+
+    const copyButton = target.closest("[data-llm-chat-copy]");
+    if (copyButton) {
+      const article = copyButton.closest(".resume-runtime__chat-message");
+      if (article) {
+        copyChatMessage(state, article);
+      }
+      return;
+    }
+
+    const regenerateButton = target.closest("[data-llm-chat-regenerate]");
+    if (regenerateButton) {
+      retryChat(state);
+    }
+  });
 
   stopButton.addEventListener("click", () => {
     if (state.abortController) {
@@ -1452,7 +1692,7 @@ function initializeLLMChat(root) {
       if (state.isOpen) {
         state.input.focus({ preventScroll: true });
       } else {
-        openChat(state);
+        openChat(state, state.openButtons[0] || null);
       }
 
       return;

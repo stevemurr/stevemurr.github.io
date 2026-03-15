@@ -86,7 +86,6 @@
     <div class="resume-panel__header resume-runtime__header">
       <div class="resume-runtime__heading">
         <p class="section-heading__eyebrow">LLM runtime</p>
-        <h2>Nemotron3 Nano on DGX Spark</h2>
       </div>
 
       <a
@@ -103,29 +102,22 @@
       </a>
     </div>
 
-    <div class="resume-runtime__intro">
-      <p class="resume-runtime__lede">
-        Live inference telemetry from the box running my local <code>nemotron3-nano</code> deployment.
-      </p>
-      <p class="resume-runtime__status" data-llm-status>Fetching the latest hour of traces.</p>
-    </div>
-
     <div
       class="resume-runtime__chat-entry"
       data-llm-chat
       data-turnstile-site-key="0x4AAAAAACrW14YrtriUnK9x"
       data-chat-model="nemotron3-nano">
       <button class="resume-runtime__chat-trigger" type="button" data-llm-chat-open>
-        <span class="resume-runtime__chat-trigger-copy">
-          <strong>Ask the DGX</strong>
-          <span>General chat, streamed live from the box.</span>
+        <span class="resume-runtime__chat-trigger-icon" aria-hidden="true">
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1"
+            viewBox="0 0 24 24" width="16" height="16">
+            <path d="M12 5v14"></path>
+            <path d="M5 12h14"></path>
+          </svg>
         </span>
-        <span class="resume-runtime__chat-trigger-hint">Cmd K</span>
+        <span class="resume-runtime__chat-trigger-placeholder">Ask AI anything...</span>
       </button>
-
-      <p class="resume-runtime__chat-note">
-        Public anonymous chat with per-request limits. Threads stay in-memory and vanish when you close the overlay.
-      </p>
+      <p class="resume-runtime__status sr-only" data-llm-status>Fetching the latest hour of traces.</p>
 
       <div class="resume-runtime__chat-overlay" data-llm-chat-overlay hidden>
         <button class="resume-runtime__chat-backdrop" type="button" aria-label="Close chat" data-llm-chat-close></button>
@@ -134,11 +126,7 @@
           <header class="resume-runtime__chat-header">
             <div class="resume-runtime__chat-bar">
               <h3 id="llm-chat-title" class="sr-only">Ask the DGX</h3>
-              <span class="resume-runtime__chat-badge">
-                <span class="resume-runtime__chat-badge-dot" aria-hidden="true"></span>
-                Ask the DGX
-              </span>
-              <span class="resume-runtime__chat-meta">Live on DGX Spark</span>
+              <span class="resume-runtime__chat-model">nemotron3-nano</span>
             </div>
 
             <button class="resume-runtime__chat-close" type="button" aria-label="Close chat" data-llm-chat-close>
@@ -152,16 +140,22 @@
 
           <div class="resume-runtime__chat-stream" data-llm-chat-messages>
             <article class="resume-runtime__chat-message resume-runtime__chat-message--assistant resume-runtime__chat-message--welcome">
-              <p class="resume-runtime__chat-message-role">DGX</p>
+              <div class="resume-runtime__chat-message-head">
+                <span class="resume-runtime__chat-avatar" aria-hidden="true">AI</span>
+                <div class="resume-runtime__chat-meta-stack">
+                  <p class="resume-runtime__chat-message-role">nemotron3-nano</p>
+                  <p class="resume-runtime__chat-message-stamp">Running on DGX Spark</p>
+                </div>
+              </div>
               <p class="resume-runtime__chat-message-copy">
-                Ask about local inference, side projects, or anything else.
+                Hi. Ask about local inference, side projects, models, infra, or anything else you want to throw at the box.
               </p>
             </article>
           </div>
 
           <div class="resume-runtime__chat-feedback-row" data-llm-chat-feedback-row hidden>
             <p class="resume-runtime__chat-feedback" data-llm-chat-feedback></p>
-            <button class="resume-runtime__chat-retry" type="button" data-llm-chat-retry hidden>Retry</button>
+            <button class="resume-runtime__chat-retry" type="button" data-llm-chat-retry hidden>Regenerate</button>
           </div>
 
           <form class="resume-runtime__chat-form" data-llm-chat-form>
@@ -172,7 +166,7 @@
               data-llm-chat-input
               rows="3"
               maxlength="1200"
-              placeholder="Ask the DGX about local inference, side projects, or anything else."></textarea>
+              placeholder="Send a message"></textarea>
 
             <div class="resume-runtime__chat-actions">
               <div class="resume-runtime__chat-turnstile" data-llm-chat-turnstile></div>
