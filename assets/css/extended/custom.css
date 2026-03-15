@@ -186,12 +186,7 @@ a {
   color: inherit;
 }
 
-body.list .main {
-  max-width: min(var(--main-width), calc(100vw - 24px));
-  padding: clamp(20px, 3vw, 36px);
-}
-
-body:not(.list) .main {
+.main {
   max-width: min(var(--main-width), calc(100vw - 24px));
   padding: clamp(20px, 3vw, 36px);
 }
@@ -1958,8 +1953,7 @@ body:not(.list) .main {
     --radius: 24px;
   }
 
-  body.list .main,
-  body:not(.list) .main {
+  .main {
     max-width: calc(100vw - 12px);
     padding: 18px 14px 28px;
   }
@@ -2080,8 +2074,7 @@ body:not(.list) .main {
 }
 
 @media (max-width: 540px) {
-  body.list .main,
-  body:not(.list) .main {
+  .main {
     max-width: 100vw;
     padding: 14px 10px 24px;
   }

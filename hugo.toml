@@ -11,37 +11,15 @@ theme = 'ResumeFrame'
   pagerSize = 5
 
 [params]
-  defaultTheme = "light"
-  disableThemeToggle = true
   showReadingTime = true
-  showShareButtons = false
-  showPostNavLinks = true
-  showBreadCrumbs = false
-  showCodeCopyButtons = true
-  disableSpecial1stPost = true
-  hideDescription = false
-  mainSections = ["posts"]
 
   [params.assets]
     theme_color = "#f6efe6"
     msapplication_TileColor = "#f6efe6"
 
   [params.profileMode]
-    enabled = true
     title = "Steve Murr"
     subtitle = "Software engineer in San Jose building AI-native products, local-first search systems, and developer tooling."
-
-    [[params.profileMode.buttons]]
-      name = "Writing"
-      url = "/posts/"
-
-    [[params.profileMode.buttons]]
-      name = "GitHub"
-      url = "https://github.com/stevemurr"
-
-  [[params.socialIcons]]
-    name = "github"
-    url = "https://github.com/stevemurr"
 
 [menu]
   [[menu.main]]

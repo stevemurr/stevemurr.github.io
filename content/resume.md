@@ -19,17 +19,7 @@ githubActivity:
   excludeRepos:
     - "stevemurr/stevemurr.github.io"
 projects:
-info:
-  - label: "GitHub"
-    value: "github.com/stevemurr"
-    url: "https://github.com/stevemurr"
-  - label: "Based in"
-    value: "San Jose, California"
 ---
-
-## Snapshot
-
-Software engineer based in San Jose building AI-native products, search systems, and developer tooling. The through-line in my recent work is straightforward: build real software, keep the interesting parts open source, and write clearly about the engineering decisions behind it.
 
 ## Profiles
 
