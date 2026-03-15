@@ -3117,8 +3117,8 @@ body.has-llm-chat-open {
   position: absolute;
   inset: 0;
   border: 0;
-  background: rgba(11, 18, 23, 0.64);
-  backdrop-filter: blur(16px);
+  background: rgba(8, 12, 18, 0.74);
+  backdrop-filter: blur(12px);
 }
 
 .resume-runtime__chat-shell {
@@ -3128,23 +3128,32 @@ body.has-llm-chat-open {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto auto;
   gap: 12px;
-  width: min(100%, 820px);
-  max-height: min(84vh, 720px);
+  width: min(100%, 780px);
+  max-height: min(82vh, 700px);
   padding: 22px;
-  border: 1px solid color-mix(in srgb, var(--accent-cool) 20%, var(--line-strong));
+  border: 1px solid color-mix(in srgb, var(--accent-cool) 18%, var(--line-strong));
   border-radius: 26px;
-  background:
-    radial-gradient(circle at top right, rgba(21, 114, 126, 0.12), transparent 28%),
-    radial-gradient(circle at 14% 0%, rgba(225, 91, 52, 0.12), transparent 24%),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--surface-strong) 96%, var(--card-background) 4%),
-      color-mix(in srgb, var(--card-background) 94%, var(--surface-strong) 6%)
-    );
+  background: color-mix(in srgb, var(--theme) 88%, white 12%);
   box-shadow:
-    0 28px 72px rgba(6, 12, 16, 0.3),
+    0 30px 80px rgba(6, 12, 16, 0.34),
     inset 0 1px 0 rgba(255, 255, 255, 0.18);
   overflow: hidden;
+}
+
+.resume-runtime__chat-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, white 34%, transparent), transparent 26%),
+    radial-gradient(circle at top right, rgba(21, 114, 126, 0.08), transparent 24%);
+}
+
+.resume-runtime__chat-shell > * {
+  position: relative;
+  z-index: 1;
 }
 
 .resume-runtime__chat-header {
@@ -3152,6 +3161,8 @@ body.has-llm-chat-open {
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
+  padding: 2px 2px 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line-subtle) 92%, transparent);
 }
 
 .resume-runtime__chat-header h3 {
@@ -3179,7 +3190,7 @@ body.has-llm-chat-open {
   padding: 0;
   border: 1px solid color-mix(in srgb, var(--line-subtle) 96%, transparent);
   border-radius: 14px;
-  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 96%, var(--theme) 4%);
   color: var(--secondary);
 }
 
@@ -3192,7 +3203,10 @@ body.has-llm-chat-open {
   display: grid;
   gap: 12px;
   min-height: 132px;
-  padding: 2px 6px 2px 2px;
+  padding: 12px;
+  border: 1px solid color-mix(in srgb, var(--line-subtle) 94%, transparent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface-strong) 98%, var(--theme) 2%);
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -3204,9 +3218,8 @@ body.has-llm-chat-open {
   padding: 14px 16px;
   border: 1px solid var(--line-strong);
   border-radius: 20px;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 88%, transparent), color-mix(in srgb, var(--card-background) 92%, transparent)),
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.08), transparent 30%);
+  background: color-mix(in srgb, var(--surface-strong) 98%, var(--theme) 2%);
+  box-shadow: 0 8px 20px rgba(12, 20, 28, 0.05);
 }
 
 .resume-runtime__chat-message--assistant,
@@ -3216,16 +3229,12 @@ body.has-llm-chat-open {
 
 .resume-runtime__chat-message--user {
   margin-left: auto;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--accent-cool) 14%, var(--surface-strong) 86%), color-mix(in srgb, var(--accent-cool) 8%, var(--card-background) 92%)),
-    radial-gradient(circle at top right, rgba(21, 114, 126, 0.16), transparent 34%);
+  background: color-mix(in srgb, var(--accent-cool) 10%, white 90%);
 }
 
 .resume-runtime__chat-message--system {
   width: 100%;
-  background:
-    linear-gradient(180deg, color-mix(in srgb, var(--theme) 22%, transparent), color-mix(in srgb, var(--card-background) 94%, transparent)),
-    radial-gradient(circle at top left, rgba(225, 91, 52, 0.08), transparent 32%);
+  background: color-mix(in srgb, var(--theme) 10%, white 90%);
 }
 
 .resume-runtime__chat-message--pending {
@@ -3259,6 +3268,7 @@ body.has-llm-chat-open {
   justify-content: space-between;
   gap: 12px;
   min-height: 24px;
+  padding: 0 4px;
 }
 
 .resume-runtime__chat-feedback {
@@ -3283,7 +3293,7 @@ body.has-llm-chat-open {
   padding: 8px 12px;
   border: 1px solid color-mix(in srgb, var(--accent-cool) 18%, var(--line-strong));
   border-radius: 999px;
-  background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 96%, var(--theme) 4%);
   color: var(--primary);
   font-size: 0.68rem;
   font-weight: 800;
@@ -3294,8 +3304,10 @@ body.has-llm-chat-open {
 .resume-runtime__chat-form {
   display: grid;
   gap: 10px;
-  padding-top: 12px;
-  border-top: 1px solid color-mix(in srgb, var(--line-subtle) 92%, transparent);
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--line-subtle) 94%, transparent);
+  border-radius: 20px;
+  background: color-mix(in srgb, var(--surface-strong) 98%, var(--theme) 2%);
 }
 
 .resume-runtime__chat-input {
@@ -3305,7 +3317,7 @@ body.has-llm-chat-open {
   padding: 12px 14px;
   border: 1px solid color-mix(in srgb, var(--line-strong) 96%, transparent);
   border-radius: 18px;
-  background: color-mix(in srgb, var(--surface-strong) 94%, var(--card-background) 6%);
+  background: color-mix(in srgb, white 96%, var(--theme) 4%);
   color: var(--primary);
   font: inherit;
   line-height: 1.58;
@@ -3338,6 +3350,7 @@ body.has-llm-chat-open {
   justify-content: flex-start;
   min-height: 0;
   max-width: 320px;
+  padding: 6px 0 0;
 }
 
 .resume-runtime__chat-turnstile:empty {
@@ -3368,7 +3381,7 @@ body.has-llm-chat-open {
 
 .resume-runtime__chat-stop {
   border: 1px solid color-mix(in srgb, var(--line-strong) 96%, transparent);
-  background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 96%, var(--theme) 4%);
   color: var(--secondary);
 }
 
