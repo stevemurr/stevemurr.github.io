@@ -146,21 +146,23 @@
 
           <form class="resume-runtime__chat-form" data-llm-chat-form>
             <label class="sr-only" for="llm-chat-input">Message</label>
-            <textarea
-              id="llm-chat-input"
-              class="resume-runtime__chat-input"
-              data-llm-chat-input
-              rows="2"
-              maxlength="1200"
-              placeholder="Send a message"></textarea>
-
-            <div class="resume-runtime__chat-actions">
-              <div class="resume-runtime__chat-turnstile" data-llm-chat-turnstile></div>
+            <div class="resume-runtime__chat-compose">
+              <textarea
+                id="llm-chat-input"
+                class="resume-runtime__chat-input"
+                data-llm-chat-input
+                rows="1"
+                maxlength="1200"
+                placeholder="Send a message"></textarea>
 
               <div class="resume-runtime__chat-buttons">
                 <button class="resume-runtime__chat-stop" type="button" data-llm-chat-stop hidden>Stop</button>
                 <button class="resume-runtime__chat-send" type="submit" data-llm-chat-send>Send</button>
               </div>
+            </div>
+
+            <div class="resume-runtime__chat-actions">
+              <div class="resume-runtime__chat-turnstile" data-llm-chat-turnstile></div>
             </div>
           </form>
         </section>

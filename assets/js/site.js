@@ -1240,6 +1240,19 @@ function scrollChatToBottom(state) {
   });
 }
 
+function autosizeChatInput(input) {
+  if (!input) {
+    return;
+  }
+
+  input.style.height = "0px";
+
+  const maxHeight = 168;
+  const nextHeight = Math.min(input.scrollHeight, maxHeight);
+  input.style.height = `${Math.max(nextHeight, 24)}px`;
+  input.style.overflowY = input.scrollHeight > maxHeight ? "auto" : "hidden";
+}
+
 function updateChatSendState(state) {
   if (!state.sendButton || !state.input) {
     return;
@@ -1455,6 +1468,7 @@ function restoreChatShell(state) {
   state.pendingThinkingText = "";
   state.messagesContainer.innerHTML = state.initialMessagesMarkup;
   state.input.value = "";
+  autosizeChatInput(state.input);
   setChatFeedback(state, "", "info", false);
   setChatBusy(state, false);
   resetTurnstile(state);
@@ -1601,6 +1615,7 @@ function openChat(state, sourceElement = null) {
   state.isOpen = true;
   animateChatOpen(state, state.lastOpenSourceElement);
   ensureTurnstileRendered(state);
+  autosizeChatInput(state.input);
   updateChatSendState(state);
   window.requestAnimationFrame(() => {
     state.input.focus({ preventScroll: true });
@@ -1978,6 +1993,7 @@ async function submitChat(state) {
 
   appendChatMessage(state, "user", content);
   state.input.value = "";
+  autosizeChatInput(state.input);
   updateChatSendState(state);
 
   await streamChatRequest(state, state.messages);
@@ -2055,6 +2071,7 @@ function initializeLLMChat(root) {
   }
 
   restoreChatShell(state);
+  autosizeChatInput(input);
 
   openButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -2109,6 +2126,7 @@ function initializeLLMChat(root) {
   });
 
   input.addEventListener("input", () => {
+    autosizeChatInput(input);
     setChatFeedback(state, "", "info", false);
     updateChatSendState(state);
   });
