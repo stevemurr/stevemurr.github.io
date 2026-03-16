@@ -3349,8 +3349,98 @@ body.has-llm-chat-open {
   color: #1c2732;
   font-size: 1rem;
   line-height: 1.7;
-  white-space: pre-wrap;
   overflow-wrap: anywhere;
+}
+
+.resume-runtime__chat-message-copy > :first-child {
+  margin-top: 0;
+}
+
+.resume-runtime__chat-message-copy > :last-child {
+  margin-bottom: 0;
+}
+
+.resume-runtime__chat-message-copy p,
+.resume-runtime__chat-message-copy ul,
+.resume-runtime__chat-message-copy ol,
+.resume-runtime__chat-message-copy pre,
+.resume-runtime__chat-message-copy blockquote,
+.resume-runtime__chat-message-copy h1,
+.resume-runtime__chat-message-copy h2,
+.resume-runtime__chat-message-copy h3,
+.resume-runtime__chat-message-copy h4 {
+  margin: 0 0 0.95em;
+}
+
+.resume-runtime__chat-message-copy h1,
+.resume-runtime__chat-message-copy h2,
+.resume-runtime__chat-message-copy h3,
+.resume-runtime__chat-message-copy h4 {
+  color: #17222d;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+}
+
+.resume-runtime__chat-message-copy h1 {
+  font-size: 1.4rem;
+}
+
+.resume-runtime__chat-message-copy h2 {
+  font-size: 1.28rem;
+}
+
+.resume-runtime__chat-message-copy h3 {
+  font-size: 1.14rem;
+}
+
+.resume-runtime__chat-message-copy h4 {
+  font-size: 1.04rem;
+}
+
+.resume-runtime__chat-message-copy ul,
+.resume-runtime__chat-message-copy ol {
+  padding-left: 1.3em;
+}
+
+.resume-runtime__chat-message-copy li + li {
+  margin-top: 0.42em;
+}
+
+.resume-runtime__chat-message-copy code {
+  padding: 0.12em 0.4em;
+  border-radius: 8px;
+  background: #eef3f6;
+  color: #1b2732;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.resume-runtime__chat-message-copy pre {
+  overflow: auto;
+  padding: 14px 16px;
+  border: 1px solid #dce5eb;
+  border-radius: 16px;
+  background: #f7f9fb;
+}
+
+.resume-runtime__chat-message-copy pre code {
+  padding: 0;
+  background: transparent;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.resume-runtime__chat-message-copy a {
+  color: #0f6d7f;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.14em;
+}
+
+.resume-runtime__chat-message-copy blockquote {
+  padding-left: 14px;
+  border-left: 3px solid #d8e2e9;
+  color: #526170;
 }
 
 .resume-runtime__chat-message--assistant .resume-runtime__chat-message-copy,
@@ -3362,6 +3452,7 @@ body.has-llm-chat-open {
 
 .resume-runtime__chat-message--user .resume-runtime__chat-message-copy {
   color: #1d2935;
+  white-space: pre-wrap;
 }
 
 .resume-runtime__chat-message-tools {
@@ -3394,7 +3485,7 @@ body.has-llm-chat-open {
 .resume-runtime__chat-feedback-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 12px;
   min-height: 24px;
   padding: 6px 28px 0;

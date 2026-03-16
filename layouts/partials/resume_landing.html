@@ -87,19 +87,6 @@
       <div class="resume-runtime__heading">
         <p class="section-heading__eyebrow">LLM runtime</p>
       </div>
-
-      <a
-        class="resume-runtime__dashboard"
-        href="https://gra.auto2putt.com/d/vllm-nemotron3/vllm-e28094-nemotron3-nano"
-        rel="noopener">
-        Full dashboard
-        <svg fill="none" shape-rendering="geometricPrecision" stroke="currentColor" stroke-linecap="round"
-          stroke-linejoin="round" stroke-width="2.2" viewBox="0 0 24 24" height="14" width="14" aria-hidden="true">
-          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"></path>
-          <path d="M15 3h6v6"></path>
-          <path d="M10 14L21 3"></path>
-        </svg>
-      </a>
     </div>
 
     <div
@@ -147,15 +134,14 @@
                   <p class="resume-runtime__chat-message-stamp">Running on DGX Spark</p>
                 </div>
               </div>
-              <p class="resume-runtime__chat-message-copy">
+              <div class="resume-runtime__chat-message-copy">
                 Hi. Ask about local inference, side projects, models, infra, or anything else you want to throw at the box.
-              </p>
+              </div>
             </article>
           </div>
 
           <div class="resume-runtime__chat-feedback-row" data-llm-chat-feedback-row hidden>
             <p class="resume-runtime__chat-feedback" data-llm-chat-feedback></p>
-            <button class="resume-runtime__chat-retry" type="button" data-llm-chat-retry hidden>Regenerate</button>
           </div>
 
           <form class="resume-runtime__chat-form" data-llm-chat-form>

@@ -846,13 +846,217 @@ function getChatRoleLabel(role) {
   return "System";
 }
 
+function appendInlineMarkdown(documentRef, parent, text) {
+  const source = String(text || "");
+  const pattern = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|`([^`\n]+)`|\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\n]+)\*|_([^_\n]+)_)/g;
+  let lastIndex = 0;
+  let match = pattern.exec(source);
+
+  while (match) {
+    if (match.index > lastIndex) {
+      parent.appendChild(documentRef.createTextNode(source.slice(lastIndex, match.index)));
+    }
+
+    if (match[2] && match[3]) {
+      const link = documentRef.createElement("a");
+      link.href = match[3];
+      link.rel = "noopener noreferrer nofollow";
+      link.target = "_blank";
+      appendInlineMarkdown(documentRef, link, match[2]);
+      parent.appendChild(link);
+    } else if (match[4]) {
+      const code = documentRef.createElement("code");
+      code.textContent = match[4];
+      parent.appendChild(code);
+    } else if (match[5] || match[6]) {
+      const strong = documentRef.createElement("strong");
+      appendInlineMarkdown(documentRef, strong, match[5] || match[6]);
+      parent.appendChild(strong);
+    } else if (match[7] || match[8]) {
+      const emphasis = documentRef.createElement("em");
+      appendInlineMarkdown(documentRef, emphasis, match[7] || match[8]);
+      parent.appendChild(emphasis);
+    }
+
+    lastIndex = pattern.lastIndex;
+    match = pattern.exec(source);
+  }
+
+  if (lastIndex < source.length) {
+    parent.appendChild(documentRef.createTextNode(source.slice(lastIndex)));
+  }
+}
+
+function appendParagraphLines(documentRef, parent, lines) {
+  const paragraph = documentRef.createElement("p");
+  lines.forEach((line, index) => {
+    if (index > 0) {
+      paragraph.appendChild(documentRef.createElement("br"));
+    }
+    appendInlineMarkdown(documentRef, paragraph, line);
+  });
+  parent.appendChild(paragraph);
+}
+
+function collectMarkdownBlock(lines, startIndex, matcher) {
+  const collected = [];
+  let index = startIndex;
+
+  while (index < lines.length) {
+    const line = lines[index];
+    if (!line.trim()) {
+      break;
+    }
+
+    const match = line.match(matcher);
+    if (!match) {
+      break;
+    }
+
+    collected.push(match);
+    index += 1;
+  }
+
+  return { collected, nextIndex: index };
+}
+
+function buildMarkdownFragment(documentRef, text) {
+  const fragment = documentRef.createDocumentFragment();
+  const lines = String(text || "")
+    .replace(/\r\n/g, "\n")
+    .replace(/\r/g, "\n")
+    .split("\n");
+  let index = 0;
+
+  while (index < lines.length) {
+    const rawLine = lines[index];
+    const line = rawLine.trimEnd();
+
+    if (!line.trim()) {
+      index += 1;
+      continue;
+    }
+
+    const codeFenceMatch = line.match(/^```([\w-]+)?\s*$/);
+    if (codeFenceMatch) {
+      const codeLines = [];
+      index += 1;
+
+      while (index < lines.length && !lines[index].trim().match(/^```/)) {
+        codeLines.push(lines[index]);
+        index += 1;
+      }
+
+      if (index < lines.length) {
+        index += 1;
+      }
+
+      const pre = documentRef.createElement("pre");
+      const code = documentRef.createElement("code");
+      if (codeFenceMatch[1]) {
+        code.dataset.language = codeFenceMatch[1];
+      }
+      code.textContent = codeLines.join("\n");
+      pre.appendChild(code);
+      fragment.appendChild(pre);
+      continue;
+    }
+
+    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    if (headingMatch) {
+      const heading = documentRef.createElement(`h${headingMatch[1].length}`);
+      appendInlineMarkdown(documentRef, heading, headingMatch[2].trim());
+      fragment.appendChild(heading);
+      index += 1;
+      continue;
+    }
+
+    const unorderedList = collectMarkdownBlock(lines, index, /^\s*[-*+]\s+(.+)$/);
+    if (unorderedList.collected.length) {
+      const list = documentRef.createElement("ul");
+      unorderedList.collected.forEach((match) => {
+        const item = documentRef.createElement("li");
+        appendInlineMarkdown(documentRef, item, match[1].trim());
+        list.appendChild(item);
+      });
+      fragment.appendChild(list);
+      index = unorderedList.nextIndex;
+      continue;
+    }
+
+    const orderedList = collectMarkdownBlock(lines, index, /^\s*\d+\.\s+(.+)$/);
+    if (orderedList.collected.length) {
+      const list = documentRef.createElement("ol");
+      orderedList.collected.forEach((match) => {
+        const item = documentRef.createElement("li");
+        appendInlineMarkdown(documentRef, item, match[1].trim());
+        list.appendChild(item);
+      });
+      fragment.appendChild(list);
+      index = orderedList.nextIndex;
+      continue;
+    }
+
+    const blockquote = collectMarkdownBlock(lines, index, /^\s*>\s?(.+)$/);
+    if (blockquote.collected.length) {
+      const quote = documentRef.createElement("blockquote");
+      appendParagraphLines(
+        documentRef,
+        quote,
+        blockquote.collected.map((match) => match[1].trim()),
+      );
+      fragment.appendChild(quote);
+      index = blockquote.nextIndex;
+      continue;
+    }
+
+    const paragraphLines = [];
+    while (index < lines.length) {
+      const paragraphLine = lines[index];
+      const trimmed = paragraphLine.trim();
+      if (
+        !trimmed
+        || /^```/.test(trimmed)
+        || /^(#{1,6})\s+/.test(trimmed)
+        || /^\s*[-*+]\s+/.test(trimmed)
+        || /^\s*\d+\.\s+/.test(trimmed)
+        || /^\s*>\s?/.test(trimmed)
+      ) {
+        break;
+      }
+
+      paragraphLines.push(paragraphLine.trimEnd());
+      index += 1;
+    }
+
+    if (paragraphLines.length) {
+      appendParagraphLines(documentRef, fragment, paragraphLines);
+      continue;
+    }
+
+    index += 1;
+  }
+
+  return fragment;
+}
+
 function setChatMessageText(message, text) {
   if (!message || !message.copyNode) {
     return;
   }
 
   const value = typeof text === "string" ? text : "";
-  message.copyNode.textContent = value;
+  message.copyNode.replaceChildren();
+
+  const role = message.article && message.article.dataset
+    ? message.article.dataset.chatMessageRole
+    : "";
+
+  if (role === "assistant" || role === "system") {
+    message.copyNode.appendChild(buildMarkdownFragment(document, value));
+  } else {
+    message.copyNode.textContent = value;
+  }
 
   if (message.article) {
     message.article.dataset.chatMessageContent = value;
@@ -919,7 +1123,7 @@ function createChatMessage(documentRef, role, text, options = {}) {
 
   const copyNode = createElement(
     documentRef,
-    "p",
+    "div",
     "resume-runtime__chat-message-copy",
     typeof text === "string" ? text : "",
   );
@@ -1194,6 +1398,26 @@ function prefersReducedMotion() {
   );
 }
 
+function getChatAnimationMetrics(state, sourceElement) {
+  if (!state.shell || !sourceElement) {
+    return null;
+  }
+
+  const sourceRect = sourceElement.getBoundingClientRect();
+  const shellRect = state.shell.getBoundingClientRect();
+
+  if (!sourceRect.width || !sourceRect.height || !shellRect.width || !shellRect.height) {
+    return null;
+  }
+
+  return {
+    deltaX: (sourceRect.left + (sourceRect.width / 2)) - (shellRect.left + (shellRect.width / 2)),
+    deltaY: (sourceRect.top + (sourceRect.height / 2)) - (shellRect.top + (shellRect.height / 2)),
+    scaleX: Math.max(0.18, Math.min(1, sourceRect.width / shellRect.width)),
+    scaleY: Math.max(0.08, Math.min(1, sourceRect.height / shellRect.height)),
+  };
+}
+
 function animateChatOpen(state, sourceElement) {
   if (
     !state.shell
@@ -1206,17 +1430,10 @@ function animateChatOpen(state, sourceElement) {
     return;
   }
 
-  const sourceRect = sourceElement.getBoundingClientRect();
-  const shellRect = state.shell.getBoundingClientRect();
-
-  if (!sourceRect.width || !sourceRect.height || !shellRect.width || !shellRect.height) {
+  const metrics = getChatAnimationMetrics(state, sourceElement);
+  if (!metrics) {
     return;
   }
-
-  const deltaX = (sourceRect.left + (sourceRect.width / 2)) - (shellRect.left + (shellRect.width / 2));
-  const deltaY = (sourceRect.top + (sourceRect.height / 2)) - (shellRect.top + (shellRect.height / 2));
-  const scaleX = Math.max(0.18, Math.min(1, sourceRect.width / shellRect.width));
-  const scaleY = Math.max(0.08, Math.min(1, sourceRect.height / shellRect.height));
 
   state.backdrop.animate(
     [
@@ -1232,7 +1449,7 @@ function animateChatOpen(state, sourceElement) {
   state.shell.animate(
     [
       {
-        transform: `translate(${deltaX}px, ${deltaY}px) scale(${scaleX}, ${scaleY})`,
+        transform: `translate(${metrics.deltaX}px, ${metrics.deltaY}px) scale(${metrics.scaleX}, ${metrics.scaleY})`,
         opacity: 0.3,
       },
       {
@@ -1248,14 +1465,15 @@ function animateChatOpen(state, sourceElement) {
 }
 
 function openChat(state, sourceElement = null) {
-  if (!state.overlay || !state.input || state.isOpen) {
+  if (!state.overlay || !state.input || state.isOpen || state.isClosing) {
     return;
   }
 
+  state.lastOpenSourceElement = sourceElement || state.openButtons[0] || null;
   state.overlay.hidden = false;
   document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = true;
-  animateChatOpen(state, sourceElement || state.openButtons[0] || null);
+  animateChatOpen(state, state.lastOpenSourceElement);
   ensureTurnstileRendered(state);
   updateChatSendState(state);
   window.requestAnimationFrame(() => {
@@ -1264,7 +1482,7 @@ function openChat(state, sourceElement = null) {
 }
 
 function closeChat(state) {
-  if (!state.overlay) {
+  if (!state.overlay || state.isClosing) {
     return;
   }
 
@@ -1272,10 +1490,67 @@ function closeChat(state) {
     state.abortController.abort();
   }
 
-  state.overlay.hidden = true;
-  document.body.classList.remove(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = false;
-  restoreChatShell(state);
+  state.isClosing = true;
+
+  const finishClose = () => {
+    state.overlay.hidden = true;
+    document.body.classList.remove(LLM_CHAT_BODY_OPEN_CLASS);
+    state.isClosing = false;
+    restoreChatShell(state);
+  };
+
+  if (
+    !state.shell
+    || !state.backdrop
+    || !state.lastOpenSourceElement
+    || prefersReducedMotion()
+    || typeof state.shell.animate !== "function"
+    || typeof state.backdrop.animate !== "function"
+  ) {
+    finishClose();
+    return;
+  }
+
+  const metrics = getChatAnimationMetrics(state, state.lastOpenSourceElement);
+  if (!metrics) {
+    finishClose();
+    return;
+  }
+
+  const backdropAnimation = state.backdrop.animate(
+    [
+      { opacity: 1 },
+      { opacity: 0 },
+    ],
+    {
+      duration: LLM_CHAT_BACKDROP_ANIMATION_MS,
+      easing: "ease-in",
+      fill: "forwards",
+    },
+  );
+
+  const shellAnimation = state.shell.animate(
+    [
+      {
+        transform: "translate(0, 0) scale(1, 1)",
+        opacity: 1,
+      },
+      {
+        transform: `translate(${metrics.deltaX}px, ${metrics.deltaY}px) scale(${metrics.scaleX}, ${metrics.scaleY})`,
+        opacity: 0.3,
+      },
+    ],
+    {
+      duration: LLM_CHAT_OPEN_ANIMATION_MS,
+      easing: "cubic-bezier(0.64, 0, 0.78, 0)",
+      fill: "forwards",
+    },
+  );
+
+  Promise.allSettled([backdropAnimation.finished, shellAnimation.finished]).finally(() => {
+    finishClose();
+  });
 }
 
 function getChatRequestMessages(messages) {
@@ -1603,9 +1878,11 @@ function initializeLLMChat(root) {
     modelLabel: root.dataset.chatModel || "nemotron3-nano",
     initialMessagesMarkup: messagesContainer.innerHTML,
     isOpen: false,
+    isClosing: false,
     isStreaming: false,
     messages: [],
     lastRequestSnapshot: null,
+    lastOpenSourceElement: openButtons[0] || null,
     pendingAssistant: null,
     pendingAssistantText: "",
     abortController: null,
