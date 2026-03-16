@@ -364,13 +364,22 @@
 
   {{- $scratch := newScratch }}
   {{- range site.RegularPages }}
+  {{- if ne .RelPermalink $page.RelPermalink }}
   {{- $postProjects := .Params.projects | default slice }}
   {{- if gt (len $postProjects) 0 }}
   {{- $entry := dict "title" .Title "url" .RelPermalink "date" (.Date.Format "Jan 2, 2006") }}
   {{- range $postProjects }}
-  {{- $repo := lower (trim . " ") }}
+  {{- $repo := "" }}
+  {{- if eq (printf "%T" .) "string" }}
+  {{- $repo = lower (trim . " ") }}
+  {{- else }}
+  {{- $repo = lower (trim (default "" .repo) " ") }}
+  {{- end }}
+  {{- if $repo }}
   {{- $existing := $scratch.Get $repo | default slice }}
   {{- $scratch.Set $repo ($existing | append $entry) }}
+  {{- end }}
+  {{- end }}
   {{- end }}
   {{- end }}
   {{- end }}

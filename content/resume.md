@@ -19,6 +19,10 @@ githubActivity:
   excludeRepos:
     - "stevemurr/stevemurr.github.io"
 projects:
+  - name: "Tic-Tac-Uh-Oh"
+    repo: "stevemurr/tic-tac-uh-oh"
+    summary: "Tic-Tac-Toe Really Bro?"
+    pinned: true
 ---
 
 ## Profiles
