@@ -1581,6 +1581,72 @@ function getChatAnimationMetrics(state, sourceElement) {
   };
 }
 
+function clearChatAnimatedStyles(state) {
+  if (state.shell) {
+    state.shell.style.transform = "";
+    state.shell.style.opacity = "";
+  }
+
+  if (state.backdrop) {
+    state.backdrop.style.opacity = "";
+  }
+}
+
+function clearChatAnimationRef(state, key, animation) {
+  if (state[key] === animation) {
+    state[key] = null;
+  }
+}
+
+function trackChatAnimation(state, key, animation) {
+  state[key] = animation;
+
+  Promise.resolve(animation.finished)
+    .catch(() => {
+      // Cancellation is part of the normal lifecycle here.
+    })
+    .finally(() => {
+      clearChatAnimationRef(state, key, animation);
+    });
+
+  return animation;
+}
+
+function cancelElementAnimations(element) {
+  if (!element || typeof element.getAnimations !== "function") {
+    return;
+  }
+
+  element.getAnimations().forEach((animation) => {
+    try {
+      animation.cancel();
+    } catch {
+      // Ignore already-finished animations.
+    }
+  });
+}
+
+function resetChatAnimations(state) {
+  [
+    ["shellAnimation", state.shellAnimation],
+    ["backdropAnimation", state.backdropAnimation],
+  ].forEach(([key, animation]) => {
+    if (animation && typeof animation.cancel === "function") {
+      try {
+        animation.cancel();
+      } catch {
+        // Ignore already-finished animations.
+      }
+    }
+
+    clearChatAnimationRef(state, key, animation);
+  });
+
+  cancelElementAnimations(state.shell);
+  cancelElementAnimations(state.backdrop);
+  clearChatAnimatedStyles(state);
+}
+
 function animateChatOpen(state, sourceElement) {
   if (
     !state.shell
@@ -1598,7 +1664,7 @@ function animateChatOpen(state, sourceElement) {
     return;
   }
 
-  state.backdrop.animate(
+  trackChatAnimation(state, "backdropAnimation", state.backdrop.animate(
     [
       { opacity: 0 },
       { opacity: 1 },
@@ -1607,9 +1673,9 @@ function animateChatOpen(state, sourceElement) {
       duration: LLM_CHAT_BACKDROP_ANIMATION_MS,
       easing: "ease-out",
     },
-  );
+  ));
 
-  state.shell.animate(
+  trackChatAnimation(state, "shellAnimation", state.shell.animate(
     [
       {
         transform: `translate(${metrics.deltaX}px, ${metrics.deltaY}px) scale(${metrics.scaleX}, ${metrics.scaleY})`,
@@ -1624,7 +1690,7 @@ function animateChatOpen(state, sourceElement) {
       duration: LLM_CHAT_OPEN_ANIMATION_MS,
       easing: "cubic-bezier(0.22, 1, 0.36, 1)",
     },
-  );
+  ));
 }
 
 function openChat(state, sourceElement = null) {
@@ -1633,6 +1699,7 @@ function openChat(state, sourceElement = null) {
   }
 
   state.lastOpenSourceElement = sourceElement || state.openButtons[0] || null;
+  resetChatAnimations(state);
   state.overlay.hidden = false;
   document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = true;
@@ -1659,6 +1726,7 @@ function closeChat(state) {
 
   const finishClose = () => {
     state.overlay.hidden = true;
+    resetChatAnimations(state);
     document.body.classList.remove(LLM_CHAT_BODY_OPEN_CLASS);
     state.isClosing = false;
     restoreChatShell(state);
@@ -1676,13 +1744,15 @@ function closeChat(state) {
     return;
   }
 
+  resetChatAnimations(state);
+
   const metrics = getChatAnimationMetrics(state, state.lastOpenSourceElement);
   if (!metrics) {
     finishClose();
     return;
   }
 
-  const backdropAnimation = state.backdrop.animate(
+  const backdropAnimation = trackChatAnimation(state, "backdropAnimation", state.backdrop.animate(
     [
       { opacity: 1 },
       { opacity: 0 },
@@ -1692,9 +1762,9 @@ function closeChat(state) {
       easing: "ease-in",
       fill: "forwards",
     },
-  );
+  ));
 
-  const shellAnimation = state.shell.animate(
+  const shellAnimation = trackChatAnimation(state, "shellAnimation", state.shell.animate(
     [
       {
         transform: "translate(0, 0) scale(1, 1)",
@@ -1710,7 +1780,7 @@ function closeChat(state) {
       easing: "cubic-bezier(0.64, 0, 0.78, 0)",
       fill: "forwards",
     },
-  );
+  ));
 
   Promise.allSettled([backdropAnimation.finished, shellAnimation.finished]).finally(() => {
     finishClose();
@@ -2081,6 +2151,8 @@ function initializeLLMChat(root) {
     messages: [],
     lastRequestSnapshot: null,
     lastOpenSourceElement: openButtons[0] || null,
+    shellAnimation: null,
+    backdropAnimation: null,
     pendingAssistant: null,
     pendingAssistantText: "",
     pendingThinkingText: "",

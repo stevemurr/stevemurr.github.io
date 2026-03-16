@@ -3237,6 +3237,9 @@ body.has-llm-chat-open {
   border: 0;
   background: var(--chat-backdrop);
   backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .resume-runtime__chat-shell {
@@ -3253,6 +3256,8 @@ body.has-llm-chat-open {
   background: var(--chat-shell-background);
   box-shadow: var(--chat-shell-shadow);
   overflow: hidden;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
 .resume-runtime__chat-shell::before {
