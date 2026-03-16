@@ -1304,6 +1304,47 @@ function setChatBusy(state, isBusy) {
   updateChatSendState(state);
 }
 
+function setChatThinking(state, message = "", visible = false) {
+  if (!state.thinkingBanner || !state.thinkingCopy) {
+    return;
+  }
+
+  const text = String(message || "").trim();
+  state.thinkingBanner.hidden = !visible;
+
+  if (visible) {
+    state.thinkingCopy.textContent = text || "Reasoning through your prompt…";
+  } else {
+    state.thinkingCopy.textContent = "Reasoning through your prompt…";
+  }
+}
+
+function extractThinkingText(data) {
+  if (typeof data === "string") {
+    return data;
+  }
+
+  if (!data || typeof data !== "object") {
+    return "";
+  }
+
+  const candidates = [
+    data.text,
+    data.thinking,
+    data.reasoning,
+    data.trace,
+    data.message,
+  ];
+
+  for (const candidate of candidates) {
+    if (typeof candidate === "string" && candidate.trim()) {
+      return candidate;
+    }
+  }
+
+  return "";
+}
+
 function appendChatMessage(state, role, text, options = {}) {
   const message = createChatMessage(document, role, text, {
     modelLabel: state.modelLabel,
@@ -1327,8 +1368,10 @@ function restoreChatShell(state) {
   state.lastRequestSnapshot = null;
   state.pendingAssistant = null;
   state.pendingAssistantText = "";
+  state.pendingThinkingText = "";
   state.messagesContainer.innerHTML = state.initialMessagesMarkup;
   state.input.value = "";
+  setChatThinking(state, "", false);
   setChatFeedback(state, "", "info", false);
   setChatBusy(state, false);
   resetTurnstile(state);
@@ -1687,8 +1730,10 @@ async function streamChatRequest(state, requestMessages) {
   state.lastRequestSnapshot = requestMessages.slice();
   setChatFeedback(state, "", "info", false);
   setChatBusy(state, true);
+  state.pendingThinkingText = "";
+  setChatThinking(state, "Reasoning through your prompt…", true);
   state.pendingAssistantText = "";
-  state.pendingAssistant = appendChatMessage(state, "assistant", "Thinking…", { pending: true });
+  state.pendingAssistant = null;
   state.abortController = new AbortController();
 
   try {
@@ -1711,9 +1756,18 @@ async function streamChatRequest(state, requestMessages) {
 
     await readEventStream(response, ({ eventName, data }) => {
       if (eventName === "start") {
-        if (state.pendingAssistant) {
-          setChatMessageText(state.pendingAssistant, "");
+        setChatThinking(state, state.pendingThinkingText || "Reasoning through your prompt…", true);
+        return;
+      }
+
+      if (eventName === "thinking" || eventName === "reasoning") {
+        const text = extractThinkingText(data);
+        if (!text) {
+          return;
         }
+
+        state.pendingThinkingText += text;
+        setChatThinking(state, state.pendingThinkingText, true);
         return;
       }
 
@@ -1723,8 +1777,16 @@ async function streamChatRequest(state, requestMessages) {
           : String((data && data.text) || "");
 
         if (!text || !state.pendingAssistant) {
-          return;
+          if (!text) {
+            return;
+          }
         }
+
+        if (!state.pendingAssistant) {
+          state.pendingAssistant = appendChatMessage(state, "assistant", "", { pending: true });
+        }
+
+        setChatThinking(state, "", false);
 
         if (!state.pendingAssistantText) {
           setChatMessageText(state.pendingAssistant, "");
@@ -1747,6 +1809,7 @@ async function streamChatRequest(state, requestMessages) {
     });
 
     markPendingAssistant(state, { error: false });
+    setChatThinking(state, "", false);
 
     if (state.pendingAssistantText.trim()) {
       if (state.pendingAssistant.actions) {
@@ -1785,11 +1848,14 @@ async function streamChatRequest(state, requestMessages) {
       return;
     }
 
+    setChatThinking(state, "", false);
     setChatFeedback(state, message, aborted ? "muted" : "error", Boolean(state.lastRequestSnapshot && state.lastRequestSnapshot.length));
   } finally {
     state.abortController = null;
     state.pendingAssistant = null;
     state.pendingAssistantText = "";
+    state.pendingThinkingText = "";
+    setChatThinking(state, "", false);
     setChatBusy(state, false);
     resetTurnstile(state);
     updateAssistantMessageActions(state);
@@ -1841,6 +1907,8 @@ function initializeLLMChat(root) {
   const overlay = root.querySelector("[data-llm-chat-overlay]");
   const backdrop = root.querySelector(".resume-runtime__chat-backdrop");
   const shell = root.querySelector(".resume-runtime__chat-shell");
+  const thinkingBanner = root.querySelector("[data-llm-chat-thinking]");
+  const thinkingCopy = root.querySelector("[data-llm-chat-thinking-copy]");
   const messagesContainer = root.querySelector("[data-llm-chat-messages]");
   const feedbackRow = root.querySelector("[data-llm-chat-feedback-row]");
   const feedback = root.querySelector("[data-llm-chat-feedback]");
@@ -1863,6 +1931,8 @@ function initializeLLMChat(root) {
     overlay,
     backdrop,
     shell,
+    thinkingBanner,
+    thinkingCopy,
     messagesContainer,
     feedbackRow,
     feedback,
@@ -1885,6 +1955,7 @@ function initializeLLMChat(root) {
     lastOpenSourceElement: openButtons[0] || null,
     pendingAssistant: null,
     pendingAssistantText: "",
+    pendingThinkingText: "",
     abortController: null,
     turnstileWidgetId: null,
     turnstileToken: "",
