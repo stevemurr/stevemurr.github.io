@@ -3570,8 +3570,8 @@ body.has-llm-chat-open {
   align-items: center;
   justify-content: flex-start;
   gap: 12px;
-  min-height: 24px;
-  padding: 6px 28px 0;
+  min-height: 20px;
+  padding: 4px 24px 0;
   background: #fff;
 }
 
@@ -3607,23 +3607,23 @@ body.has-llm-chat-open {
 
 .resume-runtime__chat-form {
   display: grid;
-  gap: 12px;
-  padding: 16px 20px 20px;
+  gap: 10px;
+  padding: 12px 16px 14px;
   border-top: 1px solid #e7edf2;
   background: #fff;
 }
 
 .resume-runtime__chat-input {
   width: 100%;
-  min-height: 96px;
-  max-height: 240px;
-  padding: 18px 18px 14px;
+  min-height: 72px;
+  max-height: 200px;
+  padding: 14px 16px 10px;
   border: 1px solid #dde5eb;
-  border-radius: 24px;
+  border-radius: 22px;
   background: #fff;
   color: #1d2935;
   font: inherit;
-  line-height: 1.58;
+  line-height: 1.5;
   resize: none;
   box-shadow: inset 0 1px 2px rgba(18, 28, 37, 0.04);
 }
@@ -3648,7 +3648,7 @@ body.has-llm-chat-open {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .resume-runtime__chat-turnstile {
@@ -3667,7 +3667,7 @@ body.has-llm-chat-open {
 .resume-runtime__chat-buttons {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-left: auto;
 }
 
@@ -3676,11 +3676,11 @@ body.has-llm-chat-open {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 102px;
-  min-height: 44px;
-  padding: 10px 18px;
+  min-width: 92px;
+  min-height: 40px;
+  padding: 8px 16px;
   border-radius: 999px;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -4984,15 +4984,16 @@ body.has-llm-chat-open {
   }
 
   .resume-runtime__chat-feedback-row {
-    padding: 6px 16px 0;
+    padding: 4px 14px 0;
   }
 
   .resume-runtime__chat-form {
-    padding: 14px 16px 16px;
+    padding: 10px 14px 12px;
   }
 
   .resume-runtime__chat-input {
-    min-height: 84px;
+    min-height: 64px;
+    padding: 12px 14px 9px;
   }
 
   .resume-runtime__chat-feedback-row,
