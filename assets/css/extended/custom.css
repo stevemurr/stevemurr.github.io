@@ -4195,6 +4195,42 @@ body.has-llm-chat-open {
   line-height: 1.56;
 }
 
+.resume-project__posts {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.resume-project__post-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+  color: var(--primary);
+  text-decoration: none;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  transition: color 0.15s ease;
+}
+
+.resume-project__post-link:hover {
+  color: var(--theme);
+}
+
+.resume-project__post-title {
+  font-weight: 500;
+}
+
+.resume-project__post-date {
+  color: var(--secondary);
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+
 .resume-project__stamp,
 .resume-project__section {
   color: var(--secondary);

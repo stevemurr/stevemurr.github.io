@@ -482,6 +482,28 @@ function kebabToTitle(str) {
   return str.split("-").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
+function getProjectPostsMap() {
+  const el = document.getElementById("project-posts-map");
+  if (!el) return {};
+  try { return JSON.parse(el.textContent); } catch { return {}; }
+}
+
+function appendProjectPosts(article, repoKey) {
+  const map = getProjectPostsMap();
+  const posts = map[repoKey];
+  if (!posts || posts.length === 0) return;
+
+  const container = createElement(document, "div", "resume-project__posts");
+  posts.forEach(post => {
+    const link = createElement(document, "a", "resume-project__post-link");
+    link.href = post.url;
+    link.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
+    link.appendChild(createElement(document, "span", "resume-project__post-date", post.date));
+    container.appendChild(link);
+  });
+  article.appendChild(container);
+}
+
 function createProjectCard(entry) {
   const repo = entry.repository;
   const repoName = repo.name || repo.full_name.split("/").pop();
@@ -522,6 +544,7 @@ function createProjectCard(entry) {
   article.appendChild(header);
 
   updateProjectCard(article, entry);
+  appendProjectPosts(article, normalizeRepo(repo.full_name));
 
   return article;
 }

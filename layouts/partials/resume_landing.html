@@ -335,6 +335,21 @@
               {{- end }}
             </div>
           </div>
+          {{- $repo := $projectRepo }}
+          {{- $relatedPosts := slice }}
+          {{- range where site.RegularPages "Params.projects" "intersect" (slice $projectRepoRaw) }}
+          {{- $relatedPosts = $relatedPosts | append . }}
+          {{- end }}
+          {{- if gt (len $relatedPosts) 0 }}
+          <div class="resume-project__posts">
+            {{- range $relatedPosts }}
+            <a class="resume-project__post-link" href="{{ .RelPermalink }}">
+              <span class="resume-project__post-title">{{ .Title }}</span>
+              <span class="resume-project__post-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+            </a>
+            {{- end }}
+          </div>
+          {{- end }}
         </article>
         {{- end }}
       </div>
@@ -342,5 +357,30 @@
     {{- end }}
 
   </div>
+
+  {{- $scratch := newScratch }}
+  {{- range site.RegularPages }}
+  {{- $postProjects := .Params.projects | default slice }}
+  {{- if gt (len $postProjects) 0 }}
+  {{- $entry := dict "title" .Title "url" .RelPermalink "date" (.Date.Format "Jan 2, 2006") }}
+  {{- range $postProjects }}
+  {{- $repo := lower (trim . " ") }}
+  {{- $existing := $scratch.Get $repo | default slice }}
+  {{- $scratch.Set $repo ($existing | append $entry) }}
+  {{- end }}
+  {{- end }}
+  {{- end }}
+  {{- $allKeys := $scratch.Values }}
+  {{- if gt (len $allKeys) 0 }}
+  <script id="project-posts-map" type="application/json">
+  {
+    {{- $first := true }}
+    {{- range $repo, $posts := $allKeys }}
+    {{- if not $first }},{{ end }}{{ $first = false }}
+    {{ $repo | jsonify | safeJS }}: {{ $posts | jsonify | safeJS }}
+    {{- end }}
+  }
+  </script>
+  {{- end }}
 
 </section>
