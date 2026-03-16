@@ -3244,25 +3244,40 @@ body.has-llm-chat-open {
   display: grid;
   gap: 8px;
   margin-left: 46px;
-  width: fit-content;
-  max-width: min(100%, 560px);
-  padding: 10px 12px;
-  border: 1px solid #e3ebf0;
-  border-radius: 16px;
-  background:
-    linear-gradient(180deg, rgba(247, 249, 250, 0.98), rgba(243, 247, 249, 0.98)),
-    radial-gradient(circle at top left, rgba(95, 166, 177, 0.08), transparent 34%);
+  width: min(100%, 640px);
+}
+
+.resume-runtime__chat-thinking-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #d9e3ea;
+  border-radius: 14px;
+  background: #fff;
+  color: #20303d;
+  text-align: left;
+}
+
+.resume-runtime__chat-thinking-panel {
+  padding: 14px 16px;
+  border: 1px solid #d9e3ea;
+  border-radius: 14px;
+  background: #fafcfd;
 }
 
 .resume-runtime__chat-thinking-head {
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
   color: #516273;
-  font-size: 0.76rem;
+  font-size: 0.8rem;
   font-weight: 800;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
 .resume-runtime__chat-thinking-pulse {
@@ -3271,14 +3286,39 @@ body.has-llm-chat-open {
   border-radius: 999px;
   background: linear-gradient(135deg, #0f6d7f, #5fa6b1);
   box-shadow: 0 0 0 0 rgba(95, 166, 177, 0.24);
+}
+
+.resume-runtime__chat-thinking[data-state="live"] .resume-runtime__chat-thinking-pulse {
   animation: chat-thinking-pulse 1.4s ease-out infinite;
+}
+
+.resume-runtime__chat-thinking[data-state="done"] .resume-runtime__chat-thinking-pulse {
+  background: linear-gradient(135deg, #1ea672, #48c78e);
+}
+
+.resume-runtime__chat-thinking-label {
+  white-space: nowrap;
+}
+
+.resume-runtime__chat-thinking-chevron {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border-right: 1.5px solid #7b8794;
+  border-bottom: 1.5px solid #7b8794;
+  transform: rotate(45deg);
+  transition: transform 160ms ease;
+}
+
+.resume-runtime__chat-thinking-toggle[aria-expanded="true"] .resume-runtime__chat-thinking-chevron {
+  transform: rotate(225deg) translate(-1px, -1px);
 }
 
 .resume-runtime__chat-thinking-copy {
   margin: 0;
-  color: #24313c;
-  font-size: 0.88rem;
-  line-height: 1.55;
+  color: #526170;
+  font-size: 0.95rem;
+  line-height: 1.62;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }

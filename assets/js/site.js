@@ -1065,12 +1065,29 @@ function setChatMessageText(message, text) {
 }
 
 function setMessageThinking(message, text = "", visible = false) {
-  if (!message || !message.thinkingNode || !message.thinkingCopyNode) {
+  if (
+    !message
+    || !message.thinkingNode
+    || !message.thinkingCopyNode
+    || !message.thinkingToggleNode
+    || !message.thinkingPanelNode
+  ) {
     return;
   }
 
-  message.thinkingNode.hidden = !visible;
-  message.thinkingCopyNode.textContent = String(text || "").trim() || "Reasoning through your prompt…";
+  const content = String(text || "").trim();
+  const shouldShow = visible && Boolean(content);
+  message.thinkingNode.hidden = !shouldShow;
+
+  if (!shouldShow) {
+    message.thinkingNode.dataset.state = "idle";
+    message.thinkingToggleNode.setAttribute("aria-expanded", "false");
+    message.thinkingPanelNode.hidden = true;
+    message.thinkingCopyNode.textContent = "";
+    return;
+  }
+
+  message.thinkingCopyNode.textContent = content;
 }
 
 function createChatMessage(documentRef, role, text, options = {}) {
@@ -1100,6 +1117,8 @@ function createChatMessage(documentRef, role, text, options = {}) {
   let copyButton = null;
   let regenerateButton = null;
   let thinkingNode = null;
+  let thinkingToggleNode = null;
+  let thinkingPanelNode = null;
   let thinkingCopyNode = null;
 
   if (showMessageHead) {
@@ -1135,24 +1154,38 @@ function createChatMessage(documentRef, role, text, options = {}) {
 
   if (role === "assistant" && !options.welcome) {
     thinkingNode = createElement(documentRef, "div", "resume-runtime__chat-thinking");
-    thinkingNode.hidden = !(options.pending || options.showThinking);
+    thinkingNode.hidden = true;
+    thinkingNode.dataset.state = options.pending ? "live" : "idle";
 
-    const thinkingHead = createElement(documentRef, "div", "resume-runtime__chat-thinking-head");
+    thinkingToggleNode = createElement(documentRef, "button", "resume-runtime__chat-thinking-toggle");
+    thinkingToggleNode.type = "button";
+    thinkingToggleNode.setAttribute("data-llm-chat-thinking-toggle", "");
+    thinkingToggleNode.setAttribute("aria-expanded", "false");
+
+    const thinkingHead = createElement(documentRef, "span", "resume-runtime__chat-thinking-head");
     const thinkingPulse = createElement(documentRef, "span", "resume-runtime__chat-thinking-pulse");
     thinkingPulse.setAttribute("aria-hidden", "true");
-    const thinkingLabel = createElement(documentRef, "span", "", "Thinking");
+    const thinkingLabel = createElement(documentRef, "span", "resume-runtime__chat-thinking-label", "Thought Process");
+    const thinkingChevron = createElement(documentRef, "span", "resume-runtime__chat-thinking-chevron", "");
+    thinkingChevron.setAttribute("aria-hidden", "true");
     thinkingHead.appendChild(thinkingPulse);
     thinkingHead.appendChild(thinkingLabel);
+    thinkingToggleNode.appendChild(thinkingHead);
+    thinkingToggleNode.appendChild(thinkingChevron);
+
+    thinkingPanelNode = createElement(documentRef, "div", "resume-runtime__chat-thinking-panel");
+    thinkingPanelNode.hidden = true;
 
     thinkingCopyNode = createElement(
       documentRef,
-      "p",
+      "div",
       "resume-runtime__chat-thinking-copy",
-      options.thinkingText || "Reasoning through your prompt…",
+      "",
     );
 
-    thinkingNode.appendChild(thinkingHead);
-    thinkingNode.appendChild(thinkingCopyNode);
+    thinkingPanelNode.appendChild(thinkingCopyNode);
+    thinkingNode.appendChild(thinkingToggleNode);
+    thinkingNode.appendChild(thinkingPanelNode);
     article.appendChild(thinkingNode);
   }
 
@@ -1195,6 +1228,8 @@ function createChatMessage(documentRef, role, text, options = {}) {
     copyButton,
     regenerateButton,
     thinkingNode,
+    thinkingToggleNode,
+    thinkingPanelNode,
     thinkingCopyNode,
   };
 }
@@ -1366,6 +1401,32 @@ function extractThinkingText(data) {
   }
 
   return "";
+}
+
+function setMessageThinkingState(message, state = "idle") {
+  if (!message || !message.thinkingNode) {
+    return;
+  }
+
+  message.thinkingNode.dataset.state = state;
+}
+
+function toggleMessageThinking(article) {
+  if (!article) {
+    return;
+  }
+
+  const thinkingNode = article.querySelector(".resume-runtime__chat-thinking");
+  const toggle = article.querySelector("[data-llm-chat-thinking-toggle]");
+  const panel = article.querySelector(".resume-runtime__chat-thinking-panel");
+
+  if (!thinkingNode || !toggle || !panel || thinkingNode.hidden) {
+    return;
+  }
+
+  const expanded = toggle.getAttribute("aria-expanded") === "true";
+  toggle.setAttribute("aria-expanded", expanded ? "false" : "true");
+  panel.hidden = expanded;
 }
 
 function appendChatMessage(state, role, text, options = {}) {
@@ -1754,11 +1815,7 @@ async function streamChatRequest(state, requestMessages) {
   setChatBusy(state, true);
   state.pendingThinkingText = "";
   state.pendingAssistantText = "";
-  state.pendingAssistant = appendChatMessage(state, "assistant", "", {
-    pending: true,
-    showThinking: true,
-    thinkingText: "Reasoning through your prompt…",
-  });
+  state.pendingAssistant = appendChatMessage(state, "assistant", "", { pending: true });
   state.abortController = new AbortController();
 
   try {
@@ -1781,11 +1838,6 @@ async function streamChatRequest(state, requestMessages) {
 
     await readEventStream(response, ({ eventName, data }) => {
       if (eventName === "start") {
-        setMessageThinking(
-          state.pendingAssistant,
-          state.pendingThinkingText || "Reasoning through your prompt…",
-          true,
-        );
         return;
       }
 
@@ -1797,6 +1849,7 @@ async function streamChatRequest(state, requestMessages) {
 
         state.pendingThinkingText += text;
         setMessageThinking(state.pendingAssistant, state.pendingThinkingText, true);
+        setMessageThinkingState(state.pendingAssistant, "live");
         return;
       }
 
@@ -1813,7 +1866,10 @@ async function streamChatRequest(state, requestMessages) {
           state.pendingAssistant = appendChatMessage(state, "assistant", "", { pending: true });
         }
 
-        setMessageThinking(state.pendingAssistant, "", false);
+        if (state.pendingThinkingText.trim()) {
+          setMessageThinking(state.pendingAssistant, state.pendingThinkingText, true);
+          setMessageThinkingState(state.pendingAssistant, "done");
+        }
 
         if (!state.pendingAssistantText) {
           setChatMessageText(state.pendingAssistant, "");
@@ -1836,7 +1892,10 @@ async function streamChatRequest(state, requestMessages) {
     });
 
     markPendingAssistant(state, { error: false });
-    setMessageThinking(state.pendingAssistant, "", false);
+    if (state.pendingThinkingText.trim()) {
+      setMessageThinking(state.pendingAssistant, state.pendingThinkingText, true);
+      setMessageThinkingState(state.pendingAssistant, "done");
+    }
 
     if (state.pendingAssistantText.trim()) {
       if (state.pendingAssistant.actions) {
@@ -1875,11 +1934,18 @@ async function streamChatRequest(state, requestMessages) {
       return;
     }
 
-    setMessageThinking(state.pendingAssistant, "", false);
+    if (state.pendingAssistantText.trim()) {
+      setMessageThinkingState(state.pendingAssistant, "done");
+    } else {
+      setMessageThinking(state.pendingAssistant, "", false);
+    }
     setChatFeedback(state, message, aborted ? "muted" : "error", Boolean(state.lastRequestSnapshot && state.lastRequestSnapshot.length));
   } finally {
     state.abortController = null;
-    setMessageThinking(state.pendingAssistant, "", false);
+    if (state.pendingAssistant && state.pendingThinkingText.trim()) {
+      setMessageThinking(state.pendingAssistant, state.pendingThinkingText, true);
+      setMessageThinkingState(state.pendingAssistant, "done");
+    }
     state.pendingAssistant = null;
     state.pendingAssistantText = "";
     state.pendingThinkingText = "";
@@ -2020,6 +2086,13 @@ function initializeLLMChat(root) {
       if (article) {
         copyChatMessage(state, article);
       }
+      return;
+    }
+
+    const thinkingToggle = target.closest("[data-llm-chat-thinking-toggle]");
+    if (thinkingToggle) {
+      const article = thinkingToggle.closest(".resume-runtime__chat-message");
+      toggleMessageThinking(article);
       return;
     }
 
