@@ -342,9 +342,13 @@
           {{- end }}
           {{- if gt (len $relatedPosts) 0 }}
           <div class="resume-project__posts">
+            <p class="resume-project__section">Article log</p>
             {{- range $relatedPosts }}
             <a class="resume-project__post-link" href="{{ .RelPermalink }}">
-              <span class="resume-project__post-title">{{ .Title }}</span>
+              <span class="resume-project__post-copy">
+                <span class="resume-project__post-kicker">Read article</span>
+                <span class="resume-project__post-title">{{ .Title }}</span>
+              </span>
               <span class="resume-project__post-date">{{ .Date.Format "Jan 2, 2006" }}</span>
             </a>
             {{- end }}

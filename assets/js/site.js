@@ -494,10 +494,14 @@ function appendProjectPosts(article, repoKey) {
   if (!posts || posts.length === 0) return;
 
   const container = createElement(document, "div", "resume-project__posts");
+  container.appendChild(createElement(document, "p", "resume-project__section", "Article log"));
   posts.forEach(post => {
     const link = createElement(document, "a", "resume-project__post-link");
     link.href = post.url;
-    link.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
+    const copy = createElement(document, "span", "resume-project__post-copy");
+    copy.appendChild(createElement(document, "span", "resume-project__post-kicker", "Read article"));
+    copy.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
+    link.appendChild(copy);
     link.appendChild(createElement(document, "span", "resume-project__post-date", post.date));
     container.appendChild(link);
   });
