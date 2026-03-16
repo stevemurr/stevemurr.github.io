@@ -3243,10 +3243,12 @@ body.has-llm-chat-open {
 .resume-runtime__chat-thinking {
   display: grid;
   gap: 8px;
-  margin: 0 22px;
-  padding: 12px 14px;
+  margin-left: 46px;
+  width: fit-content;
+  max-width: min(100%, 560px);
+  padding: 10px 12px;
   border: 1px solid #e3ebf0;
-  border-radius: 18px;
+  border-radius: 16px;
   background:
     linear-gradient(180deg, rgba(247, 249, 250, 0.98), rgba(243, 247, 249, 0.98)),
     radial-gradient(circle at top left, rgba(95, 166, 177, 0.08), transparent 34%);
@@ -3275,8 +3277,8 @@ body.has-llm-chat-open {
 .resume-runtime__chat-thinking-copy {
   margin: 0;
   color: #24313c;
-  font-size: 0.92rem;
-  line-height: 1.6;
+  font-size: 0.88rem;
+  line-height: 1.55;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -4793,10 +4795,6 @@ body.has-llm-chat-open {
     padding: 22px 20px 16px;
   }
 
-  .resume-runtime__chat-thinking {
-    margin: 0 20px;
-  }
-
   .resume-runtime__chat-feedback-row {
     padding: 6px 20px 0;
   }
@@ -4921,11 +4919,6 @@ body.has-llm-chat-open {
     padding: 14px 16px 12px;
   }
 
-  .resume-runtime__chat-thinking {
-    margin: 0 16px;
-    padding: 11px 12px;
-  }
-
   .resume-runtime__chat-stream {
     padding: 18px 16px 12px;
   }
@@ -4943,6 +4936,11 @@ body.has-llm-chat-open {
   .resume-runtime__chat-message--assistant .resume-runtime__chat-message-tools,
   .resume-runtime__chat-message--system .resume-runtime__chat-message-tools {
     margin-left: 0;
+  }
+
+  .resume-runtime__chat-thinking {
+    margin-left: 0;
+    max-width: 100%;
   }
 
   .resume-runtime__chat-feedback-row {
