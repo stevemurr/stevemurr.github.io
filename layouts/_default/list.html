@@ -10,18 +10,23 @@
 {{ partial "resume_landing.html" (dict "page" $resumePage "posts" $homePages "isHome" true) }}
 
 {{- else }}
+{{- $isPostsSection := eq .Section "posts" }}
+{{- $sectionLabel := .Section | humanize }}
+{{- if $isPostsSection }}
+{{- $sectionLabel = "Writing" }}
+{{- end }}
 
 {{- if .Title }}
 <header class="page-header">
   {{- partial "breadcrumbs.html" . }}
   {{- if .Section }}
-  <p class="page-header__eyebrow">{{ .Section | humanize }}</p>
+  <p class="page-header__eyebrow">{{ $sectionLabel }}</p>
   {{- end }}
   <h1>{{ .Title }}</h1>
-  {{- if and (eq .Section "posts") (eq .Title "Posts") }}
-  <p class="page-header__intro">Notes on AI products, browsers, local-first search, and the occasional strange side quest.</p>
-  {{- else if .Description }}
+  {{- if .Description }}
   <div class="post-description">{{ .Description | markdownify }}</div>
+  {{- else if $isPostsSection }}
+  <p class="page-header__intro">Notes on AI products, browsers, local-first search, and the occasional strange side quest.</p>
   {{- end }}
 </header>
 {{- end }}
@@ -37,7 +42,32 @@
 {{- end }}
 
 {{- $pages := union .RegularPages .Sections }}
-{{- $paginator := .Paginate $pages }}
+{{- if $isPostsSection }}
+{{- $pages = .RegularPages.ByDate.Reverse }}
+
+<section class="article-index" aria-label="Articles">
+  <div class="article-index__list">
+    {{- range $page := $pages }}
+    <article class="article-index__item">
+      <a class="article-index__link" href="{{ $page.RelPermalink }}">
+        <div class="article-index__body">
+          <h2 class="article-index__title">{{ $page.Title }}</h2>
+          {{- with $page.Params.projects }}
+          <div class="article-index__projects" aria-label="Related repositories">
+            {{- range . }}
+            <span class="article-index__project">{{ . }}</span>
+            {{- end }}
+          </div>
+          {{- end }}
+        </div>
+        <time class="article-index__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+</section>
+{{- else }}
+  {{- $paginator := .Paginate $pages }}
 
 <div class="post-strip-list">
   {{- range $index, $page := $paginator.Pages }}
@@ -45,7 +75,7 @@
   {{- end }}
 </div>
 
-{{- if gt $paginator.TotalPages 1 }}
+  {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">
   <nav class="pagination">
     {{- if $paginator.HasPrev }}
@@ -60,6 +90,7 @@
     {{- end }}
   </nav>
 </footer>
+  {{- end }}
 {{- end }}
 
 {{- end }}
