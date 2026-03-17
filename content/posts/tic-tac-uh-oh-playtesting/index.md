@@ -1,9 +1,9 @@
 ---
-title: "Tic-Tac-Uh-Oh: I Made 1,500 Robots Play My Game So I Didn't Have To"
+title: "Tic-Tac-Uh-Oh: Automated Playtesting"
 date: 2026-03-16
 draft: false
 tags: ["godot", "gamedev", "gdscript", "playtesting", "ai"]
-summary: "When you have 48 complication configs and zero friends willing to playtest, you automate."
+summary: "When you have 48 complication configs you automate."
 projects: ["stevemurr/tic-tac-uh-oh"]
 params:
   pullquote: "Turns out the best playtester is a robot that doesn't get bored after game three."
@@ -11,23 +11,15 @@ params:
   cardIcon: "gamepad"
 ---
 
-# The Problem With Having Too Many Ideas
+# Scaling Ideas
 
 Here's the thing about making a game where draws escalate instead of ending -- you end up with a lot of knobs. Twelve complications. Each one changes the rules in a different way. And they *stack*. A draw triggers a new complication on top of whatever's already active.
 
-So you've got Crossfire. Gravity. Decay. Steal. Each one alone is a different game. Pair them up? Different game. Triple stack? Different game again. The combinatorics get stupid fast.
+So you've got Crossfire. Gravity. Decay. Steal. Each one alone is a different game. Pair them up? Different game. Triple stack? Different game again.
 
-I can hear it now:
+The solution is obvious.  
 
-> *"just playtest it bro. grab some friends. play a few rounds. you'll know what's fun."*
-
-Cool. Let me just play 48+ configurations, multiple games each, across different AI skill levels, and take notes on which ones feel good. I'll clear my calendar for the next six months.
-
-> *"ok yeah that does sound like a lot."*
-
-No shit.
-
----
+You develop some metrics, spin up a bunch of agents and ask them to play each game configuration and score the results.
 
 ## ***What Even Is Fun Though***
 
@@ -136,7 +128,7 @@ Each scenario then gets played across multiple agent matchups, multiple games ea
 
 ## ***Playing Without A Board***
 
-Here's something nobody warns you about: simulating a board game headlessly in Godot is way more annoying than you'd expect.
+Simulating a board game headlessly in Godot is way more annoying than you'd expect.
 
 Godot wants to render things. It wants `await`. It wants frame callbacks. A synchronous game loop that runs without a scene tree? That's swimming upstream.
 
