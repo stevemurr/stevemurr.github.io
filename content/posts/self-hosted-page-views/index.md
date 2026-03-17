@@ -1,7 +1,7 @@
 ---
 title: "Self-Hosted Page Views for a Hugo Site"
 date: 2026-03-16
-draft: true
+draft: false
 tags: ["cloudflare", "hugo", "analytics", "workers"]
 projects: ["stevemurr/hugo-cf-worker-metrics"]
 summary: "Track visitors with Cloudflare Workers + KV. No server, no third-party scripts, no bill."
