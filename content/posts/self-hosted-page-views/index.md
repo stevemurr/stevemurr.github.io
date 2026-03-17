@@ -1,5 +1,5 @@
 ---
-title: "Self-Hosted Page Views for a Hugo Site"
+title: "Cloudflare KV for simple hugo metrics"
 date: 2026-03-16
 draft: false
 tags: ["cloudflare", "hugo", "analytics", "workers"]
