@@ -195,63 +195,6 @@
       </article>
     </div>
 
-    <div class="resume-runtime__graphs">
-      <article class="resume-runtime__graph" data-llm-graph="tokenThroughput">
-        <div class="resume-runtime__graph-header">
-          <div>
-            <p class="resume-runtime__graph-label">Token throughput</p>
-            <h3>Generation vs prompt</h3>
-          </div>
-
-          <div class="resume-runtime__legend">
-            <span class="resume-runtime__legend-item resume-runtime__legend-item--generation" data-llm-legend-key="generation">Generation</span>
-            <span class="resume-runtime__legend-item resume-runtime__legend-item--prompt" data-llm-legend-key="prompt">Prompt</span>
-          </div>
-        </div>
-
-        <div class="resume-runtime__chart-shell">
-          <svg
-            class="resume-runtime__chart"
-            viewBox="0 0 360 180"
-            preserveAspectRatio="none"
-            role="img"
-            aria-label="Token throughput chart">
-            <g data-llm-grid></g>
-            <g data-llm-series></g>
-          </svg>
-        </div>
-
-        <p class="resume-runtime__graph-caption">Last 60 minutes · 60 second step</p>
-      </article>
-
-      <article class="resume-runtime__graph" data-llm-graph="concurrentRequests">
-        <div class="resume-runtime__graph-header">
-          <div>
-            <p class="resume-runtime__graph-label">Scheduler depth</p>
-            <h3>Running vs waiting</h3>
-          </div>
-
-          <div class="resume-runtime__legend">
-            <span class="resume-runtime__legend-item resume-runtime__legend-item--running" data-llm-legend-key="running">Running</span>
-            <span class="resume-runtime__legend-item resume-runtime__legend-item--waiting" data-llm-legend-key="waiting">Waiting</span>
-          </div>
-        </div>
-
-        <div class="resume-runtime__chart-shell">
-          <svg
-            class="resume-runtime__chart"
-            viewBox="0 0 360 180"
-            preserveAspectRatio="none"
-            role="img"
-            aria-label="Concurrent requests chart">
-            <g data-llm-grid></g>
-            <g data-llm-series></g>
-          </svg>
-        </div>
-
-        <p class="resume-runtime__graph-caption">Last 60 minutes · 60 second step</p>
-      </article>
-    </div>
   </section>
 
   {{- if or (gt (len $recentCommits) 0) $githubUser }}
