@@ -23,6 +23,10 @@ projects:
     repo: "stevemurr/tic-tac-uh-oh"
     summary: "Tic-Tac-Toe Really Bro?"
     pinned: true
+  - name: "Hugo Cloudflare Metrics"
+    repo: "stevemurr/hugo-cf-worker-metrics"
+    summary: "Analytics for Hugo sites using Cloudflare Workers + KV"
+    pinned: true
 ---
 
 ## Profiles
