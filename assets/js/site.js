@@ -602,19 +602,40 @@ function formatRateValue(value) {
 }
 
 function formatRuntimeValue(metricKey, value) {
-  if (!Number.isFinite(value)) {
+  if (metricKey === "lastActivityAt") {
+    if (value === null) {
+      return "Quiet";
+    }
+
+    return value ? formatRelativeTime(value) : "—";
+  }
+
+  const numericValue = Number(value);
+
+  if (!Number.isFinite(numericValue)) {
     return "—";
   }
 
-  if (metricKey === "ttftP95Seconds") {
-    if (value < 1) {
-      return `${Math.round(value * 1000)} ms`;
-    }
-
-    return `${formatRateValue(value)} s`;
+  if (metricKey === "generatedTokens" || metricKey === "promptTokens") {
+    return new Intl.NumberFormat("en-US", {
+      maximumFractionDigits: 0,
+    }).format(Math.round(numericValue));
   }
 
-  return formatRateValue(value);
+  if (metricKey === "activeMinutes") {
+    const roundedMinutes = Math.max(0, Math.round(numericValue));
+    return `${roundedMinutes} ${roundedMinutes === 1 ? "min" : "mins"}`;
+  }
+
+  if (metricKey === "ttftP95Seconds") {
+    if (numericValue < 1) {
+      return `${Math.round(numericValue * 1000)} ms`;
+    }
+
+    return `${formatRateValue(numericValue)} s`;
+  }
+
+  return formatRateValue(numericValue);
 }
 
 function formatLegendValue(graphKey, seriesKey, value) {
@@ -623,11 +644,11 @@ function formatLegendValue(graphKey, seriesKey, value) {
   }
 
   if (graphKey === "tokenThroughput") {
-    return `${formatRateValue(value)} tok/s`;
+    return `${formatRateValue(value)} tok/s peak`;
   }
 
   if (graphKey === "concurrentRequests") {
-    return formatRateValue(value);
+    return `${formatRateValue(value)} peak`;
   }
 
   return formatRateValue(value);
@@ -656,15 +677,108 @@ function normalizeSeriesPoints(points) {
     .filter(Boolean);
 }
 
-function getLatestSeriesValue(points) {
-  for (let index = points.length - 1; index >= 0; index -= 1) {
-    const point = points[index];
-    if (point && Number.isFinite(point[1])) {
-      return point[1];
+function inferSeriesStepSeconds(points) {
+  for (let index = 1; index < points.length; index += 1) {
+    const delta = Number(points[index][0]) - Number(points[index - 1][0]);
+    if (Number.isFinite(delta) && delta > 0) {
+      return delta;
     }
   }
 
-  return null;
+  return 60;
+}
+
+function getSeriesPeakValue(points) {
+  let peak = null;
+
+  for (let index = 0; index < points.length; index += 1) {
+    const point = points[index];
+    if (!point || !Number.isFinite(point[1])) {
+      continue;
+    }
+
+    peak = peak === null ? point[1] : Math.max(peak, point[1]);
+  }
+
+  return peak;
+}
+
+function getActiveSeriesPoints(series) {
+  const pointSets = [];
+
+  if (series && series.tokenThroughput) {
+    pointSets.push(normalizeSeriesPoints(series.tokenThroughput.generation));
+    pointSets.push(normalizeSeriesPoints(series.tokenThroughput.prompt));
+  }
+
+  if (series && series.concurrentRequests) {
+    pointSets.push(normalizeSeriesPoints(series.concurrentRequests.running));
+    pointSets.push(normalizeSeriesPoints(series.concurrentRequests.waiting));
+  }
+
+  return pointSets;
+}
+
+function sumSeriesTotals(points) {
+  if (!points.length) {
+    return 0;
+  }
+
+  const stepSeconds = inferSeriesStepSeconds(points);
+
+  return points.reduce((total, point) => total + (Math.max(point[1], 0) * stepSeconds), 0);
+}
+
+function getActiveMinutes(pointSets) {
+  const activeTimestamps = new Set();
+  let stepSeconds = 60;
+
+  pointSets.forEach((points) => {
+    if (points.length > 1) {
+      stepSeconds = inferSeriesStepSeconds(points);
+    }
+
+    points.forEach((point) => {
+      if (point[1] > 0) {
+        activeTimestamps.add(point[0]);
+      }
+    });
+  });
+
+  return Math.round((activeTimestamps.size * stepSeconds) / 60);
+}
+
+function getLastActivityAt(pointSets) {
+  let lastTimestamp = null;
+
+  pointSets.forEach((points) => {
+    points.forEach((point) => {
+      if (point[1] <= 0) {
+        return;
+      }
+
+      lastTimestamp = lastTimestamp === null ? point[0] : Math.max(lastTimestamp, point[0]);
+    });
+  });
+
+  if (lastTimestamp === null) {
+    return null;
+  }
+
+  return new Date(lastTimestamp * 1000).toISOString();
+}
+
+function buildRuntimeWindowSummary(series) {
+  const generationPoints = normalizeSeriesPoints(series && series.tokenThroughput ? series.tokenThroughput.generation : null);
+  const promptPoints = normalizeSeriesPoints(series && series.tokenThroughput ? series.tokenThroughput.prompt : null);
+  const pointSets = getActiveSeriesPoints(series);
+
+  return {
+    generatedTokens: sumSeriesTotals(generationPoints),
+    promptTokens: sumSeriesTotals(promptPoints),
+    activeMinutes: getActiveMinutes(pointSets),
+    lastActivityAt: getLastActivityAt(pointSets),
+  };
 }
 
 function buildLinePath(points, width, height, padding, minValue, maxValue) {
@@ -729,13 +843,14 @@ function updateRuntimeCards(container, summary) {
   cards.forEach((card) => {
     const metricKey = card.dataset.llmCard;
     const valueNode = card.querySelector("[data-llm-value]");
-    const value = summary && metricKey in summary ? Number(summary[metricKey]) : NaN;
+    const hasValue = Boolean(summary) && metricKey in summary;
+    const value = hasValue ? summary[metricKey] : undefined;
 
     if (valueNode) {
       valueNode.textContent = formatRuntimeValue(metricKey, value);
     }
 
-    if (Number.isFinite(value)) {
+    if (hasValue && value !== null && value !== undefined && value !== "") {
       card.dataset.runtimeValue = String(value);
     } else {
       delete card.dataset.runtimeValue;
@@ -749,9 +864,9 @@ function updateRuntimeLegend(graph, graphKey, pointsBySeries) {
   legendItems.forEach((item) => {
     const seriesKey = item.dataset.llmLegendKey;
     const points = normalizeSeriesPoints(pointsBySeries && pointsBySeries[seriesKey]);
-    const latestValue = getLatestSeriesValue(points);
+    const peakValue = getSeriesPeakValue(points);
     const label = item.textContent.split(" · ")[0].trim();
-    const formattedValue = formatLegendValue(graphKey, seriesKey, latestValue);
+    const formattedValue = formatLegendValue(graphKey, seriesKey, peakValue);
 
     item.textContent = formattedValue ? `${label} · ${formattedValue}` : label;
   });
@@ -828,9 +943,9 @@ async function loadLLMMetrics(container) {
 
   try {
     const payload = await fetchMetricsJSON(endpoint);
-    const summary = payload && payload.summary ? payload.summary : {};
     const series = payload && payload.series ? payload.series : {};
     const updatedAt = payload && payload.updatedAt ? payload.updatedAt : new Date().toISOString();
+    const summary = buildRuntimeWindowSummary(series);
 
     updateRuntimeCards(container, summary);
     renderRuntimeGraph(container, "tokenThroughput", series.tokenThroughput || {});
