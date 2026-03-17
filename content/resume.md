@@ -21,7 +21,11 @@ githubActivity:
 projects:
   - name: "Tic-Tac-Uh-Oh"
     repo: "stevemurr/tic-tac-uh-oh"
-    summary: "Tic-Tac-Toe Really Bro?"
+    summary: "Tic-Tac-Toe but really bro"
+    pinned: true
+  - name: "Marriage Composer"
+    repo: "stevemurr/marriage-composer"
+    summary: "Imagine if marriage had a settings page"
     pinned: true
   - name: "Hugo Cloudflare Metrics"
     repo: "stevemurr/hugo-cf-worker-metrics"
