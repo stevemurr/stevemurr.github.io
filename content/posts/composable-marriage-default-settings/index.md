@@ -1,7 +1,7 @@
 ---
 title: "Marriage Has Default Settings"
 date: 2026-03-16
-draft: true
+draft: false
 weight: 1
 ShowPostNavLinks: true
 tags: ["legal-tech", "product", "architecture", "california", "relationships"]
