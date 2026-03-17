@@ -5573,32 +5573,3 @@ body.has-llm-chat-open {
     flex-direction: column;
   }
 }
-
-/* ── Articles page: project groups ── */
-
-.articles-group {
-  margin-top: 2.5rem;
-}
-
-.articles-group__heading {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 1.25rem;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.articles-group__repo {
-  display: inline-flex;
-  align-items: center;
-  min-height: 24px;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: var(--commit-chip-background);
-  color: var(--commit-chip-text);
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0;
-}

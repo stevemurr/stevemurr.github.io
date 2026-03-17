@@ -1,63 +1,32 @@
 {{- define "main" }}
 
-{{- $allPosts := where site.RegularPages "Section" "posts" }}
-{{- $allPosts = $allPosts.ByDate.Reverse }}
-
-{{/* Friendly display names for projects */}}
-{{- $projectNames := dict
-  "stevemurr/fabric" "Fabric"
-  "stevemurr/marriage-composer" "Composable Marriage"
-  "stevemurr/tic-tac-uh-oh" "Tic-Tac-Uh-Oh"
-  "stevemurr/hugo-cf-worker-metrics" "Self-Hosted Analytics"
-}}
-
-{{/* Build unique sorted list of project slugs */}}
-{{- $projectSet := slice }}
-{{- range $allPosts }}
-  {{- with .Params.projects }}
-    {{- range . }}
-      {{- if not (in $projectSet .) }}
-        {{- $projectSet = $projectSet | append . }}
-      {{- end }}
-    {{- end }}
-  {{- end }}
-{{- end }}
-{{- $projectSet = sort $projectSet }}
+{{- $pages := where site.RegularPages "Section" "posts" }}
+{{- $pages = $pages.ByDate.Reverse }}
 
 <header class="page-header">
   <h1>{{ .Title }}</h1>
 </header>
 
-{{- range $project := $projectSet }}
-  {{- $displayName := index $projectNames $project | default (path.Base $project) }}
-  <section class="articles-group">
-    <h2 class="articles-group__heading">
-      <span>{{ $displayName }}</span>
-      <span class="articles-group__repo">{{ $project }}</span>
-    </h2>
-    <div class="post-strip-list">
-      {{- range $allPosts }}
-        {{- if in .Params.projects $project }}
-          {{ partial "post_strip.html" (dict "page" . "featured" false) }}
-        {{- end }}
-      {{- end }}
-    </div>
-  </section>
-{{- end }}
-
-{{/* Posts with no project */}}
-{{- $orphans := where $allPosts "Params.projects" "==" nil }}
-{{- with $orphans }}
-  <section class="articles-group">
-    <h2 class="articles-group__heading">
-      <span>Other</span>
-    </h2>
-    <div class="post-strip-list">
-      {{- range . }}
-        {{ partial "post_strip.html" (dict "page" . "featured" false) }}
-      {{- end }}
-    </div>
-  </section>
-{{- end }}
+<section class="article-index" aria-label="Articles by date">
+  <div class="article-index__list">
+    {{- range $page := $pages }}
+    <article class="article-index__item">
+      <a class="article-index__link" href="{{ $page.RelPermalink }}">
+        <div class="article-index__body">
+          <h2 class="article-index__title">{{ $page.Title }}</h2>
+          {{- with $page.Params.projects }}
+          <div class="article-index__projects" aria-label="Related repositories">
+            {{- range . }}
+            <span class="article-index__project">{{ . }}</span>
+            {{- end }}
+          </div>
+          {{- end }}
+        </div>
+        <time class="article-index__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+</section>
 
 {{- end }}
