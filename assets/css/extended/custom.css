@@ -4607,6 +4607,23 @@ body.has-llm-chat-open {
   gap: 14px;
 }
 
+.articles-archive {
+  display: grid;
+  gap: 14px;
+}
+
+.main > .articles-archive {
+  margin-top: -10px;
+}
+
+.articles-archive > .page-header {
+  margin: 0;
+}
+
+.articles-archive > .article-index {
+  margin-top: 0;
+}
+
 .article-index {
   position: relative;
   overflow: hidden;
@@ -5232,6 +5249,10 @@ body.has-llm-chat-open {
   }
 
   .main > .resume-home {
+    margin-top: -4px;
+  }
+
+  .main > .articles-archive {
     margin-top: -4px;
   }
 

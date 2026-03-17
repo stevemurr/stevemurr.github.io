@@ -3,30 +3,32 @@
 {{- $pages := where site.RegularPages "Section" "posts" }}
 {{- $pages = $pages.ByDate.Reverse }}
 
-<header class="page-header">
-  <h1>{{ .Title }}</h1>
-</header>
+<section class="articles-archive">
+  <header class="page-header">
+    <h1>{{ .Title }}</h1>
+  </header>
 
-<section class="article-index" aria-label="Articles by date">
-  <div class="article-index__list">
-    {{- range $page := $pages }}
-    <article class="article-index__item">
-      <a class="article-index__link" href="{{ $page.RelPermalink }}">
-        <div class="article-index__body">
-          <h2 class="article-index__title">{{ $page.Title }}</h2>
-          {{- with $page.Params.projects }}
-          <div class="article-index__projects" aria-label="Related repositories">
-            {{- range . }}
-            <span class="article-index__project">{{ . }}</span>
+  <section class="article-index" aria-label="Articles by date">
+    <div class="article-index__list">
+      {{- range $page := $pages }}
+      <article class="article-index__item">
+        <a class="article-index__link" href="{{ $page.RelPermalink }}">
+          <div class="article-index__body">
+            <h2 class="article-index__title">{{ $page.Title }}</h2>
+            {{- with $page.Params.projects }}
+            <div class="article-index__projects" aria-label="Related repositories">
+              {{- range . }}
+              <span class="article-index__project">{{ . }}</span>
+              {{- end }}
+            </div>
             {{- end }}
           </div>
-          {{- end }}
-        </div>
-        <time class="article-index__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
-      </a>
-    </article>
-    {{- end }}
-  </div>
+          <time class="article-index__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
+        </a>
+      </article>
+      {{- end }}
+    </div>
+  </section>
 </section>
 
 {{- end }}
