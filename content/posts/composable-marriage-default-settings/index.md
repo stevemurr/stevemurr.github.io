@@ -1,6 +1,6 @@
 ---
 title: "Marriage Has Default Settings"
-date: 2026-03-16
+date: 2026-03-17
 draft: false
 weight: 1
 ShowPostNavLinks: true
