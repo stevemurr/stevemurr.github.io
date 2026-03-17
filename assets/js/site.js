@@ -12,6 +12,16 @@ const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a 
 const LLM_CHAT_OPEN_ANIMATION_MS = 260;
 const LLM_CHAT_BACKDROP_ANIMATION_MS = 180;
 const SVG_NS = "http://www.w3.org/2000/svg";
+const POST_BACK_DESTINATIONS = {
+  articles: {
+    path: "/articles/",
+    label: "Articles",
+  },
+  resume: {
+    path: "/",
+    label: "Resume",
+  },
+};
 const ACTIVITY_EVENT_TYPES = new Set([
   "PushEvent",
   "PullRequestEvent",
@@ -24,6 +34,109 @@ const ACTIVITY_EVENT_TYPES = new Set([
 
 function normalizeRepo(value) {
   return String(value || "").trim().toLowerCase();
+}
+
+function normalizePathname(value) {
+  const raw = String(value || "").trim();
+  if (!raw) {
+    return "/";
+  }
+
+  let pathname = raw;
+  if (!pathname.startsWith("/")) {
+    pathname = `/${pathname}`;
+  }
+
+  return pathname === "/" ? pathname : pathname.replace(/\/+$/, "") + "/";
+}
+
+function appendQueryParam(url, key, value) {
+  if (!url || !key || !value) {
+    return url;
+  }
+
+  try {
+    const parsed = new URL(url, window.location.origin);
+    parsed.searchParams.set(key, value);
+    return parsed.pathname + parsed.search + parsed.hash;
+  } catch (_error) {
+    const separator = String(url).includes("?") ? "&" : "?";
+    return `${url}${separator}${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+  }
+}
+
+function getPostBackDestination() {
+  const from = new URLSearchParams(window.location.search).get("from");
+  if (from && POST_BACK_DESTINATIONS[from]) {
+    return POST_BACK_DESTINATIONS[from];
+  }
+
+  if (!document.referrer) {
+    return null;
+  }
+
+  try {
+    const referrer = new URL(document.referrer);
+    if (referrer.origin !== window.location.origin) {
+      return null;
+    }
+
+    const pathname = normalizePathname(referrer.pathname);
+    if (pathname === normalizePathname(POST_BACK_DESTINATIONS.articles.path)) {
+      return POST_BACK_DESTINATIONS.articles;
+    }
+
+    if (pathname === normalizePathname(POST_BACK_DESTINATIONS.resume.path) || pathname === "/resume/") {
+      return POST_BACK_DESTINATIONS.resume;
+    }
+  } catch (_error) {
+    return null;
+  }
+
+  return null;
+}
+
+function initializePostBackLinks() {
+  const links = document.querySelectorAll("[data-post-back]");
+  if (!links.length) {
+    return;
+  }
+
+  const destination = getPostBackDestination();
+
+  links.forEach((link) => {
+    const fallback = {
+      path: link.dataset.defaultBackUrl || POST_BACK_DESTINATIONS.resume.path,
+      label: link.dataset.defaultBackLabel || POST_BACK_DESTINATIONS.resume.label,
+    };
+    const target = destination || fallback;
+
+    link.href = target.path;
+    link.setAttribute("aria-label", `Back to ${target.label}`);
+    link.setAttribute("title", target.label);
+
+    if (!destination || !document.referrer || window.history.length <= 1) {
+      return;
+    }
+
+    try {
+      const referrer = new URL(document.referrer);
+      if (referrer.origin !== window.location.origin) {
+        return;
+      }
+
+      if (normalizePathname(referrer.pathname) !== normalizePathname(target.path)) {
+        return;
+      }
+    } catch (_error) {
+      return;
+    }
+
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+      window.history.back();
+    });
+  });
 }
 
 function formatRelativeTime(value) {
@@ -497,7 +610,7 @@ function appendProjectPosts(article, repoKey) {
   container.appendChild(createElement(document, "p", "resume-project__section", "Article log"));
   posts.forEach(post => {
     const link = createElement(document, "a", "resume-project__post-link");
-    link.href = post.url;
+    link.href = appendQueryParam(post.url, "from", "resume");
     const copy = createElement(document, "span", "resume-project__post-copy");
     copy.appendChild(createElement(document, "span", "resume-project__post-kicker", "Read article"));
     copy.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
@@ -2493,6 +2606,8 @@ async function loadRecentCommits(container) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  initializePostBackLinks();
+
   const llmMetricsContainers = document.querySelectorAll("[data-llm-metrics]");
   llmMetricsContainers.forEach((container) => {
     loadLLMMetrics(container);

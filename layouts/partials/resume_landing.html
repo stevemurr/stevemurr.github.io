@@ -287,7 +287,7 @@
           <div class="resume-project__posts">
             <p class="resume-project__section">Article log</p>
             {{- range $relatedPosts }}
-            <a class="resume-project__post-link" href="{{ .RelPermalink }}">
+            <a class="resume-project__post-link" href="{{ printf "%s?from=resume" .RelPermalink }}">
               <span class="resume-project__post-copy">
                 <span class="resume-project__post-kicker">Read article</span>
                 <span class="resume-project__post-title">{{ .Title }}</span>
@@ -310,7 +310,7 @@
   {{- if ne .RelPermalink $page.RelPermalink }}
   {{- $postProjects := .Params.projects | default slice }}
   {{- if gt (len $postProjects) 0 }}
-  {{- $entry := dict "title" .Title "url" .RelPermalink "date" (.Date.Format "Jan 2, 2006") }}
+  {{- $entry := dict "title" .Title "url" (printf "%s?from=resume" .RelPermalink) "date" (.Date.Format "Jan 2, 2006") }}
   {{- range $postProjects }}
   {{- $repo := "" }}
   {{- if eq (printf "%T" .) "string" }}

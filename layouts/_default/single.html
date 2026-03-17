@@ -18,7 +18,14 @@
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
       {{- if not (.Param "hideBackLink") }}
-      <a class="post-hero__back" href="{{ $backURL }}" aria-label="Back to {{ $backLabel }}" title="{{ $backLabel }}">
+      <a
+        class="post-hero__back"
+        href="{{ $backURL }}"
+        aria-label="Back to {{ $backLabel }}"
+        title="{{ $backLabel }}"
+        data-post-back
+        data-default-back-url="{{ $backURL }}"
+        data-default-back-label="{{ $backLabel }}">
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <path d="M15 18l-6-6 6-6"></path>
           <path d="M21 12H9"></path>

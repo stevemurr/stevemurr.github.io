@@ -12,7 +12,7 @@
     <div class="article-index__list">
       {{- range $page := $pages }}
       <article class="article-index__item">
-        <a class="article-index__link" href="{{ $page.RelPermalink }}">
+        <a class="article-index__link" href="{{ printf "%s?from=articles" $page.RelPermalink }}">
           <div class="article-index__body">
             <h2 class="article-index__title">{{ $page.Title }}</h2>
             {{- with $page.Params.projects }}
