@@ -10,6 +10,7 @@ const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
 const LLM_CHAT_BODY_OPEN_CLASS = "has-llm-chat-open";
 const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a minute.";
 const LLM_CHAT_ARTICLE_SCOPE = "article";
+const LLM_CHAT_MESSAGE_CHAR_LIMIT = 1200;
 const LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT = 25000;
 const LLM_CHAT_ARTICLE_CONTEXT_ERROR = "Article chat could not load this page context. Reload and try again.";
 const LLM_CHAT_OPEN_ANIMATION_MS = 260;
@@ -2045,6 +2046,77 @@ function normalizeChatCodeText(value) {
     .trim();
 }
 
+function findChatChunkBoundary(value, maxChars) {
+  const text = String(value || "");
+  if (text.length <= maxChars) {
+    return text.length;
+  }
+
+  const candidates = [
+    "\n\n",
+    "\n",
+    ". ",
+    "? ",
+    "! ",
+    "; ",
+    ", ",
+    " ",
+  ];
+
+  for (const token of candidates) {
+    const index = text.lastIndexOf(token, maxChars);
+    if (index > 0) {
+      return index + token.length;
+    }
+  }
+
+  return maxChars;
+}
+
+function splitChatMessageContent(content, maxChars = LLM_CHAT_MESSAGE_CHAR_LIMIT) {
+  const raw = String(content || "").replace(/\r\n?/g, "\n");
+  if (!raw) {
+    return [];
+  }
+
+  if (raw.length <= maxChars) {
+    return [raw];
+  }
+
+  const chunks = [];
+  let remaining = raw;
+
+  while (remaining.length > maxChars) {
+    const boundary = findChatChunkBoundary(remaining, maxChars);
+    const chunk = remaining.slice(0, boundary).trimEnd();
+    if (chunk) {
+      chunks.push(chunk);
+    }
+    remaining = remaining.slice(boundary).trimStart();
+  }
+
+  if (remaining) {
+    chunks.push(remaining);
+  }
+
+  return chunks;
+}
+
+function expandChatMessagesForRequest(messages) {
+  return messages.flatMap((message) => {
+    const content = typeof message.content === "string" ? message.content : "";
+    const chunks = splitChatMessageContent(content);
+    if (!chunks.length) {
+      return [];
+    }
+
+    return chunks.map((chunk) => ({
+      role: message.role,
+      content: chunk,
+    }));
+  });
+}
+
 function cloneChatContentNode(node) {
   if (!node || typeof node.cloneNode !== "function") {
     return null;
@@ -2252,7 +2324,7 @@ function buildArticleChatMessages(root) {
     .join("\n");
 
   return {
-    messages: [
+    messages: expandChatMessagesForRequest([
       {
         role: "user",
         content: [
@@ -2260,11 +2332,13 @@ function buildArticleChatMessages(root) {
           "Use it only to answer the reader's next question about the current article.",
           "",
           instructionMessage,
-          "",
-          contextMessage,
         ].join("\n"),
       },
-    ],
+      {
+        role: "user",
+        content: contextMessage,
+      },
+    ]),
   };
 }
 
@@ -2302,7 +2376,7 @@ function getChatRequestMessages(state, messages) {
       content: entry.content,
     }));
 
-  return state.hiddenRequestMessages.concat(visibleMessages);
+  return expandChatMessagesForRequest(state.hiddenRequestMessages.concat(visibleMessages));
 }
 
 async function parseChatError(response) {

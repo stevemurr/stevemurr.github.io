@@ -9,6 +9,7 @@
 {{- $welcomeStamp := .welcomeStamp | default "Running on DGX Spark" -}}
 {{- $statusText := .statusText | default "" -}}
 {{- $inputPlaceholder := .inputPlaceholder | default "Send a message" -}}
+{{- $maxLength := .maxLength | default 8000 -}}
 {{- $idPrefix := .idPrefix | default "llm-chat" -}}
 {{- $titleID := printf "%s-title" $idPrefix -}}
 {{- $inputID := printf "%s-input" $idPrefix -}}
@@ -80,7 +81,7 @@
             class="resume-runtime__chat-input"
             data-llm-chat-input
             rows="1"
-            maxlength="1200"
+            maxlength="{{ $maxLength }}"
             placeholder="{{ $inputPlaceholder }}"></textarea>
 
           <div class="resume-runtime__chat-buttons">
