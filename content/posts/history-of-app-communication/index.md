@@ -1,7 +1,7 @@
 ---
 title: "Fifty Years of Apps Trying to Talk to Each Other"
-date: 2026-03-16
-draft: true
+date: 2026-03-18
+draft: false
 tags: ["ipc", "history", "macos", "fabric", "architecture"]
 summary: "From Unix pipes to gRPC — and the semantic context gap that still remains."
 projects: ["stevemurr/fabric"]
@@ -180,7 +180,3 @@ Fabric isn't replacing IPC at the transport layer. Mach ports, Unix sockets, HTT
 The problem is the semantic layer. Fabric is a **local context broker** --- a substrate that lets applications publish what they're working on and discover what other applications are working on, through a unified addressing scheme (`fabric://`) and a permission model that keeps the user in control.
 
 The closest ancestor in this fifty-year lineage is Apple's AEOM --- a queryable model of application state. But the AEOM required each application to implement its own object model and scripting dictionary. Fabric inverts this: applications register resources, actions, and subscriptions with a central broker. Discovery is built in. The addressing is uniform. And because Fabric projects its resources through an MCP gateway, AI tools can consume cross-app context without custom integration.
-
-Every generation in this history solved the plumbing problem and left the semantic problem for the next generation. Fabric is an attempt to stop punting on it.
-
-That's [the intro post](/posts/introducing-fabric/). And if you want the deep dive on Apple's twenty-year arc from radical openness to radical restriction, [that's here](/posts/history-ipc-apple-path/).
