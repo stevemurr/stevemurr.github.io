@@ -19,9 +19,9 @@ githubActivity:
   excludeRepos:
     - "stevemurr/stevemurr.github.io"
 projects:
-  - name: "Tic-Tac-Uh-Oh"
-    repo: "stevemurr/tic-tac-uh-oh"
-    summary: "Tic-Tac-Toe but really bro"
+  - name: "Fabric"
+    repo: "stevemurr/fabric"
+    summary: "macOS substrate for inter-app context sharing"
     pinned: true
   - name: "Marriage Composer"
     repo: "stevemurr/marriage-composer"
@@ -30,6 +30,10 @@ projects:
   - name: "Hugo Cloudflare Metrics"
     repo: "stevemurr/hugo-cf-worker-metrics"
     summary: "Analytics for Hugo sites using Cloudflare Workers + KV"
+    pinned: true
+  - name: "Tic-Tac-Uh-Oh"
+    repo: "stevemurr/tic-tac-uh-oh"
+    summary: "Tic-Tac-Toe but really bro"
     pinned: true
 ---
 
