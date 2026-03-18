@@ -13,6 +13,10 @@ theme = 'ResumeFrame'
 [params]
   showReadingTime = true
 
+  # Worker code and deployment live in ~/Code/github.com/stevemurr/hugo-cf-worker-metrics
+  [params.cfWorkerMetrics]
+    workerURL = "https://stevemurr-site-metrics.gh-murr-proxy.workers.dev"
+
   [params.assets]
     theme_color = "#f6efe6"
     msapplication_TileColor = "#f6efe6"

@@ -1,0 +1,31 @@
+{{- $workerURL := "" -}}
+{{- with site.Params.cfWorkerMetrics -}}
+  {{- $workerURL = strings.TrimSuffix "/" (.workerURL | default "") -}}
+{{- end -}}
+{{- if $workerURL -}}
+<script data-worker-url="{{ $workerURL }}">
+  (function() {
+    var currentScript = document.currentScript;
+    var workerUrl =
+      currentScript && currentScript.dataset
+      ? currentScript.dataset.workerUrl
+      : "";
+    var hostname = window.location.hostname;
+    var isLocalHost =
+      hostname === "localhost"
+      || hostname === "127.0.0.1"
+      || hostname === "[::1]";
+
+    if (isLocalHost || !workerUrl) {
+      return;
+    }
+
+    fetch(workerUrl + "/track?page=" + encodeURIComponent(window.location.pathname), {
+      method: "GET",
+      mode: "cors",
+      credentials: "omit",
+      keepalive: true
+    }).catch(function() {});
+  })();
+</script>
+{{- end -}}

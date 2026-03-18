@@ -9,6 +9,9 @@ const LLM_CHAT_TURNSTILE_POLL_MS = 250;
 const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
 const LLM_CHAT_BODY_OPEN_CLASS = "has-llm-chat-open";
 const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a minute.";
+const LLM_CHAT_ARTICLE_SCOPE = "article";
+const LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT = 25000;
+const LLM_CHAT_ARTICLE_CONTEXT_ERROR = "Article chat could not load this page context. Reload and try again.";
 const LLM_CHAT_OPEN_ANIMATION_MS = 260;
 const LLM_CHAT_BACKDROP_ANIMATION_MS = 180;
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -1514,7 +1517,7 @@ function updateChatSendState(state) {
   }
 
   const hasValue = Boolean(state.input.value.trim());
-  state.sendButton.disabled = state.isStreaming || !hasValue;
+  state.sendButton.disabled = state.isStreaming || !hasValue || Boolean(state.contextError);
 }
 
 function setChatFeedback(state, message, tone = "error", retryable = false) {
@@ -1592,7 +1595,9 @@ function ensureTurnstileRendered(state, attempt = 0) {
       appearance: "interaction-only",
       callback(token) {
         state.turnstileToken = token;
-        setChatFeedback(state, "", "info", false);
+        if (!syncPersistentChatFeedback(state)) {
+          setChatFeedback(state, "", "info", false);
+        }
       },
       "expired-callback"() {
         state.turnstileToken = "";
@@ -1724,9 +1729,11 @@ function restoreChatShell(state) {
   state.messagesContainer.innerHTML = state.initialMessagesMarkup;
   state.input.value = "";
   autosizeChatInput(state.input);
-  setChatFeedback(state, "", "info", false);
   setChatBusy(state, false);
   resetTurnstile(state);
+  if (!syncPersistentChatFeedback(state)) {
+    setChatFeedback(state, "", "info", false);
+  }
 }
 
 function updateAssistantMessageActions(state) {
@@ -1936,7 +1943,9 @@ function openChat(state, sourceElement = null) {
   document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = true;
   animateChatOpen(state, state.lastOpenSourceElement);
-  ensureTurnstileRendered(state);
+  if (!state.contextError) {
+    ensureTurnstileRendered(state);
+  }
   autosizeChatInput(state.input);
   updateChatSendState(state);
   window.requestAnimationFrame(() => {
@@ -2019,13 +2028,278 @@ function closeChat(state) {
   });
 }
 
-function getChatRequestMessages(messages) {
-  return messages
+function normalizeChatPlainText(value) {
+  return String(value || "")
+    .replace(/\u00a0/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function normalizeChatCodeText(value) {
+  return String(value || "")
+    .replace(/\r\n?/g, "\n")
+    .replace(/\u00a0/g, " ")
+    .split("\n")
+    .map((line) => line.replace(/\s+$/g, ""))
+    .join("\n")
+    .trim();
+}
+
+function cloneChatContentNode(node) {
+  if (!node || typeof node.cloneNode !== "function") {
+    return null;
+  }
+
+  const clone = node.cloneNode(true);
+  Array.from(clone.querySelectorAll(".anchor, .entry-hint, script, style, noscript, [hidden], [aria-hidden=\"true\"]"))
+    .forEach((child) => {
+      child.remove();
+    });
+  return clone;
+}
+
+function getArticleChatText(node) {
+  const clone = cloneChatContentNode(node);
+  return normalizeChatPlainText(clone ? clone.textContent : "");
+}
+
+function getArticleCodeText(node) {
+  const source = node && node.querySelector("code")
+    ? node.querySelector("code")
+    : node;
+  const clone = cloneChatContentNode(source);
+  return normalizeChatCodeText(clone ? clone.textContent : "");
+}
+
+function getArticleCodeLanguage(node) {
+  const classNames = [];
+
+  if (node && node.classList) {
+    classNames.push(...Array.from(node.classList));
+  }
+
+  const code = node && node.querySelector("code")
+    ? node.querySelector("code")
+    : null;
+  if (code && code.classList) {
+    classNames.push(...Array.from(code.classList));
+  }
+
+  for (const className of classNames) {
+    const match = className.match(/^language-([\w-]+)/i);
+    if (match && match[1]) {
+      return match[1];
+    }
+  }
+
+  if (code && code.dataset) {
+    return normalizeChatPlainText(code.dataset.language || code.dataset.lang || "");
+  }
+
+  return "";
+}
+
+function serializeArticleList(node) {
+  const isOrdered = node.tagName.toUpperCase() === "OL";
+  return Array.from(node.children)
+    .filter((child) => child.tagName && child.tagName.toUpperCase() === "LI")
+    .map((item, index) => {
+      const text = getArticleChatText(item);
+      if (!text) {
+        return "";
+      }
+
+      return `${isOrdered ? `${index + 1}.` : "-"} ${text}`;
+    })
+    .filter(Boolean)
+    .join("\n");
+}
+
+function serializeArticleNode(node, blocks, sections) {
+  if (!(node instanceof HTMLElement) || node.hidden) {
+    return;
+  }
+
+  const tagName = node.tagName.toUpperCase();
+  if (tagName === "SCRIPT" || tagName === "STYLE" || tagName === "NOSCRIPT") {
+    return;
+  }
+
+  if (/^H[1-6]$/.test(tagName)) {
+    const text = getArticleChatText(node);
+    if (!text) {
+      return;
+    }
+
+    const anchor = node.id ? `#${node.id}` : "";
+    if (anchor) {
+      sections.push({
+        level: tagName,
+        text,
+        anchor,
+      });
+    }
+    blocks.push(`${tagName}${anchor ? ` ${anchor}` : ""}: ${text}`);
+    return;
+  }
+
+  if (tagName === "P") {
+    const text = getArticleChatText(node);
+    if (text) {
+      blocks.push(text);
+    }
+    return;
+  }
+
+  if (tagName === "UL" || tagName === "OL") {
+    const listText = serializeArticleList(node);
+    if (listText) {
+      blocks.push(listText);
+    }
+    return;
+  }
+
+  if (tagName === "BLOCKQUOTE") {
+    const text = getArticleChatText(node);
+    if (text) {
+      blocks.push(`Blockquote: ${text}`);
+    }
+    return;
+  }
+
+  if (tagName === "PRE") {
+    const code = getArticleCodeText(node);
+    if (!code) {
+      return;
+    }
+
+    const language = getArticleCodeLanguage(node);
+    blocks.push(`Code block${language ? ` (${language})` : ""}:\n${code}`);
+    return;
+  }
+
+  Array.from(node.children).forEach((child) => {
+    serializeArticleNode(child, blocks, sections);
+  });
+}
+
+function buildArticleTranscript(contentNode) {
+  const blocks = [];
+  const sections = [];
+
+  Array.from(contentNode.children).forEach((child) => {
+    serializeArticleNode(child, blocks, sections);
+  });
+
+  return {
+    transcript: blocks.join("\n\n").trim(),
+    sections,
+  };
+}
+
+function getArticleChatURL() {
+  try {
+    const url = new URL(window.location.href);
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return window.location.href;
+  }
+}
+
+function buildArticleChatMessages(root) {
+  const article = root.closest(".post-single");
+  const title = getArticleChatText(article && article.querySelector(".post-title"));
+  const summary = getArticleChatText(article && article.querySelector(".post-hero__summary"));
+  const contentNode = article && article.querySelector(".post-content");
+
+  if (!article || !title || !contentNode) {
+    return { error: LLM_CHAT_ARTICLE_CONTEXT_ERROR };
+  }
+
+  const { transcript, sections } = buildArticleTranscript(contentNode);
+  if (!transcript) {
+    return { error: LLM_CHAT_ARTICLE_CONTEXT_ERROR };
+  }
+
+  const transcriptText = transcript.length > LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT
+    ? `${transcript.slice(0, LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT).trimEnd()}\n\n[Transcript truncated at ${LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT} characters.]`
+    : transcript;
+  const sectionIndex = sections.length
+    ? sections
+      .map((section) => `- ${section.level}: ${section.text} (${section.anchor})`)
+      .join("\n")
+    : "- None";
+  const instructionMessage = [
+    "Answer using only the current article context provided in this conversation.",
+    "If the answer is not covered in the article, reply with exactly: not covered in this article.",
+    "Do not use outside knowledge, do not speculate, and do not invent details.",
+    "When referencing a section with a known anchor, include a markdown link that uses the relative fragment, for example [Section](#section-id).",
+  ].join(" ");
+  const contextMessage = [
+    `Article title: ${title}`,
+    summary ? `Summary: ${summary}` : "",
+    `URL: ${getArticleChatURL()}`,
+    "",
+    "Section index:",
+    sectionIndex,
+    "",
+    "Article transcript:",
+    transcriptText,
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  return {
+    messages: [
+      {
+        role: "system",
+        content: instructionMessage,
+      },
+      {
+        role: "system",
+        content: contextMessage,
+      },
+    ],
+  };
+}
+
+function hydrateChatContext(state) {
+  state.hiddenRequestMessages = [];
+  state.contextError = "";
+
+  if (state.chatScope !== LLM_CHAT_ARTICLE_SCOPE) {
+    return;
+  }
+
+  const context = buildArticleChatMessages(state.root);
+  if (context.error) {
+    state.contextError = context.error;
+    return;
+  }
+
+  state.hiddenRequestMessages = context.messages;
+}
+
+function syncPersistentChatFeedback(state) {
+  if (!state.contextError) {
+    return false;
+  }
+
+  setChatFeedback(state, state.contextError, "error", false);
+  return true;
+}
+
+function getChatRequestMessages(state, messages) {
+  const visibleMessages = messages
     .slice(-LLM_CHAT_MAX_HISTORY_MESSAGES)
     .map((entry) => ({
       role: entry.role,
       content: entry.content,
     }));
+
+  return state.hiddenRequestMessages.concat(visibleMessages);
 }
 
 async function parseChatError(response) {
@@ -2166,7 +2440,7 @@ async function streamChatRequest(state, requestMessages) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        messages: getChatRequestMessages(requestMessages),
+        messages: getChatRequestMessages(state, requestMessages),
         captchaToken: state.turnstileToken,
       }),
       signal: state.abortController.signal,
@@ -2306,6 +2580,11 @@ async function submitChat(state) {
     return;
   }
 
+  if (state.contextError) {
+    setChatFeedback(state, state.contextError, "error", false);
+    return;
+  }
+
   if (!state.turnstileToken) {
     setChatFeedback(state, "Complete the verification challenge before sending.", "muted", false);
     return;
@@ -2326,6 +2605,11 @@ async function submitChat(state) {
 
 async function retryChat(state) {
   if (state.isStreaming || !state.lastRequestSnapshot || !state.lastRequestSnapshot.length) {
+    return;
+  }
+
+  if (state.contextError) {
+    setChatFeedback(state, state.contextError, "error", false);
     return;
   }
 
@@ -2375,6 +2659,7 @@ function initializeLLMChat(root) {
     openButtons,
     closeButtons,
     siteKey,
+    chatScope: root.dataset.chatScope || "general",
     modelLabel: root.dataset.chatModel || "nemotron3-nano",
     initialMessagesMarkup: messagesContainer.innerHTML,
     isOpen: false,
@@ -2391,12 +2676,15 @@ function initializeLLMChat(root) {
     abortController: null,
     turnstileWidgetId: null,
     turnstileToken: "",
+    hiddenRequestMessages: [],
+    contextError: "",
   };
 
   if (overlay.parentNode !== document.body) {
     document.body.appendChild(overlay);
   }
 
+  hydrateChatContext(state);
   restoreChatShell(state);
   autosizeChatInput(input);
 
@@ -2454,7 +2742,9 @@ function initializeLLMChat(root) {
 
   input.addEventListener("input", () => {
     autosizeChatInput(input);
-    setChatFeedback(state, "", "info", false);
+    if (!syncPersistentChatFeedback(state)) {
+      setChatFeedback(state, "", "info", false);
+    }
     updateChatSendState(state);
   });
 

@@ -3137,6 +3137,12 @@ body.has-llm-chat-open {
   margin-bottom: 18px;
 }
 
+.resume-runtime__chat-entry--article {
+  width: fit-content;
+  max-width: 100%;
+  margin-bottom: 0;
+}
+
 .resume-runtime__chat-trigger {
   display: flex;
   align-items: center;
@@ -3162,6 +3168,28 @@ body.has-llm-chat-open {
   background: var(--chat-launcher-background-hover);
   box-shadow: var(--chat-launcher-shadow-hover);
   transform: translateY(-1px);
+}
+
+.resume-runtime__chat-trigger--article {
+  width: auto;
+  max-width: 100%;
+  padding: 0 18px;
+  border-color: var(--hero-surface-border);
+  background: color-mix(in srgb, var(--hero-surface) 92%, transparent);
+  color: var(--hero-text-strong);
+  box-shadow:
+    inset 0 1px 0 var(--hero-surface-border),
+    0 18px 44px rgba(7, 16, 32, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.resume-runtime__chat-trigger--article:hover {
+  border-color: var(--hero-surface-border-strong);
+  background: color-mix(in srgb, var(--hero-surface) 98%, transparent);
+  box-shadow:
+    inset 0 1px 0 var(--hero-surface-border),
+    0 22px 48px rgba(7, 16, 32, 0.24);
 }
 
 .resume-runtime__chat-trigger:focus-visible,
@@ -3193,6 +3221,16 @@ body.has-llm-chat-open {
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.2;
+}
+
+.resume-runtime__chat-trigger--article .resume-runtime__chat-trigger-placeholder {
+  color: var(--hero-text-strong);
+}
+
+.resume-runtime__chat-trigger--article .resume-runtime__chat-trigger-icon {
+  background: color-mix(in srgb, var(--accent) 24%, var(--hero-surface));
+  color: var(--hero-text-strong);
+  box-shadow: inset 0 1px 0 var(--hero-surface-border);
 }
 
 .resume-runtime__chat-trigger-hint {
@@ -4917,6 +4955,11 @@ body.has-llm-chat-open {
   line-height: 1.66;
 }
 
+.post-hero__chat {
+  margin-top: 6px;
+  max-width: min(100%, 32rem);
+}
+
 .post-hero__meta,
 .post-hero__meta span,
 .post-hero__meta a,
@@ -5295,6 +5338,18 @@ body.has-llm-chat-open {
   .resume-runtime__chat-trigger {
     min-height: 48px;
     padding: 0 14px;
+  }
+
+  .post-hero__chat {
+    max-width: none;
+  }
+
+  .resume-runtime__chat-entry--article {
+    width: 100%;
+  }
+
+  .resume-runtime__chat-trigger--article {
+    width: 100%;
   }
 
   .resume-runtime__chat-overlay {

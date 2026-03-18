@@ -52,6 +52,20 @@
       {{- if $summary }}
       <p class="post-hero__summary">{{ $summary }}</p>
       {{- end }}
+
+      {{- if eq .Section "posts" }}
+      <div class="post-hero__chat">
+        {{ partial "llm_chat.html" (dict
+          "idPrefix" "article-chat"
+          "scope" "article"
+          "rootClass" "resume-runtime__chat-entry resume-runtime__chat-entry--article"
+          "triggerClass" "resume-runtime__chat-trigger resume-runtime__chat-trigger--article"
+          "triggerLabel" "Chat with this article"
+          "dialogTitle" "Chat with this article"
+          "welcomeCopy" "Ask about this article's argument, sections, timeline, examples, or code. If something is not covered here, I'll say so."
+        ) }}
+      </div>
+      {{- end }}
     </div>
   </header>
 

@@ -1,0 +1,98 @@
+{{- $rootClass := .rootClass | default "resume-runtime__chat-entry" -}}
+{{- $triggerClass := .triggerClass | default "resume-runtime__chat-trigger" -}}
+{{- $siteKey := .siteKey | default "0x4AAAAAACrW14YrtriUnK9x" -}}
+{{- $model := .model | default "nemotron3-nano" -}}
+{{- $scope := .scope | default "general" -}}
+{{- $dialogTitle := .dialogTitle | default "Ask the DGX" -}}
+{{- $triggerLabel := .triggerLabel | default "Ask AI anything..." -}}
+{{- $welcomeCopy := .welcomeCopy | default "Hi. Ask about local inference, side projects, models, infra, or anything else you want to throw at the box." -}}
+{{- $welcomeStamp := .welcomeStamp | default "Running on DGX Spark" -}}
+{{- $statusText := .statusText | default "" -}}
+{{- $inputPlaceholder := .inputPlaceholder | default "Send a message" -}}
+{{- $idPrefix := .idPrefix | default "llm-chat" -}}
+{{- $titleID := printf "%s-title" $idPrefix -}}
+{{- $inputID := printf "%s-input" $idPrefix -}}
+
+<div
+  class="{{ $rootClass }}"
+  data-llm-chat
+  data-turnstile-site-key="{{ $siteKey }}"
+  data-chat-model="{{ $model }}"
+  data-chat-scope="{{ $scope }}">
+  <button class="{{ $triggerClass }}" type="button" data-llm-chat-open>
+    <span class="resume-runtime__chat-trigger-icon" aria-hidden="true">
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.1"
+        viewBox="0 0 24 24" width="16" height="16">
+        <path d="M12 5v14"></path>
+        <path d="M5 12h14"></path>
+      </svg>
+    </span>
+    <span class="resume-runtime__chat-trigger-placeholder">{{ $triggerLabel }}</span>
+  </button>
+
+  {{- with $statusText }}
+  <p class="resume-runtime__status sr-only" data-llm-status>{{ . }}</p>
+  {{- end }}
+
+  <div class="resume-runtime__chat-overlay" data-llm-chat-overlay hidden>
+    <button class="resume-runtime__chat-backdrop" type="button" aria-label="Close chat" data-llm-chat-close></button>
+
+    <section class="resume-runtime__chat-shell" role="dialog" aria-modal="true" aria-labelledby="{{ $titleID }}">
+      <header class="resume-runtime__chat-header">
+        <div class="resume-runtime__chat-bar">
+          <h3 id="{{ $titleID }}" class="sr-only">{{ $dialogTitle }}</h3>
+          <span class="resume-runtime__chat-model">{{ $model }}</span>
+        </div>
+
+        <button class="resume-runtime__chat-close" type="button" aria-label="Close chat" data-llm-chat-close>
+          <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M18 6L6 18"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+      </header>
+
+      <div class="resume-runtime__chat-stream" data-llm-chat-messages>
+        <article class="resume-runtime__chat-message resume-runtime__chat-message--assistant resume-runtime__chat-message--welcome">
+          <div class="resume-runtime__chat-message-head">
+            <span class="resume-runtime__chat-avatar" aria-hidden="true">AI</span>
+            <div class="resume-runtime__chat-meta-stack">
+              <p class="resume-runtime__chat-message-role">{{ $model }}</p>
+              <p class="resume-runtime__chat-message-stamp">{{ $welcomeStamp }}</p>
+            </div>
+          </div>
+          <div class="resume-runtime__chat-message-copy">
+            {{ $welcomeCopy }}
+          </div>
+        </article>
+      </div>
+
+      <div class="resume-runtime__chat-feedback-row" data-llm-chat-feedback-row hidden>
+        <p class="resume-runtime__chat-feedback" data-llm-chat-feedback></p>
+      </div>
+
+      <form class="resume-runtime__chat-form" data-llm-chat-form>
+        <label class="sr-only" for="{{ $inputID }}">Message</label>
+        <div class="resume-runtime__chat-compose">
+          <textarea
+            id="{{ $inputID }}"
+            class="resume-runtime__chat-input"
+            data-llm-chat-input
+            rows="1"
+            maxlength="1200"
+            placeholder="{{ $inputPlaceholder }}"></textarea>
+
+          <div class="resume-runtime__chat-buttons">
+            <button class="resume-runtime__chat-stop" type="button" data-llm-chat-stop hidden>Stop</button>
+            <button class="resume-runtime__chat-send" type="submit" data-llm-chat-send>Send</button>
+          </div>
+        </div>
+
+        <div class="resume-runtime__chat-actions">
+          <div class="resume-runtime__chat-turnstile" data-llm-chat-turnstile></div>
+        </div>
+      </form>
+    </section>
+  </div>
+</div>
