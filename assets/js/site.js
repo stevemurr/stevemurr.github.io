@@ -10,12 +10,61 @@ const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
 const LLM_CHAT_BODY_OPEN_CLASS = "has-llm-chat-open";
 const LLM_CHAT_DEFAULT_ERROR = "Chat is temporarily unavailable. Try again in a minute.";
 const LLM_CHAT_ARTICLE_SCOPE = "article";
+const LLM_CHAT_REQUEST_MESSAGE_LIMIT = 8;
 const LLM_CHAT_MESSAGE_CHAR_LIMIT = 1200;
+const LLM_CHAT_ARTICLE_CONTEXT_MESSAGE_LIMIT = 3;
+const LLM_CHAT_ARTICLE_SEGMENT_CHAR_LIMIT = 920;
+const LLM_CHAT_ARTICLE_QUERY_TERM_LIMIT = 12;
 const LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT = 25000;
 const LLM_CHAT_ARTICLE_CONTEXT_ERROR = "Article chat could not load this page context. Reload and try again.";
 const LLM_CHAT_OPEN_ANIMATION_MS = 260;
 const LLM_CHAT_BACKDROP_ANIMATION_MS = 180;
 const SVG_NS = "http://www.w3.org/2000/svg";
+const LLM_CHAT_STOP_WORDS = new Set([
+  "about",
+  "after",
+  "also",
+  "and",
+  "any",
+  "are",
+  "article",
+  "because",
+  "been",
+  "before",
+  "between",
+  "but",
+  "can",
+  "could",
+  "does",
+  "for",
+  "from",
+  "have",
+  "into",
+  "just",
+  "like",
+  "more",
+  "next",
+  "only",
+  "over",
+  "page",
+  "section",
+  "should",
+  "that",
+  "the",
+  "their",
+  "them",
+  "there",
+  "these",
+  "this",
+  "those",
+  "what",
+  "when",
+  "where",
+  "which",
+  "while",
+  "with",
+  "would",
+]);
 const POST_BACK_DESTINATIONS = {
   articles: {
     path: "/articles/",
@@ -2117,6 +2166,38 @@ function expandChatMessagesForRequest(messages) {
   });
 }
 
+function packChatMessagesForSlotLimit(messages, slotLimit = LLM_CHAT_REQUEST_MESSAGE_LIMIT) {
+  if (slotLimit <= 0) {
+    return [];
+  }
+
+  const packed = [];
+  let remainingSlots = slotLimit;
+
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const expanded = expandChatMessagesForRequest([messages[index]]);
+    if (!expanded.length) {
+      continue;
+    }
+
+    if (expanded.length > remainingSlots) {
+      if (!packed.length) {
+        return expanded.slice(-remainingSlots);
+      }
+      break;
+    }
+
+    packed.unshift(...expanded);
+    remainingSlots -= expanded.length;
+
+    if (remainingSlots === 0) {
+      break;
+    }
+  }
+
+  return packed;
+}
+
 function cloneChatContentNode(node) {
   if (!node || typeof node.cloneNode !== "function") {
     return null;
@@ -2269,6 +2350,279 @@ function buildArticleTranscript(contentNode) {
   };
 }
 
+function truncateChatText(value, maxChars) {
+  const text = String(value || "").trim();
+  if (!text || text.length <= maxChars) {
+    return text;
+  }
+
+  return `${text.slice(0, Math.max(0, maxChars - 1)).trimEnd()}…`;
+}
+
+function serializeArticleBlock(node) {
+  if (!(node instanceof HTMLElement) || node.hidden) {
+    return [];
+  }
+
+  const tagName = node.tagName.toUpperCase();
+  if (tagName === "SCRIPT" || tagName === "STYLE" || tagName === "NOSCRIPT" || /^H[1-6]$/.test(tagName)) {
+    return [];
+  }
+
+  if (tagName === "P") {
+    const text = getArticleChatText(node);
+    return text ? [text] : [];
+  }
+
+  if (tagName === "UL" || tagName === "OL") {
+    const listText = serializeArticleList(node);
+    return listText ? [listText] : [];
+  }
+
+  if (tagName === "BLOCKQUOTE") {
+    const text = getArticleChatText(node);
+    return text ? [`Blockquote: ${text}`] : [];
+  }
+
+  if (tagName === "PRE") {
+    const code = getArticleCodeText(node);
+    if (!code) {
+      return [];
+    }
+
+    const language = getArticleCodeLanguage(node);
+    return [`Code block${language ? ` (${language})` : ""}:\n${code}`];
+  }
+
+  return Array.from(node.children).flatMap((child) => serializeArticleBlock(child));
+}
+
+function buildArticleSections(contentNode) {
+  const sections = [];
+  let consumedChars = 0;
+  let currentSection = {
+    heading: "Introduction",
+    anchor: "",
+    blocks: [],
+  };
+
+  function flushCurrentSection() {
+    if (!currentSection.blocks.length) {
+      return;
+    }
+
+    sections.push({
+      heading: currentSection.heading,
+      anchor: currentSection.anchor,
+      blocks: currentSection.blocks.slice(),
+      isCodeHeavy: currentSection.blocks.some((block) => block.startsWith("Code block")),
+    });
+  }
+
+  Array.from(contentNode.children).forEach((child) => {
+    if (!(child instanceof HTMLElement) || child.hidden) {
+      return;
+    }
+
+    const tagName = child.tagName.toUpperCase();
+    if (/^H[1-6]$/.test(tagName)) {
+      flushCurrentSection();
+      currentSection = {
+        heading: getArticleChatText(child) || "Section",
+        anchor: child.id ? `#${child.id}` : "",
+        blocks: [],
+      };
+      return;
+    }
+
+    const blocks = serializeArticleBlock(child);
+    blocks.forEach((block) => {
+      if (!block || consumedChars >= LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT) {
+        return;
+      }
+
+      const remainingChars = LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT - consumedChars;
+      let nextBlock = block;
+
+      if (nextBlock.length > remainingChars) {
+        nextBlock = `${nextBlock.slice(0, Math.max(0, remainingChars - 20)).trimEnd()}\n[Section truncated.]`;
+      }
+
+      currentSection.blocks.push(nextBlock);
+      consumedChars += nextBlock.length;
+    });
+  });
+
+  flushCurrentSection();
+  return sections;
+}
+
+function buildArticleSegments(sections) {
+  let order = 0;
+
+  return sections.flatMap((section) => {
+    const heading = section.heading || "Section";
+    const anchor = section.anchor || "";
+    const label = `Section: ${heading}${anchor ? ` (${anchor})` : ""}`;
+    const body = section.blocks.join("\n\n").trim();
+    const maxBodyChars = Math.max(240, LLM_CHAT_ARTICLE_SEGMENT_CHAR_LIMIT - label.length - 24);
+    const chunks = splitChatMessageContent(body, maxBodyChars);
+
+    return chunks.map((chunk, index) => {
+      const prefix = index === 0 ? label : `${label} [continued ${index + 1}]`;
+      const content = `${prefix}\n${chunk}`.trim();
+      const segment = {
+        order,
+        heading,
+        anchor,
+        content,
+        searchText: `${heading} ${anchor} ${chunk}`.toLowerCase(),
+        isCodeHeavy: section.isCodeHeavy,
+      };
+      order += 1;
+      return segment;
+    });
+  });
+}
+
+function extractArticleQueryTerms(messages) {
+  const latestUserMessage = [...messages].reverse().find((message) => message.role === "user" && message.content);
+  const priorAssistantMessage = [...messages].reverse().find((message) => message.role === "assistant" && message.content);
+  const source = [
+    latestUserMessage ? latestUserMessage.content : "",
+    priorAssistantMessage ? priorAssistantMessage.content : "",
+  ]
+    .filter(Boolean)
+    .join(" ");
+  const tokens = source.toLowerCase().match(/[a-z0-9][a-z0-9_-]*/g) || [];
+  const seen = new Set();
+  const terms = [];
+
+  for (const token of tokens) {
+    if (token.length < 3 || LLM_CHAT_STOP_WORDS.has(token) || seen.has(token)) {
+      continue;
+    }
+
+    seen.add(token);
+    terms.push(token);
+
+    if (terms.length >= LLM_CHAT_ARTICLE_QUERY_TERM_LIMIT) {
+      break;
+    }
+  }
+
+  return terms;
+}
+
+function scoreArticleSegment(segment, terms) {
+  if (!terms.length) {
+    return segment.order === 0 ? 1 : 0;
+  }
+
+  const headingText = segment.heading.toLowerCase();
+  const anchorText = segment.anchor.toLowerCase();
+  let score = 0;
+
+  terms.forEach((term) => {
+    if (headingText.includes(term)) {
+      score += 6;
+    }
+    if (anchorText.includes(term)) {
+      score += 4;
+    }
+    if (segment.searchText.includes(term)) {
+      score += 2;
+    }
+    if (
+      segment.isCodeHeavy
+      && (term === "code" || term === "example" || term === "examples" || term === "snippet")
+    ) {
+      score += 3;
+    }
+  });
+
+  return score;
+}
+
+function selectArticleContextSegments(articleContext, requestMessages, limit) {
+  if (!articleContext || !articleContext.segments.length || limit <= 0) {
+    return [];
+  }
+
+  const terms = extractArticleQueryTerms(requestMessages);
+  const rankedSegments = articleContext.segments
+    .map((segment) => ({
+      ...segment,
+      score: scoreArticleSegment(segment, terms),
+    }))
+    .sort((left, right) => right.score - left.score || left.order - right.order);
+
+  const selected = rankedSegments.filter((segment) => segment.score > 0).slice(0, limit);
+  if (!selected.length) {
+    return rankedSegments.slice(0, limit);
+  }
+
+  return selected.sort((left, right) => left.order - right.order);
+}
+
+function buildArticleMetadataMessage(articleContext) {
+  const lines = [
+    "Context only. Do not answer this message directly.",
+    "Use only this article metadata and excerpts to answer the reader's next question.",
+    "If the answer is not covered here, reply with exactly: not covered in this article.",
+    "When a known anchor is relevant, use a markdown link with the relative fragment.",
+    "",
+    `Article title: ${articleContext.title}`,
+  ];
+
+  if (articleContext.summary) {
+    lines.push(`Summary: ${truncateChatText(articleContext.summary, 220)}`);
+  }
+
+  lines.push(`URL: ${articleContext.url}`);
+  lines.push("");
+  lines.push("Known section anchors:");
+
+  let content = lines.join("\n");
+  for (const sectionLine of articleContext.sectionLines) {
+    const nextContent = `${content}\n${sectionLine}`;
+    if (nextContent.length > LLM_CHAT_MESSAGE_CHAR_LIMIT) {
+      content += "\n- ...";
+      break;
+    }
+    content = nextContent;
+  }
+
+  return content;
+}
+
+function buildArticleContextMessagesForRequest(articleContext, requestMessages, slotLimit) {
+  if (!articleContext || slotLimit <= 0) {
+    return [];
+  }
+
+  const messages = [
+    {
+      role: "user",
+      content: buildArticleMetadataMessage(articleContext),
+    },
+  ];
+
+  const excerptLimit = Math.min(
+    LLM_CHAT_ARTICLE_CONTEXT_MESSAGE_LIMIT - 1,
+    Math.max(0, slotLimit - 1),
+  );
+
+  selectArticleContextSegments(articleContext, requestMessages, excerptLimit).forEach((segment, index) => {
+    messages.push({
+      role: "user",
+      content: `Relevant article excerpt ${index + 1}:\n${segment.content}`,
+    });
+  });
+
+  return messages;
+}
+
 function getArticleChatURL() {
   try {
     const url = new URL(window.location.href);
@@ -2290,60 +2644,24 @@ function buildArticleChatMessages(root) {
     return { error: LLM_CHAT_ARTICLE_CONTEXT_ERROR };
   }
 
-  const { transcript, sections } = buildArticleTranscript(contentNode);
-  if (!transcript) {
+  const sections = buildArticleSections(contentNode);
+  if (!sections.length) {
     return { error: LLM_CHAT_ARTICLE_CONTEXT_ERROR };
   }
 
-  const transcriptText = transcript.length > LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT
-    ? `${transcript.slice(0, LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT).trimEnd()}\n\n[Transcript truncated at ${LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT} characters.]`
-    : transcript;
-  const sectionIndex = sections.length
-    ? sections
-      .map((section) => `- ${section.level}: ${section.text} (${section.anchor})`)
-      .join("\n")
-    : "- None";
-  const instructionMessage = [
-    "Answer using only the current article context provided in this conversation.",
-    "If the answer is not covered in the article, reply with exactly: not covered in this article.",
-    "Do not use outside knowledge, do not speculate, and do not invent details.",
-    "When referencing a section with a known anchor, include a markdown link that uses the relative fragment, for example [Section](#section-id).",
-  ].join(" ");
-  const contextMessage = [
-    `Article title: ${title}`,
-    summary ? `Summary: ${summary}` : "",
-    `URL: ${getArticleChatURL()}`,
-    "",
-    "Section index:",
-    sectionIndex,
-    "",
-    "Article transcript:",
-    transcriptText,
-  ]
-    .filter(Boolean)
-    .join("\n");
-
   return {
-    messages: expandChatMessagesForRequest([
-      {
-        role: "user",
-        content: [
-          "Context only. Do not answer this message directly.",
-          "Use it only to answer the reader's next question about the current article.",
-          "",
-          instructionMessage,
-        ].join("\n"),
-      },
-      {
-        role: "user",
-        content: contextMessage,
-      },
-    ]),
+    articleContext: {
+      title,
+      summary,
+      url: getArticleChatURL(),
+      sectionLines: sections.map((section) => `- ${section.heading}${section.anchor ? ` (${section.anchor})` : ""}`),
+      segments: buildArticleSegments(sections),
+    },
   };
 }
 
 function hydrateChatContext(state) {
-  state.hiddenRequestMessages = [];
+  state.articleContext = null;
   state.contextError = "";
 
   if (state.chatScope !== LLM_CHAT_ARTICLE_SCOPE) {
@@ -2356,7 +2674,7 @@ function hydrateChatContext(state) {
     return;
   }
 
-  state.hiddenRequestMessages = context.messages;
+  state.articleContext = context.articleContext;
 }
 
 function syncPersistentChatFeedback(state) {
@@ -2375,8 +2693,23 @@ function getChatRequestMessages(state, messages) {
       role: entry.role,
       content: entry.content,
     }));
+  const visibleSlotLimit = state.articleContext
+    ? Math.max(1, LLM_CHAT_REQUEST_MESSAGE_LIMIT - 1)
+    : LLM_CHAT_REQUEST_MESSAGE_LIMIT;
+  const packedVisibleMessages = packChatMessagesForSlotLimit(visibleMessages, visibleSlotLimit);
 
-  return expandChatMessagesForRequest(state.hiddenRequestMessages.concat(visibleMessages));
+  if (!state.articleContext) {
+    return packedVisibleMessages;
+  }
+
+  const availableContextSlots = Math.max(1, LLM_CHAT_REQUEST_MESSAGE_LIMIT - packedVisibleMessages.length);
+  const contextMessages = buildArticleContextMessagesForRequest(
+    state.articleContext,
+    messages,
+    availableContextSlots,
+  );
+
+  return contextMessages.concat(packedVisibleMessages);
 }
 
 async function parseChatError(response) {
@@ -2753,7 +3086,7 @@ function initializeLLMChat(root) {
     abortController: null,
     turnstileWidgetId: null,
     turnstileToken: "",
-    hiddenRequestMessages: [],
+    articleContext: null,
     contextError: "",
   };
 
