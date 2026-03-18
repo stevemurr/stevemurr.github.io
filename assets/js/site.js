@@ -2254,12 +2254,15 @@ function buildArticleChatMessages(root) {
   return {
     messages: [
       {
-        role: "system",
-        content: instructionMessage,
-      },
-      {
-        role: "system",
-        content: contextMessage,
+        role: "user",
+        content: [
+          "Context only. Do not answer this message directly.",
+          "Use it only to answer the reader's next question about the current article.",
+          "",
+          instructionMessage,
+          "",
+          contextMessage,
+        ].join("\n"),
       },
     ],
   };
