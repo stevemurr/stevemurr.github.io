@@ -1154,9 +1154,17 @@ function getChatRoleLabel(role) {
   return "System";
 }
 
+function isSupportedChatLinkDestination(destination) {
+  return /^(https?:\/\/|#|\/|\.{1,2}\/)/i.test(String(destination || "").trim());
+}
+
+function isExternalChatLinkDestination(destination) {
+  return /^https?:\/\//i.test(String(destination || "").trim());
+}
+
 function appendInlineMarkdown(documentRef, parent, text) {
   const source = String(text || "");
-  const pattern = /(\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|`([^`\n]+)`|\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\n]+)\*|_([^_\n]+)_)/g;
+  const pattern = /(\[([^\]]+)\]\(((?:https?:\/\/|#|\/|\.{1,2}\/)[^\s)]+)\)|`([^`\n]+)`|\*\*([^*]+)\*\*|__([^_]+)__|\*([^*\n]+)\*|_([^_\n]+)_)/g;
   let lastIndex = 0;
   let match = pattern.exec(source);
 
@@ -1165,11 +1173,13 @@ function appendInlineMarkdown(documentRef, parent, text) {
       parent.appendChild(documentRef.createTextNode(source.slice(lastIndex, match.index)));
     }
 
-    if (match[2] && match[3]) {
+    if (match[2] && match[3] && isSupportedChatLinkDestination(match[3])) {
       const link = documentRef.createElement("a");
       link.href = match[3];
-      link.rel = "noopener noreferrer nofollow";
-      link.target = "_blank";
+      if (isExternalChatLinkDestination(match[3])) {
+        link.rel = "noopener noreferrer nofollow";
+        link.target = "_blank";
+      }
       appendInlineMarkdown(documentRef, link, match[2]);
       parent.appendChild(link);
     } else if (match[4]) {
@@ -2146,6 +2156,42 @@ function closeChat(state) {
   Promise.allSettled([backdropAnimation.finished, shellAnimation.finished]).finally(() => {
     finishClose();
   });
+}
+
+function navigateChatFragmentLink(state, fragment) {
+  const hash = String(fragment || "").trim();
+  if (!hash || !hash.startsWith("#")) {
+    return;
+  }
+
+  closeChat(state);
+
+  const navigate = () => {
+    const rawId = hash.slice(1);
+    const decodedId = rawId ? decodeURIComponent(rawId) : "";
+    const target = decodedId ? document.getElementById(decodedId) : null;
+
+    if (target) {
+      if (window.history && typeof window.history.replaceState === "function") {
+        window.history.replaceState(null, "", hash);
+      } else {
+        window.location.hash = hash;
+      }
+
+      target.scrollIntoView({
+        behavior: prefersReducedMotion() ? "auto" : "smooth",
+        block: "start",
+      });
+      return;
+    }
+
+    window.location.hash = hash;
+  };
+
+  window.setTimeout(
+    navigate,
+    prefersReducedMotion() ? 0 : Math.max(LLM_CHAT_OPEN_ANIMATION_MS, LLM_CHAT_BACKDROP_ANIMATION_MS),
+  );
 }
 
 function normalizeChatPlainText(value) {
@@ -3211,6 +3257,16 @@ function initializeLLMChat(root) {
     const target = event.target instanceof Element ? event.target : null;
     if (!target) {
       return;
+    }
+
+    const messageLink = target.closest(".resume-runtime__chat-message-copy a");
+    if (messageLink instanceof HTMLAnchorElement) {
+      const href = messageLink.getAttribute("href") || "";
+      if (href.startsWith("#")) {
+        event.preventDefault();
+        navigateChatFragmentLink(state, href);
+        return;
+      }
     }
 
     const copyButton = target.closest("[data-llm-chat-copy]");
