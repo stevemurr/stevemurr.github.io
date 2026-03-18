@@ -1561,13 +1561,54 @@ function autosizeChatInput(input) {
   input.style.overflowY = input.scrollHeight > maxHeight ? "auto" : "hidden";
 }
 
+function chatRequiresVerification(state) {
+  return Boolean(state.turnstileContainer && state.siteKey);
+}
+
+function setTurnstileStatus(state, message = "", tone = "muted") {
+  if (!state.turnstileStatus) {
+    return;
+  }
+
+  const text = String(message || "").trim();
+  state.turnstileStatus.hidden = !text;
+  state.turnstileStatus.dataset.tone = tone;
+  state.turnstileStatus.textContent = text;
+}
+
+function syncTurnstileStatus(state) {
+  if (!chatRequiresVerification(state) || state.contextError) {
+    setTurnstileStatus(state, "", "muted");
+    return false;
+  }
+
+  if (state.turnstileError) {
+    setTurnstileStatus(state, state.turnstileError, "error");
+    return true;
+  }
+
+  if (state.turnstileToken) {
+    setTurnstileStatus(state, "", "muted");
+    return false;
+  }
+
+  if (state.turnstileWidgetId === null) {
+    setTurnstileStatus(state, "Loading verification challenge...", "muted");
+    return true;
+  }
+
+  setTurnstileStatus(state, "Waiting for verification. Complete the challenge if prompted.", "muted");
+  return true;
+}
+
 function updateChatSendState(state) {
   if (!state.sendButton || !state.input) {
     return;
   }
 
   const hasValue = Boolean(state.input.value.trim());
-  state.sendButton.disabled = state.isStreaming || !hasValue || Boolean(state.contextError);
+  const verificationBlocked = chatRequiresVerification(state) && !state.turnstileToken;
+  state.sendButton.disabled = state.isStreaming || !hasValue || Boolean(state.contextError) || verificationBlocked;
 }
 
 function setChatFeedback(state, message, tone = "error", retryable = false) {
@@ -1622,6 +1663,7 @@ function describeTurnstileError(errorCode) {
 
 function resetTurnstile(state) {
   state.turnstileToken = "";
+  state.turnstileError = "";
 
   if (
     state.turnstileWidgetId !== null
@@ -1630,12 +1672,18 @@ function resetTurnstile(state) {
   ) {
     window.turnstile.reset(state.turnstileWidgetId);
   }
+
+  syncTurnstileStatus(state);
+  updateChatSendState(state);
 }
 
 function ensureTurnstileRendered(state, attempt = 0) {
   if (!state.turnstileContainer || !state.siteKey || state.turnstileWidgetId !== null) {
     return;
   }
+
+  state.turnstileError = "";
+  syncTurnstileStatus(state);
 
   if (window.turnstile && typeof window.turnstile.render === "function") {
     state.turnstileWidgetId = window.turnstile.render(state.turnstileContainer, {
@@ -1645,35 +1693,55 @@ function ensureTurnstileRendered(state, attempt = 0) {
       appearance: "interaction-only",
       callback(token) {
         state.turnstileToken = token;
+        state.turnstileError = "";
+        syncTurnstileStatus(state);
+        updateChatSendState(state);
         if (!syncPersistentChatFeedback(state)) {
           setChatFeedback(state, "", "info", false);
         }
       },
       "expired-callback"() {
         state.turnstileToken = "";
+        state.turnstileError = "";
+        syncTurnstileStatus(state);
+        updateChatSendState(state);
         setChatFeedback(state, "Verification expired. Please confirm again.", "muted", false);
       },
       "timeout-callback"() {
         state.turnstileToken = "";
+        state.turnstileError = "";
+        syncTurnstileStatus(state);
+        updateChatSendState(state);
         setChatFeedback(state, "Verification timed out. Please try again.", "muted", false);
       },
       "unsupported-callback"() {
         state.turnstileToken = "";
-        setChatFeedback(state, "This browser is not supported by Turnstile. Try another browser.", "error", false);
+        state.turnstileError = "This browser is not supported by Turnstile. Try another browser.";
+        syncTurnstileStatus(state);
+        updateChatSendState(state);
+        setChatFeedback(state, state.turnstileError, "error", false);
         return true;
       },
       "error-callback"(errorCode) {
         state.turnstileToken = "";
-        setChatFeedback(state, describeTurnstileError(errorCode), "error", false);
+        state.turnstileError = describeTurnstileError(errorCode);
+        syncTurnstileStatus(state);
+        updateChatSendState(state);
+        setChatFeedback(state, state.turnstileError, "error", false);
         return true;
       },
     });
 
+    syncTurnstileStatus(state);
+    updateChatSendState(state);
     return;
   }
 
   if (attempt >= LLM_CHAT_TURNSTILE_MAX_ATTEMPTS) {
-    setChatFeedback(state, "Verification widget did not load. Disable blockers and reopen chat.", "error", false);
+    state.turnstileError = "Verification widget did not load. Disable blockers or shields, then reopen chat.";
+    syncTurnstileStatus(state);
+    updateChatSendState(state);
+    setChatFeedback(state, state.turnstileError, "error", false);
     return;
   }
 
@@ -1781,6 +1849,7 @@ function restoreChatShell(state) {
   autosizeChatInput(state.input);
   setChatBusy(state, false);
   resetTurnstile(state);
+  syncTurnstileStatus(state);
   if (!syncPersistentChatFeedback(state)) {
     setChatFeedback(state, "", "info", false);
   }
@@ -1993,6 +2062,7 @@ function openChat(state, sourceElement = null) {
   document.body.classList.add(LLM_CHAT_BODY_OPEN_CLASS);
   state.isOpen = true;
   animateChatOpen(state, state.lastOpenSourceElement);
+  syncTurnstileStatus(state);
   if (!state.contextError) {
     ensureTurnstileRendered(state);
   }
@@ -2678,12 +2748,17 @@ function hydrateChatContext(state) {
 }
 
 function syncPersistentChatFeedback(state) {
-  if (!state.contextError) {
-    return false;
+  if (state.contextError) {
+    setChatFeedback(state, state.contextError, "error", false);
+    return true;
   }
 
-  setChatFeedback(state, state.contextError, "error", false);
-  return true;
+  if (state.turnstileError) {
+    setChatFeedback(state, state.turnstileError, "error", false);
+    return true;
+  }
+
+  return false;
 }
 
 function getChatRequestMessages(state, messages) {
@@ -2995,8 +3070,14 @@ async function submitChat(state) {
     return;
   }
 
-  if (!state.turnstileToken) {
-    setChatFeedback(state, "Complete the verification challenge before sending.", "muted", false);
+  if (chatRequiresVerification(state) && !state.turnstileToken) {
+    syncTurnstileStatus(state);
+    setChatFeedback(
+      state,
+      state.turnstileError || "Verification is still loading. Wait a moment and try again.",
+      state.turnstileError ? "error" : "muted",
+      false,
+    );
     return;
   }
 
@@ -3023,8 +3104,14 @@ async function retryChat(state) {
     return;
   }
 
-  if (!state.turnstileToken) {
-    setChatFeedback(state, "Complete the verification challenge before retrying.", "muted", false);
+  if (chatRequiresVerification(state) && !state.turnstileToken) {
+    syncTurnstileStatus(state);
+    setChatFeedback(
+      state,
+      state.turnstileError || "Verification is still loading. Wait a moment and try again.",
+      state.turnstileError ? "error" : "muted",
+      false,
+    );
     return;
   }
 
@@ -3041,6 +3128,7 @@ function initializeLLMChat(root) {
   const form = root.querySelector("[data-llm-chat-form]");
   const input = root.querySelector("[data-llm-chat-input]");
   const turnstileContainer = root.querySelector("[data-llm-chat-turnstile]");
+  const turnstileStatus = root.querySelector("[data-llm-chat-turnstile-status]");
   const sendButton = root.querySelector("[data-llm-chat-send]");
   const stopButton = root.querySelector("[data-llm-chat-stop]");
   const retryButton = root.querySelector("[data-llm-chat-retry]");
@@ -3063,6 +3151,7 @@ function initializeLLMChat(root) {
     form,
     input,
     turnstileContainer,
+    turnstileStatus,
     sendButton,
     stopButton,
     retryButton,
@@ -3086,6 +3175,7 @@ function initializeLLMChat(root) {
     abortController: null,
     turnstileWidgetId: null,
     turnstileToken: "",
+    turnstileError: "",
     articleContext: null,
     contextError: "",
   };
@@ -3096,6 +3186,7 @@ function initializeLLMChat(root) {
 
   hydrateChatContext(state);
   restoreChatShell(state);
+  syncTurnstileStatus(state);
   autosizeChatInput(input);
 
   openButtons.forEach((button) => {
