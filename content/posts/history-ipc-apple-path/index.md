@@ -1,7 +1,7 @@
 ---
 title: "Act IV: Apple's Own Path (1991–2011)"
-date: 2026-03-16
-draft: true
+date: 2026-03-19
+draft: false
 tags: ["ipc", "history", "apple", "apple-events", "applescript", "mach", "xpc", "macos"]
 summary: "From the most ambitious inter-app communication model to the most restrictive — Apple's twenty-year arc."
 projects: ["stevemurr/fabric"]
