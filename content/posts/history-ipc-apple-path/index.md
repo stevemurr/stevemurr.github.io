@@ -1,5 +1,5 @@
 ---
-title: "Act IV: Apple's Own Path (1991–2011)"
+title: "IPC: Apple's Own Path (1991–2011)"
 date: 2026-03-19
 draft: false
 tags: ["ipc", "history", "apple", "apple-events", "applescript", "mach", "xpc", "macos"]

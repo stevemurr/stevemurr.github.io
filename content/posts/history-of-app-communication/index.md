@@ -1,5 +1,5 @@
 ---
-title: "Fifty Years of Apps Trying to Talk to Each Other"
+title: "IPC: Fifty Years of Apps Trying to Talk to Each Other"
 date: 2026-03-18
 draft: false
 tags: ["ipc", "history", "macos", "fabric", "architecture"]
