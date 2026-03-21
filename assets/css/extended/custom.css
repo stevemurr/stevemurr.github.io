@@ -2986,6 +2986,12 @@ body:not(.list) .nav {
   align-items: start;
 }
 
+.resume-home__chat,
+.resume-home__chat-entry {
+  display: grid;
+  gap: 0;
+}
+
 .resume-home__projects {
   grid-column: 1 / -1;
 }

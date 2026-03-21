@@ -78,53 +78,17 @@
     </div>
   </header>
 
-  <section
-    class="resume-panel reveal reveal--late resume-runtime"
-    data-llm-metrics
-    data-model-name="nemotron3-nano"
-    data-metrics-window="1h">
-    <div class="resume-panel__header resume-runtime__header">
-      <div class="resume-runtime__heading">
-        <p class="section-heading__eyebrow">LLM runtime</p>
-      </div>
-    </div>
-
+  <div class="resume-home__chat reveal reveal--late">
     {{ partial "llm_chat.html" (dict
       "idPrefix" "llm-chat"
       "scope" "general"
+      "rootClass" "resume-home__chat-entry"
       "statusText" "Fetching the latest hour of traces."
       "triggerLabel" "Ask AI anything..."
       "dialogTitle" "Ask the DGX"
       "welcomeCopy" "Hi. Ask about local inference, side projects, models, infra, or anything else you want to throw at the box."
     ) }}
-
-    <div class="resume-runtime__stats">
-      <article class="resume-runtime__card" data-llm-card="generatedTokens">
-        <p class="resume-runtime__card-label">Generated tokens</p>
-        <p class="resume-runtime__card-value" data-llm-value>--</p>
-        <p class="resume-runtime__card-meta">Last hour</p>
-      </article>
-
-      <article class="resume-runtime__card" data-llm-card="promptTokens">
-        <p class="resume-runtime__card-label">Prompt tokens</p>
-        <p class="resume-runtime__card-value" data-llm-value>--</p>
-        <p class="resume-runtime__card-meta">Last hour</p>
-      </article>
-
-      <article class="resume-runtime__card" data-llm-card="activeMinutes">
-        <p class="resume-runtime__card-label">Active time</p>
-        <p class="resume-runtime__card-value" data-llm-value>--</p>
-        <p class="resume-runtime__card-meta">Within the last hour</p>
-      </article>
-
-      <article class="resume-runtime__card" data-llm-card="lastActivityAt">
-        <p class="resume-runtime__card-label">Last activity</p>
-        <p class="resume-runtime__card-value" data-llm-value>--</p>
-        <p class="resume-runtime__card-meta">Most recent burst</p>
-      </article>
-    </div>
-
-  </section>
+  </div>
 
   {{- if or (gt (len $recentCommits) 0) $githubUser }}
   <section
