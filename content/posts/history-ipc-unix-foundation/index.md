@@ -1,7 +1,7 @@
 ---
-title: "Act I: The Unix Foundation (1970s)"
-date: 2026-03-16
-draft: true
+title: "IPC: The Unix Foundation (1970s)"
+date: 2026-03-22
+draft: false
 tags: ["ipc", "history", "unix", "pipes", "system-v", "bsd"]
 summary: "Pipes, signals, shared memory, and sockets — how Unix laid the groundwork for everything that followed."
 projects: ["stevemurr/fabric"]
