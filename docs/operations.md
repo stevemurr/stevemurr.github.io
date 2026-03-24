@@ -26,7 +26,7 @@ This gives you a cleaner source of truth than ad hoc dashboard edits, while stil
 - `ANALYTICS_API_KEY`
 - Turnstile widget hostnames and dashboard-level widget settings
 
-Secrets remain manual because Cloudflare Pages secrets are encrypted bindings. Treat them as write-only and reapply them when rebuilding an environment.
+Secrets stay out of Git because Cloudflare Pages secrets are encrypted bindings. Treat them as write-only and reapply them when rebuilding an environment.
 
 ## Bootstrap
 
@@ -46,6 +46,16 @@ terraform init
 terraform plan
 terraform apply
 ```
+
+## Secret Bootstrap
+
+The repo now includes a small secret bootstrap flow:
+
+- `make secrets-bootstrap` prompts for secret values, writes `.dev.vars`, and syncs the same values into Cloudflare Pages
+- `make secrets-local` only writes `.dev.vars`
+- the bootstrap script can also store an optional local `GRAFANA_TOKEN`, but it does not push that token to Pages by default
+
+The underlying script is [scripts/bootstrap_secrets.sh](../scripts/bootstrap_secrets.sh), and the local file template is [.dev.vars.example](../.dev.vars.example).
 
 ## Adopting Existing Cloudflare Resources
 
@@ -68,7 +78,7 @@ You can rebuild most of the Cloudflare side from this directory, but there are s
 
 ## Pages Secrets
 
-Run these from the repo root after the Pages project exists:
+Run these from the repo root after the Pages project exists if you want to set individual secrets by hand:
 
 ```bash
 npx --yes wrangler pages secret put TURNSTILE_SECRET_KEY

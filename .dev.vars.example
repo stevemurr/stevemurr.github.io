@@ -1,6 +1,8 @@
+# Copy to `.dev.vars` for local Wrangler development.
 TURNSTILE_SECRET_KEY=
 CF_ACCESS_CLIENT_ID=
 CF_ACCESS_CLIENT_SECRET=
 LITELLM_API_KEY=
 ANALYTICS_API_KEY=
+# Optional for local Grafana access if bearer auth is required in your environment.
 GRAFANA_TOKEN=
