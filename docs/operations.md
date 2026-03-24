@@ -53,6 +53,8 @@ The repo now includes a small secret bootstrap flow:
 
 - `make secrets-bootstrap` prompts for secret values, writes `.dev.vars`, and syncs the same values into Cloudflare Pages
 - `make secrets-local` only writes `.dev.vars`
+- `make secrets-update KEY=ANALYTICS_API_KEY` rotates a single secret without prompting for the rest
+- `make secrets-update KEYS="TURNSTILE_SECRET_KEY LITELLM_API_KEY"` rotates multiple specific secrets
 - the bootstrap script can also store an optional local `GRAFANA_TOKEN`, but it does not push that token to Pages by default
 
 The underlying script is [scripts/bootstrap_secrets.sh](../scripts/bootstrap_secrets.sh), and the local file template is [.dev.vars.example](../.dev.vars.example).
