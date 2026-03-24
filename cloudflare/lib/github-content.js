@@ -72,30 +72,47 @@ async function parseGitHubError(response) {
 async function githubRequest(env, path, { method = "GET", body } = {}) {
   const token = String(env.GITHUB_CONTENTS_TOKEN || "").trim();
   const needsWriteAuth = method !== "GET";
+  const url = `${GITHUB_API_ROOT}${path}`;
 
   if (needsWriteAuth && !token) {
     throw new HTTPError(500, "Missing GitHub contents token.");
   }
 
-  const headers = {
+  const baseHeaders = {
     Accept: "application/vnd.github+json",
     "User-Agent": "stevemurr.com-admin",
     "X-GitHub-Api-Version": "2022-11-28",
   };
 
-  if (token && needsWriteAuth) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
   if (body) {
-    headers["Content-Type"] = "application/json";
+    baseHeaders["Content-Type"] = "application/json";
   }
 
-  const response = await fetch(`${GITHUB_API_ROOT}${path}`, {
-    method,
-    headers,
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  const executeRequest = async (useAuth) => {
+    const headers = {
+      ...baseHeaders,
+      ...(useAuth && token ? { Authorization: `Bearer ${token}` } : {}),
+    };
+
+    return fetch(url, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  };
+
+  let response = await executeRequest(Boolean(token));
+
+  // Public repo reads should still succeed even if the token is missing a scope,
+  // stale, or GitHub rejects it for a read path.
+  if (
+    !response.ok
+    && method === "GET"
+    && token
+    && [400, 401, 403].includes(response.status)
+  ) {
+    response = await executeRequest(false);
+  }
 
   if (!response.ok) {
     const message = await parseGitHubError(response);
