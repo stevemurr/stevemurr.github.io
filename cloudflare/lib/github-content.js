@@ -71,16 +71,21 @@ async function parseGitHubError(response) {
 
 async function githubRequest(env, path, { method = "GET", body } = {}) {
   const token = String(env.GITHUB_CONTENTS_TOKEN || "").trim();
-  if (!token) {
+  const needsWriteAuth = method !== "GET";
+
+  if (needsWriteAuth && !token) {
     throw new HTTPError(500, "Missing GitHub contents token.");
   }
 
   const headers = {
     Accept: "application/vnd.github+json",
-    Authorization: `Bearer ${token}`,
     "User-Agent": "stevemurr.com-admin",
     "X-GitHub-Api-Version": "2022-11-28",
   };
+
+  if (token && needsWriteAuth) {
+    headers.Authorization = `Bearer ${token}`;
+  }
 
   if (body) {
     headers["Content-Type"] = "application/json";
