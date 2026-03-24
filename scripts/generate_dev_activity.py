@@ -638,16 +638,7 @@ def main() -> int:
     source = "local"
 
     try:
-        if len(verified_local_repositories) >= 3:
-            repositories = verified_local_repositories
-            commits = load_local_commits(recent_commit_local_repositories, username, identity)
-            contribution_counts = load_local_contribution_counts(
-                repositories,
-                username,
-                identity,
-                end_date - timedelta(days=CALENDAR_DAYS - 1),
-            )
-        elif token:
+        if token:
             repositories = public_repositories
             commits = load_api_commits(recent_commit_public_repositories, username, token)
             contribution_counts = load_api_contributions(
@@ -657,6 +648,15 @@ def main() -> int:
                 end_date,
             )
             source = "github"
+        elif len(verified_local_repositories) >= 3:
+            repositories = verified_local_repositories
+            commits = load_local_commits(recent_commit_local_repositories, username, identity)
+            contribution_counts = load_local_contribution_counts(
+                repositories,
+                username,
+                identity,
+                end_date - timedelta(days=CALENDAR_DAYS - 1),
+            )
         else:
             repositories = verified_local_repositories
             commits = load_local_commits(recent_commit_local_repositories, username, identity)
