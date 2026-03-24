@@ -15,6 +15,7 @@
     currentPostLoadingSlug: "",
     resume: createEmptyResume(),
     postSlugDirty: false,
+    isPostModalOpen: false,
   };
 
   const refs = {
@@ -25,11 +26,14 @@
     sidebarPanels: Array.from(root.querySelectorAll("[data-admin-sidebar-panel]")),
     panels: Array.from(root.querySelectorAll("[data-admin-panel]")),
     postList: root.querySelector("[data-admin-post-list]"),
+    postStats: root.querySelector("[data-admin-post-stats]"),
     postHeading: root.querySelector("[data-admin-post-heading]"),
     postMeta: root.querySelector("[data-admin-post-meta]"),
     postState: root.querySelector("[data-admin-post-state]"),
     postLink: root.querySelector("[data-admin-post-link]"),
     postButtons: Array.from(root.querySelectorAll("[data-admin-action='save-post']")),
+    postDetailButtons: Array.from(root.querySelectorAll("[data-admin-action='open-post-details']")),
+    postModal: root.querySelector("[data-admin-post-modal]"),
     newPostButton: root.querySelector("[data-admin-action='new-post']"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
     resumeMeta: root.querySelector("[data-admin-resume-meta]"),
@@ -80,6 +84,7 @@
   refs.projectList.addEventListener("click", handleRowRemove);
   refs.postForm.title.addEventListener("input", handlePostTitleInput);
   refs.postForm.slug.addEventListener("input", handlePostSlugInput);
+  document.addEventListener("keydown", handleGlobalKeydown);
 
   initialize().catch((error) => {
     setFeedback("error", error.message || "Admin failed to initialize.");
@@ -191,6 +196,7 @@
     }
 
     state.currentPostLoadingSlug = slug;
+    setPostModalOpen(false);
     setFeedback("info", `Loading ${slug}…`);
 
     try {
@@ -205,50 +211,95 @@
     }
   }
 
-  function startNewPost() {
+  function startNewPost({ openDetails = false } = {}) {
     state.currentPost = createEmptyPost();
     state.postSlugDirty = false;
     renderPostList();
     renderPost();
     clearFeedback();
+
+    if (openDetails) {
+      setPostModalOpen(true);
+    }
   }
 
   function renderPostList() {
     refs.postList.replaceChildren();
+    renderPostStats();
 
     if (!state.posts.length) {
-      const empty = document.createElement("p");
-      empty.className = "admin-repeat-empty";
-      empty.textContent = "No research posts found yet.";
-      refs.postList.appendChild(empty);
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 5;
+      cell.className = "admin-post-table__empty";
+      cell.textContent = "No research posts found yet.";
+      row.appendChild(cell);
+      refs.postList.appendChild(row);
       return;
     }
 
     state.posts.forEach((item) => {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "admin-post-item";
-      button.dataset.adminAction = "open-post";
-      button.dataset.slug = item.slug;
-
+      const row = document.createElement("tr");
+      row.className = "admin-post-row";
       if (state.currentPost.sha && state.currentPost.slug === item.slug) {
-        button.classList.add("is-active");
+        row.classList.add("is-active");
       }
 
-      const title = document.createElement("p");
-      title.className = "admin-post-item__title";
-      title.textContent = item.title || item.slug;
+      const statusCell = document.createElement("td");
+      const status = document.createElement("span");
+      status.className = `admin-post-status admin-post-status--${item.draft ? "draft" : "published"}`;
+      status.textContent = item.draft ? "Draft" : "Published";
+      statusCell.appendChild(status);
 
-      const meta = document.createElement("p");
-      meta.className = "admin-post-item__meta";
-      meta.textContent = `${item.date || "No date"} · ${item.draft ? "Draft" : "Published"}`;
+      const titleCell = document.createElement("td");
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "admin-post-link";
+      button.dataset.adminAction = "open-post";
+      button.dataset.slug = item.slug;
+      button.textContent = item.title || item.slug;
+      titleCell.appendChild(button);
 
-      const summary = document.createElement("p");
-      summary.className = "admin-post-item__summary";
-      summary.textContent = item.summary || "No summary yet.";
+      const dateCell = document.createElement("td");
+      dateCell.className = "admin-post-cell--muted";
+      dateCell.textContent = formatPostDate(item.date);
 
-      button.append(title, meta, summary);
-      refs.postList.appendChild(button);
+      const slugCell = document.createElement("td");
+      slugCell.className = "admin-post-cell--mono";
+      slugCell.textContent = item.slug;
+
+      const summaryCell = document.createElement("td");
+      summaryCell.className = "admin-post-cell--summary";
+      summaryCell.textContent = item.summary || "No summary yet.";
+
+      row.append(statusCell, titleCell, dateCell, slugCell, summaryCell);
+      refs.postList.appendChild(row);
+    });
+  }
+
+  function renderPostStats() {
+    refs.postStats.replaceChildren();
+
+    const counts = [
+      {
+        label: "Total",
+        value: state.posts.length,
+      },
+      {
+        label: "Published",
+        value: state.posts.filter((post) => !post.draft).length,
+      },
+      {
+        label: "Drafts",
+        value: state.posts.filter((post) => post.draft).length,
+      },
+    ];
+
+    counts.forEach((entry) => {
+      const chip = document.createElement("div");
+      chip.className = "admin-post-stat";
+      chip.innerHTML = `<strong>${entry.value}</strong><span>${entry.label}</span>`;
+      refs.postStats.appendChild(chip);
     });
   }
 
@@ -287,6 +338,10 @@
     refs.postForm.pullquote.value = params.pullquote || "";
     refs.postForm.showNav.checked = Boolean(frontmatter.ShowPostNavLinks);
     refs.postForm.body.value = record.body || "";
+
+    refs.postDetailButtons.forEach((button) => {
+      button.textContent = isExisting ? "Article Details" : "Set Details";
+    });
   }
 
   function renderResume() {
@@ -361,9 +416,10 @@
     const isExisting = Boolean(state.currentPost.sha);
     const slug = payload.slug;
 
-    if (!slug) {
-      setFeedback("error", "Post slug is required.");
-      refs.postForm.slug.focus();
+    if (!payload.title || !slug) {
+      setPostModalOpen(true);
+      setFeedback("error", !payload.title ? "Post title is required." : "Post slug is required.");
+      (payload.title ? refs.postForm.slug : refs.postForm.title).focus();
       return;
     }
 
@@ -382,6 +438,7 @@
       state.postSlugDirty = false;
       renderPost();
       await loadPosts({ preferredSlug: saved.slug });
+      setPostModalOpen(false);
       setFeedback("success", draft ? "Draft saved." : "Post published.");
     } catch (error) {
       setFeedback("error", error.message || "Post save failed.");
@@ -504,7 +561,7 @@
 
     if (adminAction === "new-post") {
       setActiveTab("posts");
-      startNewPost();
+      startNewPost({ openDetails: true });
       return;
     }
 
@@ -520,6 +577,16 @@
       savePost(actionTarget.dataset.draft === "true").catch((error) => {
         setFeedback("error", error.message || "Post save failed.");
       });
+      return;
+    }
+
+    if (adminAction === "open-post-details") {
+      setPostModalOpen(true);
+      return;
+    }
+
+    if (adminAction === "close-post-details") {
+      setPostModalOpen(false);
       return;
     }
 
@@ -578,6 +645,24 @@
     refs.postForm.slug.value = slugify(refs.postForm.slug.value);
   }
 
+  function handleGlobalKeydown(event) {
+    if (event.key === "Escape" && state.isPostModalOpen) {
+      setPostModalOpen(false);
+    }
+  }
+
+  function setPostModalOpen(isOpen) {
+    state.isPostModalOpen = Boolean(isOpen);
+    refs.postModal.hidden = !state.isPostModalOpen;
+    document.body.classList.toggle("admin-modal-open", state.isPostModalOpen);
+
+    if (state.isPostModalOpen) {
+      window.setTimeout(() => {
+        refs.postForm.title.focus();
+      }, 0);
+    }
+  }
+
   async function requestJSON(path, { method = "GET", body } = {}) {
     const response = await fetch(path, {
       method,
@@ -614,6 +699,23 @@
 
   function shortSha(value) {
     return value ? value.slice(0, 7) : "";
+  }
+
+  function formatPostDate(value) {
+    if (!value) {
+      return "No date";
+    }
+
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) {
+      return value;
+    }
+
+    return parsed.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
   }
 
   function slugify(value) {

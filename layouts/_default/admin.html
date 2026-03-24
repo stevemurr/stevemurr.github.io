@@ -33,7 +33,10 @@
           </div>
           <button class="admin-button admin-button--ghost" type="button" data-admin-action="new-post">New Post</button>
         </div>
-        <div class="admin-post-list" data-admin-post-list></div>
+        <p class="admin-sidebar__summary">
+          Use the post library to scan draft vs published work, then open article details only when you need to edit metadata.
+        </p>
+        <div class="admin-post-stats" data-admin-post-stats></div>
       </section>
 
       <section class="admin-sidebar__section" data-admin-sidebar-panel="resume" hidden>
@@ -60,74 +63,48 @@
           <div class="admin-panel__actions">
             <span class="admin-badge" data-admin-post-state>New</span>
             <a class="admin-button admin-button--ghost" href="#" target="_blank" rel="noopener" data-admin-post-link hidden>Open Post</a>
+            <button class="admin-button admin-button--ghost" type="button" data-admin-action="open-post-details">Article Details</button>
             <button class="admin-button admin-button--ghost" type="button" data-admin-action="save-post" data-draft="true">Save Draft</button>
             <button class="admin-button" type="button" data-admin-action="save-post" data-draft="false">Publish</button>
           </div>
         </header>
 
         <form class="admin-form" data-admin-post-form>
-          <div class="admin-form-grid admin-form-grid--two">
-            <label class="admin-field">
-              <span>Title</span>
-              <input id="admin-post-title" name="title" type="text" autocomplete="off">
-            </label>
+          <section class="admin-subsection admin-subsection--compact">
+            <div class="admin-subsection__header">
+              <div>
+                <p class="admin-kicker">Post library</p>
+                <h3>Published and draft entries</h3>
+              </div>
+            </div>
+            <div class="admin-post-table-wrap">
+              <table class="admin-post-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Status</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Slug</th>
+                    <th scope="col">Summary</th>
+                  </tr>
+                </thead>
+                <tbody data-admin-post-list></tbody>
+              </table>
+            </div>
+          </section>
 
-            <label class="admin-field">
-              <span>Slug</span>
-              <input id="admin-post-slug" name="slug" type="text" autocomplete="off" spellcheck="false">
-              <small class="admin-field__hint" data-admin-post-slug-hint>Lowercase, hyphenated, and locked after creation.</small>
-            </label>
-
-            <label class="admin-field">
-              <span>Date</span>
-              <input id="admin-post-date" name="date" type="date">
-            </label>
-
-            <label class="admin-field">
-              <span>Weight</span>
-              <input id="admin-post-weight" name="weight" type="text" inputmode="numeric" autocomplete="off">
-            </label>
-
-            <label class="admin-field admin-field--wide">
-              <span>Summary</span>
-              <textarea id="admin-post-summary" name="summary" rows="3"></textarea>
-            </label>
-
-            <label class="admin-field">
-              <span>Tags</span>
-              <input id="admin-post-tags" name="tags" type="text" autocomplete="off" placeholder="swift, macos, architecture">
-            </label>
-
-            <label class="admin-field">
-              <span>Projects</span>
-              <input id="admin-post-projects" name="projects" type="text" autocomplete="off" placeholder="stevemurr/fabric">
-            </label>
-
-            <label class="admin-field">
-              <span>Series</span>
-              <input id="admin-post-series" name="series" type="text" autocomplete="off" placeholder="history-of-app-communication">
-            </label>
-
-            <label class="admin-field">
-              <span>Card icon</span>
-              <input id="admin-post-card-icon" name="cardIcon" type="text" autocomplete="off" placeholder="layers">
-            </label>
-
-            <label class="admin-field admin-field--wide">
-              <span>Card gradient</span>
-              <input id="admin-post-card-gradient" name="cardGradient" type="text" autocomplete="off" placeholder="135deg, #1e3a5f, #2563eb, #60a5fa">
-            </label>
-
-            <label class="admin-field admin-field--wide">
-              <span>Pullquote</span>
-              <textarea id="admin-post-pullquote" name="pullquote" rows="3"></textarea>
-            </label>
-          </div>
-
-          <label class="admin-checkbox">
-            <input id="admin-post-show-nav" name="ShowPostNavLinks" type="checkbox">
-            <span>Show post navigation links</span>
-          </label>
+          <section class="admin-subsection admin-subsection--compact">
+            <div class="admin-subsection__header">
+              <div>
+                <p class="admin-kicker">Writing surface</p>
+                <h3>Markdown body</h3>
+              </div>
+              <button class="admin-link-button" type="button" data-admin-action="open-post-details">Edit article details</button>
+            </div>
+            <p class="admin-panel__summary">
+              Metadata now lives in article details so the main editor stays focused on the actual writing.
+            </p>
+          </section>
 
           <label class="admin-field admin-field--wide">
             <span>Markdown body</span>
@@ -250,6 +227,88 @@
         </form>
       </section>
     </div>
+  </div>
+
+  <div class="admin-modal" data-admin-post-modal hidden>
+    <button class="admin-modal__backdrop" type="button" aria-label="Close article details" data-admin-action="close-post-details"></button>
+    <section class="admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="admin-post-modal-title">
+      <header class="admin-modal__header">
+        <div>
+          <p class="admin-kicker">Article details</p>
+          <h2 id="admin-post-modal-title">Metadata and front matter</h2>
+          <p class="admin-panel__summary">Edit publishing details separately from the main markdown body.</p>
+        </div>
+        <button class="admin-link-button" type="button" data-admin-action="close-post-details">Close</button>
+      </header>
+
+      <div class="admin-form-grid admin-form-grid--two admin-modal__body">
+        <label class="admin-field">
+          <span>Title</span>
+          <input id="admin-post-title" name="title" type="text" autocomplete="off">
+        </label>
+
+        <label class="admin-field">
+          <span>Slug</span>
+          <input id="admin-post-slug" name="slug" type="text" autocomplete="off" spellcheck="false">
+          <small class="admin-field__hint" data-admin-post-slug-hint>Lowercase, hyphenated, and locked after creation.</small>
+        </label>
+
+        <label class="admin-field">
+          <span>Date</span>
+          <input id="admin-post-date" name="date" type="date">
+        </label>
+
+        <label class="admin-field">
+          <span>Weight</span>
+          <input id="admin-post-weight" name="weight" type="text" inputmode="numeric" autocomplete="off">
+        </label>
+
+        <label class="admin-field admin-field--wide">
+          <span>Summary</span>
+          <textarea id="admin-post-summary" name="summary" rows="3"></textarea>
+        </label>
+
+        <label class="admin-field">
+          <span>Tags</span>
+          <input id="admin-post-tags" name="tags" type="text" autocomplete="off" placeholder="swift, macos, architecture">
+        </label>
+
+        <label class="admin-field">
+          <span>Projects</span>
+          <input id="admin-post-projects" name="projects" type="text" autocomplete="off" placeholder="stevemurr/fabric">
+        </label>
+
+        <label class="admin-field">
+          <span>Series</span>
+          <input id="admin-post-series" name="series" type="text" autocomplete="off" placeholder="history-of-app-communication">
+        </label>
+
+        <label class="admin-field">
+          <span>Card icon</span>
+          <input id="admin-post-card-icon" name="cardIcon" type="text" autocomplete="off" placeholder="layers">
+        </label>
+
+        <label class="admin-field admin-field--wide">
+          <span>Card gradient</span>
+          <input id="admin-post-card-gradient" name="cardGradient" type="text" autocomplete="off" placeholder="135deg, #1e3a5f, #2563eb, #60a5fa">
+        </label>
+
+        <label class="admin-field admin-field--wide">
+          <span>Pullquote</span>
+          <textarea id="admin-post-pullquote" name="pullquote" rows="3"></textarea>
+        </label>
+      </div>
+
+      <footer class="admin-modal__footer">
+        <label class="admin-checkbox">
+          <input id="admin-post-show-nav" name="ShowPostNavLinks" type="checkbox">
+          <span>Show post navigation links</span>
+        </label>
+        <div class="admin-panel__actions">
+          <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-post-details">Done</button>
+        </div>
+      </footer>
+    </section>
   </div>
 
   <template id="admin-hero-button-template">
