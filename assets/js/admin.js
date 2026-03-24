@@ -92,6 +92,8 @@
 
   async function initialize() {
     setActiveTab("posts");
+    setPostModalOpen(false);
+    renderPost();
     await loadStatus();
     await Promise.all([
       loadPosts({ selectInitial: true }),
@@ -176,11 +178,7 @@
     }
 
     if (selectInitial) {
-      if (state.posts.length > 0) {
-        await openPost(state.posts[0].slug);
-      } else {
-        startNewPost();
-      }
+      startNewPost();
     }
   }
 

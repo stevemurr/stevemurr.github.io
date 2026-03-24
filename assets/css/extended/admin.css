@@ -4,6 +4,10 @@
   padding: 40px 0 80px;
 }
 
+.admin-page [hidden] {
+  display: none !important;
+}
+
 .admin-shell,
 .admin-sidebar,
 .admin-panel,
