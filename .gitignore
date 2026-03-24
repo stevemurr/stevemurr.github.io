@@ -16,3 +16,11 @@ __pycache__/
 .dev.vars
 .env
 _worker.bundle
+
+# Terraform local state
+.terraform/
+*.tfstate
+*.tfstate.*
+crash.log
+*.tfvars
+*.auto.tfvars

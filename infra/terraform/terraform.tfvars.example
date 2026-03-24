@@ -1,0 +1,31 @@
+account_id = "replace-with-cloudflare-account-id"
+zone_id    = "replace-with-cloudflare-zone-id"
+
+project_name       = "stevemurr-github-io"
+production_branch  = "main"
+build_command      = "hugo --minify"
+destination_dir    = "public"
+root_dir           = "/"
+manage_github_source = true
+
+# Leave false until you are ready to import or create the namespace intentionally.
+manage_counters_kv_namespace = false
+counters_kv_title            = "stevemurr-site-counters"
+
+custom_domains = [
+  "stevemurr.com",
+  "www.stevemurr.com",
+]
+
+# Example:
+# additional_dns_records = {
+#   mx1 = {
+#     name    = "mail.stevemurr.com"
+#     type    = "CNAME"
+#     content = "ghs.googlehosted.com"
+#     proxied = false
+#     ttl     = 1
+#     comment = "Example extra DNS record"
+#   }
+# }
+additional_dns_records = {}

@@ -14,4 +14,5 @@ DASHBOARD_URL = "https://gra.auto2putt.com/d/vllm-nemotron3/vllm-e28094-nemotron
 
 [[kv_namespaces]]
 binding = "COUNTERS"
+# Keep this ID aligned with infra/terraform outputs if the namespace is ever recreated.
 id = "27ecc7d28bfc45d9a494e9e95465f3b1"
