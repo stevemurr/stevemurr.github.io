@@ -99,7 +99,7 @@ async function handleRequest(request) {
 A couple things worth noting:
 
 - `env.COUNTERS` is the KV namespace binding you'll create next.
-- `env.ALLOWED_ORIGIN` is a Worker secret (set via `wrangler secret put ALLOWED_ORIGIN`). It should be your site's origin, like `https://stevemurr.github.io`.
+- `env.ALLOWED_ORIGIN` is a Worker secret (set via `wrangler secret put ALLOWED_ORIGIN`). It should be your site's origin, like `https://stevemurr.com`.
 - We're keying by **page path**, not a single global counter. So you get per-page view counts for free.
 - The response is a 204 No Content -- we don't leak count data back to the browser.
 - Page paths are validated to prevent garbage or malicious keys from being written to KV.
@@ -115,7 +115,7 @@ The Worker needs two secrets. Set them with Wrangler:
 ```bash
 # Your site's origin -- requests from other origins are rejected
 npx wrangler secret put ALLOWED_ORIGIN
-# Enter: https://stevemurr.github.io (or your domain)
+# Enter: https://stevemurr.com (or your domain)
 
 # API key for the read endpoints (we'll add those next)
 npx wrangler secret put API_KEY

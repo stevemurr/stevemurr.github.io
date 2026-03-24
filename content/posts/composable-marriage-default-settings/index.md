@@ -21,7 +21,7 @@ Audience: builders and product-minded readers
 Tone: provocative, concrete, systems-oriented
 -->
 
-> **Try the prototype:** [Marriage Composer](https://stevemurr.github.io/marriage-composer/marriage-composer/) -- configure a marriage like infrastructure instead of accepting defaults you've never read.
+> **Try the prototype:** [Marriage Composer](https://stevemurr.com/marriage-composer/marriage-composer/) -- configure a marriage like infrastructure instead of accepting defaults you've never read.
 
 ![Marriage Composer -- presets, modules, and configurable defaults](composer-landing.png)
 

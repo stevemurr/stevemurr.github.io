@@ -9,3 +9,9 @@ hugo_stats.json
 # OS generated files
 .DS_Store
 .hugo_build.lock
+
+# Local Cloudflare state
+.wrangler/
+.dev.vars
+.env
+_worker.bundle

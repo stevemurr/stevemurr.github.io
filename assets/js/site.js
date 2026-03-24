@@ -1,6 +1,6 @@
-const GITHUB_API_ROOT = "https://github-api-proxy.gh-murr-proxy.workers.dev";
-const LLM_METRICS_API_ROOT = "https://llm-metrics-proxy.gh-murr-proxy.workers.dev";
-const LLM_CHAT_API_ROOT = "https://llm-chat-proxy.gh-murr-proxy.workers.dev";
+const GITHUB_API_ROOT = "https://api.github.com";
+const LLM_METRICS_API_ROOT = "/api";
+const LLM_CHAT_API_ROOT = "/api";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
 const LLM_METRICS_CACHE_TTL_MS = 60 * 1000; // 1 minute
@@ -1103,7 +1103,7 @@ async function loadLLMMetrics(container) {
   const modelName = container.dataset.modelName || "nemotron3-nano";
   const windowValue = container.dataset.metricsWindow || "1h";
   const dashboardLink = container.querySelector(".resume-runtime__dashboard");
-  const endpoint = `${LLM_METRICS_API_ROOT}/api/llm/${encodeURIComponent(modelName)}?window=${encodeURIComponent(windowValue)}`;
+  const endpoint = `${LLM_METRICS_API_ROOT}/llm/${encodeURIComponent(modelName)}?window=${encodeURIComponent(windowValue)}`;
 
   setRuntimeStatus(container, `Fetching the latest ${formatWindowLabel(windowValue)} of traces.`, "loading");
 
@@ -1645,7 +1645,7 @@ function describeTurnstileError(errorCode) {
   }
 
   if (code === "110200") {
-    return `Turnstile rejected this hostname (${code}). Add stevemurr.github.io in Turnstile Hostname Management.`;
+    return `Turnstile rejected this hostname (${code}). Add ${window.location.hostname} in Turnstile Hostname Management.`;
   }
 
   if (code === "200500") {
@@ -2964,7 +2964,7 @@ async function streamChatRequest(state, requestMessages) {
   state.abortController = new AbortController();
 
   try {
-    const response = await fetch(`${LLM_CHAT_API_ROOT}/api/chat`, {
+    const response = await fetch(`${LLM_CHAT_API_ROOT}/chat`, {
       method: "POST",
       headers: {
         Accept: "text/event-stream",
