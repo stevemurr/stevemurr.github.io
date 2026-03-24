@@ -13,7 +13,7 @@
 {{- $isPostsSection := eq .Section "posts" }}
 {{- $sectionLabel := .Section | humanize }}
 {{- if $isPostsSection }}
-{{- $sectionLabel = "Writing" }}
+{{- $sectionLabel = "Research" }}
 {{- end }}
 
 {{- if .Title }}
@@ -26,7 +26,7 @@
   {{- if .Description }}
   <div class="post-description">{{ .Description | markdownify }}</div>
   {{- else if $isPostsSection }}
-  <p class="page-header__intro">Notes on AI products, browsers, local-first search, and the occasional strange side quest.</p>
+  <p class="page-header__intro">Research on AI products, browsers, local-first search, and the occasional strange side quest.</p>
   {{- end }}
 </header>
 {{- end }}
@@ -45,7 +45,7 @@
 {{- if $isPostsSection }}
 {{- $pages = .RegularPages.ByDate.Reverse }}
 
-<section class="article-index" aria-label="Articles">
+<section class="article-index" aria-label="Research">
   <div class="article-index__list">
     {{- range $page := $pages }}
     <article class="article-index__item">

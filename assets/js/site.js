@@ -68,7 +68,7 @@ const LLM_CHAT_STOP_WORDS = new Set([
 const POST_BACK_DESTINATIONS = {
   articles: {
     path: "/articles/",
-    label: "Articles",
+    label: "Research",
   },
   resume: {
     path: "/",
@@ -660,12 +660,12 @@ function appendProjectPosts(article, repoKey) {
   if (!posts || posts.length === 0) return;
 
   const container = createElement(document, "div", "resume-project__posts");
-  container.appendChild(createElement(document, "p", "resume-project__section", "Article log"));
+  container.appendChild(createElement(document, "p", "resume-project__section", "Research log"));
   posts.forEach(post => {
     const link = createElement(document, "a", "resume-project__post-link");
     link.href = appendQueryParam(post.url, "from", "resume");
     const copy = createElement(document, "span", "resume-project__post-copy");
-    copy.appendChild(createElement(document, "span", "resume-project__post-kicker", "Read article"));
+    copy.appendChild(createElement(document, "span", "resume-project__post-kicker", "Read research"));
     copy.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
     link.appendChild(copy);
     link.appendChild(createElement(document, "span", "resume-project__post-date", post.date));
