@@ -143,6 +143,7 @@ The repo includes a private `/admin/` surface for post and resume editing.
 
 - Protect `/admin*` and `/api/admin/*` with Cloudflare Access.
 - Set `ADMIN_EMAIL` to the exact Cloudflare Access-authenticated email that should be allowed through the server-side check.
+- Keep `ACCESS_TEAM_DOMAIN` and `ACCESS_APPLICATION_AUD` in [wrangler.toml](/Users/murr/Code/github.com/stevemurr/stevemurr.github.io/wrangler.toml) aligned with the Cloudflare Access app protecting those paths.
 - Create a fine-grained GitHub PAT with repository `Contents: write` permission and store it as `GITHUB_CONTENTS_TOKEN`.
 - The admin writes directly to `main` through the GitHub contents API.
 

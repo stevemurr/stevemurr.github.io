@@ -81,7 +81,7 @@ function buildSavedResumeResponse(path, sha, source) {
 }
 
 async function handleStatus(request, env, origin) {
-  const email = requireAdminEmail(request, env);
+  const email = await requireAdminEmail(request, env);
 
   return jsonResponse({
     ok: true,
@@ -94,7 +94,7 @@ async function handleStatus(request, env, origin) {
 }
 
 async function handleListPosts(request, env, origin) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
 
   const entries = await listContentDirectory(env, "content/posts");
   const postDirectories = Array.isArray(entries)
@@ -128,7 +128,7 @@ async function handleListPosts(request, env, origin) {
 }
 
 async function handleGetPost(request, env, origin, slug) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
   const { record } = await loadPostBySlug(env, slug);
 
   return jsonResponse(record, {
@@ -138,7 +138,7 @@ async function handleGetPost(request, env, origin, slug) {
 }
 
 async function handleCreatePost(request, env, origin) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
   const payload = await parseJSONBody(request);
   const slug = String(payload.slug || "").trim().toLowerCase();
   const path = getPostPathFromSlug(slug);
@@ -179,7 +179,7 @@ async function handleCreatePost(request, env, origin) {
 }
 
 async function handleUpdatePost(request, env, origin, slug) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
   if (!isValidPostSlug(slug)) {
     throw new HTTPError(400, "Invalid post slug.");
   }
@@ -218,7 +218,7 @@ async function handleUpdatePost(request, env, origin, slug) {
 }
 
 async function handleGetResume(request, env, origin) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
   const { record } = await loadResume(env);
 
   return jsonResponse(record, {
@@ -228,7 +228,7 @@ async function handleGetResume(request, env, origin) {
 }
 
 async function handleUpdateResume(request, env, origin) {
-  requireAdminEmail(request, env);
+  await requireAdminEmail(request, env);
   const payload = await parseJSONBody(request);
   const { file, record } = await loadResume(env);
   const providedSha = String(payload.sha || "").trim();

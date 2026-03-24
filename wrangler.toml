@@ -15,6 +15,8 @@ DASHBOARD_URL = "https://gra.auto2putt.com/d/vllm-nemotron3/vllm-e28094-nemotron
 GITHUB_REPOSITORY_OWNER = "stevemurr"
 GITHUB_REPOSITORY_NAME = "stevemurr.github.io"
 GITHUB_REPOSITORY_BRANCH = "main"
+ACCESS_TEAM_DOMAIN = "https://auto2putt.cloudflareaccess.com"
+ACCESS_APPLICATION_AUD = "7559476fc537ca08435db530758d5683ded34791254e803c7c4066b269c8c145"
 
 [[kv_namespaces]]
 binding = "COUNTERS"

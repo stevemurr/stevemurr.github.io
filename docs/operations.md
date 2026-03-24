@@ -108,10 +108,15 @@ The built-in admin writes directly to GitHub from Pages Functions.
 3. Set `ADMIN_EMAIL` to the Cloudflare Access identity email allowed to administer the site.
 4. Set `GITHUB_COMMITTER_NAME` and `GITHUB_COMMITTER_EMAIL` for the commit author metadata.
 5. In Cloudflare Access, protect both of these path prefixes on `stevemurr.com`:
-   - `/admin*`
+   - `/admin`
+   - `/admin/*`
+   - `/api/admin`
    - `/api/admin/*`
+6. Keep the Access runtime values in [wrangler.toml](../wrangler.toml) aligned with that application:
+   - `ACCESS_TEAM_DOMAIN`
+   - `ACCESS_APPLICATION_AUD`
 
-The server-side admin API also checks the Cloudflare Access-authenticated email header, so Access protection and `ADMIN_EMAIL` must match.
+The server-side admin API validates the Cloudflare Access JWT and compares the JWT email claim against `ADMIN_EMAIL`, so Access protection and `ADMIN_EMAIL` must match.
 
 ## Notes
 
