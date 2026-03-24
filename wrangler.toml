@@ -2,6 +2,7 @@
 name = "stevemurr-github-io"
 pages_build_output_dir = "public"
 compatibility_date = "2026-03-24"
+compatibility_flags = ["nodejs_compat"]
 
 [vars]
 HUGO_VERSION = "0.147.6"
