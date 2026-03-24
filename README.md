@@ -26,9 +26,15 @@ Personal site for Steve Murr, built with Hugo and deployed to Cloudflare Pages.
 ### Prerequisites
 
 - Hugo
-- Node.js with `npx`
+- Node.js with `npm` and `npx`
 - GitHub access if you want to refresh activity data
 - Terraform if you want to manage Cloudflare infra locally
+
+Install the local JS dependency used by Pages Functions front matter parsing:
+
+```bash
+npm install
+```
 
 ### Local Build
 
@@ -76,6 +82,13 @@ Rotate multiple secrets:
 make secrets-update KEYS="TURNSTILE_SECRET_KEY LITELLM_API_KEY"
 ```
 
+Admin runtime values are managed through the same flow:
+
+- `GITHUB_CONTENTS_TOKEN`
+- `ADMIN_EMAIL`
+- `GITHUB_COMMITTER_NAME`
+- `GITHUB_COMMITTER_EMAIL`
+
 ### Activity Data
 
 Refresh the GitHub activity snapshot:
@@ -115,9 +128,22 @@ Main production/runtime secrets:
 - `CF_ACCESS_CLIENT_SECRET`
 - `LITELLM_API_KEY`
 - `ANALYTICS_API_KEY`
+- `GITHUB_CONTENTS_TOKEN`
+- `ADMIN_EMAIL`
+- `GITHUB_COMMITTER_NAME`
+- `GITHUB_COMMITTER_EMAIL`
 
 Optional local-only secret:
 
 - `GRAFANA_TOKEN`
+
+## Admin
+
+The repo includes a private `/admin/` surface for post and resume editing.
+
+- Protect `/admin*` and `/api/admin/*` with Cloudflare Access.
+- Set `ADMIN_EMAIL` to the exact Cloudflare Access-authenticated email that should be allowed through the server-side check.
+- Create a fine-grained GitHub PAT with repository `Contents: write` permission and store it as `GITHUB_CONTENTS_TOKEN`.
+- The admin writes directly to `main` through the GitHub contents API.
 
 See [docs/operations.md](docs/operations.md) for the Cloudflare and Terraform workflow.

@@ -24,7 +24,12 @@ This gives you a cleaner source of truth than ad hoc dashboard edits, while stil
 - `CF_ACCESS_CLIENT_SECRET`
 - `LITELLM_API_KEY`
 - `ANALYTICS_API_KEY`
+- `GITHUB_CONTENTS_TOKEN`
+- `ADMIN_EMAIL`
+- `GITHUB_COMMITTER_NAME`
+- `GITHUB_COMMITTER_EMAIL`
 - Turnstile widget hostnames and dashboard-level widget settings
+- Cloudflare Access path rules for `/admin*` and `/api/admin/*`
 
 Secrets stay out of Git because Cloudflare Pages secrets are encrypted bindings. Treat them as write-only and reapply them when rebuilding an environment.
 
@@ -88,7 +93,25 @@ npx --yes wrangler pages secret put CF_ACCESS_CLIENT_ID
 npx --yes wrangler pages secret put CF_ACCESS_CLIENT_SECRET
 npx --yes wrangler pages secret put LITELLM_API_KEY
 npx --yes wrangler pages secret put ANALYTICS_API_KEY
+npx --yes wrangler pages secret put GITHUB_CONTENTS_TOKEN
+npx --yes wrangler pages secret put ADMIN_EMAIL
+npx --yes wrangler pages secret put GITHUB_COMMITTER_NAME
+npx --yes wrangler pages secret put GITHUB_COMMITTER_EMAIL
 ```
+
+## Admin Setup
+
+The built-in admin writes directly to GitHub from Pages Functions.
+
+1. Create a fine-grained GitHub personal access token for this repo with `Contents: write`.
+2. Store it as `GITHUB_CONTENTS_TOKEN`.
+3. Set `ADMIN_EMAIL` to the Cloudflare Access identity email allowed to administer the site.
+4. Set `GITHUB_COMMITTER_NAME` and `GITHUB_COMMITTER_EMAIL` for the commit author metadata.
+5. In Cloudflare Access, protect both of these path prefixes on `stevemurr.com`:
+   - `/admin*`
+   - `/api/admin/*`
+
+The server-side admin API also checks the Cloudflare Access-authenticated email header, so Access protection and `ADMIN_EMAIL` must match.
 
 ## Notes
 

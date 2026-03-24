@@ -14,6 +14,10 @@ KNOWN_KEYS=(
   "CF_ACCESS_CLIENT_SECRET"
   "LITELLM_API_KEY"
   "ANALYTICS_API_KEY"
+  "GITHUB_CONTENTS_TOKEN"
+  "ADMIN_EMAIL"
+  "GITHUB_COMMITTER_NAME"
+  "GITHUB_COMMITTER_EMAIL"
   "GRAFANA_TOKEN"
 )
 CLOUDFLARE_KEYS=(
@@ -22,6 +26,10 @@ CLOUDFLARE_KEYS=(
   "CF_ACCESS_CLIENT_SECRET"
   "LITELLM_API_KEY"
   "ANALYTICS_API_KEY"
+  "GITHUB_CONTENTS_TOKEN"
+  "ADMIN_EMAIL"
+  "GITHUB_COMMITTER_NAME"
+  "GITHUB_COMMITTER_EMAIL"
 )
 SELECTED_KEYS=()
 SELECTED_KEYS_COUNT=0
@@ -33,7 +41,7 @@ Usage: scripts/bootstrap_secrets.sh [options]
 Options:
   --local-only                Write .dev.vars but do not sync Cloudflare Pages secrets
   --cloudflare-only           Sync Cloudflare Pages secrets but do not write .dev.vars
-  --key <NAME>                Only update the named secret; may be passed multiple times
+  --key <NAME>                Only update the named secret/config; may be passed multiple times
   --project-name <name>       Override the Cloudflare Pages project name
   --dev-vars-file <path>      Override the local .dev.vars path
   -h, --help                  Show this help
@@ -71,6 +79,10 @@ label_for_key() {
     CF_ACCESS_CLIENT_SECRET) echo "Cloudflare Access client secret" ;;
     LITELLM_API_KEY) echo "LiteLLM API key" ;;
     ANALYTICS_API_KEY) echo "Analytics API key" ;;
+    GITHUB_CONTENTS_TOKEN) echo "GitHub contents token" ;;
+    ADMIN_EMAIL) echo "Admin email" ;;
+    GITHUB_COMMITTER_NAME) echo "GitHub committer name" ;;
+    GITHUB_COMMITTER_EMAIL) echo "GitHub committer email" ;;
     GRAFANA_TOKEN) echo "Grafana bearer token" ;;
     *) echo "$1" ;;
   esac
@@ -149,6 +161,38 @@ prompt_secret() {
   done
 }
 
+prompt_text_value() {
+  local key="$1"
+  local label="$2"
+  local fallback="${3:-}"
+  local value="${!key-}"
+
+  if [[ -n "${value}" ]]; then
+    printf 'Using %s from environment.\n' "${key}" >&2
+    printf -v "${key}" '%s' "${value}"
+    return
+  fi
+
+  printf '%s' "${label}" >&2
+  if [[ -n "${fallback}" ]]; then
+    printf ' [%s]' "${fallback}" >&2
+  fi
+  printf ': ' >&2
+  IFS= read -r value
+
+  if [[ -z "${value}" ]]; then
+    value="${fallback}"
+  fi
+
+  if [[ -z "${value}" ]]; then
+    printf '%s cannot be empty.\n' "${label}" >&2
+    prompt_text_value "${key}" "${label}" "${fallback}"
+    return
+  fi
+
+  printf -v "${key}" '%s' "${value}"
+}
+
 prompt_optional_secret() {
   local key="$1"
   local label="$2"
@@ -178,6 +222,15 @@ resolve_selected_secrets() {
     case "${key}" in
       ANALYTICS_API_KEY)
         prompt_secret "${key}" "${label}" "$(generate_analytics_key)"
+        ;;
+      ADMIN_EMAIL)
+        prompt_text_value "${key}" "${label}"
+        ;;
+      GITHUB_COMMITTER_NAME)
+        prompt_text_value "${key}" "${label}" "Steve Murr Admin"
+        ;;
+      GITHUB_COMMITTER_EMAIL)
+        prompt_text_value "${key}" "${label}" "stevemurr@users.noreply.github.com"
         ;;
       GRAFANA_TOKEN)
         prompt_optional_secret "${key}" "${label}"

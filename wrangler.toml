@@ -11,6 +11,9 @@ GRAFANA_BASE_URL = "https://gra.auto2putt.com"
 GRAFANA_DATASOURCE_ID = "1"
 MODEL_NAME = "nemotron3-nano"
 DASHBOARD_URL = "https://gra.auto2putt.com/d/vllm-nemotron3/vllm-e28094-nemotron3-nano"
+GITHUB_REPOSITORY_OWNER = "stevemurr"
+GITHUB_REPOSITORY_NAME = "stevemurr.github.io"
+GITHUB_REPOSITORY_BRANCH = "main"
 
 [[kv_namespaces]]
 binding = "COUNTERS"
