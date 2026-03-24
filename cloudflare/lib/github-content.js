@@ -50,20 +50,23 @@ function decodeBase64UTF8(value) {
 
 async function parseGitHubError(response) {
   const contentType = response.headers.get("content-type") || "";
+  const raw = await response.text();
 
   try {
     if (contentType.includes("application/json")) {
-      const payload = await response.json();
+      const payload = JSON.parse(raw);
       if (payload && typeof payload.message === "string" && payload.message.trim()) {
-        return payload.message.trim();
+        const docs = typeof payload.documentation_url === "string" && payload.documentation_url.trim()
+          ? ` See ${payload.documentation_url.trim()}`
+          : "";
+        return `${payload.message.trim()}${docs}`;
       }
     }
-
-    const text = await response.text();
-    return text.trim() || `GitHub request failed with status ${response.status}.`;
   } catch {
-    return `GitHub request failed with status ${response.status}.`;
+    // Fall through to raw text handling.
   }
+
+  return raw.trim() || `GitHub request failed with status ${response.status}.`;
 }
 
 async function githubRequest(env, path, { method = "GET", body } = {}) {
@@ -72,15 +75,20 @@ async function githubRequest(env, path, { method = "GET", body } = {}) {
     throw new HTTPError(500, "Missing GitHub contents token.");
   }
 
+  const headers = {
+    Accept: "application/vnd.github+json",
+    Authorization: `Bearer ${token}`,
+    "User-Agent": "stevemurr.com-admin",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  if (body) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const response = await fetch(`${GITHUB_API_ROOT}${path}`, {
     method,
-    headers: {
-      Accept: "application/vnd.github+json",
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-      "User-Agent": "stevemurr.com-admin",
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
+    headers,
     body: body ? JSON.stringify(body) : undefined,
   });
 
