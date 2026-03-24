@@ -8,12 +8,6 @@ variable "zone_id" {
   type        = string
 }
 
-variable "zone_name" {
-  description = "Primary DNS zone name."
-  type        = string
-  default     = "stevemurr.com"
-}
-
 variable "project_name" {
   description = "Cloudflare Pages project name."
   type        = string

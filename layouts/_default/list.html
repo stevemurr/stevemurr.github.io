@@ -3,7 +3,6 @@
 {{- $homePages := where site.RegularPages "Section" "posts" }}
 {{- $homePages = where $homePages "Params.hiddenInHomeList" "!=" true }}
 {{- $homePages = $homePages.ByDate.Reverse }}
-{{- $hasFeatured := gt (len $homePages) 0 }}
 
 {{- if .IsHome }}
 {{- $resumePage := or (site.GetPage "/resume") (site.GetPage "resume") (site.GetPage "page" "resume.md") . }}
@@ -45,27 +44,11 @@
 {{- if $isPostsSection }}
 {{- $pages = .RegularPages.ByDate.Reverse }}
 
-<section class="article-index" aria-label="Research">
-  <div class="article-index__list">
-    {{- range $page := $pages }}
-    <article class="article-index__item">
-      <a class="article-index__link" href="{{ $page.RelPermalink }}">
-        <div class="article-index__body">
-          <h2 class="article-index__title">{{ $page.Title }}</h2>
-          {{- with $page.Params.projects }}
-          <div class="article-index__projects" aria-label="Related repositories">
-            {{- range . }}
-            <span class="article-index__project">{{ . }}</span>
-            {{- end }}
-          </div>
-          {{- end }}
-        </div>
-        <time class="article-index__date" datetime="{{ $page.Date.Format "2006-01-02" }}">{{ $page.Date.Format "Jan 2, 2006" }}</time>
-      </a>
-    </article>
-    {{- end }}
-  </div>
-</section>
+{{ partial "article_index.html" (dict
+  "pages" $pages
+  "ariaLabel" "Research"
+  "linkMode" "direct"
+) }}
 {{- else }}
   {{- $paginator := .Paginate $pages }}
 

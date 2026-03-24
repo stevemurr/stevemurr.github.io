@@ -1,12 +1,19 @@
 SHELL := /bin/bash
 
-.PHONY: help build functions-build activity-refresh secrets-bootstrap secrets-local secrets-update terraform-init terraform-plan terraform-apply
+.PHONY: help build dev dev-build functions-build activity-refresh secrets-bootstrap secrets-local secrets-update terraform-init terraform-plan terraform-apply
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z0-9_.-]+:.*## ' Makefile | awk 'BEGIN {FS = ":.*## "}; {printf "%-20s %s\n", $$1, $$2}'
 
 build: ## Build the Hugo site
 	hugo --minify
+
+dev: ## Serve the current public/ build with Pages Functions locally
+	npx --yes wrangler pages dev public
+
+dev-build: ## Rebuild Hugo output, then serve it with Pages Functions locally
+	hugo --minify
+	npx --yes wrangler pages dev public
 
 functions-build: ## Build Pages Functions locally with Wrangler
 	npx --yes wrangler pages functions build

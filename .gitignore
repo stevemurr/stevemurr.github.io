@@ -16,6 +16,7 @@ __pycache__/
 .dev.vars
 .env
 _worker.bundle
+temp/
 
 # Terraform local state
 .terraform/

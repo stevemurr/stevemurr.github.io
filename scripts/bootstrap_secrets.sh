@@ -64,11 +64,6 @@ is_selected_key() {
   contains_key "${key}" "${SELECTED_KEYS[@]}"
 }
 
-is_cloudflare_key() {
-  local key="$1"
-  contains_key "${key}" "${CLOUDFLARE_KEYS[@]}"
-}
-
 label_for_key() {
   case "$1" in
     TURNSTILE_SECRET_KEY) echo "Turnstile secret key" ;;
