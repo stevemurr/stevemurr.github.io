@@ -24,7 +24,7 @@ USER_AGENT = "stevemurr-github-activity-generator"
 CALENDAR_DAYS = 90
 RECENT_COMMIT_COUNT = 5
 LOCAL_RECENT_FETCH_LIMIT = 120
-API_RECENT_FETCH_LIMIT = 10
+API_RECENT_FETCH_LIMIT = 25
 PACIFIC_TZ = ZoneInfo("America/Los_Angeles")
 
 
@@ -409,23 +409,42 @@ def load_api_commits(
     token: str | None,
 ) -> list[dict[str, str]]:
     commits: list[dict[str, str]] = []
+    empty_identity = {"name": "", "email": ""}
 
     for repository in repositories:
         encoded_repo = urllib.parse.quote(repository["slug"], safe="/")
-        encoded_author = urllib.parse.quote(username, safe="")
         payload = github_request(
-            f"{GITHUB_API_ROOT}/repos/{encoded_repo}/commits?per_page={API_RECENT_FETCH_LIMIT}&author={encoded_author}",
+            f"{GITHUB_API_ROOT}/repos/{encoded_repo}/commits?per_page={API_RECENT_FETCH_LIMIT}",
             token=token,
         )
 
         for item in payload:
+            author_login = str((item.get("author") or {}).get("login") or "").strip().lower()
+            committer_login = str((item.get("committer") or {}).get("login") or "").strip().lower()
             commit_info = item.get("commit") or {}
             author_info = commit_info.get("author") or {}
             committer_info = commit_info.get("committer") or {}
             committed_at = committer_info.get("date") or author_info.get("date")
             message = (commit_info.get("message") or "").splitlines()[0].strip()
 
-            if not committed_at or not message:
+            authored_by_user = (
+                author_login == username.lower()
+                or committer_login == username.lower()
+                or author_matches_identity(
+                    str(author_info.get("name") or ""),
+                    str(author_info.get("email") or ""),
+                    username,
+                    empty_identity,
+                )
+                or author_matches_identity(
+                    str(committer_info.get("name") or ""),
+                    str(committer_info.get("email") or ""),
+                    username,
+                    empty_identity,
+                )
+            )
+
+            if not authored_by_user or not committed_at or not message:
                 continue
 
             commits.append(

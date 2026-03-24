@@ -5,6 +5,7 @@ hugo_stats.json
 
 # Log files
 *.log
+__pycache__/
 
 # OS generated files
 .DS_Store

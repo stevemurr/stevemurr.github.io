@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 59,
   "contributions": {
-    "generatedAt": "2026-03-24T06:53:57.060159+00:00",
+    "generatedAt": "2026-03-24T06:59:01.005918+00:00",
     "windowDays": 90,
     "startDate": "2025-12-24",
     "endDate": "2026-03-23",
-    "total": 807,
+    "total": 808,
     "max": 48,
     "weeks": [
       {
@@ -618,7 +618,7 @@
           },
           {
             "date": "2026-03-23",
-            "count": 5,
+            "count": 6,
             "level": 1,
             "inRange": true
           },
@@ -676,6 +676,45 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/folio-trainer",
+      "repoName": "folio-trainer",
+      "fullHash": "78f1c39c93951e38d5d15e8747b15c5147035cbc",
+      "shortHash": "78f1c39",
+      "date": "2026-03-23T23:48:56Z",
+      "message": "Add quick start README for the current training flow",
+      "refs": "",
+      "url": "https://github.com/stevemurr/folio-trainer/commit/78f1c39c93951e38d5d15e8747b15c5147035cbc",
+      "displayDate": "Mar 23",
+      "displayDateTime": "Mar 23, 4:48 PM PT",
+      "relativeTime": "7 hours ago"
+    },
+    {
+      "repo": "stevemurr/folio",
+      "repoName": "folio",
+      "fullHash": "f115922e32884b1e4363de398514fd5fd7f30abe",
+      "shortHash": "f115922",
+      "date": "2026-03-23T22:51:18Z",
+      "message": "Add simulation engine with multi-agent strategy generation and results UI",
+      "refs": "",
+      "url": "https://github.com/stevemurr/folio/commit/f115922e32884b1e4363de398514fd5fd7f30abe",
+      "displayDate": "Mar 23",
+      "displayDateTime": "Mar 23, 3:51 PM PT",
+      "relativeTime": "8 hours ago"
+    },
+    {
+      "repo": "stevemurr/folio-trainer",
+      "repoName": "folio-trainer",
+      "fullHash": "1635fa43ac8066ce926927b06599f996670ad6d5",
+      "shortHash": "1635fa4",
+      "date": "2026-03-23T22:47:53Z",
+      "message": "Unify allocation training and correct next-day evaluation",
+      "refs": "",
+      "url": "https://github.com/stevemurr/folio-trainer/commit/1635fa43ac8066ce926927b06599f996670ad6d5",
+      "displayDate": "Mar 23",
+      "displayDateTime": "Mar 23, 3:47 PM PT",
+      "relativeTime": "8 hours ago"
+    },
+    {
       "repo": "stevemurr/folio",
       "repoName": "folio",
       "fullHash": "b9a18105bc4cd083f5e15abe11990c26c9c4883f",
@@ -700,45 +739,6 @@
       "displayDate": "Mar 20",
       "displayDateTime": "Mar 20, 7:29 PM PT",
       "relativeTime": "3 days ago"
-    },
-    {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "7ec0020303a616ab073f4feee9e336db72ee0849",
-      "shortHash": "7ec0020",
-      "date": "2026-03-20T15:26:14Z",
-      "message": "Overhaul frontend into a darker replay terminal layout",
-      "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/7ec0020303a616ab073f4feee9e336db72ee0849",
-      "displayDate": "Mar 20",
-      "displayDateTime": "Mar 20, 8:26 AM PT",
-      "relativeTime": "4 days ago"
-    },
-    {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "1ef17911b7520382cf24eb4f26b9c4b7d921baba",
-      "shortHash": "1ef1791",
-      "date": "2026-03-20T06:05:47Z",
-      "message": "Add app settings, real estate data, and UI refresh",
-      "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/1ef17911b7520382cf24eb4f26b9c4b7d921baba",
-      "displayDate": "Mar 19",
-      "displayDateTime": "Mar 19, 11:05 PM PT",
-      "relativeTime": "4 days ago"
-    },
-    {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "b0e2bcdd9cfe31fa15de4066faf1f507169e790e",
-      "shortHash": "b0e2bcd",
-      "date": "2026-03-20T00:19:28Z",
-      "message": "Implement streaming agent chat and analysis across backend and UI",
-      "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/b0e2bcdd9cfe31fa15de4066faf1f507169e790e",
-      "displayDate": "Mar 19",
-      "displayDateTime": "Mar 19, 5:19 PM PT",
-      "relativeTime": "4 days ago"
     }
   ]
 }
