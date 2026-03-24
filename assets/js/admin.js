@@ -8,7 +8,6 @@
   const today = new Date().toISOString().slice(0, 10);
 
   const state = {
-    activeTab: "posts",
     posts: [],
     status: null,
     currentPost: createEmptyPost(),
@@ -16,15 +15,13 @@
     resume: createEmptyResume(),
     postSlugDirty: false,
     isPostModalOpen: false,
+    isResumeModalOpen: false,
   };
 
   const refs = {
     feedback: root.querySelector("[data-admin-feedback]"),
     statusCopy: root.querySelector("[data-admin-status-copy]"),
     statusMeta: root.querySelector("[data-admin-status-meta]"),
-    tabButtons: Array.from(root.querySelectorAll("[data-admin-action='tab']")),
-    sidebarPanels: Array.from(root.querySelectorAll("[data-admin-sidebar-panel]")),
-    panels: Array.from(root.querySelectorAll("[data-admin-panel]")),
     postList: root.querySelector("[data-admin-post-list]"),
     postStats: root.querySelector("[data-admin-post-stats]"),
     postHeading: root.querySelector("[data-admin-post-heading]"),
@@ -34,6 +31,7 @@
     postButtons: Array.from(root.querySelectorAll("[data-admin-action='save-post']")),
     postDetailButtons: Array.from(root.querySelectorAll("[data-admin-action='open-post-details']")),
     postModal: root.querySelector("[data-admin-post-modal]"),
+    resumeModal: root.querySelector("[data-admin-resume-modal]"),
     newPostButton: root.querySelector("[data-admin-action='new-post']"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
     resumeMeta: root.querySelector("[data-admin-resume-meta]"),
@@ -91,8 +89,8 @@
   });
 
   async function initialize() {
-    setActiveTab("posts");
     setPostModalOpen(false);
+    setResumeModalOpen(false);
     renderPost();
     await loadStatus();
     await Promise.all([
@@ -307,12 +305,21 @@
     const params = frontmatter.params || {};
     const isExisting = Boolean(record.sha);
     const isDraft = isExisting ? Boolean(frontmatter.draft) : true;
+    const isBlankSelection = !isExisting
+      && !record.slug
+      && !frontmatter.title
+      && !record.body
+      && !frontmatter.summary;
 
-    refs.postHeading.textContent = isExisting ? (frontmatter.title || record.slug) : "New draft";
+    refs.postHeading.textContent = isExisting
+      ? (frontmatter.title || record.slug)
+      : (isBlankSelection ? "Select a post" : "New draft");
     refs.postMeta.textContent = isExisting
       ? `${record.path} · ${shortSha(record.sha)}`
-      : "Drafts and published posts write directly to GitHub main.";
-    refs.postState.textContent = isExisting ? (isDraft ? "Draft" : "Published") : "New";
+      : (isBlankSelection
+        ? "Choose a row from the library or start a new draft."
+        : "Drafts and published posts write directly to GitHub main.");
+    refs.postState.textContent = isExisting ? (isDraft ? "Draft" : "Published") : (isBlankSelection ? "Idle" : "New");
     refs.postLink.hidden = !isExisting || !record.slug || isDraft;
 
     if (!refs.postLink.hidden) {
@@ -528,22 +535,6 @@
     })).filter((entry) => entry.name || entry.repo || entry.summary);
   }
 
-  function setActiveTab(tab) {
-    state.activeTab = tab;
-
-    refs.tabButtons.forEach((button) => {
-      button.classList.toggle("is-active", button.dataset.tab === tab);
-    });
-
-    refs.sidebarPanels.forEach((panel) => {
-      panel.hidden = panel.dataset.adminSidebarPanel !== tab;
-    });
-
-    refs.panels.forEach((panel) => {
-      panel.hidden = panel.dataset.adminPanel !== tab;
-    });
-  }
-
   function handleActionClick(event) {
     const actionTarget = event.target.closest("[data-admin-action]");
     if (!actionTarget) {
@@ -552,19 +543,12 @@
 
     const { adminAction } = actionTarget.dataset;
 
-    if (adminAction === "tab") {
-      setActiveTab(actionTarget.dataset.tab || "posts");
-      return;
-    }
-
     if (adminAction === "new-post") {
-      setActiveTab("posts");
       startNewPost({ openDetails: true });
       return;
     }
 
     if (adminAction === "open-post") {
-      setActiveTab("posts");
       openPost(actionTarget.dataset.slug || "").catch((error) => {
         setFeedback("error", error.message || "Post load failed.");
       });
@@ -588,8 +572,17 @@
       return;
     }
 
+    if (adminAction === "open-resume") {
+      setResumeModalOpen(true);
+      return;
+    }
+
+    if (adminAction === "close-resume") {
+      setResumeModalOpen(false);
+      return;
+    }
+
     if (adminAction === "save-resume") {
-      setActiveTab("resume");
       saveResume().catch((error) => {
         setFeedback("error", error.message || "Resume save failed.");
       });
@@ -644,21 +637,45 @@
   }
 
   function handleGlobalKeydown(event) {
-    if (event.key === "Escape" && state.isPostModalOpen) {
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    if (state.isPostModalOpen) {
       setPostModalOpen(false);
+    }
+
+    if (state.isResumeModalOpen) {
+      setResumeModalOpen(false);
     }
   }
 
   function setPostModalOpen(isOpen) {
     state.isPostModalOpen = Boolean(isOpen);
     refs.postModal.hidden = !state.isPostModalOpen;
-    document.body.classList.toggle("admin-modal-open", state.isPostModalOpen);
+    syncModalState();
 
     if (state.isPostModalOpen) {
       window.setTimeout(() => {
         refs.postForm.title.focus();
       }, 0);
     }
+  }
+
+  function setResumeModalOpen(isOpen) {
+    state.isResumeModalOpen = Boolean(isOpen);
+    refs.resumeModal.hidden = !state.isResumeModalOpen;
+    syncModalState();
+
+    if (state.isResumeModalOpen) {
+      window.setTimeout(() => {
+        refs.resumeForm.title.focus();
+      }, 0);
+    }
+  }
+
+  function syncModalState() {
+    document.body.classList.toggle("admin-modal-open", state.isPostModalOpen || state.isResumeModalOpen);
   }
 
   async function requestJSON(path, { method = "GET", body } = {}) {

@@ -9,72 +9,48 @@
       </p>
     </div>
 
-    <div class="admin-shell__status">
-      <p class="admin-shell__status-label">Access</p>
-      <strong class="admin-shell__status-copy" data-admin-status-copy>Checking access…</strong>
-      <p class="admin-shell__status-meta" data-admin-status-meta>Waiting for admin API.</p>
+    <div class="admin-shell__meta">
+      <div class="admin-shell__actions">
+        <button
+          class="admin-icon-button"
+          type="button"
+          data-admin-action="open-resume"
+          aria-label="Edit resume"
+          title="Edit resume"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="admin-shell__status">
+        <p class="admin-shell__status-label">Access</p>
+        <strong class="admin-shell__status-copy" data-admin-status-copy>Checking access…</strong>
+        <p class="admin-shell__status-meta" data-admin-status-meta>Waiting for admin API.</p>
+      </div>
     </div>
   </header>
 
   <div class="admin-feedback admin-feedback--info" data-admin-feedback hidden></div>
 
   <div class="admin-workspace">
-    <aside class="admin-sidebar">
-      <nav class="admin-tabs" aria-label="Admin sections">
-        <button class="admin-tab is-active" type="button" data-admin-action="tab" data-tab="posts">Posts</button>
-        <button class="admin-tab" type="button" data-admin-action="tab" data-tab="resume">Resume</button>
-      </nav>
-
-      <section class="admin-sidebar__section" data-admin-sidebar-panel="posts">
-        <div class="admin-sidebar__header">
-          <div>
-            <p class="admin-kicker">Posts</p>
-            <h2>Research archive</h2>
-          </div>
-          <button class="admin-button admin-button--ghost" type="button" data-admin-action="new-post">New Post</button>
-        </div>
-        <p class="admin-sidebar__summary">
-          Use the post library to scan draft vs published work, then open article details only when you need to edit metadata.
-        </p>
-        <div class="admin-post-stats" data-admin-post-stats></div>
-      </section>
-
-      <section class="admin-sidebar__section" data-admin-sidebar-panel="resume" hidden>
-        <div class="admin-sidebar__header">
-          <div>
-            <p class="admin-kicker">Resume</p>
-            <h2>Main landing page</h2>
-          </div>
-        </div>
-        <p class="admin-sidebar__summary">
-          Edit the landing copy, GitHub activity settings, hero links, and pinned projects that show on the resume page.
-        </p>
-      </section>
-    </aside>
-
-    <div class="admin-main">
-      <section class="admin-panel" data-admin-panel="posts">
-        <header class="admin-panel__header">
-          <div>
-            <p class="admin-kicker">Post editor</p>
-            <h2 data-admin-post-heading>New draft</h2>
-            <p class="admin-panel__summary" data-admin-post-meta>Drafts and published posts write directly to GitHub main.</p>
-          </div>
-          <div class="admin-panel__actions">
-            <span class="admin-badge" data-admin-post-state>New</span>
-            <a class="admin-button admin-button--ghost" href="#" target="_blank" rel="noopener" data-admin-post-link hidden>Open Post</a>
-            <button class="admin-button admin-button--ghost" type="button" data-admin-action="open-post-details">Article Details</button>
-            <button class="admin-button admin-button--ghost" type="button" data-admin-action="save-post" data-draft="true">Save Draft</button>
-            <button class="admin-button" type="button" data-admin-action="save-post" data-draft="false">Publish</button>
-          </div>
-        </header>
-
+    <main class="admin-main">
+      <section class="admin-panel">
         <form class="admin-form" data-admin-post-form>
-          <section class="admin-subsection admin-subsection--compact">
-            <div class="admin-subsection__header">
+          <section class="admin-subsection admin-subsection--compact admin-subsection--library">
+            <div class="admin-subsection__header admin-subsection__header--library">
               <div>
-                <p class="admin-kicker">Post library</p>
-                <h3>Published and draft entries</h3>
+                <p class="admin-kicker">Research library</p>
+                <h2>Published and draft entries</h2>
+                <p class="admin-panel__summary">
+                  Scan the full archive first, then open article details only when you need to edit metadata.
+                </p>
+              </div>
+              <div class="admin-library-tools">
+                <div class="admin-post-stats" data-admin-post-stats></div>
+                <button class="admin-button admin-button--ghost" type="button" data-admin-action="new-post">New Post</button>
               </div>
             </div>
             <div class="admin-post-table-wrap">
@@ -93,45 +69,66 @@
             </div>
           </section>
 
-          <section class="admin-subsection admin-subsection--compact">
-            <div class="admin-subsection__header">
+          <section class="admin-subsection admin-subsection--editor">
+            <header class="admin-panel__header">
               <div>
                 <p class="admin-kicker">Writing surface</p>
+                <h2 data-admin-post-heading>Select a post</h2>
+                <p class="admin-panel__summary" data-admin-post-meta>
+                  Choose a row from the library or start a new draft.
+                </p>
+              </div>
+              <div class="admin-panel__actions">
+                <span class="admin-badge" data-admin-post-state>Idle</span>
+                <a class="admin-button admin-button--ghost" href="#" target="_blank" rel="noopener" data-admin-post-link hidden>Open Post</a>
+                <button class="admin-button admin-button--ghost" type="button" data-admin-action="open-post-details">Article Details</button>
+                <button class="admin-button admin-button--ghost" type="button" data-admin-action="save-post" data-draft="true">Save Draft</button>
+                <button class="admin-button" type="button" data-admin-action="save-post" data-draft="false">Publish</button>
+              </div>
+            </header>
+
+            <div class="admin-subsection__header">
+              <div>
                 <h3>Markdown body</h3>
+                <p class="admin-panel__summary">
+                  Metadata lives in article details so the main editor stays focused on the writing.
+                </p>
               </div>
               <button class="admin-link-button" type="button" data-admin-action="open-post-details">Edit article details</button>
             </div>
-            <p class="admin-panel__summary">
-              Metadata now lives in article details so the main editor stays focused on the actual writing.
-            </p>
-          </section>
 
-          <label class="admin-field admin-field--wide">
-            <span>Markdown body</span>
-            <textarea id="admin-post-body" name="body" class="admin-code-area" rows="24" spellcheck="false"></textarea>
-          </label>
+            <label class="admin-field admin-field--wide">
+              <span>Markdown body</span>
+              <textarea id="admin-post-body" name="body" class="admin-code-area" rows="24" spellcheck="false"></textarea>
+            </label>
+          </section>
         </form>
       </section>
+    </main>
+  </div>
 
-      <section class="admin-panel" data-admin-panel="resume" hidden>
-        <header class="admin-panel__header">
-          <div>
-            <p class="admin-kicker">Resume editor</p>
-            <h2>Landing page content</h2>
-            <p class="admin-panel__summary" data-admin-resume-meta>Manage hero copy, GitHub activity config, pinned projects, and markdown body.</p>
-          </div>
-          <div class="admin-panel__actions">
-            <span class="admin-badge admin-badge--quiet">content/resume.md</span>
-            <button class="admin-button" type="button" data-admin-action="save-resume">Save Resume</button>
-          </div>
-        </header>
+  <div class="admin-modal" data-admin-resume-modal hidden>
+    <button class="admin-modal__backdrop" type="button" aria-label="Close resume editor" data-admin-action="close-resume"></button>
+    <section class="admin-modal__dialog admin-modal__dialog--wide" role="dialog" aria-modal="true" aria-labelledby="admin-resume-modal-title">
+      <header class="admin-modal__header">
+        <div>
+          <p class="admin-kicker">Resume editor</p>
+          <h2 id="admin-resume-modal-title">Landing page content</h2>
+          <p class="admin-panel__summary" data-admin-resume-meta>Manage hero copy, GitHub activity config, pinned projects, and markdown body.</p>
+        </div>
+        <div class="admin-panel__actions">
+          <span class="admin-badge admin-badge--quiet">content/resume.md</span>
+          <button class="admin-button" type="button" data-admin-action="save-resume">Save Resume</button>
+          <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-resume">Close</button>
+        </div>
+      </header>
 
-        <form class="admin-form" data-admin-resume-form>
-          <div class="admin-form-grid admin-form-grid--two">
-            <label class="admin-field">
-              <span>Title</span>
-              <input id="admin-resume-title" name="title" type="text" autocomplete="off">
-            </label>
+      <form class="admin-form admin-modal__body" data-admin-resume-form>
+        <div class="admin-form-grid admin-form-grid--two">
+          <label class="admin-field">
+            <span>Title</span>
+            <input id="admin-resume-title" name="title" type="text" autocomplete="off">
+          </label>
 
             <label class="admin-field">
               <span>Layout</span>
