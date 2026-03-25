@@ -66,10 +66,6 @@
   gap: 16px;
 }
 
-.admin-panel__header--library {
-  align-items: center;
-}
-
 .admin-kicker {
   margin: 0 0 10px;
   font-size: 0.72rem;
@@ -94,23 +90,15 @@
   color: var(--secondary);
 }
 
-.admin-library-heading {
-  display: flex;
-  align-items: center;
-  min-height: 46px;
+.admin-panel--library {
+  overflow: hidden;
+  padding: 0;
 }
 
-.admin-library-heading .admin-kicker {
-  margin-bottom: 0;
-}
-
-.admin-library-tools {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+.admin-panel--library .admin-post-table-wrap {
+  border: 0;
+  border-radius: inherit;
+  background: transparent;
 }
 
 .logo {
@@ -743,6 +731,19 @@
   padding: 28px;
 }
 
+.admin-modal--resume {
+  align-items: start;
+  padding-top: calc(var(--header-height) + 28px);
+}
+
+.admin-modal--resume .admin-modal__dialog--wide {
+  width: min(
+    calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
+    calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
+  );
+  max-height: calc(100vh - var(--header-height) - 56px);
+}
+
 .admin-modal__backdrop {
   position: absolute;
   inset: 0;
@@ -760,10 +761,6 @@
   padding: 24px;
   background: radial-gradient(circle at top right, color-mix(in srgb, var(--accent) 10%, transparent), transparent 32%), linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, white), color-mix(in srgb, var(--theme) 88%, white));
   box-shadow: 0 32px 80px rgba(8, 14, 20, 0.24);
-}
-
-.admin-modal__dialog--wide {
-  width: min(1180px, calc(100vw - 40px));
 }
 
 .admin-modal__header {
@@ -801,7 +798,6 @@
   }
 
   .admin-detail__actions,
-  .admin-library-tools,
   .admin-panel__actions {
     justify-content: stretch;
   }
@@ -823,7 +819,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .admin-library-tools,
   .admin-detail__actions {
     flex-wrap: wrap;
   }
@@ -843,6 +838,15 @@
   .admin-icon-button,
   .admin-button {
     width: 100%;
+  }
+
+  .admin-modal--resume {
+    padding-top: calc(var(--header-height) + 20px);
+  }
+
+  .admin-modal--resume .admin-modal__dialog--wide {
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - var(--header-height) - 40px);
   }
 }
 

@@ -5,38 +5,6 @@
   <div class="admin-workspace">
     <main class="admin-main">
       <section class="admin-panel admin-panel--library" data-admin-post-library>
-        <header class="admin-panel__header admin-panel__header--library">
-          <div class="admin-library-heading">
-            <p class="admin-kicker">Research library</p>
-          </div>
-          <div class="admin-library-tools">
-            <button
-              class="admin-icon-button"
-              type="button"
-              data-admin-action="open-resume"
-              aria-label="Edit resume"
-              title="Edit resume"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 20h9" />
-                <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
-              </svg>
-            </button>
-            <button
-              class="admin-icon-button admin-icon-button--primary"
-              type="button"
-              data-admin-action="new-post"
-              aria-label="Create new post"
-              title="Create new post"
-            >
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M12 5v14" />
-                <path d="M5 12h14" />
-              </svg>
-            </button>
-          </div>
-        </header>
-
         <div class="admin-post-table-wrap">
           <table class="admin-post-table">
             <thead>
@@ -180,7 +148,7 @@
     </main>
   </div>
 
-  <div class="admin-modal" data-admin-resume-modal hidden>
+  <div class="admin-modal admin-modal--resume" data-admin-resume-modal hidden>
     <button class="admin-modal__backdrop" type="button" aria-label="Close resume editor" data-admin-action="close-resume"></button>
     <section class="admin-modal__dialog admin-modal__dialog--wide" role="dialog" aria-modal="true" aria-labelledby="admin-resume-modal-title">
       <header class="admin-modal__header">
