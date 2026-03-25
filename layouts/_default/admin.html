@@ -59,19 +59,6 @@
                 <button
                   class="admin-icon-button"
                   type="button"
-                  data-admin-action="open-resume"
-                  aria-label="Edit resume"
-                  title="Edit resume"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M12 20h9" />
-                    <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
-                  </svg>
-                </button>
-
-                <button
-                  class="admin-icon-button"
-                  type="button"
                   data-admin-action="open-post-details"
                   aria-label="Edit article details"
                   title="Edit article details"
@@ -288,7 +275,7 @@
         <label class="admin-field">
           <span>Slug</span>
           <input id="admin-post-slug" name="slug" type="text" autocomplete="off" spellcheck="false">
-          <small class="admin-field__hint" data-admin-post-slug-hint>Lowercase, hyphenated, and locked after creation.</small>
+          <small class="admin-field__hint" data-admin-post-slug-hint>Inferred from title. You can adjust it before creation.</small>
         </label>
 
         <label class="admin-field">
@@ -308,22 +295,42 @@
 
         <label class="admin-field">
           <span>Tags</span>
-          <input id="admin-post-tags" name="tags" type="text" autocomplete="off" placeholder="swift, macos, architecture">
+          <div class="admin-token-picker" data-admin-picker="tags">
+            <div class="admin-token-picker__control">
+              <div class="admin-token-picker__chips" data-admin-picker-chips></div>
+              <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Add tags and press Enter">
+            </div>
+            <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
+          </div>
+          <input id="admin-post-tags" name="tags" type="hidden">
         </label>
 
         <label class="admin-field">
           <span>Projects</span>
-          <input id="admin-post-projects" name="projects" type="text" autocomplete="off" placeholder="stevemurr/fabric">
-        </label>
-
-        <label class="admin-field">
-          <span>Series</span>
-          <input id="admin-post-series" name="series" type="text" autocomplete="off" placeholder="history-of-app-communication">
+          <div class="admin-token-picker" data-admin-picker="projects">
+            <div class="admin-token-picker__control">
+              <div class="admin-token-picker__chips" data-admin-picker-chips></div>
+              <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Search repos and press Enter">
+            </div>
+            <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
+          </div>
+          <input id="admin-post-projects" name="projects" type="hidden">
         </label>
 
         <label class="admin-field">
           <span>Card icon</span>
-          <input id="admin-post-card-icon" name="cardIcon" type="text" autocomplete="off" placeholder="layers">
+          <select id="admin-post-card-icon" name="cardIcon">
+            <option value="">Default file</option>
+            <option value="layers">Layers</option>
+            <option value="terminal">Terminal</option>
+            <option value="history">History</option>
+            <option value="cpu">CPU</option>
+            <option value="search">Search</option>
+            <option value="globe">Globe</option>
+            <option value="brain">Brain</option>
+            <option value="gamepad">Gamepad</option>
+            <option value="file">File</option>
+          </select>
         </label>
 
         <label class="admin-field admin-field--wide">
@@ -343,7 +350,7 @@
           <span>Show post navigation links</span>
         </label>
         <div class="admin-panel__actions">
-          <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-post-details">Done</button>
+          <button class="admin-button" type="button" data-admin-action="submit-post-details" data-admin-post-modal-submit>Create</button>
         </div>
       </footer>
     </section>

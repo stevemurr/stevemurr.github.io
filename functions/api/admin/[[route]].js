@@ -42,6 +42,8 @@ function summarizePost(record) {
     sha: record.sha,
     title: record.frontmatter.title,
     repo: Array.isArray(record.frontmatter.projects) ? (record.frontmatter.projects[0] || "") : "",
+    projects: Array.isArray(record.frontmatter.projects) ? record.frontmatter.projects : [],
+    tags: Array.isArray(record.frontmatter.tags) ? record.frontmatter.tags : [],
     date: record.frontmatter.date,
     draft: record.frontmatter.draft,
     summary: record.frontmatter.summary,

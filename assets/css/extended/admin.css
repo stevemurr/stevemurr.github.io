@@ -444,6 +444,16 @@
   color: var(--primary);
 }
 
+.admin-publish-toggle__option[data-draft="true"].is-active {
+  background: color-mix(in srgb, var(--secondary) 18%, var(--surface-strong));
+  color: var(--primary);
+}
+
+.admin-publish-toggle__option[data-draft="false"].is-active {
+  background: color-mix(in srgb, #1b9f6a 16%, var(--surface-strong));
+  color: color-mix(in srgb, #1b9f6a 84%, var(--primary));
+}
+
 .admin-editor {
   display: grid;
   gap: 16px;
@@ -609,7 +619,8 @@
 }
 
 .admin-field input,
-.admin-field textarea {
+.admin-field textarea,
+.admin-field select {
   width: 100%;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--border) 96%, transparent);
@@ -628,7 +639,8 @@
 
 .admin-code-area,
 .admin-field input[spellcheck="false"],
-.admin-field textarea[spellcheck="false"] {
+.admin-field textarea[spellcheck="false"],
+.admin-field select {
   font-family: var(--font-mono);
   font-size: 0.94rem;
   line-height: 1.6;
@@ -636,15 +648,124 @@
 
 .admin-field input:focus,
 .admin-field textarea:focus,
+.admin-field select:focus,
 .admin-checkbox input:focus {
   outline: none;
 }
 
 .admin-field input:focus-visible,
 .admin-field textarea:focus-visible,
+.admin-field select:focus-visible,
 .admin-editor__surface .ProseMirror:focus-visible {
   border-color: color-mix(in srgb, var(--accent-cool) 36%, var(--border));
   box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-cool) 18%, transparent);
+}
+
+.admin-token-picker {
+  position: relative;
+}
+
+.admin-token-picker__control {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 50px;
+  padding: 8px 12px;
+  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--border) 96%, transparent);
+  background: color-mix(in srgb, var(--surface-strong) 96%, white);
+  box-shadow: 0 1px 2px rgba(17, 24, 32, 0.04);
+  transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+  cursor: text;
+}
+
+.admin-token-picker:focus-within .admin-token-picker__control {
+  border-color: color-mix(in srgb, var(--accent-cool) 36%, var(--border));
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-cool) 18%, transparent);
+}
+
+.admin-token-picker__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-token-picker__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 30px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--chip-background);
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  line-height: 1;
+}
+
+.admin-token-picker__chip-remove {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--secondary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.admin-token-picker__input {
+  flex: 1 1 160px;
+  min-width: 140px;
+  border: 0;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  padding: 4px 0;
+}
+
+.admin-token-picker__input:focus {
+  outline: none;
+}
+
+.admin-token-picker__menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: grid;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--surface-strong) 98%, white);
+  box-shadow: var(--shadow-soft);
+}
+
+.admin-token-picker__option {
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--primary);
+  font: inherit;
+  text-align: left;
+  padding: 9px 10px;
+  cursor: pointer;
+}
+
+.admin-token-picker__option:hover,
+.admin-token-picker__option:focus-visible,
+.admin-token-picker__chip-remove:hover,
+.admin-token-picker__chip-remove:focus-visible {
+  color: var(--accent-cool);
+  outline: none;
+}
+
+.admin-token-picker__empty {
+  padding: 9px 10px;
+  color: var(--secondary);
+  font-size: 0.88rem;
 }
 
 .admin-form-grid,

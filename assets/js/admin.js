@@ -22,6 +22,8 @@ const root = document.querySelector("[data-admin-app]");
 if (root) {
   const API_ROOT = root.dataset.adminApiRoot || "/api/admin";
   const today = new Date().toISOString().slice(0, 10);
+  const DEFAULT_GITHUB_OWNER = "stevemurr";
+  const pickerControllers = {};
 
   const state = {
     posts: [],
@@ -36,6 +38,12 @@ if (root) {
     editorMode: "visual",
     editorMarkdown: "",
     editor: null,
+    githubRepositories: [],
+    isGithubRepositoriesLoading: false,
+    postFieldOptions: {
+      tags: [],
+      projects: [],
+    },
   };
 
   const refs = {
@@ -47,6 +55,7 @@ if (root) {
     postDetail: root.querySelector("[data-admin-post-detail]"),
     postSaveButton: root.querySelector("[data-admin-action='save-post']"),
     postModal: root.querySelector("[data-admin-post-modal]"),
+    postModalSubmitButton: root.querySelector("[data-admin-post-modal-submit]"),
     resumeModal: root.querySelector("[data-admin-resume-modal]"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
     resumeMeta: root.querySelector("[data-admin-resume-meta]"),
@@ -65,6 +74,10 @@ if (root) {
     editorVisual: root.querySelector("[data-admin-editor-visual]"),
     editorSourceWrap: root.querySelector("[data-admin-editor-source-wrap]"),
     editorSource: root.querySelector("[data-admin-editor-source]"),
+    postPickers: {
+      tags: root.querySelector("[data-admin-picker='tags']"),
+      projects: root.querySelector("[data-admin-picker='projects']"),
+    },
     postForm: {
       title: document.getElementById("admin-post-title"),
       slug: document.getElementById("admin-post-slug"),
@@ -74,7 +87,6 @@ if (root) {
       summary: document.getElementById("admin-post-summary"),
       tags: document.getElementById("admin-post-tags"),
       projects: document.getElementById("admin-post-projects"),
-      series: document.getElementById("admin-post-series"),
       cardIcon: document.getElementById("admin-post-card-icon"),
       cardGradient: document.getElementById("admin-post-card-gradient"),
       pullquote: document.getElementById("admin-post-pullquote"),
@@ -105,6 +117,7 @@ if (root) {
   refs.postForm.slug.addEventListener("input", handlePostSlugInput);
   refs.editorSource.addEventListener("input", handleEditorSourceInput);
   document.addEventListener("keydown", handleGlobalKeydown);
+  initializePostEnhancements();
 
   initialize().catch((error) => {
     setFeedback("error", error.message || "Admin failed to initialize.");
@@ -122,7 +135,6 @@ if (root) {
         summary: "",
         tags: [],
         projects: [],
-        series: [],
         weight: "",
         ShowPostNavLinks: false,
         params: {
@@ -180,6 +192,7 @@ if (root) {
   async function loadPosts() {
     const payload = await requestJSON(`${API_ROOT}/posts`);
     state.posts = Array.isArray(payload.items) ? payload.items : [];
+    refreshPostFieldOptions();
     renderPostList();
   }
 
@@ -187,6 +200,7 @@ if (root) {
     const payload = await requestJSON(`${API_ROOT}/resume`);
     state.resume = payload;
     renderResume();
+    loadGitHubRepositories(state.resume.frontmatter?.githubActivity?.username || DEFAULT_GITHUB_OWNER).catch(() => {});
   }
 
   async function openPost(slug) {
@@ -315,13 +329,13 @@ if (root) {
     refs.postForm.date.value = frontmatter.date || today;
     refs.postForm.weight.value = frontmatter.weight || "";
     refs.postForm.summary.value = frontmatter.summary || "";
-    refs.postForm.tags.value = listToInput(frontmatter.tags);
-    refs.postForm.projects.value = listToInput(frontmatter.projects);
-    refs.postForm.series.value = listToInput(frontmatter.series);
+    setTokenPickerValues("tags", frontmatter.tags || []);
+    setTokenPickerValues("projects", frontmatter.projects || []);
     refs.postForm.cardIcon.value = params.cardIcon || "";
     refs.postForm.cardGradient.value = params.cardGradient || "";
     refs.postForm.pullquote.value = params.pullquote || "";
     refs.postForm.showNav.checked = Boolean(frontmatter.ShowPostNavLinks);
+    renderPostModal();
   }
 
   function renderPostDetail() {
@@ -357,6 +371,7 @@ if (root) {
     refs.editorSource.value = state.editorMode === "source"
       ? refs.editorSource.value
       : state.editorMarkdown;
+    renderPostModal();
   }
 
   function renderResume() {
@@ -426,7 +441,7 @@ if (root) {
     row.querySelector("[data-field='name']").focus();
   }
 
-  async function savePost() {
+  async function savePost(options = {}) {
     const payload = await collectPostPayload();
     const isExisting = Boolean(state.currentPost.sha);
     const slug = payload.slug;
@@ -438,7 +453,7 @@ if (root) {
       return;
     }
 
-    setButtonBusy([refs.postSaveButton], true);
+    setButtonBusy([refs.postSaveButton, refs.postModalSubmitButton], true);
     setFeedback("info", state.currentDraftValue ? "Saving draft…" : "Saving published post…");
 
     try {
@@ -460,10 +475,15 @@ if (root) {
       setPostModalOpen(false);
       renderPostDetail();
       setFeedback("success", state.currentDraftValue ? "Draft saved." : "Post saved as published.");
+      if (options.focusEditor) {
+        focusPostEditor();
+      }
+      return true;
     } catch (error) {
       setFeedback("error", error.message || "Post save failed.");
+      return false;
     } finally {
-      setButtonBusy([refs.postSaveButton], false);
+      setButtonBusy([refs.postSaveButton, refs.postModalSubmitButton], false);
     }
   }
 
@@ -478,6 +498,7 @@ if (root) {
       });
       state.resume = saved;
       renderResume();
+      loadGitHubRepositories(state.resume.frontmatter?.githubActivity?.username || DEFAULT_GITHUB_OWNER).catch(() => {});
       setFeedback("success", "Resume saved.");
     } catch (error) {
       setFeedback("error", error.message || "Resume save failed.");
@@ -496,7 +517,6 @@ if (root) {
       summary: refs.postForm.summary.value.trim(),
       tags: inputToList(refs.postForm.tags.value),
       projects: inputToList(refs.postForm.projects.value),
-      series: inputToList(refs.postForm.series.value),
       weight: refs.postForm.weight.value.trim(),
       ShowPostNavLinks: refs.postForm.showNav.checked,
       params: {
@@ -577,9 +597,7 @@ if (root) {
     }
 
     if (adminAction === "save-post") {
-      savePost().catch((error) => {
-        setFeedback("error", error.message || "Post save failed.");
-      });
+      savePost();
       return;
     }
 
@@ -611,6 +629,17 @@ if (root) {
     if (adminAction === "close-post-details") {
       setPostModalOpen(false);
       renderPostDetail();
+      return;
+    }
+
+    if (adminAction === "submit-post-details") {
+      if (state.currentPost.sha) {
+        setPostModalOpen(false);
+        renderPostDetail();
+        return;
+      }
+
+      await savePost({ focusEditor: true });
       return;
     }
 
@@ -669,6 +698,7 @@ if (root) {
       refs.postForm.slug.value = slugify(refs.postForm.title.value);
     }
 
+    renderPostModal();
     renderPostDetail();
   }
 
@@ -702,6 +732,7 @@ if (root) {
     state.isPostModalOpen = Boolean(isOpen);
     refs.postModal.hidden = !state.isPostModalOpen;
     syncModalState();
+    renderPostModal();
 
     if (state.isPostModalOpen) {
       window.setTimeout(() => {
@@ -724,6 +755,15 @@ if (root) {
 
   function syncModalState() {
     document.body.classList.toggle("admin-modal-open", state.isPostModalOpen || state.isResumeModalOpen);
+  }
+
+  function renderPostModal() {
+    const isExisting = Boolean(state.currentPost.sha);
+    refs.postModalSubmitButton.textContent = isExisting ? "Done" : "Create";
+    refs.postModalSubmitButton.classList.toggle("admin-button--ghost", isExisting);
+    refs.postForm.slugHint.textContent = isExisting
+      ? "Slug is locked for existing posts."
+      : "Inferred from title. You can adjust it before creation.";
   }
 
   function setPostView(view) {
@@ -961,6 +1001,348 @@ if (root) {
       button.disabled = isBusy;
       button.setAttribute("aria-busy", String(isBusy));
     });
+  }
+
+  function initializePostEnhancements() {
+    initializeTokenPicker("tags", {
+      normalize: (value) => String(value || "").trim().toLowerCase(),
+      getSuggestions: () => state.postFieldOptions.tags,
+      getEmptyMessage: () => "No matching tags yet. Press Enter to add one.",
+    });
+
+    initializeTokenPicker("projects", {
+      normalize: (value) => normalizeRepositoryName(value),
+      getSuggestions: () => state.postFieldOptions.projects,
+      getEmptyMessage: (query) => {
+        if (state.isGithubRepositoriesLoading) {
+          return "Loading GitHub repositories…";
+        }
+
+        return query
+          ? "No matching repositories. Press Enter to use that repo."
+          : "Start typing to search repositories.";
+      },
+    });
+  }
+
+  function initializeTokenPicker(name, options) {
+    const rootElement = refs.postPickers[name];
+    const hiddenInput = refs.postForm[name];
+    if (!rootElement || !hiddenInput) {
+      return;
+    }
+
+    const controller = {
+      name,
+      rootElement,
+      hiddenInput,
+      input: rootElement.querySelector("[data-admin-picker-input]"),
+      chips: rootElement.querySelector("[data-admin-picker-chips]"),
+      menu: rootElement.querySelector("[data-admin-picker-menu]"),
+      options,
+    };
+
+    pickerControllers[name] = controller;
+
+    controller.rootElement.addEventListener("click", (event) => {
+      if (!event.target.closest("[data-admin-picker-remove]")) {
+        controller.input.focus();
+      }
+    });
+
+    controller.chips.addEventListener("click", (event) => {
+      const removeButton = event.target.closest("[data-admin-picker-remove]");
+      if (!removeButton) {
+        return;
+      }
+
+      const nextValues = getTokenPickerValues(name).filter((value) => value !== removeButton.dataset.value);
+      setTokenPickerValues(name, nextValues);
+      controller.input.focus();
+    });
+
+    controller.menu.addEventListener("mousedown", (event) => {
+      event.preventDefault();
+    });
+
+    controller.menu.addEventListener("click", (event) => {
+      const option = event.target.closest("[data-admin-picker-option]");
+      if (!option) {
+        return;
+      }
+
+      addTokenPickerValue(name, option.dataset.value || "");
+    });
+
+    controller.input.addEventListener("focus", () => {
+      renderTokenPicker(name);
+    });
+
+    controller.input.addEventListener("input", () => {
+      renderTokenPicker(name);
+    });
+
+    controller.input.addEventListener("blur", () => {
+      window.setTimeout(() => {
+        if (document.activeElement !== controller.input) {
+          controller.rootElement.classList.remove("is-open");
+          controller.menu.hidden = true;
+        }
+      }, 120);
+    });
+
+    controller.input.addEventListener("keydown", (event) => {
+      if (event.key === "Backspace" && !controller.input.value.trim()) {
+        const values = getTokenPickerValues(name);
+        if (values.length) {
+          event.preventDefault();
+          setTokenPickerValues(name, values.slice(0, -1));
+        }
+        return;
+      }
+
+      if (event.key === "Enter" || event.key === ",") {
+        event.preventDefault();
+        commitTokenPickerInput(name);
+      }
+    });
+
+    renderTokenPicker(name);
+  }
+
+  function refreshPostFieldOptions() {
+    const tagSet = new Set();
+    const fallbackProjects = [];
+
+    state.posts.forEach((item) => {
+      (Array.isArray(item.tags) ? item.tags : []).forEach((tag) => {
+        const normalized = String(tag || "").trim().toLowerCase();
+        if (normalized) {
+          tagSet.add(normalized);
+        }
+      });
+
+      (Array.isArray(item.projects) ? item.projects : []).forEach((project) => {
+        const normalized = normalizeRepositoryName(project);
+        if (normalized) {
+          fallbackProjects.push(normalized);
+        }
+      });
+
+      if (item.repo) {
+        fallbackProjects.push(normalizeRepositoryName(item.repo));
+      }
+    });
+
+    state.postFieldOptions.tags = [...tagSet].sort((left, right) => left.localeCompare(right));
+    state.postFieldOptions.projects = uniqueValues([
+      ...state.githubRepositories,
+      ...fallbackProjects,
+    ]);
+
+    renderTokenPicker("tags");
+    renderTokenPicker("projects");
+  }
+
+  async function loadGitHubRepositories(username) {
+    const owner = String(username || DEFAULT_GITHUB_OWNER).trim() || DEFAULT_GITHUB_OWNER;
+    state.isGithubRepositoriesLoading = true;
+    renderTokenPicker("projects");
+
+    try {
+      const response = await fetch(`https://api.github.com/users/${encodeURIComponent(owner)}/repos?per_page=100&sort=updated&type=owner`, {
+        headers: {
+          Accept: "application/vnd.github+json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`GitHub repositories request failed (${response.status}).`);
+      }
+
+      const payload = await response.json();
+      state.githubRepositories = Array.isArray(payload)
+        ? payload.map((repo) => normalizeRepositoryName(repo?.full_name || `${owner}/${repo?.name || ""}`)).filter(Boolean)
+        : [];
+    } catch (_error) {
+      state.githubRepositories = [];
+    } finally {
+      state.isGithubRepositoriesLoading = false;
+      refreshPostFieldOptions();
+    }
+  }
+
+  function renderTokenPicker(name) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return;
+    }
+
+    const selectedValues = getTokenPickerValues(name);
+    controller.chips.replaceChildren();
+
+    selectedValues.forEach((value) => {
+      const chip = document.createElement("span");
+      chip.className = "admin-token-picker__chip";
+
+      const label = document.createElement("span");
+      label.textContent = value;
+
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.className = "admin-token-picker__chip-remove";
+      removeButton.dataset.adminPickerRemove = "true";
+      removeButton.dataset.value = value;
+      removeButton.setAttribute("aria-label", `Remove ${value}`);
+      removeButton.textContent = "×";
+
+      chip.append(label, removeButton);
+      controller.chips.appendChild(chip);
+    });
+
+    const query = controller.input.value.trim();
+    const suggestions = getTokenPickerSuggestions(name, query);
+    controller.menu.replaceChildren();
+
+    if (suggestions.length) {
+      suggestions.forEach((value) => {
+        const option = document.createElement("button");
+        option.type = "button";
+        option.className = "admin-token-picker__option";
+        option.dataset.adminPickerOption = "true";
+        option.dataset.value = value;
+        option.textContent = value;
+        controller.menu.appendChild(option);
+      });
+    } else {
+      const empty = document.createElement("div");
+      empty.className = "admin-token-picker__empty";
+      empty.textContent = controller.options.getEmptyMessage(query);
+      controller.menu.appendChild(empty);
+    }
+
+    const shouldOpen = document.activeElement === controller.input;
+    controller.rootElement.classList.toggle("is-open", shouldOpen);
+    controller.menu.hidden = !shouldOpen;
+  }
+
+  function getTokenPickerSuggestions(name, query) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return [];
+    }
+
+    const selectedSet = new Set(getTokenPickerValues(name));
+    const normalizedQuery = controller.options.normalize(query);
+    const options = (controller.options.getSuggestions() || []).filter((value) => !selectedSet.has(value));
+
+    if (!normalizedQuery) {
+      return options.slice(0, 8);
+    }
+
+    const filtered = options.filter((value) => value.includes(normalizedQuery)).slice(0, 8);
+    if (!filtered.length && normalizedQuery && !selectedSet.has(normalizedQuery)) {
+      return [normalizedQuery];
+    }
+
+    if (!filtered.includes(normalizedQuery) && normalizedQuery && !selectedSet.has(normalizedQuery)) {
+      filtered.unshift(normalizedQuery);
+    }
+
+    return uniqueValues(filtered).slice(0, 8);
+  }
+
+  function getTokenPickerValues(name) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return [];
+    }
+
+    return inputToList(controller.hiddenInput.value).map((value) => controller.options.normalize(value)).filter(Boolean);
+  }
+
+  function setTokenPickerValues(name, values) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return;
+    }
+
+    controller.hiddenInput.value = listToInput(uniqueValues(
+      (Array.isArray(values) ? values : [])
+        .map((value) => controller.options.normalize(value))
+        .filter(Boolean),
+    ));
+    controller.input.value = "";
+    renderTokenPicker(name);
+  }
+
+  function addTokenPickerValue(name, value) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return;
+    }
+
+    const normalized = controller.options.normalize(value);
+    if (!normalized) {
+      return;
+    }
+
+    setTokenPickerValues(name, [...getTokenPickerValues(name), normalized]);
+    controller.input.focus();
+  }
+
+  function commitTokenPickerInput(name) {
+    const controller = pickerControllers[name];
+    if (!controller) {
+      return;
+    }
+
+    const query = controller.input.value.trim();
+    if (!query) {
+      return;
+    }
+
+    const suggestions = getTokenPickerSuggestions(name, query);
+    addTokenPickerValue(name, suggestions[0] || query);
+  }
+
+  function focusPostEditor() {
+    window.setTimeout(() => {
+      if (state.editorMode === "source") {
+        refs.editorSource.focus();
+        return;
+      }
+
+      const visualEditor = refs.editorVisual.querySelector(".ProseMirror");
+      if (visualEditor instanceof HTMLElement) {
+        visualEditor.focus();
+      }
+    }, 0);
+  }
+
+  function normalizeRepositoryName(value) {
+    return String(value || "")
+      .trim()
+      .replace(/^https?:\/\/github\.com\//i, "")
+      .replace(/\/+$/, "")
+      .toLowerCase();
+  }
+
+  function uniqueValues(items) {
+    const seen = new Set();
+    const values = [];
+
+    items.forEach((item) => {
+      const normalized = String(item || "").trim();
+      if (!normalized || seen.has(normalized)) {
+        return;
+      }
+
+      seen.add(normalized);
+      values.push(normalized);
+    });
+
+    return values;
   }
 
   function escapeHTML(value) {
