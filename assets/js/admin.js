@@ -10,6 +10,7 @@
   const state = {
     posts: [],
     status: null,
+    postView: "library",
     currentPost: createEmptyPost(),
     currentPostLoadingSlug: "",
     resume: createEmptyResume(),
@@ -28,7 +29,8 @@
     postMeta: root.querySelector("[data-admin-post-meta]"),
     postState: root.querySelector("[data-admin-post-state]"),
     postLink: root.querySelector("[data-admin-post-link]"),
-    postEditor: root.querySelector("[data-admin-post-editor]"),
+    postLibrary: root.querySelector("[data-admin-post-library]"),
+    postDetail: root.querySelector("[data-admin-post-detail]"),
     postButtons: Array.from(root.querySelectorAll("[data-admin-action='save-post']")),
     postDetailButtons: Array.from(root.querySelectorAll("[data-admin-action='open-post-details']")),
     postModal: root.querySelector("[data-admin-post-modal]"),
@@ -92,6 +94,7 @@
   async function initialize() {
     setPostModalOpen(false);
     setResumeModalOpen(false);
+    setPostView("library");
     renderPost();
     await loadStatus();
     await Promise.all([
@@ -177,7 +180,7 @@
     }
 
     if (selectInitial) {
-      startNewPost();
+      renderPost();
     }
   }
 
@@ -193,6 +196,7 @@
     }
 
     state.currentPostLoadingSlug = slug;
+    setPostView("detail");
     setPostModalOpen(false);
     setFeedback("info", `Loading ${slug}…`);
 
@@ -200,9 +204,9 @@
       const payload = await requestJSON(`${API_ROOT}/posts/${encodeURIComponent(slug)}`);
       state.currentPost = payload;
       state.postSlugDirty = false;
+      setPostView("detail");
       renderPostList();
       renderPost();
-      revealPostEditor();
       clearFeedback();
     } finally {
       state.currentPostLoadingSlug = "";
@@ -212,6 +216,7 @@
   function startNewPost({ openDetails = false } = {}) {
     state.currentPost = createEmptyPost();
     state.postSlugDirty = false;
+    setPostView("detail");
     renderPostList();
     renderPost();
     clearFeedback();
@@ -318,7 +323,7 @@
 
     refs.postHeading.textContent = isExisting
       ? (frontmatter.title || record.slug)
-      : (isBlankSelection ? "Select a post" : "New draft");
+      : (isBlankSelection ? "Select a post from the library" : "New draft");
     refs.postMeta.textContent = isExisting
       ? `${record.path} · ${shortSha(record.sha)}`
       : (isBlankSelection
@@ -560,6 +565,12 @@
       return;
     }
 
+    if (adminAction === "back-to-library") {
+      setPostView("library");
+      clearFeedback();
+      return;
+    }
+
     if (adminAction === "save-post") {
       savePost(actionTarget.dataset.draft === "true").catch((error) => {
         setFeedback("error", error.message || "Post save failed.");
@@ -683,21 +694,16 @@
     document.body.classList.toggle("admin-modal-open", state.isPostModalOpen || state.isResumeModalOpen);
   }
 
-  function revealPostEditor() {
-    if (!refs.postEditor) {
-      return;
+  function setPostView(view) {
+    state.postView = view === "detail" ? "detail" : "library";
+
+    if (refs.postLibrary) {
+      refs.postLibrary.hidden = state.postView !== "library";
     }
 
-    refs.postEditor.scrollIntoView({
-      behavior: "smooth",
-      block: "start",
-    });
-
-    window.setTimeout(() => {
-      refs.postForm.body.focus({
-        preventScroll: true,
-      });
-    }, 120);
+    if (refs.postDetail) {
+      refs.postDetail.hidden = state.postView !== "detail";
+    }
   }
 
   async function requestJSON(path, { method = "GET", body } = {}) {

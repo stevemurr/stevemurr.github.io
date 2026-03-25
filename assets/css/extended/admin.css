@@ -223,9 +223,10 @@
   gap: 18px;
 }
 
-.admin-subsection--editor {
+.admin-subsection--detail {
   gap: 18px;
-  scroll-margin-top: calc(var(--header-height) + 20px);
+  padding-top: 0;
+  border-top: 0;
 }
 
 .admin-form > .admin-subsection:first-child {
@@ -243,6 +244,16 @@
   gap: 12px;
   justify-content: flex-end;
   align-items: center;
+}
+
+.admin-link-button--back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-panel__header--detail {
+  align-items: start;
 }
 
 .admin-sidebar__header,

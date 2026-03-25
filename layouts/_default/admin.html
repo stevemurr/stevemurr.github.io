@@ -39,7 +39,7 @@
     <main class="admin-main">
       <section class="admin-panel">
         <form class="admin-form" data-admin-post-form>
-          <section class="admin-subsection admin-subsection--compact admin-subsection--library">
+          <section class="admin-subsection admin-subsection--compact admin-subsection--library" data-admin-post-library>
             <div class="admin-subsection__header admin-subsection__header--library">
               <div>
                 <p class="admin-kicker">Research library</p>
@@ -68,10 +68,14 @@
             </div>
           </section>
 
-          <section class="admin-subsection admin-subsection--editor" data-admin-post-editor>
-            <header class="admin-panel__header">
+          <section class="admin-subsection admin-subsection--detail" data-admin-post-detail hidden>
+            <header class="admin-panel__header admin-panel__header--detail">
               <div>
-                <p class="admin-kicker">Writing surface</p>
+                <button class="admin-link-button admin-link-button--back" type="button" data-admin-action="back-to-library">
+                  <span aria-hidden="true">←</span>
+                  <span>Back to library</span>
+                </button>
+                <p class="admin-kicker">Article detail</p>
                 <h2 data-admin-post-heading>Select a post</h2>
                 <p class="admin-panel__summary" data-admin-post-meta>
                   Choose a row from the library or start a new draft.
@@ -86,11 +90,11 @@
               </div>
             </header>
 
-            <div class="admin-subsection__header">
+            <div class="admin-subsection__header admin-subsection__header--detail">
               <div>
-                <h3>Markdown body</h3>
+                <h3>Writing surface</h3>
                 <p class="admin-panel__summary">
-                  Metadata lives in article details so the main editor stays focused on the writing.
+                  Edit the markdown body here and use article details for front matter and publishing metadata.
                 </p>
               </div>
               <button class="admin-link-button" type="button" data-admin-action="open-post-details">Edit article details</button>
