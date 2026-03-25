@@ -1,15 +1,24 @@
 ---
-title: "Act III: The Distributed Object Era (Late 80s–90s)"
-date: 2026-03-16
-draft: true
-tags: ["ipc", "history", "corba", "com", "dcom", "distributed-objects"]
-summary: "CORBA and COM promised a world of universal distributed objects. Reality had other plans."
-projects: ["stevemurr/fabric"]
-series: ["history-of-app-communication"]
+title: 'IPC: The Distributed Object Era (Late 80s–90s)'
+date: '2026-03-25'
+draft: false
+tags:
+  - ipc
+  - history
+  - corba
+  - com
+  - dcom
+  - distributed-objects
+summary: >-
+  CORBA and COM promised a world of universal distributed objects. Reality had
+  other plans.
+projects:
+  - stevemurr/fabric
+series:
+  - history-of-app-communication
 params:
-  cardGradient: "135deg, #1e3a5f, #2563eb, #60a5fa"
+  cardGradient: '135deg, #1e3a5f, #2563eb, #60a5fa'
 ---
-
 By the late 1980s, the software industry had convinced itself that objects were the answer to everything. Object-oriented programming was ascendant. C++ was eating the world. Smalltalk veterans were colonizing enterprise IT. And if objects were the right way to structure programs, then surely they were the right way to structure *networks* of programs too. The distributed object was the logical next step --- or so it seemed.
 
 What followed was one of the most ambitious, expensive, and ultimately instructive detours in the history of computing. Two competing visions --- CORBA from a consortium of vendors, and COM/DCOM from Microsoft --- tried to make distributed objects real. Both produced technology that shaped a generation of software. Both, in different ways, buckled under the weight of their own ambition. And both left behind ideas that we still use today, even if we have mostly forgotten where they came from.
