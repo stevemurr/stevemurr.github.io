@@ -55,20 +55,6 @@
 
               <div class="admin-detail__actions">
                 <button
-                  class="admin-icon-button"
-                  type="button"
-                  data-admin-action="open-post-details"
-                  aria-label="Edit article details"
-                  title="Edit article details"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M3 7h18" />
-                    <path d="M6 12h12" />
-                    <path d="M10 17h4" />
-                  </svg>
-                </button>
-
-                <button
                   class="admin-icon-button admin-icon-button--primary"
                   type="button"
                   data-admin-action="save-post"
@@ -84,6 +70,39 @@
               </div>
             </div>
           </header>
+
+          <section class="admin-post-settings">
+            <div class="admin-post-settings__header">
+              <div>
+                <p class="admin-kicker">Post settings</p>
+                <h2>Metadata</h2>
+              </div>
+            </div>
+
+            <div class="admin-form-grid admin-form-grid--two">
+              <label class="admin-field admin-field--wide">
+                <span>Title</span>
+                <input id="admin-post-title" name="title" type="text" autocomplete="off">
+              </label>
+
+              <label class="admin-field">
+                <span>Date</span>
+                <input id="admin-post-date" name="date" type="date">
+              </label>
+
+              <div class="admin-field admin-field--wide">
+                <span>Projects</span>
+                <div class="admin-token-picker" data-admin-picker="projects">
+                  <div class="admin-token-picker__control">
+                    <div class="admin-token-picker__chips" data-admin-picker-chips></div>
+                    <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Search repos and press Enter">
+                  </div>
+                  <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
+                </div>
+                <input id="admin-post-projects" name="projects" type="hidden">
+              </div>
+            </div>
+          </section>
 
           <section class="admin-editor">
             <div class="admin-editor__header">
@@ -252,109 +271,6 @@
         </footer>
       </section>
     </div>
-  </div>
-
-  <div class="admin-modal admin-modal--post" data-admin-post-modal hidden>
-    <button class="admin-modal__backdrop" type="button" aria-label="Close article details" data-admin-action="close-post-details"></button>
-    <section class="admin-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="admin-post-modal-title">
-      <header class="admin-modal__header">
-        <div>
-          <p class="admin-kicker">Article details</p>
-          <h2 id="admin-post-modal-title">Metadata and front matter</h2>
-        </div>
-        <div class="admin-panel__actions">
-          <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-post-details">Close</button>
-        </div>
-      </header>
-
-      <div class="admin-form-grid admin-form-grid--two admin-modal__body">
-        <label class="admin-field">
-          <span>Title</span>
-          <input id="admin-post-title" name="title" type="text" autocomplete="off">
-        </label>
-
-        <label class="admin-field">
-          <span>Slug</span>
-          <input id="admin-post-slug" name="slug" type="text" autocomplete="off" spellcheck="false">
-          <small class="admin-field__hint" data-admin-post-slug-hint>Inferred from title. You can adjust it before creation.</small>
-        </label>
-
-        <label class="admin-field">
-          <span>Date</span>
-          <input id="admin-post-date" name="date" type="date">
-        </label>
-
-        <label class="admin-field">
-          <span>Weight</span>
-          <input id="admin-post-weight" name="weight" type="text" inputmode="numeric" autocomplete="off">
-        </label>
-
-        <label class="admin-field admin-field--wide">
-          <span>Summary</span>
-          <textarea id="admin-post-summary" name="summary" rows="3"></textarea>
-        </label>
-
-        <div class="admin-field">
-          <span>Tags</span>
-          <div class="admin-token-picker" data-admin-picker="tags">
-            <div class="admin-token-picker__control">
-              <div class="admin-token-picker__chips" data-admin-picker-chips></div>
-              <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Add tags and press Enter">
-            </div>
-            <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
-          </div>
-          <input id="admin-post-tags" name="tags" type="hidden">
-        </div>
-
-        <div class="admin-field">
-          <span>Projects</span>
-          <div class="admin-token-picker" data-admin-picker="projects">
-            <div class="admin-token-picker__control">
-              <div class="admin-token-picker__chips" data-admin-picker-chips></div>
-              <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Search repos and press Enter">
-            </div>
-            <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
-          </div>
-          <input id="admin-post-projects" name="projects" type="hidden">
-        </div>
-
-        <label class="admin-field">
-          <span>Card icon</span>
-          <select id="admin-post-card-icon" name="cardIcon">
-            <option value="">Default file</option>
-            <option value="layers">Layers</option>
-            <option value="terminal">Terminal</option>
-            <option value="history">History</option>
-            <option value="cpu">CPU</option>
-            <option value="search">Search</option>
-            <option value="globe">Globe</option>
-            <option value="brain">Brain</option>
-            <option value="gamepad">Gamepad</option>
-            <option value="file">File</option>
-          </select>
-        </label>
-
-        <label class="admin-field admin-field--wide">
-          <span>Card gradient</span>
-          <input id="admin-post-card-gradient" name="cardGradient" type="text" autocomplete="off" placeholder="135deg, #1e3a5f, #2563eb, #60a5fa">
-        </label>
-
-        <label class="admin-field admin-field--wide">
-          <span>Pullquote</span>
-          <textarea id="admin-post-pullquote" name="pullquote" rows="3"></textarea>
-        </label>
-      </div>
-
-      <footer class="admin-modal__footer">
-        <label class="admin-checkbox">
-          <input id="admin-post-show-nav" name="ShowPostNavLinks" type="checkbox">
-          <span>Show post navigation links</span>
-        </label>
-        <div class="admin-panel__actions">
-          <button class="admin-button" type="button" data-admin-action="submit-post-details" data-admin-post-modal-submit>Create</button>
-        </div>
-      </footer>
-    </section>
   </div>
 
   <template id="admin-hero-button-template">

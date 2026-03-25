@@ -32,8 +32,6 @@ if (root) {
     currentPostLoadingSlug: "",
     currentDraftValue: true,
     resume: createEmptyResume(),
-    postSlugDirty: false,
-    isPostModalOpen: false,
     isResumeModalOpen: false,
     editorMode: "visual",
     editorMarkdown: "",
@@ -54,8 +52,6 @@ if (root) {
     postLibrary: root.querySelector("[data-admin-post-library]"),
     postDetail: root.querySelector("[data-admin-post-detail]"),
     postSaveButton: root.querySelector("[data-admin-action='save-post']"),
-    postModal: root.querySelector("[data-admin-post-modal]"),
-    postModalSubmitButton: root.querySelector("[data-admin-post-modal-submit]"),
     resumeModal: root.querySelector("[data-admin-resume-modal]"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
     resumeMeta: root.querySelector("[data-admin-resume-meta]"),
@@ -75,22 +71,12 @@ if (root) {
     editorSourceWrap: root.querySelector("[data-admin-editor-source-wrap]"),
     editorSource: root.querySelector("[data-admin-editor-source]"),
     postPickers: {
-      tags: root.querySelector("[data-admin-picker='tags']"),
       projects: root.querySelector("[data-admin-picker='projects']"),
     },
     postForm: {
       title: document.getElementById("admin-post-title"),
-      slug: document.getElementById("admin-post-slug"),
-      slugHint: root.querySelector("[data-admin-post-slug-hint]"),
       date: document.getElementById("admin-post-date"),
-      weight: document.getElementById("admin-post-weight"),
-      summary: document.getElementById("admin-post-summary"),
-      tags: document.getElementById("admin-post-tags"),
       projects: document.getElementById("admin-post-projects"),
-      cardIcon: document.getElementById("admin-post-card-icon"),
-      cardGradient: document.getElementById("admin-post-card-gradient"),
-      pullquote: document.getElementById("admin-post-pullquote"),
-      showNav: document.getElementById("admin-post-show-nav"),
     },
     resumeForm: {
       title: document.getElementById("admin-resume-title"),
@@ -114,7 +100,6 @@ if (root) {
   refs.heroButtons.addEventListener("click", handleRowRemove);
   refs.projectList.addEventListener("click", handleRowRemove);
   refs.postForm.title.addEventListener("input", handlePostTitleInput);
-  refs.postForm.slug.addEventListener("input", handlePostSlugInput);
   refs.editorSource.addEventListener("input", handleEditorSourceInput);
   document.addEventListener("keydown", handleGlobalKeydown);
   initializePostEnhancements();
@@ -135,6 +120,7 @@ if (root) {
         summary: "",
         tags: [],
         projects: [],
+        series: [],
         weight: "",
         ShowPostNavLinks: false,
         params: {
@@ -177,7 +163,6 @@ if (root) {
   }
 
   async function initialize() {
-    setPostModalOpen(false);
     setResumeModalOpen(false);
     setPostView("library");
     renderPostList();
@@ -222,14 +207,12 @@ if (root) {
 
     state.currentPostLoadingSlug = slug;
     setPostView("detail");
-    setPostModalOpen(false);
     setFeedback("info", `Loading ${slug}…`);
 
     try {
       const payload = await requestJSON(`${API_ROOT}/posts/${encodeURIComponent(slug)}`);
       state.currentPost = payload;
       state.currentDraftValue = Boolean(payload.frontmatter?.draft);
-      state.postSlugDirty = false;
       hydratePostFormFromCurrentPost();
       await setEditorContent(payload.body || "");
       renderPostList();
@@ -240,10 +223,9 @@ if (root) {
     }
   }
 
-  async function startNewPost({ openDetails = false } = {}) {
+  async function startNewPost() {
     state.currentPost = createEmptyPost();
     state.currentDraftValue = true;
-    state.postSlugDirty = false;
     state.editorMode = "visual";
     hydratePostFormFromCurrentPost();
     await setEditorContent("");
@@ -251,10 +233,7 @@ if (root) {
     renderPostList();
     renderPostDetail();
     clearFeedback();
-
-    if (openDetails) {
-      setPostModalOpen(true);
-    }
+    focusPostTitle();
   }
 
   function renderPostList() {
@@ -317,41 +296,25 @@ if (root) {
   function hydratePostFormFromCurrentPost() {
     const record = state.currentPost;
     const frontmatter = record.frontmatter || {};
-    const params = frontmatter.params || {};
-    const isExisting = Boolean(record.sha);
 
     refs.postForm.title.value = frontmatter.title || "";
-    refs.postForm.slug.value = record.slug || "";
-    refs.postForm.slug.readOnly = isExisting;
-    refs.postForm.slugHint.textContent = isExisting
-      ? "Slug is locked for existing posts in v1."
-      : "Lowercase, hyphenated, and locked after creation.";
     refs.postForm.date.value = frontmatter.date || today;
-    refs.postForm.weight.value = frontmatter.weight || "";
-    refs.postForm.summary.value = frontmatter.summary || "";
-    setTokenPickerValues("tags", frontmatter.tags || []);
     setTokenPickerValues("projects", frontmatter.projects || []);
-    refs.postForm.cardIcon.value = params.cardIcon || "";
-    refs.postForm.cardGradient.value = params.cardGradient || "";
-    refs.postForm.pullquote.value = params.pullquote || "";
-    refs.postForm.showNav.checked = Boolean(frontmatter.ShowPostNavLinks);
-    renderPostModal();
   }
 
   function renderPostDetail() {
     const record = state.currentPost;
     const isExisting = Boolean(record.sha);
     const title = refs.postForm.title.value.trim() || record.frontmatter?.title || "";
-    const slug = refs.postForm.slug.value.trim() || record.slug || "";
-    const isBlankSelection = !isExisting && !slug && !title && !state.editorMarkdown.trim() && !refs.postForm.summary.value.trim();
-    const path = slug ? `content/posts/${slug}/index.md` : "";
+    const slug = getCurrentPostSlug();
+    const path = getCurrentPostPath();
 
     refs.postHeading.textContent = isExisting
       ? (title || slug)
-      : (isBlankSelection ? "Select a post" : (title || "New draft"));
+      : (title || "New draft");
     refs.postMeta.textContent = isExisting
       ? `${record.path} · ${shortSha(record.sha)}`
-      : path;
+      : (path || "Choose a title to generate the file path.");
 
     refs.draftToggleButtons.forEach((button) => {
       const isActive = String(state.currentDraftValue) === button.dataset.draft;
@@ -371,7 +334,6 @@ if (root) {
     refs.editorSource.value = state.editorMode === "source"
       ? refs.editorSource.value
       : state.editorMarkdown;
-    renderPostModal();
   }
 
   function renderResume() {
@@ -441,19 +403,30 @@ if (root) {
     row.querySelector("[data-field='name']").focus();
   }
 
-  async function savePost(options = {}) {
+  async function savePost() {
     const payload = await collectPostPayload();
     const isExisting = Boolean(state.currentPost.sha);
     const slug = payload.slug;
 
-    if (!payload.title || !slug) {
-      setPostModalOpen(true);
-      setFeedback("error", !payload.title ? "Post title is required." : "Post slug is required.");
-      (payload.title ? refs.postForm.slug : refs.postForm.title).focus();
+    if (!payload.title) {
+      setFeedback("error", "Post title is required.");
+      refs.postForm.title.focus();
       return;
     }
 
-    setButtonBusy([refs.postSaveButton, refs.postModalSubmitButton], true);
+    if (!slug) {
+      setFeedback("error", "Title must include letters or numbers to generate a slug.");
+      refs.postForm.title.focus();
+      return;
+    }
+
+    if (!payload.date) {
+      setFeedback("error", "Post date is required.");
+      refs.postForm.date.focus();
+      return;
+    }
+
+    setButtonBusy([refs.postSaveButton], true);
     setFeedback("info", state.currentDraftValue ? "Saving draft…" : "Saving published post…");
 
     try {
@@ -467,23 +440,18 @@ if (root) {
 
       state.currentPost = saved;
       state.currentDraftValue = Boolean(saved.frontmatter?.draft);
-      state.postSlugDirty = false;
       hydratePostFormFromCurrentPost();
       await setEditorContent(saved.body || "");
       await loadPosts();
       setPostView("detail");
-      setPostModalOpen(false);
       renderPostDetail();
       setFeedback("success", state.currentDraftValue ? "Draft saved." : "Post saved as published.");
-      if (options.focusEditor) {
-        focusPostEditor();
-      }
       return true;
     } catch (error) {
       setFeedback("error", error.message || "Post save failed.");
       return false;
     } finally {
-      setButtonBusy([refs.postSaveButton, refs.postModalSubmitButton], false);
+      setButtonBusy([refs.postSaveButton], false);
     }
   }
 
@@ -508,22 +476,29 @@ if (root) {
   }
 
   async function collectPostPayload() {
+    const frontmatter = state.currentPost.frontmatter || {};
+    const params = frontmatter.params || {};
+    const isExisting = Boolean(state.currentPost.sha);
+
     return {
       sha: state.currentPost.sha || "",
-      slug: refs.postForm.slug.value.trim().toLowerCase(),
+      slug: getCurrentPostSlug(),
       title: refs.postForm.title.value.trim(),
       date: refs.postForm.date.value.trim(),
       draft: state.currentDraftValue,
-      summary: refs.postForm.summary.value.trim(),
-      tags: inputToList(refs.postForm.tags.value),
       projects: inputToList(refs.postForm.projects.value),
-      weight: refs.postForm.weight.value.trim(),
-      ShowPostNavLinks: refs.postForm.showNav.checked,
-      params: {
-        pullquote: refs.postForm.pullquote.value.trim(),
-        cardGradient: refs.postForm.cardGradient.value.trim(),
-        cardIcon: refs.postForm.cardIcon.value.trim(),
-      },
+      ...(isExisting ? {
+        summary: frontmatter.summary || "",
+        tags: Array.isArray(frontmatter.tags) ? frontmatter.tags : [],
+        series: Array.isArray(frontmatter.series) ? frontmatter.series : [],
+        weight: frontmatter.weight || "",
+        ShowPostNavLinks: Boolean(frontmatter.ShowPostNavLinks),
+        params: {
+          pullquote: params.pullquote || "",
+          cardGradient: params.cardGradient || "",
+          cardIcon: params.cardIcon || "",
+        },
+      } : {}),
       body: await getCurrentEditorMarkdown(),
     };
   }
@@ -579,7 +554,7 @@ if (root) {
     const { adminAction } = actionTarget.dataset;
 
     if (adminAction === "new-post") {
-      await startNewPost({ openDetails: true });
+      await startNewPost();
       return;
     }
 
@@ -619,22 +594,6 @@ if (root) {
       runEditorCommand(actionTarget.dataset.command || "").catch((error) => {
         setFeedback("error", error.message || "Editor command failed.");
       });
-      return;
-    }
-
-    if (adminAction === "open-post-details") {
-      setPostModalOpen(true);
-      return;
-    }
-
-    if (adminAction === "close-post-details") {
-      setPostModalOpen(false);
-      renderPostDetail();
-      return;
-    }
-
-    if (adminAction === "submit-post-details") {
-      await savePost({ focusEditor: !state.currentPost.sha });
       return;
     }
 
@@ -689,17 +648,6 @@ if (root) {
   }
 
   function handlePostTitleInput() {
-    if (!state.currentPost.sha && !state.postSlugDirty) {
-      refs.postForm.slug.value = slugify(refs.postForm.title.value);
-    }
-
-    renderPostModal();
-    renderPostDetail();
-  }
-
-  function handlePostSlugInput() {
-    state.postSlugDirty = true;
-    refs.postForm.slug.value = slugify(refs.postForm.slug.value);
     renderPostDetail();
   }
 
@@ -714,26 +662,8 @@ if (root) {
       return;
     }
 
-    if (state.isPostModalOpen) {
-      setPostModalOpen(false);
-      renderPostDetail();
-    }
-
     if (state.isResumeModalOpen) {
       setResumeModalOpen(false);
-    }
-  }
-
-  function setPostModalOpen(isOpen) {
-    state.isPostModalOpen = Boolean(isOpen);
-    refs.postModal.hidden = !state.isPostModalOpen;
-    syncModalState();
-    renderPostModal();
-
-    if (state.isPostModalOpen) {
-      window.setTimeout(() => {
-        refs.postForm.title.focus();
-      }, 0);
     }
   }
 
@@ -750,15 +680,7 @@ if (root) {
   }
 
   function syncModalState() {
-    document.body.classList.toggle("admin-modal-open", state.isPostModalOpen || state.isResumeModalOpen);
-  }
-
-  function renderPostModal() {
-    const isExisting = Boolean(state.currentPost.sha);
-    refs.postModalSubmitButton.textContent = isExisting ? "Save" : "Create";
-    refs.postForm.slugHint.textContent = isExisting
-      ? "Slug is locked for existing posts."
-      : "Inferred from title. You can adjust it before creation.";
+    document.body.classList.toggle("admin-modal-open", state.isResumeModalOpen);
   }
 
   function setPostView(view) {
@@ -970,6 +892,26 @@ if (root) {
       day: "numeric",
       year: "numeric",
     });
+  }
+
+  function getCurrentPostSlug() {
+    if (state.currentPost.sha) {
+      return String(state.currentPost.slug || "").trim().toLowerCase();
+    }
+
+    return slugify(refs.postForm.title.value);
+  }
+
+  function getCurrentPostPath() {
+    const slug = getCurrentPostSlug();
+    return slug ? `content/posts/${slug}/index.md` : "";
+  }
+
+  function focusPostTitle() {
+    window.setTimeout(() => {
+      refs.postForm.title.focus();
+      refs.postForm.title.select();
+    }, 0);
   }
 
   function slugify(value) {
@@ -1300,20 +1242,6 @@ if (root) {
 
     const suggestions = getTokenPickerSuggestions(name, query);
     addTokenPickerValue(name, suggestions[0] || query);
-  }
-
-  function focusPostEditor() {
-    window.setTimeout(() => {
-      if (state.editorMode === "source") {
-        refs.editorSource.focus();
-        return;
-      }
-
-      const visualEditor = refs.editorVisual.querySelector(".ProseMirror");
-      if (visualEditor instanceof HTMLElement) {
-        visualEditor.focus();
-      }
-    }, 0);
   }
 
   function normalizeRepositoryName(value) {

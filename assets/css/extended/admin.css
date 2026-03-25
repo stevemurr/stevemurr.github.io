@@ -413,6 +413,27 @@
   flex: 0 0 auto;
 }
 
+.admin-post-settings {
+  display: grid;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-strong) 96%, white);
+}
+
+.admin-post-settings__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-post-settings__header h2 {
+  margin: 0;
+  color: var(--primary);
+}
+
 .admin-detail__actions,
 .admin-panel__actions {
   display: flex;
@@ -858,14 +879,12 @@
   padding: 28px;
 }
 
-.admin-modal--resume,
-.admin-modal--post {
+.admin-modal--resume {
   align-items: start;
   padding-top: calc(var(--header-height) + 28px);
 }
 
-.admin-modal--resume .admin-modal__dialog--wide,
-.admin-modal--post .admin-modal__dialog {
+.admin-modal--resume .admin-modal__dialog--wide {
   width: min(
     calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
     calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
@@ -908,6 +927,7 @@
 @media (max-width: 980px) {
   .admin-panel__header--library,
   .admin-detail__header,
+  .admin-post-settings__header,
   .admin-editor__header,
   .admin-modal__header,
   .admin-modal__footer,
@@ -938,6 +958,7 @@
   }
 
   .admin-panel,
+  .admin-post-settings,
   .admin-editor,
   .admin-modal__dialog {
     padding: 18px;
@@ -969,13 +990,11 @@
     width: 100%;
   }
 
-  .admin-modal--resume,
-  .admin-modal--post {
+  .admin-modal--resume {
     padding-top: calc(var(--header-height) + 20px);
   }
 
-  .admin-modal--resume .admin-modal__dialog--wide,
-  .admin-modal--post .admin-modal__dialog {
+  .admin-modal--resume .admin-modal__dialog--wide {
     width: calc(100vw - 20px);
     max-height: calc(100vh - var(--header-height) - 40px);
   }
