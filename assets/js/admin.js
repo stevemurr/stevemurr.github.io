@@ -23,6 +23,11 @@ if (root) {
   const API_ROOT = root.dataset.adminApiRoot || "/api/admin";
   const today = new Date().toISOString().slice(0, 10);
   const DEFAULT_GITHUB_OWNER = "stevemurr";
+  const FEEDBACK_TRANSITION_MS = 180;
+  const FEEDBACK_SUCCESS_MS = 2600;
+  const FEEDBACK_INFO_MS = 3200;
+  let feedbackHideTimer = 0;
+  let feedbackCleanupTimer = 0;
 
   const state = {
     posts: [],
@@ -423,7 +428,7 @@ if (root) {
       await loadPosts();
       setPostView("detail");
       renderPostDetail();
-      setFeedback("success", state.currentDraftValue ? "Draft saved." : "Post saved as published.");
+      setFeedback("success", state.currentDraftValue ? "Draft saved." : "Post saved as published.", { autoHide: true });
       return true;
     } catch (error) {
       setFeedback("error", error.message || "Post save failed.");
@@ -445,7 +450,7 @@ if (root) {
       state.resume = saved;
       renderResume();
       loadGitHubRepositories(state.resume.frontmatter?.githubActivity?.username || DEFAULT_GITHUB_OWNER).catch(() => {});
-      setFeedback("success", "Resume saved.");
+      setFeedback("success", "Resume saved.", { autoHide: true });
     } catch (error) {
       setFeedback("error", error.message || "Resume save failed.");
     } finally {
@@ -745,7 +750,7 @@ if (root) {
 
   async function runEditorCommand(command) {
     if (state.editorMode !== "visual") {
-      setFeedback("info", "Switch back to Visual mode to use rich editing controls.");
+      setFeedback("info", "Switch back to Visual mode to use rich editing controls.", { autoHide: true });
       return;
     }
 
@@ -896,14 +901,71 @@ if (root) {
       .replace(/^-+|-+$/g, "");
   }
 
-  function setFeedback(type, message) {
-    refs.feedback.hidden = !message;
-    refs.feedback.textContent = message || "";
+  function setFeedback(type, message, options = {}) {
+    const text = String(message || "").trim();
+    clearFeedbackTimers();
+
+    if (!text) {
+      hideFeedback({ immediate: options.immediate !== false });
+      return;
+    }
+
+    refs.feedback.hidden = false;
+    refs.feedback.textContent = text;
     refs.feedback.className = `admin-feedback admin-feedback--${type}`;
+    refs.feedback.setAttribute("role", type === "error" ? "alert" : "status");
+    refs.feedback.setAttribute("aria-live", type === "error" ? "assertive" : "polite");
+    refs.feedback.setAttribute("aria-hidden", "false");
+    void refs.feedback.offsetWidth;
+    refs.feedback.classList.add("is-visible");
+
+    const autoHide = Boolean(options.autoHide);
+    if (autoHide) {
+      const duration = Number(options.duration) || (type === "success" ? FEEDBACK_SUCCESS_MS : FEEDBACK_INFO_MS);
+      feedbackHideTimer = window.setTimeout(() => {
+        hideFeedback();
+      }, duration);
+    }
   }
 
   function clearFeedback() {
-    setFeedback("info", "");
+    hideFeedback();
+  }
+
+  function hideFeedback({ immediate = false } = {}) {
+    clearFeedbackTimers();
+    if (refs.feedback.hidden) {
+      refs.feedback.setAttribute("aria-hidden", "true");
+      return;
+    }
+
+    refs.feedback.setAttribute("aria-hidden", "true");
+
+    if (immediate) {
+      refs.feedback.className = "admin-feedback admin-feedback--info";
+      refs.feedback.hidden = true;
+      refs.feedback.textContent = "";
+      return;
+    }
+
+    refs.feedback.classList.remove("is-visible");
+    feedbackCleanupTimer = window.setTimeout(() => {
+      refs.feedback.className = "admin-feedback admin-feedback--info";
+      refs.feedback.hidden = true;
+      refs.feedback.textContent = "";
+    }, FEEDBACK_TRANSITION_MS);
+  }
+
+  function clearFeedbackTimers() {
+    if (feedbackHideTimer) {
+      window.clearTimeout(feedbackHideTimer);
+      feedbackHideTimer = 0;
+    }
+
+    if (feedbackCleanupTimer) {
+      window.clearTimeout(feedbackCleanupTimer);
+      feedbackCleanupTimer = 0;
+    }
   }
 
   function setButtonBusy(buttons, isBusy) {

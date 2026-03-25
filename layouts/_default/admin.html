@@ -1,6 +1,14 @@
 {{- define "main" }}
 <section class="admin-page" data-admin-app data-admin-api-root="/api/admin">
-  <div class="admin-feedback admin-feedback--info" data-admin-feedback hidden></div>
+  <div
+    class="admin-feedback admin-feedback--info"
+    data-admin-feedback
+    role="status"
+    aria-live="polite"
+    aria-atomic="true"
+    aria-hidden="true"
+    hidden
+  ></div>
 
   <div class="admin-workspace">
     <main class="admin-main">

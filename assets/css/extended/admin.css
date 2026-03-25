@@ -20,9 +20,24 @@
 }
 
 .admin-feedback {
-  margin-top: 18px;
+  position: fixed;
+  top: calc(var(--header-height) + 18px);
+  left: 50%;
+  z-index: 70;
+  width: min(560px, calc(100vw - 32px));
+  margin-top: 0;
   padding: 14px 18px;
-  font-weight: 500;
+  font-weight: 600;
+  line-height: 1.45;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -10px);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.admin-feedback.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
 .admin-feedback--info {
