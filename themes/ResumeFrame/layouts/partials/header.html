@@ -6,7 +6,37 @@
       <span class="admin-site-pill" aria-label="Admin">Admin</span>
       {{- end }}
     </div>
-    <ul id="menu">
+    <ul id="menu"{{ if eq .Layout "admin" }} class="admin-nav-actions"{{ end }}>
+      {{- if eq .Layout "admin" }}
+      <li>
+        <button
+          class="admin-nav-button"
+          type="button"
+          data-admin-action="open-resume"
+          aria-label="Edit resume markdown"
+          title="Edit resume markdown"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 20h9" />
+            <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
+          </svg>
+        </button>
+      </li>
+      <li>
+        <button
+          class="admin-nav-button admin-nav-button--primary"
+          type="button"
+          data-admin-action="new-post"
+          aria-label="Create new post"
+          title="Create new post"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 5v14" />
+            <path d="M5 12h14" />
+          </svg>
+        </button>
+      </li>
+      {{- else }}
       {{- $currentURL := .RelPermalink | absLangURL -}}
       {{- range site.Menus.main }}
       {{- $targetURL := .URL | absLangURL -}}
@@ -16,6 +46,7 @@
           <span{{ if or (eq $targetURL $currentURL) $isResumePage }} class="active"{{ end }}>{{ .Name }}</span>
         </a>
       </li>
+      {{- end }}
       {{- end }}
     </ul>
   </nav>

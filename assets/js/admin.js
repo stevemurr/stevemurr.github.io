@@ -98,7 +98,7 @@ if (root) {
     },
   };
 
-  root.addEventListener("click", handleActionClick);
+  document.addEventListener("click", handleActionClick);
   refs.heroButtons.addEventListener("click", handleRowRemove);
   refs.projectList.addEventListener("click", handleRowRemove);
   refs.postForm.title.addEventListener("input", handlePostTitleInput);

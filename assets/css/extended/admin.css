@@ -136,6 +136,53 @@
   white-space: nowrap;
 }
 
+#menu.admin-nav-actions {
+  gap: 8px;
+}
+
+#menu.admin-nav-actions .admin-nav-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--accent-cool) 14%, var(--border));
+  border-radius: 14px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, white), color-mix(in srgb, var(--theme) 86%, white));
+  color: var(--accent-cool);
+  font: inherit;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  transition: transform 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+#menu.admin-nav-actions .admin-nav-button svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+#menu.admin-nav-actions .admin-nav-button--primary {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 94%, #31404e), color-mix(in srgb, var(--primary) 96%, black));
+  color: var(--surface-strong);
+  border-color: color-mix(in srgb, var(--primary) 12%, var(--border));
+  box-shadow: 0 12px 28px rgba(12, 20, 28, 0.12);
+}
+
+#menu.admin-nav-actions .admin-nav-button:hover,
+#menu.admin-nav-actions .admin-nav-button:focus-visible {
+  transform: translateY(-1px);
+}
+
+#menu.admin-nav-actions .admin-nav-button:focus-visible {
+  outline: none;
+}
+
 .admin-icon-button,
 .admin-button,
 .admin-link-button,
@@ -802,5 +849,15 @@
 @media (max-width: 540px) {
   .admin-site-pill {
     display: none;
+  }
+
+  #menu.admin-nav-actions {
+    gap: 6px;
+  }
+
+  #menu.admin-nav-actions .admin-nav-button {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
   }
 }
