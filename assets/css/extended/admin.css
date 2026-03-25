@@ -383,58 +383,29 @@
 
 .admin-detail__header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 18px;
 }
 
-.admin-detail__lead {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
-  min-width: 0;
-}
-
-.admin-detail__meta {
-  display: grid;
-  gap: 8px;
-  min-width: 0;
-}
-
-.admin-detail__meta h1 {
-  font-size: clamp(2rem, 3vw, 2.7rem);
-  line-height: 1;
-}
-
 .admin-detail__toolbar {
-  display: grid;
-  gap: 12px;
-  justify-items: end;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
   flex: 0 0 auto;
 }
 
 .admin-post-settings {
   display: grid;
-  gap: 16px;
+  gap: 18px;
   padding: 22px;
   border-radius: 24px;
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-strong) 96%, white);
 }
 
-.admin-post-settings__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.admin-post-settings__header h2 {
-  margin: 0;
-  color: var(--primary);
-}
-
-.admin-detail__actions,
 .admin-panel__actions {
   display: flex;
   gap: 10px;
@@ -492,8 +463,8 @@
 
 .admin-editor__header {
   display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: flex-end;
   gap: 16px;
 }
 
@@ -927,7 +898,6 @@
 @media (max-width: 980px) {
   .admin-panel__header--library,
   .admin-detail__header,
-  .admin-post-settings__header,
   .admin-editor__header,
   .admin-modal__header,
   .admin-modal__footer,
@@ -937,18 +907,13 @@
     align-items: stretch;
   }
 
-  .admin-detail__lead {
-    width: 100%;
-  }
-
   .admin-detail__toolbar {
     width: 100%;
-    justify-items: stretch;
+    justify-content: flex-start;
   }
 
-  .admin-detail__actions,
   .admin-panel__actions {
-    justify-content: stretch;
+    justify-content: flex-start;
   }
 }
 
@@ -967,10 +932,6 @@
   .admin-form-grid--two,
   .admin-repeat-grid--two {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .admin-detail__actions {
-    flex-wrap: wrap;
   }
 
   .admin-post-table {

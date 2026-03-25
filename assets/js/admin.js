@@ -23,7 +23,6 @@ if (root) {
   const API_ROOT = root.dataset.adminApiRoot || "/api/admin";
   const today = new Date().toISOString().slice(0, 10);
   const DEFAULT_GITHUB_OWNER = "stevemurr";
-  const pickerControllers = {};
 
   const state = {
     posts: [],
@@ -37,9 +36,7 @@ if (root) {
     editorMarkdown: "",
     editor: null,
     githubRepositories: [],
-    isGithubRepositoriesLoading: false,
     postFieldOptions: {
-      tags: [],
       projects: [],
     },
   };
@@ -47,8 +44,6 @@ if (root) {
   const refs = {
     feedback: root.querySelector("[data-admin-feedback]"),
     postList: root.querySelector("[data-admin-post-list]"),
-    postHeading: root.querySelector("[data-admin-post-heading]"),
-    postMeta: root.querySelector("[data-admin-post-meta]"),
     postLibrary: root.querySelector("[data-admin-post-library]"),
     postDetail: root.querySelector("[data-admin-post-detail]"),
     postSaveButton: root.querySelector("[data-admin-action='save-post']"),
@@ -70,9 +65,6 @@ if (root) {
     editorVisual: root.querySelector("[data-admin-editor-visual]"),
     editorSourceWrap: root.querySelector("[data-admin-editor-source-wrap]"),
     editorSource: root.querySelector("[data-admin-editor-source]"),
-    postPickers: {
-      projects: root.querySelector("[data-admin-picker='projects']"),
-    },
     postForm: {
       title: document.getElementById("admin-post-title"),
       date: document.getElementById("admin-post-date"),
@@ -102,7 +94,6 @@ if (root) {
   refs.postForm.title.addEventListener("input", handlePostTitleInput);
   refs.editorSource.addEventListener("input", handleEditorSourceInput);
   document.addEventListener("keydown", handleGlobalKeydown);
-  initializePostEnhancements();
 
   initialize().catch((error) => {
     setFeedback("error", error.message || "Admin failed to initialize.");
@@ -299,23 +290,10 @@ if (root) {
 
     refs.postForm.title.value = frontmatter.title || "";
     refs.postForm.date.value = frontmatter.date || today;
-    setTokenPickerValues("projects", frontmatter.projects || []);
+    renderPostProjectOptions(Array.isArray(frontmatter.projects) ? (frontmatter.projects[0] || "") : "");
   }
 
   function renderPostDetail() {
-    const record = state.currentPost;
-    const isExisting = Boolean(record.sha);
-    const title = refs.postForm.title.value.trim() || record.frontmatter?.title || "";
-    const slug = getCurrentPostSlug();
-    const path = getCurrentPostPath();
-
-    refs.postHeading.textContent = isExisting
-      ? (title || slug)
-      : (title || "New draft");
-    refs.postMeta.textContent = isExisting
-      ? `${record.path} · ${shortSha(record.sha)}`
-      : (path || "Choose a title to generate the file path.");
-
     refs.draftToggleButtons.forEach((button) => {
       const isActive = String(state.currentDraftValue) === button.dataset.draft;
       button.classList.toggle("is-active", isActive);
@@ -902,11 +880,6 @@ if (root) {
     return slugify(refs.postForm.title.value);
   }
 
-  function getCurrentPostPath() {
-    const slug = getCurrentPostSlug();
-    return slug ? `content/posts/${slug}/index.md` : "";
-  }
-
   function focusPostTitle() {
     window.setTimeout(() => {
       refs.postForm.title.focus();
@@ -940,126 +913,10 @@ if (root) {
     });
   }
 
-  function initializePostEnhancements() {
-    initializeTokenPicker("tags", {
-      normalize: (value) => String(value || "").trim().toLowerCase(),
-      getSuggestions: () => state.postFieldOptions.tags,
-      getEmptyMessage: () => "No matching tags yet. Press Enter to add one.",
-    });
-
-    initializeTokenPicker("projects", {
-      normalize: (value) => normalizeRepositoryName(value),
-      getSuggestions: () => state.postFieldOptions.projects,
-      getEmptyMessage: (query) => {
-        if (state.isGithubRepositoriesLoading) {
-          return "Loading GitHub repositories…";
-        }
-
-        return query
-          ? "No matching repositories. Press Enter to use that repo."
-          : "Start typing to search repositories.";
-      },
-    });
-  }
-
-  function initializeTokenPicker(name, options) {
-    const rootElement = refs.postPickers[name];
-    const hiddenInput = refs.postForm[name];
-    if (!rootElement || !hiddenInput) {
-      return;
-    }
-
-    const controller = {
-      name,
-      rootElement,
-      hiddenInput,
-      input: rootElement.querySelector("[data-admin-picker-input]"),
-      chips: rootElement.querySelector("[data-admin-picker-chips]"),
-      menu: rootElement.querySelector("[data-admin-picker-menu]"),
-      options,
-    };
-
-    pickerControllers[name] = controller;
-
-    controller.rootElement.addEventListener("click", (event) => {
-      if (!event.target.closest("[data-admin-picker-remove]")) {
-        controller.input.focus();
-      }
-    });
-
-    controller.chips.addEventListener("click", (event) => {
-      const removeButton = event.target.closest("[data-admin-picker-remove]");
-      if (!removeButton) {
-        return;
-      }
-
-      const nextValues = getTokenPickerValues(name).filter((value) => value !== removeButton.dataset.value);
-      setTokenPickerValues(name, nextValues);
-      controller.input.focus();
-    });
-
-    controller.menu.addEventListener("mousedown", (event) => {
-      event.preventDefault();
-    });
-
-    controller.menu.addEventListener("click", (event) => {
-      const option = event.target.closest("[data-admin-picker-option]");
-      if (!option) {
-        return;
-      }
-
-      event.stopPropagation();
-      addTokenPickerValue(name, option.dataset.value || "");
-    });
-
-    controller.input.addEventListener("focus", () => {
-      renderTokenPicker(name);
-    });
-
-    controller.input.addEventListener("input", () => {
-      renderTokenPicker(name);
-    });
-
-    controller.input.addEventListener("blur", () => {
-      window.setTimeout(() => {
-        if (document.activeElement !== controller.input) {
-          controller.rootElement.classList.remove("is-open");
-          controller.menu.hidden = true;
-        }
-      }, 120);
-    });
-
-    controller.input.addEventListener("keydown", (event) => {
-      if (event.key === "Backspace" && !controller.input.value.trim()) {
-        const values = getTokenPickerValues(name);
-        if (values.length) {
-          event.preventDefault();
-          setTokenPickerValues(name, values.slice(0, -1));
-        }
-        return;
-      }
-
-      if (event.key === "Enter" || event.key === ",") {
-        event.preventDefault();
-        commitTokenPickerInput(name);
-      }
-    });
-
-    renderTokenPicker(name);
-  }
-
   function refreshPostFieldOptions() {
-    const tagSet = new Set();
     const fallbackProjects = [];
 
     state.posts.forEach((item) => {
-      (Array.isArray(item.tags) ? item.tags : []).forEach((tag) => {
-        const normalized = String(tag || "").trim().toLowerCase();
-        if (normalized) {
-          tagSet.add(normalized);
-        }
-      });
-
       (Array.isArray(item.projects) ? item.projects : []).forEach((project) => {
         const normalized = normalizeRepositoryName(project);
         if (normalized) {
@@ -1072,21 +929,15 @@ if (root) {
       }
     });
 
-    state.postFieldOptions.tags = [...tagSet].sort((left, right) => left.localeCompare(right));
     state.postFieldOptions.projects = uniqueValues([
       ...state.githubRepositories,
       ...fallbackProjects,
     ]);
-
-    renderTokenPicker("tags");
-    renderTokenPicker("projects");
+    renderPostProjectOptions();
   }
 
   async function loadGitHubRepositories(username) {
     const owner = String(username || DEFAULT_GITHUB_OWNER).trim() || DEFAULT_GITHUB_OWNER;
-    state.isGithubRepositoriesLoading = true;
-    renderTokenPicker("projects");
-
     try {
       const response = await fetch(`https://api.github.com/users/${encodeURIComponent(owner)}/repos?per_page=100&sort=updated&type=owner`, {
         headers: {
@@ -1104,144 +955,40 @@ if (root) {
         : [];
     } catch (_error) {
       state.githubRepositories = [];
-    } finally {
-      state.isGithubRepositoriesLoading = false;
-      refreshPostFieldOptions();
     }
+
+    refreshPostFieldOptions();
   }
 
-  function renderTokenPicker(name) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return;
-    }
+  function renderPostProjectOptions(selectedValue = refs.postForm.projects.value || state.currentPost.frontmatter?.projects?.[0] || "") {
+    const normalizedSelected = normalizeRepositoryName(selectedValue);
+    const options = uniqueValues([
+      normalizedSelected,
+      ...state.postFieldOptions.projects,
+    ]);
 
-    const selectedValues = getTokenPickerValues(name);
-    controller.chips.replaceChildren();
+    refs.postForm.projects.replaceChildren();
 
-    selectedValues.forEach((value) => {
-      const chip = document.createElement("span");
-      chip.className = "admin-token-picker__chip";
+    const emptyOption = document.createElement("option");
+    emptyOption.value = "";
+    emptyOption.textContent = "No repository";
+    refs.postForm.projects.appendChild(emptyOption);
 
-      const label = document.createElement("span");
-      label.textContent = value;
+    options.forEach((value) => {
+      if (!value) {
+        return;
+      }
 
-      const removeButton = document.createElement("button");
-      removeButton.type = "button";
-      removeButton.className = "admin-token-picker__chip-remove";
-      removeButton.dataset.adminPickerRemove = "true";
-      removeButton.dataset.value = value;
-      removeButton.setAttribute("aria-label", `Remove ${value}`);
-      removeButton.textContent = "×";
-
-      chip.append(label, removeButton);
-      controller.chips.appendChild(chip);
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      refs.postForm.projects.appendChild(option);
     });
 
-    const query = controller.input.value.trim();
-    const suggestions = getTokenPickerSuggestions(name, query);
-    controller.menu.replaceChildren();
-
-    if (suggestions.length) {
-      suggestions.forEach((value) => {
-        const option = document.createElement("button");
-        option.type = "button";
-        option.className = "admin-token-picker__option";
-        option.dataset.adminPickerOption = "true";
-        option.dataset.value = value;
-        option.textContent = value;
-        controller.menu.appendChild(option);
-      });
-    } else {
-      const empty = document.createElement("div");
-      empty.className = "admin-token-picker__empty";
-      empty.textContent = controller.options.getEmptyMessage(query);
-      controller.menu.appendChild(empty);
+    refs.postForm.projects.value = normalizedSelected;
+    if (refs.postForm.projects.value !== normalizedSelected) {
+      refs.postForm.projects.value = "";
     }
-
-    const shouldOpen = document.activeElement === controller.input;
-    controller.rootElement.classList.toggle("is-open", shouldOpen);
-    controller.menu.hidden = !shouldOpen;
-  }
-
-  function getTokenPickerSuggestions(name, query) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return [];
-    }
-
-    const selectedSet = new Set(getTokenPickerValues(name));
-    const normalizedQuery = controller.options.normalize(query);
-    const options = (controller.options.getSuggestions() || []).filter((value) => !selectedSet.has(value));
-
-    if (!normalizedQuery) {
-      return options.slice(0, 8);
-    }
-
-    const filtered = options.filter((value) => value.includes(normalizedQuery)).slice(0, 8);
-    if (!filtered.length && normalizedQuery && !selectedSet.has(normalizedQuery)) {
-      return [normalizedQuery];
-    }
-
-    if (!filtered.includes(normalizedQuery) && normalizedQuery && !selectedSet.has(normalizedQuery)) {
-      filtered.unshift(normalizedQuery);
-    }
-
-    return uniqueValues(filtered).slice(0, 8);
-  }
-
-  function getTokenPickerValues(name) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return [];
-    }
-
-    return inputToList(controller.hiddenInput.value).map((value) => controller.options.normalize(value)).filter(Boolean);
-  }
-
-  function setTokenPickerValues(name, values) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return;
-    }
-
-    controller.hiddenInput.value = listToInput(uniqueValues(
-      (Array.isArray(values) ? values : [])
-        .map((value) => controller.options.normalize(value))
-        .filter(Boolean),
-    ));
-    controller.input.value = "";
-    renderTokenPicker(name);
-  }
-
-  function addTokenPickerValue(name, value) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return;
-    }
-
-    const normalized = controller.options.normalize(value);
-    if (!normalized) {
-      return;
-    }
-
-    setTokenPickerValues(name, [...getTokenPickerValues(name), normalized]);
-    controller.input.focus();
-  }
-
-  function commitTokenPickerInput(name) {
-    const controller = pickerControllers[name];
-    if (!controller) {
-      return;
-    }
-
-    const query = controller.input.value.trim();
-    if (!query) {
-      return;
-    }
-
-    const suggestions = getTokenPickerSuggestions(name, query);
-    addTokenPickerValue(name, suggestions[0] || query);
   }
 
   function normalizeRepositoryName(value) {

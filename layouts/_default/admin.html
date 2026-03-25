@@ -23,25 +23,17 @@
       <section class="admin-panel admin-panel--detail" data-admin-post-detail hidden>
         <form class="admin-form" data-admin-post-form>
           <header class="admin-detail__header">
-            <div class="admin-detail__lead">
-              <button
-                class="admin-icon-button admin-icon-button--back"
-                type="button"
-                data-admin-action="back-to-library"
-                aria-label="Back to library"
-                title="Back to library"
-              >
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M15 18l-6-6 6-6" />
-                </svg>
-              </button>
-
-              <div class="admin-detail__meta">
-                <p class="admin-kicker">Article details</p>
-                <h1 data-admin-post-heading>Select a post</h1>
-                <p class="admin-panel__summary" data-admin-post-meta></p>
-              </div>
-            </div>
+            <button
+              class="admin-icon-button admin-icon-button--back"
+              type="button"
+              data-admin-action="back-to-library"
+              aria-label="Back to library"
+              title="Back to library"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M15 18l-6-6 6-6" />
+              </svg>
+            </button>
 
             <div class="admin-detail__toolbar">
               <div class="admin-publish-toggle" role="group" aria-label="Publish status">
@@ -53,32 +45,23 @@
                 </button>
               </div>
 
-              <div class="admin-detail__actions">
-                <button
-                  class="admin-icon-button admin-icon-button--primary"
-                  type="button"
-                  data-admin-action="save-post"
-                  aria-label="Save post"
-                  title="Save post"
-                >
-                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                    <path d="M19 21H5a2 2 0 0 1-2-2V7.5L7.5 3h9L21 7.5V19a2 2 0 0 1-2 2Z" />
-                    <path d="M17 21v-8H7v8" />
-                    <path d="M7 3v5h8" />
-                  </svg>
-                </button>
-              </div>
+              <button
+                class="admin-icon-button admin-icon-button--primary"
+                type="button"
+                data-admin-action="save-post"
+                aria-label="Save post"
+                title="Save post"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M19 21H5a2 2 0 0 1-2-2V7.5L7.5 3h9L21 7.5V19a2 2 0 0 1-2 2Z" />
+                  <path d="M17 21v-8H7v8" />
+                  <path d="M7 3v5h8" />
+                </svg>
+              </button>
             </div>
           </header>
 
           <section class="admin-post-settings">
-            <div class="admin-post-settings__header">
-              <div>
-                <p class="admin-kicker">Post settings</p>
-                <h2>Metadata</h2>
-              </div>
-            </div>
-
             <div class="admin-form-grid admin-form-grid--two">
               <label class="admin-field admin-field--wide">
                 <span>Title</span>
@@ -90,27 +73,17 @@
                 <input id="admin-post-date" name="date" type="date">
               </label>
 
-              <div class="admin-field admin-field--wide">
-                <span>Projects</span>
-                <div class="admin-token-picker" data-admin-picker="projects">
-                  <div class="admin-token-picker__control">
-                    <div class="admin-token-picker__chips" data-admin-picker-chips></div>
-                    <input class="admin-token-picker__input" type="text" autocomplete="off" data-admin-picker-input placeholder="Search repos and press Enter">
-                  </div>
-                  <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
-                </div>
-                <input id="admin-post-projects" name="projects" type="hidden">
-              </div>
+              <label class="admin-field">
+                <span>Repo</span>
+                <select id="admin-post-projects" name="projects">
+                  <option value="">No repository</option>
+                </select>
+              </label>
             </div>
           </section>
 
           <section class="admin-editor">
             <div class="admin-editor__header">
-              <div>
-                <p class="admin-kicker">Writing surface</p>
-                <h2>Post body</h2>
-              </div>
-
               <div class="admin-editor__mode-toggle" role="group" aria-label="Editor mode">
                 <button class="admin-editor__mode-button" type="button" data-admin-action="set-editor-mode" data-mode="visual">
                   Visual
