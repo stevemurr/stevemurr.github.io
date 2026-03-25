@@ -5,7 +5,7 @@
 {{- if eq .Layout "admin" -}}
 <meta name="robots" content="noindex, nofollow">
 {{- $adminStyles := resources.Get "css/extended/admin.css" | minify | fingerprint -}}
-{{- $adminScript := resources.Get "js/admin.js" | minify | fingerprint -}}
+{{- $adminScript := resources.Get "js/admin.js" | js.Build (dict "targetPath" "js/admin.js" "format" "iife" "minify" true) | fingerprint -}}
 <link rel="stylesheet" href="{{ $adminStyles.RelPermalink }}" integrity="{{ $adminStyles.Data.Integrity }}">
 <script defer src="{{ $adminScript.RelPermalink }}" integrity="{{ $adminScript.Data.Integrity }}"></script>
 {{- else -}}

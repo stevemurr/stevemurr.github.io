@@ -1,41 +1,54 @@
-(function() {
-  const root = document.querySelector("[data-admin-app]");
-  if (!root) {
-    return;
-  }
+import { defaultValueCtx, Editor, rootCtx } from "@milkdown/core";
+import { clipboard } from "@milkdown/plugin-clipboard";
+import { history, redoCommand, undoCommand } from "@milkdown/plugin-history";
+import { listener, listenerCtx } from "@milkdown/plugin-listener";
+import {
+  commonmark,
+  createCodeBlockCommand,
+  insertHrCommand,
+  toggleEmphasisCommand,
+  toggleLinkCommand,
+  toggleStrongCommand,
+  wrapInBlockquoteCommand,
+  wrapInBulletListCommand,
+  wrapInHeadingCommand,
+  wrapInOrderedListCommand,
+} from "@milkdown/preset-commonmark";
+import { gfm, insertTableCommand } from "@milkdown/preset-gfm";
+import { callCommand, getMarkdown, replaceAll } from "@milkdown/utils";
 
+const root = document.querySelector("[data-admin-app]");
+
+if (root) {
   const API_ROOT = root.dataset.adminApiRoot || "/api/admin";
   const today = new Date().toISOString().slice(0, 10);
 
   const state = {
     posts: [],
-    status: null,
     postView: "library",
     currentPost: createEmptyPost(),
     currentPostLoadingSlug: "",
+    currentDraftValue: true,
     resume: createEmptyResume(),
     postSlugDirty: false,
     isPostModalOpen: false,
     isResumeModalOpen: false,
+    editorMode: "visual",
+    editorMarkdown: "",
+    editor: null,
   };
 
   const refs = {
     feedback: root.querySelector("[data-admin-feedback]"),
-    statusCopy: root.querySelector("[data-admin-status-copy]"),
-    statusMeta: root.querySelector("[data-admin-status-meta]"),
     postList: root.querySelector("[data-admin-post-list]"),
     postStats: root.querySelector("[data-admin-post-stats]"),
     postHeading: root.querySelector("[data-admin-post-heading]"),
     postMeta: root.querySelector("[data-admin-post-meta]"),
-    postState: root.querySelector("[data-admin-post-state]"),
-    postLink: root.querySelector("[data-admin-post-link]"),
     postLibrary: root.querySelector("[data-admin-post-library]"),
     postDetail: root.querySelector("[data-admin-post-detail]"),
-    postButtons: Array.from(root.querySelectorAll("[data-admin-action='save-post']")),
-    postDetailButtons: Array.from(root.querySelectorAll("[data-admin-action='open-post-details']")),
+    postSaveButton: root.querySelector("[data-admin-action='save-post']"),
     postModal: root.querySelector("[data-admin-post-modal]"),
     resumeModal: root.querySelector("[data-admin-resume-modal]"),
-    newPostButton: root.querySelector("[data-admin-action='new-post']"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
     resumeMeta: root.querySelector("[data-admin-resume-meta]"),
     addHeroButton: root.querySelector("[data-admin-action='add-hero-button']"),
@@ -46,6 +59,13 @@
     projectEmpty: root.querySelector("[data-admin-project-empty]"),
     heroTemplate: document.getElementById("admin-hero-button-template"),
     projectTemplate: document.getElementById("admin-project-template"),
+    draftToggleButtons: Array.from(root.querySelectorAll("[data-admin-action='set-post-draft']")),
+    editorModeButtons: Array.from(root.querySelectorAll("[data-admin-action='set-editor-mode']")),
+    editorCommandButtons: Array.from(root.querySelectorAll("[data-admin-action='editor-command']")),
+    editorToolbar: root.querySelector("[data-admin-editor-toolbar]"),
+    editorVisual: root.querySelector("[data-admin-editor-visual]"),
+    editorSourceWrap: root.querySelector("[data-admin-editor-source-wrap]"),
+    editorSource: root.querySelector("[data-admin-editor-source]"),
     postForm: {
       title: document.getElementById("admin-post-title"),
       slug: document.getElementById("admin-post-slug"),
@@ -60,7 +80,6 @@
       cardGradient: document.getElementById("admin-post-card-gradient"),
       pullquote: document.getElementById("admin-post-pullquote"),
       showNav: document.getElementById("admin-post-show-nav"),
-      body: document.getElementById("admin-post-body"),
     },
     resumeForm: {
       title: document.getElementById("admin-resume-title"),
@@ -85,23 +104,12 @@
   refs.projectList.addEventListener("click", handleRowRemove);
   refs.postForm.title.addEventListener("input", handlePostTitleInput);
   refs.postForm.slug.addEventListener("input", handlePostSlugInput);
+  refs.editorSource.addEventListener("input", handleEditorSourceInput);
   document.addEventListener("keydown", handleGlobalKeydown);
 
   initialize().catch((error) => {
     setFeedback("error", error.message || "Admin failed to initialize.");
   });
-
-  async function initialize() {
-    setPostModalOpen(false);
-    setResumeModalOpen(false);
-    setPostView("library");
-    renderPost();
-    await loadStatus();
-    await Promise.all([
-      loadPosts({ selectInitial: true }),
-      loadResume(),
-    ]);
-  }
 
   function createEmptyPost() {
     return {
@@ -157,31 +165,23 @@
     };
   }
 
-  async function loadStatus() {
-    const payload = await requestJSON(`${API_ROOT}/status`);
-    state.status = payload;
-    refs.statusCopy.textContent = payload.email || "Authenticated";
-
-    if (payload.repository) {
-      refs.statusMeta.textContent = `${payload.repository.owner}/${payload.repository.repo} · ${payload.repository.branch}`;
-    } else {
-      refs.statusMeta.textContent = "Admin API ready.";
-    }
+  async function initialize() {
+    setPostModalOpen(false);
+    setResumeModalOpen(false);
+    setPostView("library");
+    renderPostList();
+    renderPostDetail();
+    await Promise.all([
+      loadPosts(),
+      loadResume(),
+    ]);
+    clearFeedback();
   }
 
-  async function loadPosts({ selectInitial = false, preferredSlug = "" } = {}) {
+  async function loadPosts() {
     const payload = await requestJSON(`${API_ROOT}/posts`);
     state.posts = Array.isArray(payload.items) ? payload.items : [];
     renderPostList();
-
-    if (preferredSlug) {
-      await openPost(preferredSlug);
-      return;
-    }
-
-    if (selectInitial) {
-      renderPost();
-    }
   }
 
   async function loadResume() {
@@ -191,7 +191,19 @@
   }
 
   async function openPost(slug) {
-    if (!slug || state.currentPostLoadingSlug === slug) {
+    if (!slug) {
+      return;
+    }
+
+    if (state.currentPost.sha && state.currentPost.slug === slug) {
+      setPostView("detail");
+      renderPostList();
+      renderPostDetail();
+      clearFeedback();
+      return;
+    }
+
+    if (state.currentPostLoadingSlug === slug) {
       return;
     }
 
@@ -203,22 +215,28 @@
     try {
       const payload = await requestJSON(`${API_ROOT}/posts/${encodeURIComponent(slug)}`);
       state.currentPost = payload;
+      state.currentDraftValue = Boolean(payload.frontmatter?.draft);
       state.postSlugDirty = false;
-      setPostView("detail");
+      hydratePostFormFromCurrentPost();
+      await setEditorContent(payload.body || "");
       renderPostList();
-      renderPost();
+      renderPostDetail();
       clearFeedback();
     } finally {
       state.currentPostLoadingSlug = "";
     }
   }
 
-  function startNewPost({ openDetails = false } = {}) {
+  async function startNewPost({ openDetails = false } = {}) {
     state.currentPost = createEmptyPost();
+    state.currentDraftValue = true;
     state.postSlugDirty = false;
+    state.editorMode = "visual";
+    hydratePostFormFromCurrentPost();
+    await setEditorContent("");
     setPostView("detail");
     renderPostList();
-    renderPost();
+    renderPostDetail();
     clearFeedback();
 
     if (openDetails) {
@@ -244,7 +262,8 @@
     state.posts.forEach((item) => {
       const row = document.createElement("tr");
       row.className = "admin-post-row";
-      if (state.currentPost.sha && state.currentPost.slug === item.slug) {
+
+      if (state.currentPost.slug && state.currentPost.slug === item.slug) {
         row.classList.add("is-active");
       }
 
@@ -254,7 +273,7 @@
       button.className = "admin-post-link";
       button.dataset.adminAction = "open-post";
       button.dataset.slug = item.slug;
-      button.textContent = item.title || item.slug;
+      button.innerHTML = `<span>${escapeHTML(item.title || item.slug)}</span>`;
       titleCell.appendChild(button);
 
       const repoCell = document.createElement("td");
@@ -286,7 +305,7 @@
   function renderPostStats() {
     refs.postStats.replaceChildren();
 
-    const counts = [
+    [
       {
         label: "Total",
         value: state.posts.length,
@@ -299,9 +318,7 @@
         label: "Drafts",
         value: state.posts.filter((post) => post.draft).length,
       },
-    ];
-
-    counts.forEach((entry) => {
+    ].forEach((entry) => {
       const chip = document.createElement("div");
       chip.className = "admin-post-stat";
       chip.innerHTML = `<strong>${entry.value}</strong><span>${entry.label}</span>`;
@@ -309,32 +326,11 @@
     });
   }
 
-  function renderPost() {
+  function hydratePostFormFromCurrentPost() {
     const record = state.currentPost;
     const frontmatter = record.frontmatter || {};
     const params = frontmatter.params || {};
     const isExisting = Boolean(record.sha);
-    const isDraft = isExisting ? Boolean(frontmatter.draft) : true;
-    const isBlankSelection = !isExisting
-      && !record.slug
-      && !frontmatter.title
-      && !record.body
-      && !frontmatter.summary;
-
-    refs.postHeading.textContent = isExisting
-      ? (frontmatter.title || record.slug)
-      : (isBlankSelection ? "Select a post from the library" : "New draft");
-    refs.postMeta.textContent = isExisting
-      ? `${record.path} · ${shortSha(record.sha)}`
-      : (isBlankSelection
-        ? "Choose a row from the library or start a new draft."
-        : "Drafts and published posts write directly to GitHub main.");
-    refs.postState.textContent = isExisting ? (isDraft ? "Draft" : "Published") : (isBlankSelection ? "Idle" : "New");
-    refs.postLink.hidden = !isExisting || !record.slug || isDraft;
-
-    if (!refs.postLink.hidden) {
-      refs.postLink.href = `/posts/${record.slug}/?from=articles`;
-    }
 
     refs.postForm.title.value = frontmatter.title || "";
     refs.postForm.slug.value = record.slug || "";
@@ -352,11 +348,41 @@
     refs.postForm.cardGradient.value = params.cardGradient || "";
     refs.postForm.pullquote.value = params.pullquote || "";
     refs.postForm.showNav.checked = Boolean(frontmatter.ShowPostNavLinks);
-    refs.postForm.body.value = record.body || "";
+  }
 
-    refs.postDetailButtons.forEach((button) => {
-      button.textContent = isExisting ? "Article Details" : "Set Details";
+  function renderPostDetail() {
+    const record = state.currentPost;
+    const isExisting = Boolean(record.sha);
+    const title = refs.postForm.title.value.trim() || record.frontmatter?.title || "";
+    const slug = refs.postForm.slug.value.trim() || record.slug || "";
+    const isBlankSelection = !isExisting && !slug && !title && !state.editorMarkdown.trim() && !refs.postForm.summary.value.trim();
+    const path = slug ? `content/posts/${slug}/index.md` : "";
+
+    refs.postHeading.textContent = isExisting
+      ? (title || slug)
+      : (isBlankSelection ? "Select a post" : (title || "New draft"));
+    refs.postMeta.textContent = isExisting
+      ? `${record.path} · ${shortSha(record.sha)}`
+      : (path || "Choose a row from the library or create a new draft.");
+
+    refs.draftToggleButtons.forEach((button) => {
+      const isActive = String(state.currentDraftValue) === button.dataset.draft;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
     });
+
+    refs.editorModeButtons.forEach((button) => {
+      const isActive = button.dataset.mode === state.editorMode;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    refs.editorToolbar.hidden = state.editorMode !== "visual";
+    refs.editorSourceWrap.hidden = state.editorMode !== "source";
+    refs.editorVisual.hidden = state.editorMode !== "visual";
+    refs.editorSource.value = state.editorMode === "source"
+      ? refs.editorSource.value
+      : state.editorMarkdown;
   }
 
   function renderResume() {
@@ -426,8 +452,8 @@
     row.querySelector("[data-field='name']").focus();
   }
 
-  async function savePost(draft) {
-    const payload = collectPostPayload(draft);
+  async function savePost() {
+    const payload = await collectPostPayload();
     const isExisting = Boolean(state.currentPost.sha);
     const slug = payload.slug;
 
@@ -438,8 +464,8 @@
       return;
     }
 
-    setButtonBusy(refs.postButtons, true);
-    setFeedback("info", draft ? "Saving draft…" : "Publishing post…");
+    setButtonBusy([refs.postSaveButton], true);
+    setFeedback("info", state.currentDraftValue ? "Saving draft…" : "Saving published post…");
 
     try {
       const saved = await requestJSON(
@@ -449,16 +475,21 @@
           body: payload,
         },
       );
+
       state.currentPost = saved;
+      state.currentDraftValue = Boolean(saved.frontmatter?.draft);
       state.postSlugDirty = false;
-      renderPost();
-      await loadPosts({ preferredSlug: saved.slug });
+      hydratePostFormFromCurrentPost();
+      await setEditorContent(saved.body || "");
+      await loadPosts();
+      setPostView("detail");
       setPostModalOpen(false);
-      setFeedback("success", draft ? "Draft saved." : "Post published.");
+      renderPostDetail();
+      setFeedback("success", state.currentDraftValue ? "Draft saved." : "Post saved as published.");
     } catch (error) {
       setFeedback("error", error.message || "Post save failed.");
     } finally {
-      setButtonBusy(refs.postButtons, false);
+      setButtonBusy([refs.postSaveButton], false);
     }
   }
 
@@ -481,13 +512,13 @@
     }
   }
 
-  function collectPostPayload(draft) {
+  async function collectPostPayload() {
     return {
       sha: state.currentPost.sha || "",
       slug: refs.postForm.slug.value.trim().toLowerCase(),
       title: refs.postForm.title.value.trim(),
       date: refs.postForm.date.value.trim(),
-      draft,
+      draft: state.currentDraftValue,
       summary: refs.postForm.summary.value.trim(),
       tags: inputToList(refs.postForm.tags.value),
       projects: inputToList(refs.postForm.projects.value),
@@ -499,7 +530,7 @@
         cardGradient: refs.postForm.cardGradient.value.trim(),
         cardIcon: refs.postForm.cardIcon.value.trim(),
       },
-      body: refs.postForm.body.value,
+      body: await getCurrentEditorMarkdown(),
     };
   }
 
@@ -545,7 +576,7 @@
     })).filter((entry) => entry.name || entry.repo || entry.summary);
   }
 
-  function handleActionClick(event) {
+  async function handleActionClick(event) {
     const actionTarget = event.target.closest("[data-admin-action]");
     if (!actionTarget) {
       return;
@@ -554,7 +585,7 @@
     const { adminAction } = actionTarget.dataset;
 
     if (adminAction === "new-post") {
-      startNewPost({ openDetails: true });
+      await startNewPost({ openDetails: true });
       return;
     }
 
@@ -572,8 +603,28 @@
     }
 
     if (adminAction === "save-post") {
-      savePost(actionTarget.dataset.draft === "true").catch((error) => {
+      savePost().catch((error) => {
         setFeedback("error", error.message || "Post save failed.");
+      });
+      return;
+    }
+
+    if (adminAction === "set-post-draft") {
+      state.currentDraftValue = actionTarget.dataset.draft !== "false";
+      renderPostDetail();
+      return;
+    }
+
+    if (adminAction === "set-editor-mode") {
+      setEditorMode(actionTarget.dataset.mode || "visual").catch((error) => {
+        setFeedback("error", error.message || "Editor mode switch failed.");
+      });
+      return;
+    }
+
+    if (adminAction === "editor-command") {
+      runEditorCommand(actionTarget.dataset.command || "").catch((error) => {
+        setFeedback("error", error.message || "Editor command failed.");
       });
       return;
     }
@@ -585,6 +636,7 @@
 
     if (adminAction === "close-post-details") {
       setPostModalOpen(false);
+      renderPostDetail();
       return;
     }
 
@@ -639,17 +691,23 @@
   }
 
   function handlePostTitleInput() {
-    const isExisting = Boolean(state.currentPost.sha);
-    if (isExisting || state.postSlugDirty) {
-      return;
+    if (!state.currentPost.sha && !state.postSlugDirty) {
+      refs.postForm.slug.value = slugify(refs.postForm.title.value);
     }
 
-    refs.postForm.slug.value = slugify(refs.postForm.title.value);
+    renderPostDetail();
   }
 
   function handlePostSlugInput() {
     state.postSlugDirty = true;
     refs.postForm.slug.value = slugify(refs.postForm.slug.value);
+    renderPostDetail();
+  }
+
+  function handleEditorSourceInput() {
+    if (state.editorMode === "source") {
+      state.editorMarkdown = refs.editorSource.value;
+    }
   }
 
   function handleGlobalKeydown(event) {
@@ -696,13 +754,157 @@
 
   function setPostView(view) {
     state.postView = view === "detail" ? "detail" : "library";
+    refs.postLibrary.hidden = state.postView !== "library";
+    refs.postDetail.hidden = state.postView !== "detail";
+  }
 
-    if (refs.postLibrary) {
-      refs.postLibrary.hidden = state.postView !== "library";
+  async function setEditorMode(mode) {
+    const nextMode = mode === "source" ? "source" : "visual";
+
+    if (nextMode === state.editorMode) {
+      return;
     }
 
-    if (refs.postDetail) {
-      refs.postDetail.hidden = state.postView !== "detail";
+    if (nextMode === "source") {
+      state.editorMarkdown = await getCurrentEditorMarkdown();
+      refs.editorSource.value = state.editorMarkdown;
+      state.editorMode = "source";
+      renderPostDetail();
+      return;
+    }
+
+    state.editorMarkdown = refs.editorSource.value;
+    state.editorMode = "visual";
+    renderPostDetail();
+    await ensureVisualEditor(state.editorMarkdown);
+  }
+
+  async function setEditorContent(markdown) {
+    state.editorMarkdown = String(markdown || "");
+    refs.editorSource.value = state.editorMarkdown;
+
+    if (state.editorMode === "visual") {
+      await ensureVisualEditor(state.editorMarkdown);
+    } else if (state.editor) {
+      state.editor.action(replaceAll(state.editorMarkdown, true));
+    }
+  }
+
+  async function ensureVisualEditor(markdown = state.editorMarkdown) {
+    const nextMarkdown = String(markdown || "");
+
+    if (!state.editor) {
+      const editor = Editor.make()
+        .config((ctx) => {
+          ctx.set(rootCtx, refs.editorVisual);
+          ctx.set(defaultValueCtx, nextMarkdown);
+        })
+        .use(commonmark)
+        .use(gfm)
+        .use(history)
+        .use(listener)
+        .use(clipboard);
+
+      state.editor = await editor.create();
+      state.editor.action((ctx) => {
+        ctx.get(listenerCtx).markdownUpdated((_ctx, markdownValue) => {
+          state.editorMarkdown = markdownValue;
+          if (refs.editorSource.value !== markdownValue) {
+            refs.editorSource.value = markdownValue;
+          }
+        });
+      });
+    } else {
+      state.editor.action(replaceAll(nextMarkdown, true));
+    }
+
+    state.editorMarkdown = state.editor.action(getMarkdown());
+    refs.editorSource.value = state.editorMarkdown;
+  }
+
+  async function getCurrentEditorMarkdown() {
+    if (state.editorMode === "source") {
+      state.editorMarkdown = refs.editorSource.value;
+      return state.editorMarkdown;
+    }
+
+    await ensureVisualEditor(state.editorMarkdown);
+    state.editorMarkdown = state.editor.action(getMarkdown());
+    refs.editorSource.value = state.editorMarkdown;
+    return state.editorMarkdown;
+  }
+
+  async function runEditorCommand(command) {
+    if (state.editorMode !== "visual") {
+      setFeedback("info", "Switch back to Visual mode to use rich editing controls.");
+      return;
+    }
+
+    await ensureVisualEditor(state.editorMarkdown);
+
+    if (!state.editor) {
+      return;
+    }
+
+    const exec = (key, payload) => {
+      state.editor.action(callCommand(key, payload));
+      state.editorMarkdown = state.editor.action(getMarkdown());
+      refs.editorSource.value = state.editorMarkdown;
+    };
+
+    switch (command) {
+      case "undo":
+        exec(undoCommand);
+        break;
+      case "redo":
+        exec(redoCommand);
+        break;
+      case "bold":
+        exec(toggleStrongCommand);
+        break;
+      case "italic":
+        exec(toggleEmphasisCommand);
+        break;
+      case "heading-2":
+        exec(wrapInHeadingCommand, 2);
+        break;
+      case "heading-3":
+        exec(wrapInHeadingCommand, 3);
+        break;
+      case "bullet-list":
+        exec(wrapInBulletListCommand);
+        break;
+      case "ordered-list":
+        exec(wrapInOrderedListCommand);
+        break;
+      case "blockquote":
+        exec(wrapInBlockquoteCommand);
+        break;
+      case "code-block":
+        exec(createCodeBlockCommand);
+        break;
+      case "rule":
+        exec(insertHrCommand);
+        break;
+      case "link": {
+        const href = window.prompt("Link URL", "https://");
+        if (href == null) {
+          return;
+        }
+
+        const value = href.trim();
+        if (!value) {
+          return;
+        }
+
+        exec(toggleLinkCommand, { href: value });
+        break;
+      }
+      case "table":
+        exec(insertTableCommand, { row: 3, col: 3 });
+        break;
+      default:
+        break;
     }
   }
 
@@ -763,31 +965,34 @@
 
   function slugify(value) {
     return String(value || "")
-      .trim()
       .toLowerCase()
+      .trim()
+      .replace(/['".,!?()[\]{}:;@#$%^&*+=~`]/g, "")
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-+|-+$/g, "");
   }
 
-  function setButtonBusy(buttons, disabled) {
-    buttons.filter(Boolean).forEach((button) => {
-      button.disabled = disabled;
-    });
-
-    if (refs.newPostButton) {
-      refs.newPostButton.disabled = disabled;
-    }
+  function setFeedback(type, message) {
+    refs.feedback.hidden = !message;
+    refs.feedback.textContent = message || "";
+    refs.feedback.className = `admin-feedback admin-feedback--${type}`;
   }
 
   function clearFeedback() {
-    refs.feedback.hidden = true;
-    refs.feedback.textContent = "";
-    refs.feedback.className = "admin-feedback admin-feedback--info";
+    setFeedback("info", "");
   }
 
-  function setFeedback(kind, message) {
-    refs.feedback.hidden = false;
-    refs.feedback.textContent = message;
-    refs.feedback.className = `admin-feedback admin-feedback--${kind}`;
+  function setButtonBusy(buttons, isBusy) {
+    buttons.filter(Boolean).forEach((button) => {
+      button.disabled = isBusy;
+      button.setAttribute("aria-busy", String(isBusy));
+    });
   }
-})();
+
+  function escapeHTML(value) {
+    return String(value || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;");
+  }
+}

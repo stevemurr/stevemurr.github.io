@@ -1,108 +1,183 @@
 {{- define "main" }}
 <section class="admin-page" data-admin-app data-admin-api-root="/api/admin">
-  <header class="admin-shell">
-    <div class="admin-shell__copy">
-      <p class="admin-shell__eyebrow">Private control room</p>
-      <h1 class="admin-shell__title">Admin</h1>
-      <p class="admin-shell__summary">
-        Edit research posts, save drafts, publish updates, and maintain the resume page without hand-editing front matter.
-      </p>
-    </div>
-
-    <div class="admin-shell__meta">
-      <div class="admin-shell__actions">
-        <button
-          class="admin-icon-button"
-          type="button"
-          data-admin-action="open-resume"
-          aria-label="Edit resume"
-          title="Edit resume"
-        >
-          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-            <path d="M12 20h9" />
-            <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
-          </svg>
-        </button>
-      </div>
-
-      <div class="admin-shell__status">
-        <p class="admin-shell__status-label">Access</p>
-        <strong class="admin-shell__status-copy" data-admin-status-copy>Checking access…</strong>
-        <p class="admin-shell__status-meta" data-admin-status-meta>Waiting for admin API.</p>
-      </div>
-    </div>
-  </header>
-
   <div class="admin-feedback admin-feedback--info" data-admin-feedback hidden></div>
 
   <div class="admin-workspace">
     <main class="admin-main">
-      <section class="admin-panel">
-        <form class="admin-form" data-admin-post-form>
-          <section class="admin-subsection admin-subsection--compact admin-subsection--library" data-admin-post-library>
-            <div class="admin-subsection__header admin-subsection__header--library">
-              <div>
-                <p class="admin-kicker">Research library</p>
-                <h2>Published and draft entries</h2>
-                <p class="admin-panel__summary">
-                  Scan the full archive first, then open article details only when you need to edit metadata.
-                </p>
-              </div>
-              <div class="admin-library-tools">
-                <div class="admin-post-stats" data-admin-post-stats></div>
-                <button class="admin-button admin-button--ghost" type="button" data-admin-action="new-post">New Post</button>
-              </div>
-            </div>
-            <div class="admin-post-table-wrap">
-              <table class="admin-post-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Repo</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Publish Status</th>
-                  </tr>
-                </thead>
-                <tbody data-admin-post-list></tbody>
-              </table>
-            </div>
-          </section>
+      <section class="admin-panel admin-panel--library" data-admin-post-library>
+        <header class="admin-panel__header admin-panel__header--library">
+          <div>
+            <p class="admin-kicker">Research library</p>
+            <h1>Published and draft entries</h1>
+            <p class="admin-panel__summary">
+              Scan the archive first, then open a post into the dedicated detail editor when you want to work on it.
+            </p>
+          </div>
+          <div class="admin-library-tools">
+            <div class="admin-post-stats" data-admin-post-stats></div>
+            <button
+              class="admin-icon-button"
+              type="button"
+              data-admin-action="open-resume"
+              aria-label="Edit resume"
+              title="Edit resume"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 20h9" />
+                <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
+              </svg>
+            </button>
+            <button
+              class="admin-icon-button admin-icon-button--primary"
+              type="button"
+              data-admin-action="new-post"
+              aria-label="Create new post"
+              title="Create new post"
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 5v14" />
+                <path d="M5 12h14" />
+              </svg>
+            </button>
+          </div>
+        </header>
 
-          <section class="admin-subsection admin-subsection--detail" data-admin-post-detail hidden>
-            <header class="admin-panel__header admin-panel__header--detail">
-              <div>
-                <button class="admin-link-button admin-link-button--back" type="button" data-admin-action="back-to-library">
-                  <span aria-hidden="true">←</span>
-                  <span>Back to library</span>
-                </button>
+        <div class="admin-post-table-wrap">
+          <table class="admin-post-table">
+            <thead>
+              <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Repo</th>
+                <th scope="col">Date</th>
+                <th scope="col">Publish Status</th>
+              </tr>
+            </thead>
+            <tbody data-admin-post-list></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="admin-panel admin-panel--detail" data-admin-post-detail hidden>
+        <form class="admin-form" data-admin-post-form>
+          <header class="admin-detail__header">
+            <div class="admin-detail__lead">
+              <button
+                class="admin-icon-button admin-icon-button--back"
+                type="button"
+                data-admin-action="back-to-library"
+                aria-label="Back to library"
+                title="Back to library"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M15 18l-6-6 6-6" />
+                </svg>
+              </button>
+
+              <div class="admin-detail__meta">
                 <p class="admin-kicker">Article detail</p>
-                <h2 data-admin-post-heading>Select a post</h2>
+                <h1 data-admin-post-heading>Select a post</h1>
                 <p class="admin-panel__summary" data-admin-post-meta>
                   Choose a row from the library or start a new draft.
                 </p>
               </div>
-              <div class="admin-panel__actions">
-                <span class="admin-badge" data-admin-post-state>Idle</span>
-                <a class="admin-button admin-button--ghost" href="#" target="_blank" rel="noopener" data-admin-post-link hidden>Open Post</a>
-                <button class="admin-button admin-button--ghost" type="button" data-admin-action="open-post-details">Article Details</button>
-                <button class="admin-button admin-button--ghost" type="button" data-admin-action="save-post" data-draft="true">Save Draft</button>
-                <button class="admin-button" type="button" data-admin-action="save-post" data-draft="false">Publish</button>
-              </div>
-            </header>
-
-            <div class="admin-subsection__header admin-subsection__header--detail">
-              <div>
-                <h3>Writing surface</h3>
-                <p class="admin-panel__summary">
-                  Edit the markdown body here and use article details for front matter and publishing metadata.
-                </p>
-              </div>
-              <button class="admin-link-button" type="button" data-admin-action="open-post-details">Edit article details</button>
             </div>
 
-            <label class="admin-field admin-field--wide">
-              <span>Markdown body</span>
-              <textarea id="admin-post-body" name="body" class="admin-code-area" rows="24" spellcheck="false"></textarea>
+            <div class="admin-detail__toolbar">
+              <div class="admin-publish-toggle" role="group" aria-label="Publish status">
+                <button class="admin-publish-toggle__option" type="button" data-admin-action="set-post-draft" data-draft="true">
+                  Draft
+                </button>
+                <button class="admin-publish-toggle__option" type="button" data-admin-action="set-post-draft" data-draft="false">
+                  Published
+                </button>
+              </div>
+
+              <div class="admin-detail__actions">
+                <button
+                  class="admin-icon-button"
+                  type="button"
+                  data-admin-action="open-resume"
+                  aria-label="Edit resume"
+                  title="Edit resume"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M12 20h9" />
+                    <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4Z" />
+                  </svg>
+                </button>
+
+                <button
+                  class="admin-icon-button"
+                  type="button"
+                  data-admin-action="open-post-details"
+                  aria-label="Edit article details"
+                  title="Edit article details"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M3 7h18" />
+                    <path d="M6 12h12" />
+                    <path d="M10 17h4" />
+                  </svg>
+                </button>
+
+                <button
+                  class="admin-icon-button admin-icon-button--primary"
+                  type="button"
+                  data-admin-action="save-post"
+                  aria-label="Save post"
+                  title="Save post"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V7.5L7.5 3h9L21 7.5V19a2 2 0 0 1-2 2Z" />
+                    <path d="M17 21v-8H7v8" />
+                    <path d="M7 3v5h8" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <section class="admin-editor">
+            <div class="admin-editor__header">
+              <div>
+                <p class="admin-kicker">Writing surface</p>
+                <h2>Post body</h2>
+                <p class="admin-panel__summary">
+                  Rich editing is markdown-native. Switch to source mode any time for exact raw Markdown.
+                </p>
+              </div>
+
+              <div class="admin-editor__mode-toggle" role="group" aria-label="Editor mode">
+                <button class="admin-editor__mode-button" type="button" data-admin-action="set-editor-mode" data-mode="visual">
+                  Visual
+                </button>
+                <button class="admin-editor__mode-button" type="button" data-admin-action="set-editor-mode" data-mode="source">
+                  Markdown
+                </button>
+              </div>
+            </div>
+
+            <div class="admin-editor__toolbar" data-admin-editor-toolbar>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="undo" title="Undo" aria-label="Undo">↺</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="redo" title="Redo" aria-label="Redo">↻</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="italic" title="Italic" aria-label="Italic"><em>I</em></button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-2" title="Heading 2" aria-label="Heading 2">H2</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-3" title="Heading 3" aria-label="Heading 3">H3</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bullet-list" title="Bullet list" aria-label="Bullet list">•</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="ordered-list" title="Ordered list" aria-label="Ordered list">1.</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="blockquote" title="Blockquote" aria-label="Blockquote">“</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="code-block" title="Code block" aria-label="Code block">&lt;/&gt;</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="rule" title="Horizontal rule" aria-label="Horizontal rule">—</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="link" title="Link" aria-label="Link">🔗</button>
+              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="table" title="Insert table" aria-label="Insert table">▦</button>
+            </div>
+
+            <div class="admin-editor__surface" data-admin-editor-visual></div>
+
+            <label class="admin-field admin-field--wide admin-editor__source" data-admin-editor-source-wrap hidden>
+              <span>Markdown source</span>
+              <textarea id="admin-post-body-source" name="bodySource" class="admin-code-area" rows="24" spellcheck="false" data-admin-editor-source></textarea>
             </label>
           </section>
         </form>

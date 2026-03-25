@@ -1,7 +1,18 @@
 {
   "name": "stevemurr-github-io",
   "private": true,
+  "type": "module",
   "dependencies": {
+    "@milkdown/core": "^7.19.2",
+    "@milkdown/ctx": "^7.19.2",
+    "@milkdown/plugin-clipboard": "^7.19.2",
+    "@milkdown/plugin-history": "^7.19.2",
+    "@milkdown/plugin-listener": "^7.19.2",
+    "@milkdown/preset-commonmark": "^7.19.2",
+    "@milkdown/preset-gfm": "^7.19.2",
+    "@milkdown/prose": "^7.19.2",
+    "@milkdown/theme-nord": "^7.19.2",
+    "@milkdown/utils": "^7.19.2",
     "gray-matter": "^4.0.3",
     "jose": "^6.2.2"
   }
