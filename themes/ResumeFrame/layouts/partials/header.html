@@ -2,6 +2,9 @@
   <nav class="nav">
     <div class="logo">
       <a href="{{ "/" | absLangURL }}" accesskey="h" title="{{ site.Title }} (Alt + H)">{{ site.Title }}</a>
+      {{- if eq .Layout "admin" }}
+      <span class="admin-site-pill" aria-label="Admin">Admin</span>
+      {{- end }}
     </div>
     <ul id="menu">
       {{- $currentURL := .RelPermalink | absLangURL -}}

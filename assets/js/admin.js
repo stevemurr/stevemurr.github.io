@@ -41,7 +41,6 @@ if (root) {
   const refs = {
     feedback: root.querySelector("[data-admin-feedback]"),
     postList: root.querySelector("[data-admin-post-list]"),
-    postStats: root.querySelector("[data-admin-post-stats]"),
     postHeading: root.querySelector("[data-admin-post-heading]"),
     postMeta: root.querySelector("[data-admin-post-meta]"),
     postLibrary: root.querySelector("[data-admin-post-library]"),
@@ -246,7 +245,6 @@ if (root) {
 
   function renderPostList() {
     refs.postList.replaceChildren();
-    renderPostStats();
 
     if (!state.posts.length) {
       const row = document.createElement("tr");
@@ -299,30 +297,6 @@ if (root) {
 
       row.append(titleCell, repoCell, dateCell, statusCell);
       refs.postList.appendChild(row);
-    });
-  }
-
-  function renderPostStats() {
-    refs.postStats.replaceChildren();
-
-    [
-      {
-        label: "Total",
-        value: state.posts.length,
-      },
-      {
-        label: "Published",
-        value: state.posts.filter((post) => !post.draft).length,
-      },
-      {
-        label: "Drafts",
-        value: state.posts.filter((post) => post.draft).length,
-      },
-    ].forEach((entry) => {
-      const chip = document.createElement("div");
-      chip.className = "admin-post-stat";
-      chip.innerHTML = `<strong>${entry.value}</strong><span>${entry.label}</span>`;
-      refs.postStats.appendChild(chip);
     });
   }
 
