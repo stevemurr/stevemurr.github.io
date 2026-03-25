@@ -731,12 +731,14 @@
   padding: 28px;
 }
 
-.admin-modal--resume {
+.admin-modal--resume,
+.admin-modal--post {
   align-items: start;
   padding-top: calc(var(--header-height) + 28px);
 }
 
-.admin-modal--resume .admin-modal__dialog--wide {
+.admin-modal--resume .admin-modal__dialog--wide,
+.admin-modal--post .admin-modal__dialog {
   width: min(
     calc(var(--main-width) - (clamp(20px, 3vw, 36px) * 2)),
     calc(100vw - 24px - (clamp(20px, 3vw, 36px) * 2))
@@ -840,11 +842,13 @@
     width: 100%;
   }
 
-  .admin-modal--resume {
+  .admin-modal--resume,
+  .admin-modal--post {
     padding-top: calc(var(--header-height) + 20px);
   }
 
-  .admin-modal--resume .admin-modal__dialog--wide {
+  .admin-modal--resume .admin-modal__dialog--wide,
+  .admin-modal--post .admin-modal__dialog {
     width: calc(100vw - 20px);
     max-height: calc(100vh - var(--header-height) - 40px);
   }
