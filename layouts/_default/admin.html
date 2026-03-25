@@ -135,141 +135,31 @@
     <section class="admin-modal__dialog admin-modal__dialog--wide" role="dialog" aria-modal="true" aria-labelledby="admin-resume-modal-title">
       <header class="admin-modal__header">
         <div>
-          <p class="admin-kicker">Resume editor</p>
-          <h2 id="admin-resume-modal-title">Landing page content</h2>
-          <p class="admin-panel__summary" data-admin-resume-meta>Manage hero copy, GitHub activity config, pinned projects, and markdown body.</p>
+          <h2 id="admin-resume-modal-title">Pinned projects</h2>
         </div>
         <div class="admin-panel__actions">
           <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-resume">Close</button>
         </div>
       </header>
 
-      <form class="admin-form admin-modal__body" data-admin-resume-form>
-        <div class="admin-form-grid admin-form-grid--two">
-          <label class="admin-field">
-            <span>Title</span>
-            <input id="admin-resume-title" name="title" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>Layout</span>
-            <input id="admin-resume-layout" name="layout" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field admin-field--wide">
-            <span>Summary</span>
-            <textarea id="admin-resume-summary" name="summary" rows="3"></textarea>
-          </label>
-
-          <label class="admin-field">
-            <span>Eyebrow</span>
-            <input id="admin-resume-eyebrow" name="eyebrow" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>Back label</span>
-            <input id="admin-resume-back-label" name="backLabel" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>Back URL</span>
-            <input id="admin-resume-back-url" name="backUrl" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>Card icon</span>
-            <input id="admin-resume-card-icon" name="cardIcon" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field admin-field--wide">
-            <span>Card gradient</span>
-            <input id="admin-resume-card-gradient" name="cardGradient" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field admin-field--wide">
-            <span>Hero title</span>
-            <input id="admin-resume-hero-title" name="heroTitle" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>GitHub username</span>
-            <input id="admin-resume-github-username" name="githubUsername" type="text" autocomplete="off">
-          </label>
-
-          <label class="admin-field">
-            <span>Excluded repos</span>
-            <input id="admin-resume-exclude-repos" name="excludeRepos" type="text" autocomplete="off" placeholder="stevemurr/stevemurr.github.io">
-          </label>
+      <form class="admin-form admin-modal__body admin-form--resume-projects" data-admin-resume-form>
+        <div class="admin-panel__actions admin-panel__actions--end">
+          <button class="admin-button admin-button--ghost" type="button" data-admin-action="add-project">Add Project</button>
         </div>
 
-        <div class="admin-checkbox-row">
-          <label class="admin-checkbox">
-            <input id="admin-resume-hide-meta" name="hideMeta" type="checkbox">
-            <span>Hide page meta</span>
-          </label>
+        <div class="admin-repeat-list" id="admin-resume-projects" data-admin-resume-projects></div>
+        <p class="admin-repeat-empty" data-admin-project-empty>No pinned projects yet.</p>
+      </form>
 
-          <label class="admin-checkbox">
-            <input id="admin-resume-show-toc" name="showToc" type="checkbox">
-            <span>Show table of contents</span>
-          </label>
+      <footer class="admin-modal__footer">
+        <span class="admin-badge admin-badge--quiet">content/resume.md</span>
+        <div class="admin-panel__actions">
+          <button class="admin-button" type="button" data-admin-action="save-resume">Save pinned projects</button>
         </div>
-
-        <section class="admin-subsection">
-          <div class="admin-subsection__header">
-            <div>
-              <p class="admin-kicker">Hero buttons</p>
-              <h3>Primary links</h3>
-            </div>
-            <button class="admin-button admin-button--ghost" type="button" data-admin-action="add-hero-button">Add Button</button>
-          </div>
-          <div class="admin-repeat-list" id="admin-hero-buttons" data-admin-hero-buttons></div>
-          <p class="admin-repeat-empty" data-admin-hero-empty>No hero buttons yet.</p>
-        </section>
-
-        <section class="admin-subsection">
-          <div class="admin-subsection__header">
-            <div>
-              <p class="admin-kicker">Pinned projects</p>
-              <h3>Resume cards</h3>
-            </div>
-            <button class="admin-button admin-button--ghost" type="button" data-admin-action="add-project">Add Project</button>
-          </div>
-          <div class="admin-repeat-list" id="admin-resume-projects" data-admin-resume-projects></div>
-          <p class="admin-repeat-empty" data-admin-project-empty>No pinned projects yet.</p>
-        </section>
-
-        <label class="admin-field admin-field--wide">
-          <span>Markdown body</span>
-          <textarea id="admin-resume-body" name="body" class="admin-code-area" rows="18" spellcheck="false"></textarea>
-        </label>
-        </form>
-
-        <footer class="admin-modal__footer">
-          <span class="admin-badge admin-badge--quiet">content/resume.md</span>
-          <div class="admin-panel__actions">
-            <button class="admin-button" type="button" data-admin-action="save-resume">Save Resume</button>
-          </div>
-        </footer>
+      </footer>
       </section>
     </div>
   </div>
-
-  <template id="admin-hero-button-template">
-    <div class="admin-repeat-row" data-admin-row="hero-button">
-      <div class="admin-repeat-grid admin-repeat-grid--two">
-        <label class="admin-field">
-          <span>Name</span>
-          <input type="text" data-field="name" autocomplete="off">
-        </label>
-
-        <label class="admin-field">
-          <span>URL</span>
-          <input type="text" data-field="url" autocomplete="off">
-        </label>
-      </div>
-      <button class="admin-link-button" type="button" data-admin-action="remove-row">Remove</button>
-    </div>
-  </template>
 
   <template id="admin-project-template">
     <div class="admin-repeat-row" data-admin-row="resume-project">
@@ -290,13 +180,7 @@
         </label>
       </div>
 
-      <div class="admin-repeat-row__footer">
-        <label class="admin-checkbox">
-          <input type="checkbox" data-field="pinned">
-          <span>Pinned</span>
-        </label>
-        <button class="admin-link-button" type="button" data-admin-action="remove-row">Remove</button>
-      </div>
+      <button class="admin-link-button" type="button" data-admin-action="remove-row">Remove</button>
     </div>
   </template>
 </section>

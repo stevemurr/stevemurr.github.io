@@ -54,14 +54,9 @@ if (root) {
     postSaveButton: root.querySelector("[data-admin-action='save-post']"),
     resumeModal: root.querySelector("[data-admin-resume-modal]"),
     saveResumeButton: root.querySelector("[data-admin-action='save-resume']"),
-    resumeMeta: root.querySelector("[data-admin-resume-meta]"),
-    addHeroButton: root.querySelector("[data-admin-action='add-hero-button']"),
     addProjectButton: root.querySelector("[data-admin-action='add-project']"),
-    heroButtons: root.querySelector("[data-admin-hero-buttons]"),
-    heroEmpty: root.querySelector("[data-admin-hero-empty]"),
     projectList: root.querySelector("[data-admin-resume-projects]"),
     projectEmpty: root.querySelector("[data-admin-project-empty]"),
-    heroTemplate: document.getElementById("admin-hero-button-template"),
     projectTemplate: document.getElementById("admin-project-template"),
     draftToggleButtons: Array.from(root.querySelectorAll("[data-admin-action='set-post-draft']")),
     editorModeButtons: Array.from(root.querySelectorAll("[data-admin-action='set-editor-mode']")),
@@ -75,26 +70,9 @@ if (root) {
       date: document.getElementById("admin-post-date"),
       projects: document.getElementById("admin-post-projects"),
     },
-    resumeForm: {
-      title: document.getElementById("admin-resume-title"),
-      layout: document.getElementById("admin-resume-layout"),
-      summary: document.getElementById("admin-resume-summary"),
-      eyebrow: document.getElementById("admin-resume-eyebrow"),
-      backLabel: document.getElementById("admin-resume-back-label"),
-      backUrl: document.getElementById("admin-resume-back-url"),
-      cardIcon: document.getElementById("admin-resume-card-icon"),
-      cardGradient: document.getElementById("admin-resume-card-gradient"),
-      heroTitle: document.getElementById("admin-resume-hero-title"),
-      githubUsername: document.getElementById("admin-resume-github-username"),
-      excludeRepos: document.getElementById("admin-resume-exclude-repos"),
-      hideMeta: document.getElementById("admin-resume-hide-meta"),
-      showToc: document.getElementById("admin-resume-show-toc"),
-      body: document.getElementById("admin-resume-body"),
-    },
   };
 
   document.addEventListener("click", handleActionClick);
-  refs.heroButtons.addEventListener("click", handleRowRemove);
   refs.projectList.addEventListener("click", handleRowRemove);
   refs.postForm.title.addEventListener("input", handlePostTitleInput);
   refs.editorSource.addEventListener("input", handleEditorSourceInput);
@@ -321,40 +299,8 @@ if (root) {
 
   function renderResume() {
     const frontmatter = state.resume.frontmatter || {};
-    const hero = frontmatter.hero || {};
-    const githubActivity = frontmatter.githubActivity || {};
-
-    refs.resumeMeta.textContent = `${state.resume.path || "content/resume.md"} · ${state.resume.sha ? shortSha(state.resume.sha) : "Unsaved"}`;
-    refs.resumeForm.title.value = frontmatter.title || "";
-    refs.resumeForm.layout.value = frontmatter.layout || "";
-    refs.resumeForm.summary.value = frontmatter.summary || "";
-    refs.resumeForm.eyebrow.value = frontmatter.eyebrow || "";
-    refs.resumeForm.backLabel.value = frontmatter.backLabel || "";
-    refs.resumeForm.backUrl.value = frontmatter.backUrl || "";
-    refs.resumeForm.cardIcon.value = frontmatter.cardIcon || "";
-    refs.resumeForm.cardGradient.value = frontmatter.cardGradient || "";
-    refs.resumeForm.heroTitle.value = hero.title || "";
-    refs.resumeForm.githubUsername.value = githubActivity.username || "";
-    refs.resumeForm.excludeRepos.value = listToInput(githubActivity.excludeRepos);
-    refs.resumeForm.hideMeta.checked = Boolean(frontmatter.hideMeta);
-    refs.resumeForm.showToc.checked = Boolean(frontmatter.showToc);
-    refs.resumeForm.body.value = state.resume.body || "";
-
-    renderHeroButtons(hero.buttons || []);
-    renderResumeProjects(frontmatter.projects || []);
-  }
-
-  function renderHeroButtons(items) {
-    refs.heroButtons.replaceChildren();
-
-    items.forEach((entry) => {
-      const row = refs.heroTemplate.content.firstElementChild.cloneNode(true);
-      row.querySelector("[data-field='name']").value = entry.name || "";
-      row.querySelector("[data-field='url']").value = entry.url || "";
-      refs.heroButtons.appendChild(row);
-    });
-
-    refs.heroEmpty.hidden = items.length > 0;
+    const projects = Array.isArray(frontmatter.projects) ? frontmatter.projects : [];
+    renderResumeProjects(projects.filter((entry) => Boolean(entry && entry.pinned)));
   }
 
   function renderResumeProjects(items) {
@@ -365,18 +311,10 @@ if (root) {
       row.querySelector("[data-field='name']").value = entry.name || "";
       row.querySelector("[data-field='repo']").value = entry.repo || "";
       row.querySelector("[data-field='summary']").value = entry.summary || "";
-      row.querySelector("[data-field='pinned']").checked = Boolean(entry.pinned);
       refs.projectList.appendChild(row);
     });
 
     refs.projectEmpty.hidden = items.length > 0;
-  }
-
-  function appendHeroButtonRow() {
-    const row = refs.heroTemplate.content.firstElementChild.cloneNode(true);
-    refs.heroButtons.appendChild(row);
-    refs.heroEmpty.hidden = true;
-    row.querySelector("[data-field='name']").focus();
   }
 
   function appendResumeProjectRow() {
@@ -440,7 +378,7 @@ if (root) {
 
   async function saveResume() {
     setButtonBusy([refs.saveResumeButton], true);
-    setFeedback("info", "Saving resume…");
+    setFeedback("info", "Saving pinned projects…");
 
     try {
       const saved = await requestJSON(`${API_ROOT}/resume`, {
@@ -450,9 +388,9 @@ if (root) {
       state.resume = saved;
       renderResume();
       loadGitHubRepositories(state.resume.frontmatter?.githubActivity?.username || DEFAULT_GITHUB_OWNER).catch(() => {});
-      setFeedback("success", "Resume saved.", { autoHide: true });
+      setFeedback("success", "Pinned projects saved.", { autoHide: true });
     } catch (error) {
-      setFeedback("error", error.message || "Resume save failed.");
+      setFeedback("error", error.message || "Pinned projects save failed.");
     } finally {
       setButtonBusy([refs.saveResumeButton], false);
     }
@@ -487,36 +425,42 @@ if (root) {
   }
 
   function collectResumePayload() {
+    const frontmatter = state.resume.frontmatter || {};
+    const hero = frontmatter.hero || {};
+    const githubActivity = frontmatter.githubActivity || {};
+    const existingProjects = Array.isArray(frontmatter.projects) ? frontmatter.projects : [];
+    const unpinnedProjects = existingProjects
+      .filter((entry) => !Boolean(entry && entry.pinned))
+      .map((entry) => ({
+        name: entry.name || "",
+        repo: entry.repo || "",
+        summary: entry.summary || "",
+        pinned: Boolean(entry.pinned),
+      }));
+
     return {
       sha: state.resume.sha || "",
-      title: refs.resumeForm.title.value.trim(),
-      layout: refs.resumeForm.layout.value.trim(),
-      summary: refs.resumeForm.summary.value.trim(),
-      eyebrow: refs.resumeForm.eyebrow.value.trim(),
-      backLabel: refs.resumeForm.backLabel.value.trim(),
-      backUrl: refs.resumeForm.backUrl.value.trim(),
-      cardIcon: refs.resumeForm.cardIcon.value.trim(),
-      cardGradient: refs.resumeForm.cardGradient.value.trim(),
-      hideMeta: refs.resumeForm.hideMeta.checked,
-      showToc: refs.resumeForm.showToc.checked,
+      title: frontmatter.title || "",
+      layout: frontmatter.layout || "",
+      summary: frontmatter.summary || "",
+      eyebrow: frontmatter.eyebrow || "",
+      backLabel: frontmatter.backLabel || "",
+      backUrl: frontmatter.backUrl || "",
+      cardIcon: frontmatter.cardIcon || "",
+      cardGradient: frontmatter.cardGradient || "",
+      hideMeta: Boolean(frontmatter.hideMeta),
+      showToc: Boolean(frontmatter.showToc),
       hero: {
-        title: refs.resumeForm.heroTitle.value.trim(),
-        buttons: collectHeroButtons(),
+        title: hero.title || "",
+        buttons: Array.isArray(hero.buttons) ? hero.buttons : [],
       },
       githubActivity: {
-        username: refs.resumeForm.githubUsername.value.trim(),
-        excludeRepos: inputToList(refs.resumeForm.excludeRepos.value),
+        username: githubActivity.username || "",
+        excludeRepos: Array.isArray(githubActivity.excludeRepos) ? githubActivity.excludeRepos : [],
       },
-      projects: collectResumeProjects(),
-      body: refs.resumeForm.body.value,
+      projects: [...collectResumeProjects(), ...unpinnedProjects],
+      body: state.resume.body || "",
     };
-  }
-
-  function collectHeroButtons() {
-    return Array.from(refs.heroButtons.querySelectorAll("[data-admin-row='hero-button']")).map((row) => ({
-      name: row.querySelector("[data-field='name']").value.trim(),
-      url: row.querySelector("[data-field='url']").value.trim(),
-    })).filter((entry) => entry.name || entry.url);
   }
 
   function collectResumeProjects() {
@@ -524,7 +468,7 @@ if (root) {
       name: row.querySelector("[data-field='name']").value.trim(),
       repo: row.querySelector("[data-field='repo']").value.trim(),
       summary: row.querySelector("[data-field='summary']").value.trim(),
-      pinned: row.querySelector("[data-field='pinned']").checked,
+      pinned: true,
     })).filter((entry) => entry.name || entry.repo || entry.summary);
   }
 
@@ -597,11 +541,6 @@ if (root) {
       return;
     }
 
-    if (adminAction === "add-hero-button") {
-      appendHeroButtonRow();
-      return;
-    }
-
     if (adminAction === "add-project") {
       appendResumeProjectRow();
     }
@@ -620,10 +559,6 @@ if (root) {
     }
 
     row.remove();
-
-    if (list === refs.heroButtons) {
-      refs.heroEmpty.hidden = refs.heroButtons.children.length > 0;
-    }
 
     if (list === refs.projectList) {
       refs.projectEmpty.hidden = refs.projectList.children.length > 0;
@@ -657,7 +592,13 @@ if (root) {
 
     if (state.isResumeModalOpen) {
       window.setTimeout(() => {
-        refs.resumeForm.title.focus();
+        const firstProjectName = refs.projectList.querySelector("[data-field='name']");
+        if (firstProjectName instanceof HTMLElement) {
+          firstProjectName.focus();
+          return;
+        }
+
+        refs.addProjectButton.focus();
       }, 0);
     }
   }
@@ -850,14 +791,6 @@ if (root) {
       .split(/[\n,]/)
       .map((entry) => entry.trim())
       .filter(Boolean);
-  }
-
-  function listToInput(value) {
-    return Array.isArray(value) ? value.join(", ") : "";
-  }
-
-  function shortSha(value) {
-    return value ? value.slice(0, 7) : "";
   }
 
   function formatPostDate(value) {
