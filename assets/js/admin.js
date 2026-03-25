@@ -28,6 +28,7 @@
     postMeta: root.querySelector("[data-admin-post-meta]"),
     postState: root.querySelector("[data-admin-post-state]"),
     postLink: root.querySelector("[data-admin-post-link]"),
+    postEditor: root.querySelector("[data-admin-post-editor]"),
     postButtons: Array.from(root.querySelectorAll("[data-admin-action='save-post']")),
     postDetailButtons: Array.from(root.querySelectorAll("[data-admin-action='open-post-details']")),
     postModal: root.querySelector("[data-admin-post-modal]"),
@@ -201,6 +202,7 @@
       state.postSlugDirty = false;
       renderPostList();
       renderPost();
+      revealPostEditor();
       clearFeedback();
     } finally {
       state.currentPostLoadingSlug = "";
@@ -226,7 +228,7 @@
     if (!state.posts.length) {
       const row = document.createElement("tr");
       const cell = document.createElement("td");
-      cell.colSpan = 5;
+      cell.colSpan = 4;
       cell.className = "admin-post-table__empty";
       cell.textContent = "No research posts found yet.";
       row.appendChild(cell);
@@ -241,12 +243,6 @@
         row.classList.add("is-active");
       }
 
-      const statusCell = document.createElement("td");
-      const status = document.createElement("span");
-      status.className = `admin-post-status admin-post-status--${item.draft ? "draft" : "published"}`;
-      status.textContent = item.draft ? "Draft" : "Published";
-      statusCell.appendChild(status);
-
       const titleCell = document.createElement("td");
       const button = document.createElement("button");
       button.type = "button";
@@ -256,19 +252,28 @@
       button.textContent = item.title || item.slug;
       titleCell.appendChild(button);
 
+      const repoCell = document.createElement("td");
+      if (item.repo) {
+        const repoPill = document.createElement("span");
+        repoPill.className = "admin-post-repo";
+        repoPill.textContent = item.repo;
+        repoCell.appendChild(repoPill);
+      } else {
+        repoCell.className = "admin-post-cell--muted";
+        repoCell.textContent = "No repo";
+      }
+
       const dateCell = document.createElement("td");
       dateCell.className = "admin-post-cell--muted";
       dateCell.textContent = formatPostDate(item.date);
 
-      const slugCell = document.createElement("td");
-      slugCell.className = "admin-post-cell--mono";
-      slugCell.textContent = item.slug;
+      const statusCell = document.createElement("td");
+      const status = document.createElement("span");
+      status.className = `admin-post-status admin-post-status--${item.draft ? "draft" : "published"}`;
+      status.textContent = item.draft ? "Draft" : "Published";
+      statusCell.appendChild(status);
 
-      const summaryCell = document.createElement("td");
-      summaryCell.className = "admin-post-cell--summary";
-      summaryCell.textContent = item.summary || "No summary yet.";
-
-      row.append(statusCell, titleCell, dateCell, slugCell, summaryCell);
+      row.append(titleCell, repoCell, dateCell, statusCell);
       refs.postList.appendChild(row);
     });
   }
@@ -676,6 +681,23 @@
 
   function syncModalState() {
     document.body.classList.toggle("admin-modal-open", state.isPostModalOpen || state.isResumeModalOpen);
+  }
+
+  function revealPostEditor() {
+    if (!refs.postEditor) {
+      return;
+    }
+
+    refs.postEditor.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+
+    window.setTimeout(() => {
+      refs.postForm.body.focus({
+        preventScroll: true,
+      });
+    }, 120);
   }
 
   async function requestJSON(path, { method = "GET", body } = {}) {
