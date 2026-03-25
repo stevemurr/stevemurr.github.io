@@ -90,6 +90,10 @@
   color: var(--secondary);
 }
 
+.admin-field__hint {
+  font-size: 0.82rem;
+}
+
 .admin-panel--library {
   overflow: hidden;
   padding: 0;
@@ -245,6 +249,7 @@
 }
 
 .admin-button--ghost {
+  border-color: color-mix(in srgb, var(--accent-cool) 14%, var(--border));
   background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, white), color-mix(in srgb, var(--theme) 86%, white));
   color: var(--primary);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -408,7 +413,8 @@
   flex: 0 0 auto;
 }
 
-.admin-detail__actions {
+.admin-detail__actions,
+.admin-panel__actions {
   display: flex;
   gap: 10px;
   align-items: center;

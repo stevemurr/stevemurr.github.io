@@ -585,6 +585,7 @@ if (root) {
 
     if (adminAction === "open-post") {
       openPost(actionTarget.dataset.slug || "").catch((error) => {
+        setPostView("library");
         setFeedback("error", error.message || "Post load failed.");
       });
       return;
@@ -633,13 +634,7 @@ if (root) {
     }
 
     if (adminAction === "submit-post-details") {
-      if (state.currentPost.sha) {
-        setPostModalOpen(false);
-        renderPostDetail();
-        return;
-      }
-
-      await savePost({ focusEditor: true });
+      await savePost({ focusEditor: !state.currentPost.sha });
       return;
     }
 
@@ -760,8 +755,7 @@ if (root) {
 
   function renderPostModal() {
     const isExisting = Boolean(state.currentPost.sha);
-    refs.postModalSubmitButton.textContent = isExisting ? "Done" : "Create";
-    refs.postModalSubmitButton.classList.toggle("admin-button--ghost", isExisting);
+    refs.postModalSubmitButton.textContent = isExisting ? "Save" : "Create";
     refs.postForm.slugHint.textContent = isExisting
       ? "Slug is locked for existing posts."
       : "Inferred from title. You can adjust it before creation.";
