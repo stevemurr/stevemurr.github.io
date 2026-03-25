@@ -351,7 +351,7 @@ if (root) {
       : (isBlankSelection ? "Select a post" : (title || "New draft"));
     refs.postMeta.textContent = isExisting
       ? `${record.path} · ${shortSha(record.sha)}`
-      : (path || "Choose a row from the library or create a new draft.");
+      : path;
 
     refs.draftToggleButtons.forEach((button) => {
       const isActive = String(state.currentDraftValue) === button.dataset.draft;
@@ -721,6 +721,7 @@ if (root) {
 
     if (state.isPostModalOpen) {
       setPostModalOpen(false);
+      renderPostDetail();
     }
 
     if (state.isResumeModalOpen) {
@@ -1071,6 +1072,7 @@ if (root) {
         return;
       }
 
+      event.stopPropagation();
       addTokenPickerValue(name, option.dataset.value || "");
     });
 

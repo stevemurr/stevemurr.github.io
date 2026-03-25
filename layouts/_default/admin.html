@@ -39,9 +39,7 @@
               <div class="admin-detail__meta">
                 <p class="admin-kicker">Article detail</p>
                 <h1 data-admin-post-heading>Select a post</h1>
-                <p class="admin-panel__summary" data-admin-post-meta>
-                  Choose a row from the library or start a new draft.
-                </p>
+                <p class="admin-panel__summary" data-admin-post-meta></p>
               </div>
             </div>
 
@@ -92,9 +90,6 @@
               <div>
                 <p class="admin-kicker">Writing surface</p>
                 <h2>Post body</h2>
-                <p class="admin-panel__summary">
-                  Rich editing is markdown-native. Switch to source mode any time for exact raw Markdown.
-                </p>
               </div>
 
               <div class="admin-editor__mode-toggle" role="group" aria-label="Editor mode">
@@ -145,8 +140,6 @@
           <p class="admin-panel__summary" data-admin-resume-meta>Manage hero copy, GitHub activity config, pinned projects, and markdown body.</p>
         </div>
         <div class="admin-panel__actions">
-          <span class="admin-badge admin-badge--quiet">content/resume.md</span>
-          <button class="admin-button" type="button" data-admin-action="save-resume">Save Resume</button>
           <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-resume">Close</button>
         </div>
       </header>
@@ -250,6 +243,13 @@
             <textarea id="admin-resume-body" name="body" class="admin-code-area" rows="18" spellcheck="false"></textarea>
           </label>
         </form>
+
+        <footer class="admin-modal__footer">
+          <span class="admin-badge admin-badge--quiet">content/resume.md</span>
+          <div class="admin-panel__actions">
+            <button class="admin-button" type="button" data-admin-action="save-resume">Save Resume</button>
+          </div>
+        </footer>
       </section>
     </div>
   </div>
@@ -261,9 +261,10 @@
         <div>
           <p class="admin-kicker">Article details</p>
           <h2 id="admin-post-modal-title">Metadata and front matter</h2>
-          <p class="admin-panel__summary">Edit publishing details separately from the main markdown body.</p>
         </div>
-        <button class="admin-link-button" type="button" data-admin-action="close-post-details">Close</button>
+        <div class="admin-panel__actions">
+          <button class="admin-button admin-button--ghost" type="button" data-admin-action="close-post-details">Close</button>
+        </div>
       </header>
 
       <div class="admin-form-grid admin-form-grid--two admin-modal__body">
@@ -293,7 +294,7 @@
           <textarea id="admin-post-summary" name="summary" rows="3"></textarea>
         </label>
 
-        <label class="admin-field">
+        <div class="admin-field">
           <span>Tags</span>
           <div class="admin-token-picker" data-admin-picker="tags">
             <div class="admin-token-picker__control">
@@ -303,9 +304,9 @@
             <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
           </div>
           <input id="admin-post-tags" name="tags" type="hidden">
-        </label>
+        </div>
 
-        <label class="admin-field">
+        <div class="admin-field">
           <span>Projects</span>
           <div class="admin-token-picker" data-admin-picker="projects">
             <div class="admin-token-picker__control">
@@ -315,7 +316,7 @@
             <div class="admin-token-picker__menu" data-admin-picker-menu hidden></div>
           </div>
           <input id="admin-post-projects" name="projects" type="hidden">
-        </label>
+        </div>
 
         <label class="admin-field">
           <span>Card icon</span>
