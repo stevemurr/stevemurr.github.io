@@ -83,7 +83,23 @@
           </section>
 
           <section class="admin-editor">
-            <div class="admin-editor__header">
+            <div class="admin-editor__toolbar-row">
+              <div class="admin-editor__toolbar" data-admin-editor-toolbar>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="undo" title="Undo" aria-label="Undo">↺</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="redo" title="Redo" aria-label="Redo">↻</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="italic" title="Italic" aria-label="Italic"><em>I</em></button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-2" title="Heading 2" aria-label="Heading 2">H2</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-3" title="Heading 3" aria-label="Heading 3">H3</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bullet-list" title="Bullet list" aria-label="Bullet list">•</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="ordered-list" title="Ordered list" aria-label="Ordered list">1.</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="blockquote" title="Blockquote" aria-label="Blockquote">“</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="code-block" title="Code block" aria-label="Code block">&lt;/&gt;</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="rule" title="Horizontal rule" aria-label="Horizontal rule">—</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="link" title="Link" aria-label="Link">🔗</button>
+                <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="table" title="Insert table" aria-label="Insert table">▦</button>
+              </div>
+
               <div class="admin-editor__mode-toggle" role="group" aria-label="Editor mode">
                 <button class="admin-editor__mode-button" type="button" data-admin-action="set-editor-mode" data-mode="visual">
                   Visual
@@ -92,22 +108,6 @@
                   Markdown
                 </button>
               </div>
-            </div>
-
-            <div class="admin-editor__toolbar" data-admin-editor-toolbar>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="undo" title="Undo" aria-label="Undo">↺</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="redo" title="Redo" aria-label="Redo">↻</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bold" title="Bold" aria-label="Bold"><strong>B</strong></button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="italic" title="Italic" aria-label="Italic"><em>I</em></button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-2" title="Heading 2" aria-label="Heading 2">H2</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="heading-3" title="Heading 3" aria-label="Heading 3">H3</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="bullet-list" title="Bullet list" aria-label="Bullet list">•</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="ordered-list" title="Ordered list" aria-label="Ordered list">1.</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="blockquote" title="Blockquote" aria-label="Blockquote">“</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="code-block" title="Code block" aria-label="Code block">&lt;/&gt;</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="rule" title="Horizontal rule" aria-label="Horizontal rule">—</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="link" title="Link" aria-label="Link">🔗</button>
-              <button class="admin-editor__tool" type="button" data-admin-action="editor-command" data-command="table" title="Insert table" aria-label="Insert table">▦</button>
             </div>
 
             <div class="admin-editor__surface" data-admin-editor-visual></div>
