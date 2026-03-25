@@ -1,13 +1,23 @@
 ---
-title: "Act II: The RPC Dream (1980s)"
-date: 2026-03-16
-draft: true
-tags: ["ipc", "history", "rpc", "sun-rpc", "dce", "distributed-systems"]
-summary: "The seductive promise of making remote calls look local — and the hard lesson that followed."
-projects: ["stevemurr/fabric"]
-series: ["history-of-app-communication"]
+title: 'IPC: The RPC Dream (1980s)'
+date: '2026-03-24'
+draft: false
+tags:
+  - ipc
+  - history
+  - rpc
+  - sun-rpc
+  - dce
+  - distributed-systems
+summary: >-
+  The seductive promise of making remote calls look local — and the hard lesson
+  that followed.
+projects:
+  - stevemurr/fabric
+series:
+  - history-of-app-communication
 params:
-  cardGradient: "135deg, #1e3a5f, #2563eb, #60a5fa"
+  cardGradient: '135deg, #1e3a5f, #2563eb, #60a5fa'
 ---
 
 By the early 1980s, computers were no longer solitary machines. The minicomputer revolution and the rise of networked workstations had created a new problem: how should programs talk to each other across a wire? The previous decade had given us pipes and sockets and shared memory — mechanisms that worked beautifully when processes lived on the same box. But the network changed everything. Suddenly your collaborator's data lived on a machine across the hall, and the old abstractions felt primitive.
