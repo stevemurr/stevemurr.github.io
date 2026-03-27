@@ -3,59 +3,13 @@
   "username": "stevemurr",
   "repoCount": 59,
   "contributions": {
-    "generatedAt": "2026-03-26T18:38:13.878418+00:00",
+    "generatedAt": "2026-03-27T00:57:30.797288+00:00",
     "windowDays": 90,
-    "startDate": "2025-12-27",
-    "endDate": "2026-03-26",
+    "startDate": "2025-12-28",
+    "endDate": "2026-03-27",
     "total": 844,
     "max": 48,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2025-12-21",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-22",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-23",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-24",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-25",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-26",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2025-12-27",
-            "count": 0,
-            "level": 0,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -644,7 +598,7 @@
             "date": "2026-03-27",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-03-28",
@@ -657,20 +611,16 @@
     ],
     "monthLabels": [
       {
-        "label": "Dec",
+        "label": "Jan",
         "column": 0
       },
       {
-        "label": "Jan",
-        "column": 1
-      },
-      {
         "label": "Feb",
-        "column": 6
+        "column": 5
       },
       {
         "label": "Mar",
-        "column": 10
+        "column": 9
       }
     ]
   },
