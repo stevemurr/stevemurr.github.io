@@ -1,19 +1,27 @@
 ---
-title: "Marriage Has Default Settings"
-date: 2026-03-17
+title: Marriage Has Default Settings
+date: '2026-03-17'
 draft: false
 weight: 1
 ShowPostNavLinks: true
-tags: ["legal-tech", "product", "architecture", "california", "relationships"]
-summary: "You wouldn't accept Terms of Service you've never read. Marriage is the most consequential contract most people sign without reviewing a single clause."
-projects: ["stevemurr/marriage-composer"]
-series: ["Composable Marriage"]
+tags:
+  - legal-tech
+  - product
+  - architecture
+  - california
+  - relationships
+summary: >-
+  You wouldn't accept Terms of Service you've never read. Marriage is the most
+  consequential contract most people sign without reviewing a single clause.
+projects:
+  - stevemurr/marriage-composer
+series:
+  - Composable Marriage
 params:
-  pullquote: "Marriage already has a settings panel. Most couples just never see it."
-  cardGradient: "135deg, #3a2f28, #8c5e3c, #d2a679"
-  cardIcon: "cpu"
+  pullquote: Marriage already has a settings panel. Most couples just never see it.
+  cardGradient: '135deg, #3a2f28, #8c5e3c, #d2a679'
+  cardIcon: cpu
 ---
-
 <!--
 BLOG POST 1: Marriage Has Default Settings
 Series: Composable Marriage
@@ -21,7 +29,7 @@ Audience: builders and product-minded readers
 Tone: provocative, concrete, systems-oriented
 -->
 
-> **Try the prototype:** [Marriage Composer](https://stevemurr.com/marriage-composer/marriage-composer/) -- configure a marriage like infrastructure instead of accepting defaults you've never read.
+> **Try the prototype:** [Marriage Composer](https://stevemurr.github.io/marriage-composer/marriage-composer/) -- configure a marriage like infrastructure instead of accepting defaults you've never read.
 
 ![Marriage Composer -- presets, modules, and configurable defaults](composer-landing.png)
 
@@ -55,7 +63,7 @@ Most couples vaguely know this. What they don't know is how far it reaches.
 
 None of this is hidden. It's all in the California Family Code. But nobody reads the California Family Code before their wedding. They read The Knot.
 
----
+***
 
 # The Product Problem
 
@@ -75,7 +83,7 @@ The question shouldn't be "do you trust me enough to not need a prenup?"
 
 The question should be "which defaults fit this specific partnership?"
 
----
+***
 
 # The Composable Alternative
 
@@ -127,7 +135,7 @@ The point isn't that there's one right configuration. The point is that the conf
 
 ![Property & Assets module -- pre-marital assets, primary residence, intellectual property](composer-property.png)
 
----
+***
 
 # The Prototype
 
@@ -135,22 +143,26 @@ This isn't just a blog post thought experiment. There's a working prototype that
 
 The [`marriage-composer.jsx`](https://github.com/stevemurr/marriage-composer/blob/main/marriage-composer.jsx) UI is built around a `MODULES` structure that treats marriage as six independent but related domains:
 
-| Module | What It Covers |
-|--------|---------------|
-| **finances** | Income pooling, separate vs. shared accounts |
-| **property** | Ownership, title holding, equity tracking |
-| **decisions** | Dispute resolution, relocation, major life choices |
-| **children** | Custody frameworks, education, religious upbringing |
-| **health** | Healthcare directives, medical POA, HIPAA access |
-| **dissolution** | Exit terms, support frameworks, cooling periods |
+| Module          | What It Covers                                      |
+| --------------- | --------------------------------------------------- |
+| **finances**    | Income pooling, separate vs. shared accounts        |
+| **property**    | Ownership, title holding, equity tracking           |
+| **decisions**   | Dispute resolution, relocation, major life choices  |
+| **children**    | Custody frameworks, education, religious upbringing |
+| **health**      | Healthcare directives, medical POA, HIPAA access    |
+| **dissolution** | Exit terms, support frameworks, cooling periods     |
 
 The prototype ships with presets -- think of them like starter configs. The `Independent Partnership` preset is the most relevant one for people who want explicit boundaries:
 
-- Separate income
-- Creator-owned IP
-- Proportional equity
-- Originator bears debt
-- Arbitration for disputes
+* Separate income
+
+* Creator-owned IP
+
+* Proportional equity
+
+* Originator bears debt
+
+* Arbitration for disputes
 
 But you can mix and match. Take a preset as a starting point, then adjust individual settings to fit your actual partnership.
 
@@ -158,7 +170,7 @@ The insight here is structural: marriage can be represented as a set of independ
 
 ![Dissolution Terms module -- asset division, spousal support, cooling-off period](composer-dissolution.png)
 
----
+***
 
 # What This Cannot Solve
 
@@ -174,7 +186,7 @@ Let me be clear about the boundaries.
 
 Software can expose the settings, structure the conversation, and compile documents. It cannot abolish the legal system. And it shouldn't -- the legal system exists to protect the person with less power in the relationship. The goal is to make the system legible, not to bypass it.
 
----
+***
 
 # What's Next
 
