@@ -1,7 +1,7 @@
 import matter from "gray-matter";
 
 const POSTS_ROOT = "content/posts";
-const RESUME_PATH = "content/resume.md";
+const CODE_PAGE_PATH = "content/code.md";
 const POST_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function cloneData(value) {
@@ -125,7 +125,7 @@ export function isValidPostSlug(slug) {
 }
 
 export function getResumePath() {
-  return RESUME_PATH;
+  return CODE_PAGE_PATH;
 }
 
 export function parsePostDocument(path, sha, source) {
@@ -237,7 +237,7 @@ export function buildResumeDocument(existingSource, payload) {
   const hero = cloneData(data.hero);
   const githubActivity = cloneData(data.githubActivity);
 
-  data.title = normalizeString(payload.title) || "Resume";
+  data.title = normalizeString(payload.title) || "Code";
   data.layout = normalizeString(payload.layout) || normalizeString(data.layout) || "resume";
   setValueOrDelete(data, "summary", normalizeString(payload.summary));
   setValueOrDelete(data, "cardGradient", normalizeString(payload.cardGradient));

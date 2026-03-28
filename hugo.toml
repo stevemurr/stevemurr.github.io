@@ -23,8 +23,8 @@ theme = 'ResumeFrame'
 
 [menu]
   [[menu.main]]
-    identifier = "resume"
-    name = "Resume"
+    identifier = "code"
+    name = "Code"
     url = "/"
     weight = 10
   [[menu.main]]

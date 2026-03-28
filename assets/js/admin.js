@@ -109,10 +109,10 @@ if (root) {
 
   function createEmptyResume() {
     return {
-      path: "content/resume.md",
+      path: "content/code.md",
       sha: "",
       frontmatter: {
-        title: "Resume",
+        title: "Code",
         layout: "resume",
         summary: "",
         cardGradient: "",
@@ -156,7 +156,7 @@ if (root) {
   }
 
   async function loadResume() {
-    const payload = await requestJSON(`${API_ROOT}/resume`);
+    const payload = await requestJSON(`${API_ROOT}/code`);
     state.resume = payload;
     renderResume();
     loadGitHubRepositories(state.resume.frontmatter?.githubActivity?.username || DEFAULT_GITHUB_OWNER).catch(() => {});
@@ -381,7 +381,7 @@ if (root) {
     setFeedback("info", "Saving pinned projects…");
 
     try {
-      const saved = await requestJSON(`${API_ROOT}/resume`, {
+      const saved = await requestJSON(`${API_ROOT}/code`, {
         method: "PUT",
         body: collectResumePayload(),
       });
@@ -536,7 +536,7 @@ if (root) {
 
     if (adminAction === "save-resume") {
       saveResume().catch((error) => {
-        setFeedback("error", error.message || "Resume save failed.");
+      setFeedback("error", error.message || "Code page save failed.");
       });
       return;
     }

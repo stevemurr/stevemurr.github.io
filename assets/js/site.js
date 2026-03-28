@@ -70,9 +70,9 @@ const POST_BACK_DESTINATIONS = {
     path: "/articles/",
     label: "Research",
   },
-  resume: {
+  code: {
     path: "/",
-    label: "Resume",
+    label: "Code",
   },
 };
 const ACTIVITY_EVENT_TYPES = new Set([
@@ -120,6 +120,10 @@ function appendQueryParam(url, key, value) {
 
 function getPostBackDestination() {
   const from = new URLSearchParams(window.location.search).get("from");
+  if (from === "resume") {
+    return POST_BACK_DESTINATIONS.code;
+  }
+
   if (from && POST_BACK_DESTINATIONS[from]) {
     return POST_BACK_DESTINATIONS[from];
   }
@@ -139,8 +143,12 @@ function getPostBackDestination() {
       return POST_BACK_DESTINATIONS.articles;
     }
 
-    if (pathname === normalizePathname(POST_BACK_DESTINATIONS.resume.path) || pathname === "/resume/") {
-      return POST_BACK_DESTINATIONS.resume;
+    if (
+      pathname === normalizePathname(POST_BACK_DESTINATIONS.code.path)
+      || pathname === "/code/"
+      || pathname === "/resume/"
+    ) {
+      return POST_BACK_DESTINATIONS.code;
     }
   } catch (_error) {
     return null;
@@ -159,8 +167,8 @@ function initializePostBackLinks() {
 
   links.forEach((link) => {
     const fallback = {
-      path: link.dataset.defaultBackUrl || POST_BACK_DESTINATIONS.resume.path,
-      label: link.dataset.defaultBackLabel || POST_BACK_DESTINATIONS.resume.label,
+      path: link.dataset.defaultBackUrl || POST_BACK_DESTINATIONS.code.path,
+      label: link.dataset.defaultBackLabel || POST_BACK_DESTINATIONS.code.label,
     };
     const target = destination || fallback;
 

@@ -13,8 +13,8 @@
           class="admin-nav-button"
           type="button"
           data-admin-action="open-resume"
-          aria-label="Edit resume markdown"
-          title="Edit resume markdown"
+          aria-label="Edit code page"
+          title="Edit code page"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M12 20h9" />
@@ -40,7 +40,7 @@
       {{- $currentURL := .RelPermalink | absLangURL -}}
       {{- range site.Menus.main }}
       {{- $targetURL := .URL | absLangURL -}}
-      {{- $isResumePage := and (eq .Identifier "resume") (eq $.Layout "resume") -}}
+      {{- $isResumePage := and (eq .Identifier "code") (eq $.Layout "resume") -}}
       <li>
         <a href="{{ $targetURL }}" title="{{ .Title | default .Name }}">
           <span{{ if or (eq $targetURL $currentURL) $isResumePage }} class="active"{{ end }}>{{ .Name }}</span>

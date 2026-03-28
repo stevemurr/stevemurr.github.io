@@ -18,6 +18,10 @@ import {
 
 const ADMIN_METHODS = "GET, POST, PUT, OPTIONS";
 
+function isCodeResource(resource) {
+  return resource === "code" || resource === "resume";
+}
+
 function toActionParts(params) {
   return Array.isArray(params.route)
     ? params.route.map((part) => String(part || "").trim()).filter(Boolean)
@@ -237,24 +241,24 @@ async function handleUpdateResume(request, env, origin) {
   const providedSha = String(payload.sha || "").trim();
 
   if (!providedSha) {
-    throw new HTTPError(400, "Missing resume sha.");
+    throw new HTTPError(400, "Missing code page sha.");
   }
 
   if (providedSha !== record.sha) {
-    throw new HTTPError(409, "Resume content changed since it was loaded. Refresh and try again.");
+    throw new HTTPError(409, "Code page content changed since it was loaded. Refresh and try again.");
   }
 
   let source;
   try {
     source = buildResumeDocument(file.content, payload);
   } catch (error) {
-    throw new HTTPError(400, error instanceof Error ? error.message : "Invalid resume payload.");
+    throw new HTTPError(400, error instanceof Error ? error.message : "Invalid code page payload.");
   }
 
   const saved = await putContentFile(env, getResumePath(), {
     content: source,
     sha: record.sha,
-    message: "Update resume",
+    message: "Update code page",
   });
 
   return jsonResponse(buildSavedResumeResponse(saved.path, saved.sha, source), {
@@ -316,11 +320,11 @@ export async function onRequest(context) {
       return handleUpdatePost(request, env, origin, slug);
     }
 
-    if (resource === "resume" && request.method === "GET" && !slug) {
+    if (isCodeResource(resource) && request.method === "GET" && !slug) {
       return handleGetResume(request, env, origin);
     }
 
-    if (resource === "resume" && request.method === "PUT" && !slug) {
+    if (isCodeResource(resource) && request.method === "PUT" && !slug) {
       return handleUpdateResume(request, env, origin);
     }
 

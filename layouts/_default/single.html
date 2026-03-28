@@ -4,7 +4,7 @@
 {{- $icon := .Params.cardIcon | default "file" }}
 {{- $summary := .Params.summary | default (.Summary | plainify | htmlUnescape) }}
 {{- $defaultBackURL := "/" }}
-{{- $defaultBackLabel := "Resume" }}
+{{- $defaultBackLabel := "Code" }}
 {{- $backURL := .Params.backUrl | default $defaultBackURL }}
 {{- $backLabel := .Params.backLabel | default $defaultBackLabel }}
 {{- $shareEnabled := and site.Params.ShowShareButtons (ne .Params.disableShare true) }}

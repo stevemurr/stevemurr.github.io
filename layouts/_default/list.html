@@ -5,8 +5,8 @@
 {{- $homePages = $homePages.ByDate.Reverse }}
 
 {{- if .IsHome }}
-{{- $resumePage := or (site.GetPage "/resume") (site.GetPage "resume") (site.GetPage "page" "resume.md") . }}
-{{ partial "resume_landing.html" (dict "page" $resumePage "posts" $homePages "isHome" true) }}
+{{- $codePage := or (site.GetPage "/code") (site.GetPage "code") (site.GetPage "page" "code.md") (site.GetPage "/resume") (site.GetPage "resume") (site.GetPage "page" "resume.md") . }}
+{{ partial "resume_landing.html" (dict "page" $codePage "posts" $homePages "isHome" true) }}
 
 {{- else }}
 {{- $isPostsSection := eq .Section "posts" }}

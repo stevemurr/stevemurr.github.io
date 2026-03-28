@@ -12,7 +12,7 @@ Personal site for Steve Murr, built with Hugo and deployed to Cloudflare Pages.
 
 ## Repo Layout
 
-- `content/`: research posts, resume, and page content
+- `content/`: research posts, code-page content, and page content
 - `layouts/`: Hugo templates and partials
 - `assets/`: site JavaScript and CSS
 - `functions/`: Cloudflare Pages Functions
@@ -139,7 +139,7 @@ Optional local-only secret:
 
 ## Admin
 
-The repo includes a private `/admin/` surface for post and resume editing.
+The repo includes a private `/admin/` surface for post and code-page editing.
 
 - Protect `/admin*` and `/api/admin/*` with Cloudflare Access.
 - Set `ADMIN_EMAIL` to the exact Cloudflare Access-authenticated email that should be allowed through the server-side check.
