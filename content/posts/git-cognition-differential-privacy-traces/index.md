@@ -1,7 +1,7 @@
 ---
-title: "Differential Privacy on Reasoning Traces"
+title: Differential Privacy on Reasoning Traces
 date: '2026-03-29'
-draft: true
+draft: false
 weight: 2
 ShowPostNavLinks: true
 tags:
@@ -13,16 +13,19 @@ tags:
 summary: >-
   A survey of the 2026 landscape for applying differential privacy to
   chain-of-thought outputs — covering private decoding, selective budget
-  allocation, DP-aligned training, and the faithfulness problem that
-  undercuts all of them.
+  allocation, DP-aligned training, and the faithfulness problem that undercuts
+  all of them.
 series:
   - Git Cognition
 params:
-  pullquote: "Even perfect DP on the exposed trace protects the text you release, not necessarily the model's actual latent reasoning."
+  pullquote: >-
+    Even perfect DP on the exposed trace protects the text you release, not
+    necessarily the model's actual latent reasoning.
   cardGradient: '135deg, #1a1a2e, #0d2137, #0a3d62'
   cardIcon: terminal
+projects:
+  - stevemurr/git-cognition
 ---
-
 # Scope and Framing
 
 This review covers differential privacy (DP) as applied to visible reasoning traces — chain-of-thought outputs, scratchpad contents, and agent trajectories — not to model weights or gradient-level protections during pretraining. The question it addresses: **given that reasoning traces can leak sensitive information from their conditioning context, what is the state of the art for bounding that leakage formally or empirically?**
@@ -93,16 +96,16 @@ Outside pure DP, split architectures offer a pragmatic alternative. **PPMI** [(L
 
 # Summary
 
-| Problem | Current Frontier | Maturity |
-|---|---|---|
-| Formal DP on released traces | DP-Fusion, InvisibleInk, AdaPMixED, selective-budget DP-RAG | Research prototypes; not yet deployed at scale |
+| Problem                        | Current Frontier                                                    | Maturity                                                  |
+| ------------------------------ | ------------------------------------------------------------------- | --------------------------------------------------------- |
+| Formal DP on released traces   | DP-Fusion, InvisibleInk, AdaPMixED, selective-budget DP-RAG         | Research prototypes; not yet deployed at scale            |
 | Training on private trace logs | User-level DP fine-tuning/alignment + DP synthetic trace generation | More mature; scales to hundreds of millions of parameters |
-| Direct trace-specific defenses | Privacy-first reasoning, gatekeeping, trajectory-level unlearning | Mostly empirical, not formal-DP |
-| Split architectures | PPMI-style local/remote separation | Practical but limits reasoning scope |
+| Direct trace-specific defenses | Privacy-first reasoning, gatekeeping, trajectory-level unlearning   | Mostly empirical, not formal-DP                           |
+| Split architectures            | PPMI-style local/remote separation                                  | Practical but limits reasoning scope                      |
 
 The missing breakthrough is an end-to-end method that provides useful, faithful, long reasoning traces with formal user-level DP under realistic agent workloads. This is an inference from the current literature rather than a claim made by any single paper.
 
----
+***
 
 ## References
 
