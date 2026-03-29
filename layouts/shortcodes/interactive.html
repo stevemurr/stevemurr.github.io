@@ -1,0 +1,15 @@
+{{- $src := .Get "src" -}}
+{{- $title := .Get "title" -}}
+{{- $height := .Get "height" | default "600px" -}}
+<figure class="interactive-embed">
+  {{- if $title }}
+  <figcaption class="interactive-embed__title">{{ $title }}</figcaption>
+  {{- end }}
+  <iframe
+    src="{{ $src }}"
+    title="{{ $title | default $src }}"
+    style="width:100%;height:{{ $height }};border:none;border-radius:8px;"
+    loading="lazy"
+    sandbox="allow-scripts allow-same-origin"
+  ></iframe>
+</figure>

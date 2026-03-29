@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECS Dynamic Graph</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d1117;color:#e6edf3;font-family:'JetBrains Mono',ui-monospace,monospace;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+#top{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid #21262d;flex-shrink:0}
+#top h1{font-size:13px;font-weight:500;color:#8b949e;letter-spacing:.05em}
+#tabs{display:flex;gap:6px}
+.etab{background:none;border:1px solid #30363d;border-radius:5px;padding:3px 12px;font-size:11px;cursor:pointer;color:#8b949e;font-family:inherit;transition:all .15s}
+.etab:hover{border-color:#58a6ff;color:#cdd9e5}
+.etab.sel{background:rgba(56,139,253,.15);border-color:#388bfd;color:#79c0ff;font-weight:500}
+#main{display:flex;flex:1;overflow:hidden;gap:0}
+#canvas-wrap{flex:1;position:relative}
+canvas{display:block;width:100%;height:100%}
+#panel{width:200px;flex-shrink:0;border-left:1px solid #21262d;display:flex;flex-direction:column;overflow:hidden}
+.pane{padding:12px 12px 8px;border-bottom:1px solid #21262d}
+.pane:last-child{border-bottom:none;flex:1;display:flex;flex-direction:column;overflow:hidden}
+.plabel{font-size:9px;font-weight:500;color:#6e7681;letter-spacing:.08em;text-transform:uppercase;margin-bottom:7px}
+.ctog{display:flex;align-items:center;justify-content:space-between;padding:4px 7px;border-radius:5px;cursor:pointer;border:1px solid #21262d;font-size:11px;color:#8b949e;transition:all .12s;margin-bottom:3px;user-select:none}
+.ctog:hover{background:#161b22}
+.ctog.on{color:#e6edf3;border-color:#30363d}
+.sw{width:26px;height:14px;border-radius:7px;background:#21262d;position:relative;transition:background .2s;flex-shrink:0}
+.sw::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:#484f58;transition:all .2s}
+.ctog.on .sw{background:#1f6feb}
+.ctog.on .sw::after{left:14px;background:#fff}
+.sitem{padding:4px 7px;border-radius:5px;border:1px solid #21262d;font-size:10px;color:#6e7681;margin-bottom:3px;display:flex;justify-content:space-between;align-items:center;transition:all .2s}
+.dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+#log{font-size:10px;line-height:1.8;overflow-y:auto;flex:1;padding:4px 0}
+#log div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#footer{font-size:9px;color:#6e7681;padding:6px 16px;border-top:1px solid #21262d;flex-shrink:0;letter-spacing:.03em}
+</style>
+</head>
+<body>
+<div id="top">
+  <h1>ECS / </h1>
+  <div id="tabs"></div>
+</div>
+<div id="main">
+  <div id="canvas-wrap"><canvas id="g"></canvas></div>
+  <div id="panel">
+    <div class="pane">
+      <div class="plabel">components</div>
+      <div id="ct"></div>
+    </div>
+    <div class="pane">
+      <div class="plabel">active systems</div>
+      <div id="ss"></div>
+    </div>
+    <div class="pane">
+      <div class="plabel">event log</div>
+      <div id="log"></div>
+    </div>
+  </div>
+</div>
+<div id="footer">toggle components → watch edges animate · systems activate when all requirements met</div>
+
+<script>
+const CC={Position:'#4ECDC4',Velocity:'#45B7D1',Health:'#FF6B6B',Sprite:'#96CEB4',Collider:'#FFE66D',Input:'#C3A6FF',AI:'#F4A261',Sound:'#FF8FAB'};
+const CN=Object.keys(CC);
+const SDEF=[
+  {name:'Physics',     req:['Position','Velocity'],          col:'#22C98A'},
+  {name:'Renderer',    req:['Position','Sprite'],            col:'#22AAEE'},
+  {name:'Combat',      req:['Health','Collider'],            col:'#EE4455'},
+  {name:'PlayerInput', req:['Input','Velocity'],             col:'#FFAA22'},
+  {name:'AIBehavior',  req:['AI','Position','Velocity'],     col:'#BB55FF'},
+];
+const EDEF=[
+  {id:0,name:'Player',  tag:'#0001',comps:['Position','Velocity','Health','Sprite','Input','Collider']},
+  {id:1,name:'Enemy',   tag:'#0002',comps:['Position','Velocity','Health','Sprite','AI','Collider']},
+  {id:2,name:'Particle',tag:'#0003',comps:['Position','Velocity','Sprite']},
+  {id:3,name:'Camera',  tag:'#0004',comps:['Position']},
+];
+const ents=EDEF.map(d=>({...d,comps:new Set(d.comps)}));
+let sel=0;
+const eP={},eT={};
+ents.forEach(e=>CN.forEach(c=>{const k=`${e.id}_${c}`;eP[k]=eT[k]=e.comps.has(c)?1:0;}));
+const sysP={};
+const logs=[];
+const canvas=document.getElementById('g');
+const ctx=canvas.getContext('2d');
+let NP={};
+
+const BG='#0d1117',S1='#161b22',LN='#30363d',T1='#e6edf3',T2='#8b949e',T3='#484f58';
+
+function toRgba(hex,a){const r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);return`rgba(${r},${g},${b},${a})`;}
+
+function resize(){
+  const wrap=canvas.parentElement;
+  const dpr=devicePixelRatio||1;
+  const W=wrap.clientWidth,H=wrap.clientHeight;
+  canvas.width=W*dpr;canvas.height=H*dpr;
+  canvas.style.width=W+'px';canvas.style.height=H+'px';
+  ctx.scale(dpr,dpr);
+  layout(W,H);
+}
+
+function layout(W,H){
+  const pad=60;
+  ents.forEach((e,i)=>{NP[`e${e.id}`]={x:W*.12,y:pad+i*(H-pad*2)/(ents.length-1)};});
+  CN.forEach((c,i)=>{NP[`c${c}`]={x:W*.50,y:40+i*(H-80)/(CN.length-1)};});
+  SDEF.forEach((s,i)=>{NP[`s${s.name}`]={x:W*.88,y:pad+i*(H-pad*2)/(SDEF.length-1)};});
+}
+
+function rr(c,x,y,w,h,r){c.beginPath();c.moveTo(x+r,y);c.lineTo(x+w-r,y);c.arcTo(x+w,y,x+w,y+r,r);c.lineTo(x+w,y+h-r);c.arcTo(x+w,y+h,x+w-r,y+h,r);c.lineTo(x+r,y+h);c.arcTo(x,y+h,x,y+h-r,r);c.lineTo(x,y+r);c.arcTo(x,y,x+r,y,r);c.closePath();}
+
+function actSys(e){return SDEF.filter(s=>s.req.every(r=>e.comps.has(r)));}
+
+let lastFrame=0;
+function draw(ts){
+  requestAnimationFrame(draw);
+  if(ts-lastFrame<16)return; // cap ~60fps
+  lastFrame=ts;
+  const dpr=devicePixelRatio||1;
+  const W=canvas.width/dpr,H=canvas.height/dpr;
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.fillStyle=BG;ctx.fillRect(0,0,W,H);
+
+  // interpolate edge weights
+  CN.forEach(c=>ents.forEach(e=>{
+    const k=`${e.id}_${c}`,d=eT[k]-eP[k];
+    if(Math.abs(d)>.001)eP[k]+=d*.1;else eP[k]=eT[k];
+  }));
+  Object.keys(sysP).forEach(k=>{sysP[k]-=.04;if(sysP[k]<=0)delete sysP[k];});
+
+  const se=ents.find(e=>e.id===sel);
+
+  // system requirement dashed lines (background)
+  SDEF.forEach(sys=>{
+    const sp=NP[`s${sys.name}`];if(!sp)return;
+    sys.req.forEach(req=>{
+      const cp=NP[`c${req}`];if(!cp)return;
+      ctx.beginPath();ctx.setLineDash([3,6]);ctx.strokeStyle=toRgba(sys.col,.12);ctx.lineWidth=1;
+      ctx.moveTo(sp.x,sp.y);ctx.lineTo(cp.x,cp.y);ctx.stroke();ctx.setLineDash([]);
+    });
+  });
+
+  // entity -> component edges
+  ents.forEach(e=>{
+    const ep=NP[`e${e.id}`];if(!ep)return;
+    const isSel=e.id===sel;
+    CN.forEach(c=>{
+      const k=`${e.id}_${c}`,pr=eP[k];if(pr<.01)return;
+      const cp=NP[`c${c}`];if(!cp)return;
+      ctx.beginPath();
+      ctx.strokeStyle=toRgba(CC[c],isSel?pr*.9:pr*.12);
+      ctx.lineWidth=isSel?2:1;
+      ctx.moveTo(ep.x,ep.y);
+      ctx.lineTo(ep.x+(cp.x-ep.x)*pr,ep.y+(cp.y-ep.y)*pr);
+      ctx.stroke();
+    });
+  });
+
+  // component nodes
+  CN.forEach(c=>{
+    const cp=NP[`c${c}`];if(!cp)return;
+    const col=CC[c],has=se?.comps.has(c);
+    ctx.beginPath();ctx.arc(cp.x,cp.y,20,0,Math.PI*2);
+    ctx.fillStyle=toRgba(col,has?.32:.08);ctx.fill();
+    ctx.strokeStyle=has?col:toRgba(col,.25);ctx.lineWidth=has?2:.5;ctx.stroke();
+    ctx.fillStyle=has?col:toRgba(col,.45);
+    ctx.font='bold 9px JetBrains Mono,monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(c.slice(0,3).toUpperCase(),cp.x,cp.y);
+  });
+
+  // entity nodes
+  ents.forEach(e=>{
+    const ep=NP[`e${e.id}`];if(!ep)return;
+    const isSel=e.id===sel,aS=actSys(e);
+    const W2=96,H2=30;
+    rr(ctx,ep.x-W2/2,ep.y-H2/2,W2,H2,6);
+    ctx.fillStyle=isSel?S1:BG;ctx.fill();
+    ctx.strokeStyle=isSel?'#388bfd':LN;ctx.lineWidth=isSel?1.5:.5;ctx.stroke();
+    if(aS.length){ctx.beginPath();ctx.arc(ep.x+W2/2-10,ep.y-H2/2+9,4,0,Math.PI*2);ctx.fillStyle=aS[0].col;ctx.fill();}
+    ctx.fillStyle=isSel?T1:T2;
+    ctx.font=`${isSel?'600':'400'} 12px JetBrains Mono,monospace`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(e.name,ep.x-3,ep.y-4);
+    ctx.fillStyle=T3;ctx.font='400 8.5px JetBrains Mono,monospace';
+    ctx.fillText(`ENT ${e.tag}`,ep.x-3,ep.y+7);
+  });
+
+  // system nodes
+  SDEF.forEach(sys=>{
+    const sp=NP[`s${sys.name}`];if(!sp)return;
+    const col=sys.col;
+    const isOn=!!actSys(se||ents[0]).find(s=>s.name===sys.name);
+    const cnt=ents.filter(e=>actSys(e).find(s=>s.name===sys.name)).length;
+    const pulse=sysP[sys.name]||0,sc=1+pulse*.06;
+    ctx.save();ctx.translate(sp.x,sp.y);ctx.scale(sc,sc);
+    const W2=88,H2=28;rr(ctx,-W2/2,-H2/2,W2,H2,14);
+    ctx.fillStyle=toRgba(col,isOn?.2:.05);ctx.fill();
+    ctx.strokeStyle=isOn?col:toRgba(col,.25);ctx.lineWidth=isOn?1.5:.5;ctx.stroke();
+    ctx.fillStyle=isOn?col:toRgba(col,.5);
+    ctx.font=`${isOn?'600':'400'} 10.5px JetBrains Mono,monospace`;ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(sys.name,0,-4);
+    ctx.fillStyle=isOn?toRgba(col,.7):T3;ctx.font='400 8px JetBrains Mono,monospace';
+    ctx.fillText(`${cnt}/${ents.length} matched`,0,6);
+    ctx.restore();
+  });
+
+  // column labels
+  ctx.fillStyle=T3;ctx.font='400 9px JetBrains Mono,monospace';ctx.textAlign='center';
+  ctx.fillText('ENTITIES',W*.12,18);ctx.fillText('COMPONENTS',W*.50,18);ctx.fillText('SYSTEMS',W*.88,18);
+  ctx.strokeStyle=toRgba(LN,.5);ctx.lineWidth=.5;ctx.setLineDash([2,8]);
+  ctx.beginPath();ctx.moveTo(W*.31,24);ctx.lineTo(W*.31,H-10);ctx.moveTo(W*.69,24);ctx.lineTo(W*.69,H-10);ctx.stroke();ctx.setLineDash([]);
+}
+
+function toggle(eid,cname){
+  const e=ents.find(x=>x.id===eid),k=`${eid}_${cname}`;
+  const old=new Set(actSys(e).map(s=>s.name));
+  if(e.comps.has(cname)){e.comps.delete(cname);eT[k]=0;addLog('rm',`− ${cname}`);}
+  else{e.comps.add(cname);eT[k]=1;addLog('add',`+ ${cname}`);}
+  const nw=new Set(actSys(e).map(s=>s.name));
+  SDEF.forEach(s=>{
+    const was=old.has(s.name),now=nw.has(s.name);
+    if(!was&&now){addLog('sys',`↑ ${s.name} ACTIVATED`);sysP[s.name]=1;}
+    else if(was&&!now)addLog('off',`↓ ${s.name} dropped`);
+  });
+  renderUI();
+}
+function selectEnt(id){sel=id;renderUI();}
+
+function addLog(type,msg){
+  logs.unshift({type,msg});if(logs.length>60)logs.pop();
+  const col={add:'#3fb950',rm:'#f85149',sys:'#58a6ff',off:'#e3b341'};
+  document.getElementById('log').innerHTML=logs.slice(0,24).map(l=>`<div style="color:${col[l.type]||T2}">${l.msg}</div>`).join('');
+}
+
+function renderUI(){
+  document.getElementById('tabs').innerHTML=ents.map(e=>`<button class="etab ${e.id===sel?'sel':''}" onclick="selectEnt(${e.id})">${e.name}</button>`).join('');
+  const se=ents.find(e=>e.id===sel);
+  document.getElementById('ct').innerHTML=CN.map(c=>{
+    const on=se?.comps.has(c);
+    return`<div class="ctog ${on?'on':''}" onclick="toggle(${sel},'${c}')">
+      <span style="display:flex;align-items:center;gap:6px">
+        <span style="width:7px;height:7px;border-radius:50%;background:${CC[c]};flex-shrink:0"></span>${c}
+      </span><div class="sw"></div></div>`;
+  }).join('');
+  const aSys=new Set(actSys(se||ents[0]).map(s=>s.name));
+  document.getElementById('ss').innerHTML=SDEF.map(s=>{
+    const on=aSys.has(s.name);
+    return`<div class="sitem" style="${on?`border-color:${toRgba(s.col,.4)};background:${toRgba(s.col,.1)};color:${s.col}`:''}">
+      <span style="display:flex;align-items:center;gap:5px">
+        <span class="dot" style="background:${on?s.col:T3}"></span>${s.name}
+      </span>
+      <span style="font-size:9px;opacity:.7">${s.req.map(r=>r.slice(0,3)).join('·')}</span>
+    </div>`;
+  }).join('');
+}
+
+window.addEventListener('resize',()=>{resize();});
+resize();renderUI();requestAnimationFrame(draw);
+</script>
+</body>
+</html>

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ECS UI Playground</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0d1117;--bg2:#161b22;--bg3:#21262d;--bd:#30363d;--t1:#e6edf3;--t2:#8b949e;--t3:#484f58}
+body{background:var(--bg);color:var(--t1);font-family:'JetBrains Mono',ui-monospace,monospace;height:100vh;display:flex;flex-direction:column;overflow:hidden;font-size:12px}
+
+/* ── Toolbar ── */
+#tb{display:flex;align-items:center;gap:6px;padding:6px 12px;border-bottom:1px solid var(--bd);flex-shrink:0}
+#tb-title{font-size:11px;color:var(--t3);letter-spacing:.05em;margin-right:4px}
+.btn{background:none;border:1px solid var(--bd);border-radius:5px;padding:3px 10px;font-size:10px;color:var(--t2);cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+.btn:hover{border-color:#58a6ff;color:var(--t1)}
+.btn.danger:hover{border-color:#f85149;color:#f85149}
+.btn.prim{border-color:rgba(56,139,253,.5);color:#58a6ff;background:rgba(56,139,253,.08)}
+.btn.prim:hover{background:rgba(56,139,253,.15)}
+#tbsp{flex:1}
+.pill{font-size:9px;padding:2px 7px;border-radius:10px;border:1px solid transparent;color:var(--t3);transition:all .2s;cursor:default}
+.pill.on{background:rgba(0,0,0,.2)}
+
+/* ── Workspace ── */
+#ws{display:flex;flex:1;overflow:hidden}
+
+/* ── Tree ── */
+#tp{width:192px;flex-shrink:0;border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden}
+#tp-hdr{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 5px;flex-shrink:0}
+#tp-hdr span{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+#tree{flex:1;overflow-y:auto;padding:4px}
+.ti{display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:5px;cursor:pointer;border:1px solid transparent;margin-bottom:1px;transition:background .1s;position:relative}
+.ti:hover{background:var(--bg2)}
+.ti:hover .ti-add{opacity:1}
+.ti.sel{background:var(--bg3);border-color:var(--bd)}
+.ti-name{flex:1;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ti-dots{display:flex;gap:2px;align-items:center;flex-shrink:0}
+.ti-add{opacity:0;font-size:10px;color:#388bfd;padding:0 3px;cursor:pointer;transition:opacity .15s;flex-shrink:0}
+.ti-add:hover{color:#58a6ff}
+#tp-foot{padding:6px;border-top:1px solid var(--bd);flex-shrink:0}
+
+/* ── Preview ── */
+#pp{flex:1;overflow:auto;position:relative;background:var(--bg)}
+#preview{min-height:100%;padding:24px;display:flex;flex-direction:column;gap:16px}
+#pp-empty{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;pointer-events:none}
+#pp-empty p{font-size:11px;color:var(--t3);text-align:center;line-height:1.9}
+#pp-empty .btns{display:flex;gap:8px;pointer-events:all}
+
+/* ── Inspector ── */
+#ip{width:244px;flex-shrink:0;border-left:1px solid var(--bd);display:flex;flex-direction:column;overflow:hidden}
+#ip-hdr{padding:7px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px;flex-shrink:0}
+#ip-name{background:none;border:none;font-family:inherit;font-size:12px;font-weight:500;color:var(--t1);flex:1;outline:none;min-width:0}
+#ip-name:focus{color:#58a6ff}
+#ip-name::placeholder{color:var(--t3)}
+#ip-parent{font-size:9px;color:var(--t3);flex-shrink:0;cursor:pointer}
+#ip-parent:hover{color:#58a6ff}
+#ip-body{flex:1;overflow-y:auto;padding:5px}
+#ip-none{padding:20px 12px;font-size:11px;color:var(--t3);text-align:center;line-height:1.9}
+
+/* ── Component blocks ── */
+.cb{border:1px solid var(--bd);border-radius:6px;margin-bottom:5px;overflow:hidden}
+.cb.off{opacity:.35}
+.ch{display:flex;align-items:center;gap:6px;padding:6px 8px;cursor:pointer;user-select:none;transition:background .1s}
+.ch:hover{background:var(--bg2)}
+.cdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.cname{font-size:10px;font-weight:500;flex:1}
+.csw{width:26px;height:14px;border-radius:7px;background:var(--bg3);position:relative;transition:background .2s;flex-shrink:0}
+.csw::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;border-radius:50%;background:var(--t3);transition:all .2s}
+.cb.on .csw{background:#1f6feb}
+.cb.on .csw::after{left:14px;background:#fff}
+.cfields{padding:0 8px 8px;display:flex;flex-direction:column;gap:4px}
+.fr{display:flex;align-items:flex-start;gap:6px}
+.fl{font-size:9px;color:var(--t2);width:62px;flex-shrink:0;padding-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fi{flex:1;background:var(--bg);border:1px solid var(--bd);border-radius:4px;padding:3px 6px;font-size:10px;color:var(--t1);font-family:inherit;outline:none;width:100%;min-width:0}
+.fi:focus{border-color:#388bfd}
+.fi[type=color]{padding:1px 2px;height:22px;cursor:pointer}
+textarea.fi{resize:vertical;min-height:48px;line-height:1.5}
+select.fi{padding:2px 4px}
+
+/* ── Log bar ── */
+#lb{height:22px;border-top:1px solid var(--bd);padding:0 10px;display:flex;align-items:center;gap:10px;overflow:hidden;flex-shrink:0}
+#le{display:flex;gap:12px;flex:1;overflow:hidden}
+.le-item{font-size:9px;white-space:nowrap}
+
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:2px}
+
+/* ── Preview component styles ── */
+.p-ent{cursor:pointer;transition:outline .1s}
+.p-sel{outline:2px solid rgba(88,166,255,.45)!important;outline-offset:2px}
+.p-card{background:#1c2128;border:1px solid #30363d;border-radius:8px;padding:12px;transition:border-color .15s}
+.p-card:hover{border-color:#484f58}
+.p-todo{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:6px;min-height:32px;transition:background .1s}
+.p-todo:hover{background:rgba(255,255,255,.025)}
+.p-col{background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-width:230px;flex-shrink:0}
+.drag-over-target{outline:1.5px dashed rgba(56,139,253,.5)!important;background:rgba(56,139,253,.06)!important}
+.dragging-el{opacity:.35}
+</style>
+</head>
+<body>
+
+<div id="tb">
+  <span id="tb-title">ECS UI /</span>
+  <button class="btn prim" onclick="addItem()">+ item</button>
+  <button class="btn" onclick="addContainer()">+ container</button>
+  <div style="width:6px"></div>
+  <button class="btn" onclick="spawnTodo()">todo list ↗</button>
+  <button class="btn" onclick="spawnKanban()">kanban ↗</button>
+  <div id="tbsp"></div>
+  <div id="pills" style="display:flex;gap:4px"></div>
+  <div style="width:6px"></div>
+  <button class="btn danger" id="btndel" style="display:none" onclick="deleteSel()">✕ delete</button>
+  <button class="btn danger" onclick="clearAll()">clear</button>
+</div>
+
+<div id="ws">
+  <div id="tp">
+    <div id="tp-hdr"><span>entity tree</span></div>
+    <div id="tree"></div>
+    <div id="tp-foot"><button class="btn" style="width:100%" onclick="addItem()">+ new item</button></div>
+  </div>
+
+  <div id="pp">
+    <div id="preview"></div>
+    <div id="pp-empty">
+      <p>world is empty<br>pick a template or add entities</p>
+      <div class="btns">
+        <button class="btn prim" onclick="spawnTodo()">Todo List</button>
+        <button class="btn prim" onclick="spawnKanban()">Kanban Board</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="ip">
+    <div id="ip-hdr">
+      <input id="ip-name" type="text" placeholder="no selection" readonly>
+      <span id="ip-parent"></span>
+    </div>
+    <div id="ip-body"><div id="ip-none">select an entity<br>to view components</div></div>
+  </div>
+</div>
+
+<div id="lb">
+  <span style="font-size:9px;color:var(--t3);flex-shrink:0">log</span>
+  <div id="le"></div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════ COMPONENT SCHEMA ════
+const CDEFS = {
+  Text: {
+    color: '#58a6ff',
+    fields: {
+      content: { type: 'textarea', default: '', placeholder: 'content...' }
+    }
+  },
+  Style: {
+    color: '#C3A6FF',
+    fields: {
+      background:  { type: 'color',  default: '#1c2128' },
+      foreground:  { type: 'color',  default: '#e6edf3' },
+      fontSize:    { type: 'select', default: '13px', options: ['11px','12px','13px','14px','16px','18px','20px','24px','28px','32px'] },
+      fontWeight:  { type: 'select', default: '400',  options: ['300','400','500','600','700'] },
+      radius:      { type: 'number', default: 8,   min: 0, max: 32, step: 1 },
+      padding:     { type: 'number', default: 12,  min: 0, max: 64, step: 2 },
+      border:      { type: 'select', default: 'subtle', options: ['none','subtle','strong'] }
+    }
+  },
+  Layout: {
+    color: '#4ECDC4',
+    fields: {
+      direction: { type: 'select', default: 'column', options: ['row','column'] },
+      gap:       { type: 'number', default: 8,   min: 0, max: 64, step: 2 },
+      wrap:      { type: 'select', default: 'no', options: ['yes','no'] },
+      minWidth:  { type: 'number', default: 0,   min: 0, max: 800, step: 20 },
+      scrollY:   { type: 'select', default: 'no', options: ['yes','no'] }
+    }
+  },
+  Checked: {
+    color: '#3fb950',
+    fields: {
+      done: { type: 'select', default: 'false', options: ['false','true'] }
+    }
+  },
+  Tag: {
+    color: '#F4A261',
+    fields: {
+      label: { type: 'text',  default: 'tag' },
+      color: { type: 'color', default: '#F4A261' }
+    }
+  },
+  Priority: {
+    color: '#f85149',
+    fields: {
+      level: { type: 'select', default: 'medium', options: ['low','medium','high','urgent'] }
+    }
+  },
+  Draggable: {
+    color: '#FFE66D',
+    fields: {
+      group: { type: 'text', default: 'cards' }
+    }
+  }
+};
+const CNAMES = Object.keys(CDEFS);
+
+// ═══════════════════════════════════════════════════════════════ ECS CORE ════
+const ecs = (() => {
+  const entities = new Map();
+  let nextId = 1;
+  return {
+    entities,
+    create(name) {
+      const id = nextId++;
+      entities.set(id, { id, name, components: new Map() });
+      return id;
+    },
+    destroy(id) { entities.delete(id); },
+    add(id, type, overrides = {}) {
+      const e = entities.get(id); if (!e) return null;
+      const def = CDEFS[type]; if (!def) return null;
+      const data = {};
+      Object.entries(def.fields).forEach(([k, v]) => data[k] = v.default);
+      const comp = { ...data, ...overrides };
+      e.components.set(type, comp); return comp;
+    },
+    remove(id, type) { entities.get(id)?.components.delete(type); },
+    has(id, type)    { return entities.get(id)?.components.has(type) ?? false; },
+    get(id, type)    { return entities.get(id)?.components.get(type); },
+    all()            { return [...entities.values()]; },
+    // parent/child via internal __parent key (not exposed in CDEFS)
+    setParent(id, parentId) {
+      const e = entities.get(id); if (!e) return;
+      if (parentId) e.components.set('__parent', { entityId: parentId });
+      else e.components.delete('__parent');
+    },
+    getParent(id)    { return entities.get(id)?.components.get('__parent')?.entityId ?? null; },
+    getChildren(id)  { return [...entities.values()].filter(e => e.components.get('__parent')?.entityId === id); },
+    getRoots()       { return [...entities.values()].filter(e => !e.components.has('__parent')); }
+  };
+})();
+
+// ═══════════════════════════════════════════════════════════════════ STATE ════
+const S = { sel: null, dirty: true, logs: [], dragEid: null, dragging: false, frame: 0 };
+
+// ══════════════════════════════════════════════════════════════════ HELPERS ════
+function log(type, msg) {
+  S.logs.unshift({ type, msg });
+  if (S.logs.length > 60) S.logs.pop();
+  const c = { add:'#3fb950', rm:'#e3b341', info:'#58a6ff', warn:'#f85149' };
+  document.getElementById('le').innerHTML = S.logs.slice(0, 7)
+    .map(l => `<span class="le-item" style="color:${c[l.type]||'#8b949e'}">${l.msg}</span>`)
+    .join('');
+}
+function hex2rgba(hex, a) {
+  const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+  return `rgba(${r},${g},${b},${a})`;
+}
+function borderCSS(border) {
+  if (!border || border === 'none') return '';
+  if (border === 'strong') return 'border:1px solid rgba(139,148,158,.35);';
+  return 'border:1px solid rgba(48,54,61,.9);';
+}
+const PRI_COLOR = { low:'#6e7681', medium:'#e3b341', high:'#f85149', urgent:'#ff6b6b' };
+
+// ════════════════════════════════════════════════════════ RENDER SYSTEM ════
+// The Render System is the heart of UI-ECS. It walks the entity tree and
+// produces DOM from component data. Same principle as a game renderer —
+// just outputting HTML instead of canvas draw calls.
+
+function entityHTML(eid) {
+  const e = ecs.entities.get(eid); if (!e) return '';
+  const has = t => e.components.has(t);
+  const get = t => e.components.get(t);
+  const isSel = e.id === S.sel;
+
+  const text = get('Text'), sty = get('Style'), lay = get('Layout');
+  const chk  = get('Checked'), tag = get('Tag'), pri = get('Priority');
+  const drag = get('Draggable');
+
+  // Style component → inline CSS overrides
+  let styCSS = '';
+  if (sty) {
+    styCSS = `background:${sty.background};color:${sty.foreground};`
+           + `font-size:${sty.fontSize};font-weight:${sty.fontWeight};`
+           + `border-radius:${sty.radius}px;padding:${sty.padding}px;`
+           + borderCSS(sty.border);
+  }
+
+  const selClass = isSel ? ' p-sel' : '';
+  const children = ecs.getChildren(eid);
+  const childHTML = children.map(c => entityHTML(c.id)).join('');
+
+  // Badges: Tag + Priority
+  const tagBadge = tag
+    ? `<span style="font-size:10px;padding:1px 7px;border-radius:10px;background:${hex2rgba(tag.color,.1)};color:${tag.color};border:1px solid ${hex2rgba(tag.color,.3)};white-space:nowrap">${tag.label}</span>`
+    : '';
+  const priBadge = pri
+    ? `<span style="font-size:9px;padding:1px 5px;border-radius:3px;background:${hex2rgba(PRI_COLOR[pri.level],.1)};color:${PRI_COLOR[pri.level]};border:1px solid ${hex2rgba(PRI_COLOR[pri.level],.3)};white-space:nowrap">${pri.level}</span>`
+    : '';
+
+  // ── ARCHETYPE: TODO ITEM (has Checked component) ──────────────────────────
+  if (has('Checked')) {
+    const done = chk.done === 'true';
+    const content = text?.content || e.name;
+    const doneCSS = done ? 'text-decoration:line-through;color:#484f58;' : '';
+    return `<div data-eid="${eid}" class="p-ent p-todo${selClass}" style="${styCSS}" onclick="selClick(event,${eid})">
+      <div onclick="event.stopPropagation();toggleCheck(${eid})"
+           style="width:16px;height:16px;border-radius:4px;flex-shrink:0;cursor:pointer;
+                  border:1.5px solid ${done ? '#3fb950' : 'rgba(139,148,158,.3)'};
+                  background:${done ? hex2rgba('#3fb950',.1) : 'transparent'};
+                  display:flex;align-items:center;justify-content:center;">
+        ${done ? `<svg width="10" height="10" viewBox="0 0 10 10"><polyline points="1.5,5 4,7.5 8.5,2.5" fill="none" stroke="#3fb950" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>` : ''}
+      </div>
+      <span style="${doneCSS}flex:1;font-size:13px;line-height:1.4">${content}</span>
+      ${(priBadge||tagBadge) ? `<span style="display:flex;gap:4px;align-items:center;margin-left:auto">${priBadge}${tagBadge}</span>` : ''}
+    </div>`;
+  }
+
+  // ── ARCHETYPE: LAYOUT CONTAINER ───────────────────────────────────────────
+  if (has('Layout')) {
+    const dir = lay.direction, gap = lay.gap;
+    const minW = lay.minWidth > 0 ? `min-width:${lay.minWidth}px;` : '';
+    const scrollY = lay.scrollY === 'yes' ? 'overflow-y:auto;max-height:520px;' : '';
+    const flex = `display:flex;flex-direction:${dir};gap:${gap}px;${lay.wrap==='yes'?'flex-wrap:wrap;':''}${minW}${scrollY}`;
+    const containerCSS = styCSS + flex;
+
+    // Container header (Text component on the container itself)
+    const header = text
+      ? `<div style="font-size:${sty?.fontSize||'13px'};font-weight:${sty?.fontWeight||'500'};color:${sty?.foreground||'#e6edf3'};margin-bottom:${dir==='column'?'4':'0'}px;flex-shrink:0">${text.content || e.name}</div>`
+      : '';
+
+    const dragAttrs = drag ? `draggable="true" ondragstart="dragStart(event,${eid})"` : '';
+    return `<div data-eid="${eid}" class="p-ent${selClass}" ${dragAttrs} style="${containerCSS}"
+        ondragover="event.preventDefault();event.stopPropagation();this.classList.add('drag-over-target')"
+        ondragleave="this.classList.remove('drag-over-target')"
+        ondrop="dropOn(event,${eid})"
+        onclick="selClick(event,${eid})">${header}${childHTML}</div>`;
+  }
+
+  // ── ARCHETYPE: CARD / DEFAULT ─────────────────────────────────────────────
+  const content = text?.content || '';
+  const dragAttrs = drag ? `draggable="true" ondragstart="dragStart(event,${eid})"` : '';
+  const cardBaseCSS = sty ? styCSS : '';
+  return `<div data-eid="${eid}" class="p-ent p-card${selClass}" ${dragAttrs} style="${cardBaseCSS}" onclick="selClick(event,${eid})">
+    ${content
+      ? `<div style="font-size:13px;line-height:1.5;${(priBadge||tagBadge)?'margin-bottom:8px;':''}">${content}</div>`
+      : `<div style="font-size:11px;color:#484f58;font-style:italic">${e.name}</div>`}
+    ${childHTML}
+    ${(priBadge||tagBadge) ? `<div style="display:flex;gap:4px;flex-wrap:wrap">${priBadge}${tagBadge}</div>` : ''}
+  </div>`;
+}
+
+function renderPreview() {
+  const roots = ecs.getRoots();
+  document.getElementById('preview').innerHTML = roots.map(e => entityHTML(e.id)).join('');
+  document.getElementById('pp-empty').style.display = roots.length ? 'none' : 'flex';
+}
+
+// ═══════════════════════════════════════════════════════ TREE SYSTEM ════
+function treeNodeHTML(eid, depth) {
+  const e = ecs.entities.get(eid); if (!e) return '';
+  const children = ecs.getChildren(eid);
+  const comps = [...e.components.keys()].filter(k => !k.startsWith('__'));
+  const dots = comps.slice(0, 7).map(c =>
+    `<span style="width:5px;height:5px;border-radius:50%;background:${CDEFS[c]?.color||'#484f58'};display:inline-block"></span>`
+  ).join('');
+  const arrow = children.length
+    ? `<span style="font-size:8px;color:var(--t3);flex-shrink:0">▾</span>`
+    : `<span style="width:10px;flex-shrink:0"></span>`;
+  return `<div>
+    <div class="ti${e.id===S.sel?' sel':''}" style="padding-left:${6+depth*14}px" onclick="selectEnt(${e.id})">
+      ${arrow}
+      <span class="ti-name">${e.name}</span>
+      <div class="ti-dots">${dots}</div>
+      <span class="ti-add" onclick="event.stopPropagation();addChildTo(${e.id})">+</span>
+    </div>
+    ${children.map(c => treeNodeHTML(c.id, depth+1)).join('')}
+  </div>`;
+}
+
+function renderTree() {
+  document.getElementById('tree').innerHTML =
+    ecs.getRoots().map(e => treeNodeHTML(e.id, 0)).join('');
+}
+
+// ═══════════════════════════════════════════════════════ INSPECTOR ════
+function renderInspector() {
+  const nameEl = document.getElementById('ip-name');
+  const parentEl = document.getElementById('ip-parent');
+  const bodyEl = document.getElementById('ip-body');
+  if (!S.sel || !ecs.entities.has(S.sel)) {
+    nameEl.value = ''; nameEl.placeholder = 'no selection'; nameEl.readOnly = true;
+    parentEl.textContent = ''; bodyEl.innerHTML = '<div id="ip-none">select an entity<br>to view components</div>';
+    return;
+  }
+  const e = ecs.entities.get(S.sel);
+  nameEl.value = e.name; nameEl.readOnly = false;
+  const pid = ecs.getParent(S.sel);
+  parentEl.textContent = pid ? `↑ ${ecs.entities.get(pid)?.name||'?'}` : 'root';
+  parentEl.onclick = pid ? () => selectEnt(pid) : null;
+
+  bodyEl.innerHTML = CNAMES.map(cn => {
+    const has = e.components.has(cn), def = CDEFS[cn], comp = e.components.get(cn);
+    const fields = has ? Object.entries(def.fields).map(([k, f]) => {
+      const v = comp[k];
+      let inp;
+      if (f.type === 'number')
+        inp = `<input class="fi" type="number" min="${f.min}" max="${f.max}" step="${f.step||1}" value="${typeof v==='number'?Math.round(v*100)/100:v}" data-e="${e.id}" data-c="${cn}" data-f="${k}" oninput="setField(this)">`;
+      else if (f.type === 'color')
+        inp = `<input class="fi" type="color" value="${v||'#000000'}" data-e="${e.id}" data-c="${cn}" data-f="${k}" oninput="setField(this)">`;
+      else if (f.type === 'textarea')
+        inp = `<textarea class="fi" data-e="${e.id}" data-c="${cn}" data-f="${k}" oninput="setField(this)" placeholder="${f.placeholder||''}">${v||''}</textarea>`;
+      else if (f.type === 'select')
+        inp = `<select class="fi" data-e="${e.id}" data-c="${cn}" data-f="${k}" onchange="setField(this)">${f.options.map(o=>`<option value="${o}"${o===v?' selected':''}>${o}</option>`).join('')}</select>`;
+      else
+        inp = `<input class="fi" type="text" value="${v||''}" data-e="${e.id}" data-c="${cn}" data-f="${k}" oninput="setField(this)">`;
+      return `<div class="fr"><span class="fl">${k}</span>${inp}</div>`;
+    }).join('') : '';
+    return `<div class="cb ${has?'on':'off'}">
+      <div class="ch" onclick="toggleComp(${e.id},'${cn}')">
+        <div class="cdot" style="background:${def.color}"></div>
+        <span class="cname">${cn}</span>
+        <div class="csw"></div>
+      </div>
+      ${has ? `<div class="cfields">${fields}</div>` : ''}
+    </div>`;
+  }).join('');
+}
+
+function syncInspectorLive() {
+  const e = ecs.entities.get(S.sel); if (!e) return;
+  const ni = document.getElementById('ip-name');
+  if (document.activeElement !== ni) ni.value = e.name;
+  document.querySelectorAll('.fi').forEach(inp => {
+    if (document.activeElement === inp) return;
+    const comp = e.components.get(inp.dataset.c); if (!comp) return;
+    const v = comp[inp.dataset.f];
+    if (inp.tagName === 'TEXTAREA') { if (inp.value !== (v||'')) inp.value = v||''; }
+    else if (inp.tagName === 'SELECT') { if (inp.value !== v) inp.value = v; }
+    else if (inp.type === 'number') { if (parseFloat(inp.value) !== v) inp.value = v; }
+    else { if (inp.value !== (v||'')) inp.value = v||''; }
+  });
+}
+
+// ═══════════════════════════════════════════════════════ SYSTEM PILLS ════
+const SYS_DEF = [
+  { n:'Layout',   q:['Layout'],   col:'#4ECDC4' },
+  { n:'Text',     q:['Text'],     col:'#58a6ff' },
+  { n:'Todo',     q:['Checked'],  col:'#3fb950' },
+  { n:'Styled',   q:['Style'],    col:'#C3A6FF' },
+  { n:'Drag',     q:['Draggable'],col:'#FFE66D' },
+];
+function updatePills() {
+  const p = document.getElementById('pills');
+  if (!p.children.length)
+    p.innerHTML = SYS_DEF.map(s => `<span class="pill" id="pill_${s.n}">${s.n}</span>`).join('');
+  SYS_DEF.forEach(s => {
+    const cnt = ecs.all().filter(e => s.q.every(t => e.components.has(t))).length;
+    const el = document.getElementById('pill_' + s.n); if (!el) return;
+    if (cnt > 0) {
+      el.style.cssText = `border-color:${hex2rgba(s.col,.25)};background:${hex2rgba(s.col,.08)};color:${s.col}`;
+      el.textContent = `${s.n} ×${cnt}`; el.classList.add('on');
+    } else {
+      el.style.cssText = 'color:var(--t3)'; el.textContent = s.n; el.classList.remove('on');
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════ ACTIONS ════
+function selectEnt(id) {
+  S.sel = id;
+  document.getElementById('btndel').style.display = id ? '' : 'none';
+  renderTree(); renderInspector();
+}
+function selClick(e, eid) { e.stopPropagation(); selectEnt(eid); }
+
+function toggleCheck(eid) {
+  const c = ecs.get(eid, 'Checked'); if (!c) return;
+  c.done = c.done === 'true' ? 'false' : 'true';
+  S.dirty = true;
+}
+
+function toggleComp(eid, cn) {
+  const name = ecs.entities.get(eid)?.name || '?';
+  if (ecs.has(eid, cn)) { ecs.remove(eid, cn); log('rm', `${name} − ${cn}`); }
+  else                   { ecs.add(eid, cn);    log('add', `${name} + ${cn}`); }
+  S.dirty = true; renderInspector();
+}
+
+function setField(inp) {
+  const comp = ecs.get(+inp.dataset.e, inp.dataset.c); if (!comp) return;
+  const def = CDEFS[inp.dataset.c]?.fields[inp.dataset.f];
+  comp[inp.dataset.f] = def?.type === 'number' ? (parseFloat(inp.value) || 0) : inp.value;
+  S.dirty = true;
+}
+
+// ═════════════════════════════════════════════════════════════ DRAG ════
+function dragStart(e, eid) {
+  S.dragEid = eid; S.dragging = true;
+  e.stopPropagation();
+  setTimeout(() => document.querySelector(`[data-eid="${eid}"]`)?.classList.add('dragging-el'), 0);
+}
+function dropOn(e, targetEid) {
+  e.preventDefault(); e.stopPropagation();
+  document.querySelectorAll('.drag-over-target').forEach(el => el.classList.remove('drag-over-target'));
+  document.querySelectorAll('.dragging-el').forEach(el => el.classList.remove('dragging-el'));
+  if (!S.dragEid || S.dragEid === targetEid) { S.dragging = false; S.dragEid = null; return; }
+  const target = ecs.entities.get(targetEid);
+  if (!target?.components.has('Layout')) { S.dragging = false; S.dragEid = null; return; }
+  // guard: don't drop onto own descendant
+  let anc = targetEid;
+  while (anc) { if (anc === S.dragEid) { S.dragging = false; S.dragEid = null; return; } anc = ecs.getParent(anc); }
+  const n = ecs.entities.get(S.dragEid)?.name || '?';
+  ecs.setParent(S.dragEid, targetEid);
+  log('info', `"${n}" → ${target.name}`);
+  S.dragEid = null; S.dragging = false; S.dirty = true;
+}
+window.addEventListener('dragend', () => {
+  document.querySelectorAll('.drag-over-target,.dragging-el').forEach(el => { el.classList.remove('drag-over-target'); el.classList.remove('dragging-el'); });
+  S.dragging = false;
+});
+
+// ═══════════════════════════════════════════════════ ADD / DELETE ════
+function addChildTo(parentId) {
+  const n = `Item ${ecs.entities.size + 1}`;
+  const id = ecs.create(n);
+  ecs.add(id, 'Text', { content: n });
+  ecs.setParent(id, parentId);
+  log('add', `"${n}" → ${ecs.entities.get(parentId)?.name}`);
+  S.dirty = true; selectEnt(id);
+}
+
+function addItem() {
+  const pid = S.sel && ecs.has(S.sel, 'Layout') ? S.sel : null;
+  if (pid) { addChildTo(pid); return; }
+  const n = `Item ${ecs.entities.size + 1}`;
+  const id = ecs.create(n);
+  ecs.add(id, 'Text', { content: n });
+  log('add', `created "${n}"`);
+  S.dirty = true; selectEnt(id);
+}
+
+function addContainer() {
+  const n = `Container ${ecs.entities.size + 1}`;
+  const id = ecs.create(n);
+  ecs.add(id, 'Layout', { direction:'column', gap:8, wrap:'no', minWidth:0, scrollY:'no' });
+  ecs.add(id, 'Style',  { background:'#161b22', foreground:'#e6edf3', fontSize:'13px', fontWeight:'400', radius:8, padding:16, border:'subtle' });
+  log('add', `created "${n}"`);
+  S.dirty = true; selectEnt(id);
+}
+
+function deleteSel() {
+  if (!S.sel) return;
+  function destroyTree(id) { ecs.getChildren(id).forEach(c => destroyTree(c.id)); ecs.destroy(id); }
+  const n = ecs.entities.get(S.sel)?.name || '?';
+  destroyTree(S.sel);
+  log('rm', `deleted "${n}"`);
+  selectEnt(null); S.dirty = true;
+}
+
+function clearAll() {
+  [...ecs.entities.keys()].forEach(id => ecs.destroy(id));
+  selectEnt(null); S.dirty = true; log('info', 'cleared world');
+}
+
+// ══════════════════════════════════════════════════════ TEMPLATES ════
+function spawnTodo() {
+  clearAll();
+  const root = ecs.create('My Todos');
+  ecs.add(root, 'Layout', { direction:'column', gap:4, wrap:'no', minWidth:0, scrollY:'no' });
+  ecs.add(root, 'Style',  { background:'#161b22', foreground:'#e6edf3', fontSize:'20px', fontWeight:'600', radius:12, padding:20, border:'subtle' });
+  ecs.add(root, 'Text',   { content:'My Todos' });
+
+  const items = [
+    { name:'Buy groceries',     tag:{label:'personal', color:'#4ECDC4'} },
+    { name:'Write docs',        pri:'high' },
+    { name:'Code review',       tag:{label:'work',     color:'#58a6ff'}, pri:'medium' },
+    { name:'Call dentist',      pri:'low' },
+    { name:'Set up CI',         tag:{label:'work',     color:'#58a6ff'}, done:true },
+    { name:'Design review',     pri:'urgent' },
+    { name:'Update README' },
+    { name:'Merge PR #44',      tag:{label:'work',     color:'#58a6ff'}, done:true },
+  ];
+
+  items.forEach(item => {
+    const id = ecs.create(item.name);
+    ecs.add(id, 'Text',    { content: item.name });
+    ecs.add(id, 'Checked', { done: item.done ? 'true' : 'false' });
+    if (item.tag) ecs.add(id, 'Tag',      item.tag);
+    if (item.pri) ecs.add(id, 'Priority', { level: item.pri });
+    ecs.setParent(id, root);
+  });
+
+  log('info', 'todo list loaded');
+  S.dirty = true; selectEnt(null);
+}
+
+function spawnKanban() {
+  clearAll();
+  const board = ecs.create('Project Board');
+  ecs.add(board, 'Layout', { direction:'row', gap:16, wrap:'no', minWidth:0, scrollY:'no' });
+  ecs.add(board, 'Style',  { background:'#0d1117', foreground:'#e6edf3', fontSize:'13px', fontWeight:'400', radius:0, padding:24, border:'none' });
+
+  const cols = [
+    { name:'Backlog', cards:[
+      { name:'Design token audit',       pri:'low' },
+      { name:'Update node deps',         pri:'low' },
+      { name:'Add dark mode support',    tag:{label:'frontend', color:'#4ECDC4'} },
+      { name:'Write onboarding guide',   tag:{label:'docs',     color:'#96CEB4'} },
+    ]},
+    { name:'In Progress', cards:[
+      { name:'Build auth flow',          pri:'high', tag:{label:'backend', color:'#58a6ff'} },
+      { name:'Write unit tests',         pri:'medium' },
+    ]},
+    { name:'Review', cards:[
+      { name:'API documentation',        tag:{label:'docs',    color:'#96CEB4'} },
+      { name:'Performance profiling',    pri:'high' },
+    ]},
+    { name:'Done', cards:[
+      { name:'Set up CI/CD',             tag:{label:'devops', color:'#F4A261'}, done:true },
+      { name:'Init project scaffold',    done:true },
+    ]},
+  ];
+
+  cols.forEach(colDef => {
+    const col = ecs.create(colDef.name);
+    ecs.add(col, 'Layout', { direction:'column', gap:8, wrap:'no', minWidth:240, scrollY:'no' });
+    ecs.add(col, 'Style',  { background:'#161b22', foreground:'#e6edf3', fontSize:'12px', fontWeight:'500', radius:8, padding:12, border:'subtle' });
+    ecs.add(col, 'Text',   { content: colDef.name });
+    ecs.setParent(col, board);
+
+    colDef.cards.forEach(card => {
+      const c = ecs.create(card.name);
+      ecs.add(c, 'Text',      { content: card.name });
+      ecs.add(c, 'Style',     { background:'#21262d', foreground:'#e6edf3', fontSize:'13px', fontWeight:'400', radius:6, padding:10, border:'subtle' });
+      ecs.add(c, 'Draggable', { group:'cards' });
+      if (card.pri)  ecs.add(c, 'Priority', { level: card.pri });
+      if (card.tag)  ecs.add(c, 'Tag', card.tag);
+      if (card.done) ecs.add(c, 'Checked', { done:'true' });
+      ecs.setParent(c, col);
+    });
+  });
+
+  log('info', 'kanban board loaded');
+  S.dirty = true; selectEnt(null);
+}
+
+// ══════════════════════════════════════════════════════ NAME EDIT ════
+document.getElementById('ip-name').addEventListener('input', e => {
+  if (!S.sel) return;
+  const en = ecs.entities.get(S.sel);
+  if (en) { en.name = e.target.value; S.dirty = true; }
+});
+
+// ═════════════════════════════════════════════════════ RENDER LOOP ════
+function loop() {
+  requestAnimationFrame(loop);
+  S.frame++;
+  if (S.dirty && !S.dragging) {
+    renderPreview(); renderTree(); updatePills();
+    S.dirty = false;
+  }
+  if (S.sel && S.frame % 4 === 0) syncInspectorLive();
+}
+
+// Expose all onclick handlers to global scope
+window.selClick    = selClick;
+window.toggleCheck = toggleCheck;
+window.toggleComp  = toggleComp;
+window.setField    = setField;
+window.selectEnt   = selectEnt;
+window.dragStart   = dragStart;
+window.dropOn      = dropOn;
+window.addItem     = addItem;
+window.addChildTo  = addChildTo;
+window.addContainer= addContainer;
+window.deleteSel   = deleteSel;
+window.clearAll    = clearAll;
+window.spawnTodo   = spawnTodo;
+window.spawnKanban = spawnKanban;
+
+requestAnimationFrame(loop);
+log('info', 'ready · pick a template or add entities');
+</script>
+</body>
+</html>
