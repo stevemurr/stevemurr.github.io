@@ -1,7 +1,7 @@
 ---
 title: 'IPC: The Desktop Bus (2000s)'
 date: '2026-03-16'
-draft: true
+draft: false
 tags:
   - ipc
   - history
