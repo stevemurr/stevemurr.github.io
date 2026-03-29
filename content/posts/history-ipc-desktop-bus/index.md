@@ -1,15 +1,25 @@
 ---
-title: "Act V: The Desktop Bus (2000s)"
-date: 2026-03-16
+title: 'IPC: The Desktop Bus (2000s)'
+date: '2026-03-16'
 draft: true
-tags: ["ipc", "history", "dbus", "bonjour", "linux", "zeroconf", "service-discovery"]
-summary: "D-Bus unified Linux desktop IPC while Bonjour solved service discovery — because finding each other is half the battle."
-projects: ["stevemurr/fabric"]
-series: ["history-of-app-communication"]
+tags:
+  - ipc
+  - history
+  - dbus
+  - bonjour
+  - linux
+  - zeroconf
+  - service-discovery
+summary: >-
+  D-Bus unified Linux desktop IPC while Bonjour solved service discovery —
+  because finding each other is half the battle.
+projects:
+  - stevemurr/fabric
+series:
+  - history-of-app-communication
 params:
-  cardGradient: "135deg, #1e3a5f, #2563eb, #60a5fa"
+  cardGradient: '135deg, #1e3a5f, #2563eb, #60a5fa'
 ---
-
 By the turn of the millennium, the Linux desktop had an embarrassing secret. Two major desktop environments -- GNOME and KDE -- had each built their own inter-process communication systems, and neither one worked particularly well. Meanwhile, Apple was quietly solving a different but equally fundamental problem: how do devices on a network find each other without anyone configuring anything? The answers that emerged -- D-Bus on the Linux side, Bonjour on the Apple side -- would reshape how software discovers and communicates with other software. Together, they illustrate a truth that every generation of IPC has to learn: moving bytes is only half the problem. The other half is knowing where to send them.
 
 ## The CORBA Hangover
@@ -72,7 +82,7 @@ This is the service discovery problem, and in 2002 -- the same year D-Bus develo
 
 Stuart Cheshire, a [computer scientist](https://en.wikipedia.org/wiki/Stuart_Cheshire) with a B.A. and M.A. from Cambridge and a Ph.D. from Stanford, had joined Apple with a specific mission. The old world of AppleTalk -- Apple's proprietary networking protocol from the 1980s -- had made service discovery trivially easy. You plugged a printer into the network and it appeared in the Chooser. No configuration required. But AppleTalk was being replaced by TCP/IP, and TCP/IP had no equivalent. If you wanted to print to a network printer over IP, you needed to know its IP address, or its DNS hostname, which meant someone had to configure a DNS server, which meant you needed an IT department, which meant the home user was out of luck.
 
-Cheshire set up an email discussion board to address this problem, which eventually attracted Apple's attention. Apple commissioned him to develop a protocol variant for Mac OS X, and the result was announced in August 2002 alongside Mac OS X 10.2 Jaguar under the name [Rendezvous](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/NetServices/Articles/about.html). (It was renamed to [Bonjour](https://en.wikipedia.org/wiki/Bonjour_(software)) in 2005 after a trademark dispute.)
+Cheshire set up an email discussion board to address this problem, which eventually attracted Apple's attention. Apple commissioned him to develop a protocol variant for Mac OS X, and the result was announced in August 2002 alongside Mac OS X 10.2 Jaguar under the name [Rendezvous](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/NetServices/Articles/about.html). (It was renamed to [Bonjour](https://en.wikipedia.org/wiki/Bonjour_\(software\)) in 2005 after a trademark dispute.)
 
 Bonjour was not a single protocol but a stack of three, each solving one layer of the zero-configuration problem:
 
