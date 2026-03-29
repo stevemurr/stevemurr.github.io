@@ -17,7 +17,7 @@ from zoneinfo import ZoneInfo
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-RESUME_PATH = REPO_ROOT / "content" / "resume.md"
+RESUME_PATH = REPO_ROOT / "content" / "code.md"
 OUTPUT_PATH = REPO_ROOT / "data" / "dev_activity.json"
 GITHUB_API_ROOT = "https://api.github.com"
 USER_AGENT = "stevemurr-github-activity-generator"
