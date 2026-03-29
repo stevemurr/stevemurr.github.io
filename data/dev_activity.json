@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 58,
+  "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-03-29T01:00:26.379274+00:00",
+    "generatedAt": "2026-03-29T07:24:57.378152+00:00",
     "windowDays": 90,
     "startDate": "2025-12-30",
     "endDate": "2026-03-29",
-    "total": 856,
+    "total": 872,
     "max": 48,
     "weeks": [
       {
@@ -596,14 +596,14 @@
           },
           {
             "date": "2026-03-27",
-            "count": 5,
+            "count": 6,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-03-28",
-            "count": 0,
-            "level": 0,
+            "count": 9,
+            "level": 1,
             "inRange": true
           }
         ]
@@ -612,8 +612,8 @@
         "days": [
           {
             "date": "2026-03-29",
-            "count": 0,
-            "level": 0,
+            "count": 6,
+            "level": 1,
             "inRange": true
           },
           {
@@ -672,69 +672,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/folio-trainer",
-      "repoName": "folio-trainer",
-      "fullHash": "78f1c39c93951e38d5d15e8747b15c5147035cbc",
-      "shortHash": "78f1c39",
-      "date": "2026-03-23T23:48:56Z",
-      "message": "Add quick start README for the current training flow",
+      "repo": "stevemurr/cycle-foundary",
+      "repoName": "cycle-foundary",
+      "fullHash": "bb8beee121849b0c589a1e6e5b2731dc87905cdf",
+      "shortHash": "bb8beee",
+      "date": "2026-03-29T06:58:43Z",
+      "message": "Add README with quick start, controls, and architecture overview",
       "refs": "",
-      "url": "https://github.com/stevemurr/folio-trainer/commit/78f1c39c93951e38d5d15e8747b15c5147035cbc",
-      "displayDate": "Mar 23",
-      "displayDateTime": "Mar 23, 4:48 PM PT",
-      "relativeTime": "5 days ago"
+      "url": "https://github.com/stevemurr/cycle-foundary/commit/bb8beee121849b0c589a1e6e5b2731dc87905cdf",
+      "displayDate": "Mar 28",
+      "displayDateTime": "Mar 28, 11:58 PM PT",
+      "relativeTime": "26 minutes ago"
     },
     {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "f115922e32884b1e4363de398514fd5fd7f30abe",
-      "shortHash": "f115922",
-      "date": "2026-03-23T22:51:18Z",
-      "message": "Add simulation engine with multi-agent strategy generation and results UI",
+      "repo": "stevemurr/git-cognition",
+      "repoName": "git-cognition",
+      "fullHash": "953cd8b92b9946296bea072127741c5b7deca9d3",
+      "shortHash": "953cd8b",
+      "date": "2026-03-29T06:57:11Z",
+      "message": "chore: bootstrap repository",
       "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/f115922e32884b1e4363de398514fd5fd7f30abe",
-      "displayDate": "Mar 23",
-      "displayDateTime": "Mar 23, 3:51 PM PT",
-      "relativeTime": "5 days ago"
+      "url": "https://github.com/stevemurr/git-cognition/commit/953cd8b92b9946296bea072127741c5b7deca9d3",
+      "displayDate": "Mar 28",
+      "displayDateTime": "Mar 28, 11:57 PM PT",
+      "relativeTime": "27 minutes ago"
     },
     {
-      "repo": "stevemurr/folio-trainer",
-      "repoName": "folio-trainer",
-      "fullHash": "1635fa43ac8066ce926927b06599f996670ad6d5",
-      "shortHash": "1635fa4",
-      "date": "2026-03-23T22:47:53Z",
-      "message": "Unify allocation training and correct next-day evaluation",
+      "repo": "stevemurr/cycle-foundary",
+      "repoName": "cycle-foundary",
+      "fullHash": "888167161e8e7e7340d603ba073eaa675bd20138",
+      "shortHash": "8881671",
+      "date": "2026-03-26T07:12:02Z",
+      "message": "Add modular cursor feedback system with ghost preview and validity",
       "refs": "",
-      "url": "https://github.com/stevemurr/folio-trainer/commit/1635fa43ac8066ce926927b06599f996670ad6d5",
-      "displayDate": "Mar 23",
-      "displayDateTime": "Mar 23, 3:47 PM PT",
-      "relativeTime": "5 days ago"
+      "url": "https://github.com/stevemurr/cycle-foundary/commit/888167161e8e7e7340d603ba073eaa675bd20138",
+      "displayDate": "Mar 26",
+      "displayDateTime": "Mar 26, 12:12 AM PT",
+      "relativeTime": "3 days ago"
     },
     {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "b9a18105bc4cd083f5e15abe11990c26c9c4883f",
-      "shortHash": "b9a1810",
-      "date": "2026-03-21T02:58:00Z",
-      "message": "Clean up workspace chrome and fix modal scrolling",
+      "repo": "stevemurr/cycle-foundary",
+      "repoName": "cycle-foundary",
+      "fullHash": "2f11038a8b3df9af66f99c5880e32e8aea50092e",
+      "shortHash": "2f11038",
+      "date": "2026-03-26T06:53:59Z",
+      "message": "Fix Makefile: use absolute path so it works from any directory",
       "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/b9a18105bc4cd083f5e15abe11990c26c9c4883f",
-      "displayDate": "Mar 20",
-      "displayDateTime": "Mar 20, 7:58 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/cycle-foundary/commit/2f11038a8b3df9af66f99c5880e32e8aea50092e",
+      "displayDate": "Mar 25",
+      "displayDateTime": "Mar 25, 11:53 PM PT",
+      "relativeTime": "3 days ago"
     },
     {
-      "repo": "stevemurr/folio",
-      "repoName": "folio",
-      "fullHash": "5430fbc1144c232fc50b647b6763bb2e27f24c2a",
-      "shortHash": "5430fbc",
-      "date": "2026-03-21T02:29:59Z",
-      "message": "Refactor workspace simulation flow around editable books and benchmarks",
+      "repo": "stevemurr/cycle-foundary",
+      "repoName": "cycle-foundary",
+      "fullHash": "dce2a8b7505487e7c0499b8aa3d6687f622da708",
+      "shortHash": "dce2a8b",
+      "date": "2026-03-26T03:10:03Z",
+      "message": "Add Makefile for common repo commands",
       "refs": "",
-      "url": "https://github.com/stevemurr/folio/commit/5430fbc1144c232fc50b647b6763bb2e27f24c2a",
-      "displayDate": "Mar 20",
-      "displayDateTime": "Mar 20, 7:29 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/cycle-foundary/commit/dce2a8b7505487e7c0499b8aa3d6687f622da708",
+      "displayDate": "Mar 25",
+      "displayDateTime": "Mar 25, 8:10 PM PT",
+      "relativeTime": "3 days ago"
     }
   ]
 }
