@@ -1,7 +1,7 @@
 ---
-title: "Toward a Git Diff for Reasoning Traces"
+title: Toward a Git Diff for Reasoning Traces
 date: '2026-03-29'
-draft: true
+draft: false
 weight: 1
 ShowPostNavLinks: true
 tags:
@@ -17,11 +17,14 @@ summary: >-
 series:
   - Git Cognition
 params:
-  pullquote: "The informative comparison is not which sentence changed, but whether the model branched, backtracked, merged, or over-linearized."
+  pullquote: >-
+    The informative comparison is not which sentence changed, but whether the
+    model branched, backtracked, merged, or over-linearized.
   cardGradient: '135deg, #1a1a2e, #16213e, #0f3460'
   cardIcon: terminal
+projects:
+  - stevemurr/git-cognition
 ---
-
 # Scope and Framing
 
 This review covers visible chain-of-thought (CoT), scratchpad outputs, and agent trajectories — not hidden activations or internal representations. The question it addresses: **given two reasoning traces over the same problem, what is the state of the art for structurally comparing them, localizing divergences, and determining which divergences matter?**
@@ -101,7 +104,7 @@ The strongest 2026 stack for reasoning-trace comparison is:
 
 Plain text diff remains useful for formatting and debugging, but it is no longer the serious baseline for reasoning-trace comparison.
 
----
+***
 
 ## References
 
