@@ -23,17 +23,17 @@ githubActivity:
   excludeRepos:
     - stevemurr/stevemurr.github.io
 projects:
-  - name: Fabric
-    repo: stevemurr/fabric
-    summary: macOS substrate for inter-app context sharing
+  - name: Git Cognition
+    repo: stevemurr/git-cognition
+    summary: ''
     pinned: true
   - name: Marriage Composer
     repo: stevemurr/marriage-composer
     summary: Imagine if marriage had a settings page
     pinned: true
-  - name: Hugo Cloudflare Metrics
-    repo: stevemurr/hugo-cf-worker-metrics
-    summary: Analytics for Hugo sites using Cloudflare Workers + KV
+  - name: Fabric
+    repo: stevemurr/fabric
+    summary: macOS substrate for inter-app context sharing
     pinned: true
   - name: Tic-Tac-Uh-Oh
     repo: stevemurr/tic-tac-uh-oh
