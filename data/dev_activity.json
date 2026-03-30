@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-03-29T18:29:03.199010+00:00",
+    "generatedAt": "2026-03-30T01:00:30.569237+00:00",
     "windowDays": 90,
-    "startDate": "2025-12-30",
-    "endDate": "2026-03-29",
-    "total": 874,
+    "startDate": "2025-12-31",
+    "endDate": "2026-03-30",
+    "total": 873,
     "max": 48,
     "weeks": [
       {
@@ -26,9 +26,9 @@
           },
           {
             "date": "2025-12-30",
-            "count": 6,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2025-12-31",
@@ -612,15 +612,15 @@
         "days": [
           {
             "date": "2026-03-29",
-            "count": 8,
-            "level": 1,
+            "count": 13,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-03-30",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-03-31",
@@ -674,67 +674,67 @@
     {
       "repo": "stevemurr/git-cognition",
       "repoName": "git-cognition",
-      "fullHash": "a014d20a7a0e7a0f16614ac5600da625fd20d588",
-      "shortHash": "a014d20",
-      "date": "2026-03-29T17:16:26Z",
-      "message": "feat: expand git-cognition with claude plugin, tests, and CLI improvements",
+      "fullHash": "6d0aeceac600023bb47cb0d09543e835ad6246f8",
+      "shortHash": "6d0aece",
+      "date": "2026-03-29T20:17:54Z",
+      "message": "fix: reject low-quality BM25 excerpts, show task prompt as fallback",
       "refs": "",
-      "url": "https://github.com/stevemurr/git-cognition/commit/a014d20a7a0e7a0f16614ac5600da625fd20d588",
+      "url": "https://github.com/stevemurr/git-cognition/commit/6d0aeceac600023bb47cb0d09543e835ad6246f8",
       "displayDate": "Mar 29",
-      "displayDateTime": "Mar 29, 10:16 AM PT",
-      "relativeTime": "1 hour ago"
-    },
-    {
-      "repo": "stevemurr/cycle-foundary",
-      "repoName": "cycle-foundary",
-      "fullHash": "bb8beee121849b0c589a1e6e5b2731dc87905cdf",
-      "shortHash": "bb8beee",
-      "date": "2026-03-29T06:58:43Z",
-      "message": "Add README with quick start, controls, and architecture overview",
-      "refs": "",
-      "url": "https://github.com/stevemurr/cycle-foundary/commit/bb8beee121849b0c589a1e6e5b2731dc87905cdf",
-      "displayDate": "Mar 28",
-      "displayDateTime": "Mar 28, 11:58 PM PT",
-      "relativeTime": "11 hours ago"
+      "displayDateTime": "Mar 29, 1:17 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/git-cognition",
       "repoName": "git-cognition",
-      "fullHash": "953cd8b92b9946296bea072127741c5b7deca9d3",
-      "shortHash": "953cd8b",
-      "date": "2026-03-29T06:57:11Z",
-      "message": "chore: bootstrap repository",
+      "fullHash": "3fb90d931c130a8819213996d8a4e971a66deae2",
+      "shortHash": "3fb90d9",
+      "date": "2026-03-29T19:43:43Z",
+      "message": "fix: deprioritize markdown tables in BM25 excerpt selection",
       "refs": "",
-      "url": "https://github.com/stevemurr/git-cognition/commit/953cd8b92b9946296bea072127741c5b7deca9d3",
-      "displayDate": "Mar 28",
-      "displayDateTime": "Mar 28, 11:57 PM PT",
-      "relativeTime": "12 hours ago"
+      "url": "https://github.com/stevemurr/git-cognition/commit/3fb90d931c130a8819213996d8a4e971a66deae2",
+      "displayDate": "Mar 29",
+      "displayDateTime": "Mar 29, 12:43 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
-      "repo": "stevemurr/cycle-foundary",
-      "repoName": "cycle-foundary",
-      "fullHash": "888167161e8e7e7340d603ba073eaa675bd20138",
-      "shortHash": "8881671",
-      "date": "2026-03-26T07:12:02Z",
-      "message": "Add modular cursor feedback system with ghost preview and validity",
+      "repo": "stevemurr/git-cognition",
+      "repoName": "git-cognition",
+      "fullHash": "405e9f7d7c7c93797d230c9af2340cfbf94b70fd",
+      "shortHash": "405e9f7",
+      "date": "2026-03-29T19:14:06Z",
+      "message": "fix: git log parser and update README",
       "refs": "",
-      "url": "https://github.com/stevemurr/cycle-foundary/commit/888167161e8e7e7340d603ba073eaa675bd20138",
-      "displayDate": "Mar 26",
-      "displayDateTime": "Mar 26, 12:12 AM PT",
-      "relativeTime": "3 days ago"
+      "url": "https://github.com/stevemurr/git-cognition/commit/405e9f7d7c7c93797d230c9af2340cfbf94b70fd",
+      "displayDate": "Mar 29",
+      "displayDateTime": "Mar 29, 12:14 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
-      "repo": "stevemurr/cycle-foundary",
-      "repoName": "cycle-foundary",
-      "fullHash": "2f11038a8b3df9af66f99c5880e32e8aea50092e",
-      "shortHash": "2f11038",
-      "date": "2026-03-26T06:53:59Z",
-      "message": "Fix Makefile: use absolute path so it works from any directory",
+      "repo": "stevemurr/git-cognition",
+      "repoName": "git-cognition",
+      "fullHash": "c4df46cedcdba0607e8bd4243568f144ac8ec228",
+      "shortHash": "c4df46c",
+      "date": "2026-03-29T18:47:50Z",
+      "message": "feat: git-cognition v5 \u2014 Go rewrite with colored output",
       "refs": "",
-      "url": "https://github.com/stevemurr/cycle-foundary/commit/2f11038a8b3df9af66f99c5880e32e8aea50092e",
-      "displayDate": "Mar 25",
-      "displayDateTime": "Mar 25, 11:53 PM PT",
-      "relativeTime": "3 days ago"
+      "url": "https://github.com/stevemurr/git-cognition/commit/c4df46cedcdba0607e8bd4243568f144ac8ec228",
+      "displayDate": "Mar 29",
+      "displayDateTime": "Mar 29, 11:47 AM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/git-cognition",
+      "repoName": "git-cognition",
+      "fullHash": "e942b36b2741dfc05df7ef0c9a0f4154a3784e1e",
+      "shortHash": "e942b36",
+      "date": "2026-03-29T17:19:40Z",
+      "message": "chore: clean slate for v2 redesign",
+      "refs": "",
+      "url": "https://github.com/stevemurr/git-cognition/commit/e942b36b2741dfc05df7ef0c9a0f4154a3784e1e",
+      "displayDate": "Mar 29",
+      "displayDateTime": "Mar 29, 10:19 AM PT",
+      "relativeTime": "8 hours ago"
     }
   ]
 }
