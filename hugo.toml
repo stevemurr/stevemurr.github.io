@@ -28,9 +28,9 @@ theme = 'ResumeFrame'
     url = "/"
     weight = 10
   [[menu.main]]
-    identifier = "articles"
+    identifier = "research"
     name = "Research"
-    url = "/articles/"
+    url = "/research/"
     weight = 20
 
 [outputs]

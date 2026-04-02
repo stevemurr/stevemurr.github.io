@@ -66,8 +66,8 @@ const LLM_CHAT_STOP_WORDS = new Set([
   "would",
 ]);
 const POST_BACK_DESTINATIONS = {
-  articles: {
-    path: "/articles/",
+  research: {
+    path: "/research/",
     label: "Research",
   },
   code: {
@@ -139,8 +139,8 @@ function getPostBackDestination() {
     }
 
     const pathname = normalizePathname(referrer.pathname);
-    if (pathname === normalizePathname(POST_BACK_DESTINATIONS.articles.path)) {
-      return POST_BACK_DESTINATIONS.articles;
+    if (pathname === normalizePathname(POST_BACK_DESTINATIONS.research.path)) {
+      return POST_BACK_DESTINATIONS.research;
     }
 
     if (

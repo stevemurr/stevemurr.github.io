@@ -6,8 +6,8 @@
   <div class="article-index__list">
     {{- range $page := $pages }}
     {{- $link := $page.RelPermalink }}
-    {{- if eq $linkMode "articles" }}
-    {{- $link = printf "%s?from=articles" $page.RelPermalink }}
+    {{- if eq $linkMode "research" }}
+    {{- $link = printf "%s?from=research" $page.RelPermalink }}
     {{- end }}
     <article class="article-index__item">
       <a class="article-index__link" href="{{ $link }}">

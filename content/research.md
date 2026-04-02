@@ -1,4 +1,4 @@
 ---
 title: "Research"
-layout: "articles"
+layout: "research"
 ---
