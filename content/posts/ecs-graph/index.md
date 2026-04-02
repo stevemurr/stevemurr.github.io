@@ -14,7 +14,8 @@ params:
   cardGradient: '135deg, #1e3a5f, #2563eb, #60a5fa'
   cardIcon: layers
 ---
-Entity Component System is one of those patterns that sounds simple on paper — entities are IDs, components are data, systems are logic — but the emergent behavior of a running ECS world is hard to grasp without seeing it. These interactive demos let you poke at a live ECS and watch what happens.
+
+Here are some interactive ECS systems.
 
 ## The Graph
 
