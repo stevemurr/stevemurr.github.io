@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-09T12:41:59.381987+00:00",
+    "generatedAt": "2026-04-09T18:37:27.997468+00:00",
     "windowDays": 90,
     "startDate": "2026-01-10",
     "endDate": "2026-04-09",
-    "total": 762,
+    "total": 763,
     "max": 48,
     "weeks": [
       {
@@ -636,7 +636,7 @@
           },
           {
             "date": "2026-04-09",
-            "count": 2,
+            "count": 3,
             "level": 1,
             "inRange": true
           },
@@ -678,6 +678,19 @@
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
+      "fullHash": "7c5fccafd51182981eeb7436907884682adbbaf2",
+      "shortHash": "7c5fcca",
+      "date": "2026-04-09T15:10:42Z",
+      "message": "Fix OOM crash on large audio files: memory growth + eliminate double-copy",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/7c5fccafd51182981eeb7436907884682adbbaf2",
+      "displayDate": "Apr 9",
+      "displayDateTime": "Apr 9, 8:10 AM PT",
+      "relativeTime": "3 hours ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
       "fullHash": "b65852bdf6268d4e95ce4651e316fc33f0d839b6",
       "shortHash": "b65852b",
       "date": "2026-04-09T07:10:17Z",
@@ -686,7 +699,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/b65852bdf6268d4e95ce4651e316fc33f0d839b6",
       "displayDate": "Apr 9",
       "displayDateTime": "Apr 9, 12:10 AM PT",
-      "relativeTime": "6 hours ago"
+      "relativeTime": "11 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -699,7 +712,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/a33ad89566af03307bab0a8387aca1e3066817c4",
       "displayDate": "Apr 8",
       "displayDateTime": "Apr 8, 11:58 PM PT",
-      "relativeTime": "6 hours ago"
+      "relativeTime": "12 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -712,7 +725,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/0dd1cd35c3d79ec74b12359d7fddfead04f8c82a",
       "displayDate": "Apr 8",
       "displayDateTime": "Apr 8, 11:56 PM PT",
-      "relativeTime": "6 hours ago"
+      "relativeTime": "12 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -725,20 +738,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/a71a2892855bf1e28ec56a05e430df63b8f3743b",
       "displayDate": "Apr 8",
       "displayDateTime": "Apr 8, 10:26 PM PT",
-      "relativeTime": "7 hours ago"
-    },
-    {
-      "repo": "stevemurr/browser-daw",
-      "repoName": "browser-daw",
-      "fullHash": "7541297c5459ad2fb6ecc666c69ad370e7de2c76",
-      "shortHash": "7541297",
-      "date": "2026-04-09T01:15:59Z",
-      "message": "Initial commit: browser DAW with WASM audio engine and E2E tests",
-      "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/7541297c5459ad2fb6ecc666c69ad370e7de2c76",
-      "displayDate": "Apr 8",
-      "displayDateTime": "Apr 8, 6:15 PM PT",
-      "relativeTime": "11 hours ago"
+      "relativeTime": "13 hours ago"
     }
   ]
 }
