@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-09T06:50:36.418159+00:00",
+    "generatedAt": "2026-04-09T12:41:59.381987+00:00",
     "windowDays": 90,
     "startDate": "2026-01-10",
     "endDate": "2026-04-09",
-    "total": 759,
+    "total": 762,
     "max": 48,
     "weeks": [
       {
@@ -630,13 +630,13 @@
           },
           {
             "date": "2026-04-08",
-            "count": 3,
+            "count": 5,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-04-09",
-            "count": 1,
+            "count": 2,
             "level": 1,
             "inRange": true
           },
@@ -678,6 +678,45 @@
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
+      "fullHash": "b65852bdf6268d4e95ce4651e316fc33f0d839b6",
+      "shortHash": "b65852b",
+      "date": "2026-04-09T07:10:17Z",
+      "message": "Add mix export: offline render to 16-bit stereo WAV download",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/b65852bdf6268d4e95ce4651e316fc33f0d839b6",
+      "displayDate": "Apr 9",
+      "displayDateTime": "Apr 9, 12:10 AM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
+      "fullHash": "a33ad89566af03307bab0a8387aca1e3066817c4",
+      "shortHash": "a33ad89",
+      "date": "2026-04-09T06:58:56Z",
+      "message": "docs: add README with hero image and project overview",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/a33ad89566af03307bab0a8387aca1e3066817c4",
+      "displayDate": "Apr 8",
+      "displayDateTime": "Apr 8, 11:58 PM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
+      "fullHash": "0dd1cd35c3d79ec74b12359d7fddfead04f8c82a",
+      "shortHash": "0dd1cd3",
+      "date": "2026-04-09T06:56:08Z",
+      "message": "feat: full DSP plugin suite with visual UI and two-column overlay",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/0dd1cd35c3d79ec74b12359d7fddfead04f8c82a",
+      "displayDate": "Apr 8",
+      "displayDateTime": "Apr 8, 11:56 PM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
       "fullHash": "a71a2892855bf1e28ec56a05e430df63b8f3743b",
       "shortHash": "a71a289",
       "date": "2026-04-09T05:26:33Z",
@@ -686,7 +725,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/a71a2892855bf1e28ec56a05e430df63b8f3743b",
       "displayDate": "Apr 8",
       "displayDateTime": "Apr 8, 10:26 PM PT",
-      "relativeTime": "1 hour ago"
+      "relativeTime": "7 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -699,46 +738,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/7541297c5459ad2fb6ecc666c69ad370e7de2c76",
       "displayDate": "Apr 8",
       "displayDateTime": "Apr 8, 6:15 PM PT",
-      "relativeTime": "6 hours ago"
-    },
-    {
-      "repo": "stevemurr/datasheet-ingest",
-      "repoName": "datasheet-ingest",
-      "fullHash": "d642a4c152fc3274e4bedb9dadb136f5ba2bb66a",
-      "shortHash": "d642a4c",
-      "date": "2026-04-04T02:17:38Z",
-      "message": "Add eval pipeline and optimize image preprocessing",
-      "refs": "",
-      "url": "https://github.com/stevemurr/datasheet-ingest/commit/d642a4c152fc3274e4bedb9dadb136f5ba2bb66a",
-      "displayDate": "Apr 3",
-      "displayDateTime": "Apr 3, 7:17 PM PT",
-      "relativeTime": "5 days ago"
-    },
-    {
-      "repo": "stevemurr/datasheet-ingest",
-      "repoName": "datasheet-ingest",
-      "fullHash": "97dcb0bad3472899c35a5ab90d864faa38250fd1",
-      "shortHash": "97dcb0b",
-      "date": "2026-04-04T00:13:39Z",
-      "message": "Initial commit: PDF datasheet extraction tool",
-      "refs": "",
-      "url": "https://github.com/stevemurr/datasheet-ingest/commit/97dcb0bad3472899c35a5ab90d864faa38250fd1",
-      "displayDate": "Apr 3",
-      "displayDateTime": "Apr 3, 5:13 PM PT",
-      "relativeTime": "5 days ago"
-    },
-    {
-      "repo": "stevemurr/git-cognition",
-      "repoName": "git-cognition",
-      "fullHash": "32178390386683bcb81174cbecd148bd2fe40014",
-      "shortHash": "3217839",
-      "date": "2026-04-02T22:30:57Z",
-      "message": "Update readme",
-      "refs": "",
-      "url": "https://github.com/stevemurr/git-cognition/commit/32178390386683bcb81174cbecd148bd2fe40014",
-      "displayDate": "Apr 2",
-      "displayDateTime": "Apr 2, 3:30 PM PT",
-      "relativeTime": "6 days ago"
+      "relativeTime": "11 hours ago"
     }
   ]
 }
