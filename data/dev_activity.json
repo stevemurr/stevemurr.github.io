@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-09T00:50:28.716016+00:00",
+    "generatedAt": "2026-04-09T06:50:36.418159+00:00",
     "windowDays": 90,
     "startDate": "2026-01-10",
     "endDate": "2026-04-09",
-    "total": 755,
+    "total": 759,
     "max": 48,
     "weeks": [
       {
@@ -630,14 +630,14 @@
           },
           {
             "date": "2026-04-08",
-            "count": 0,
-            "level": 0,
+            "count": 3,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-04-09",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
@@ -676,6 +676,32 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
+      "fullHash": "a71a2892855bf1e28ec56a05e430df63b8f3743b",
+      "shortHash": "a71a289",
+      "date": "2026-04-09T05:26:33Z",
+      "message": "fix: strip PCM buffers from React props to eliminate 1.5-2s drag freeze",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/a71a2892855bf1e28ec56a05e430df63b8f3743b",
+      "displayDate": "Apr 8",
+      "displayDateTime": "Apr 8, 10:26 PM PT",
+      "relativeTime": "1 hour ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
+      "fullHash": "7541297c5459ad2fb6ecc666c69ad370e7de2c76",
+      "shortHash": "7541297",
+      "date": "2026-04-09T01:15:59Z",
+      "message": "Initial commit: browser DAW with WASM audio engine and E2E tests",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/7541297c5459ad2fb6ecc666c69ad370e7de2c76",
+      "displayDate": "Apr 8",
+      "displayDateTime": "Apr 8, 6:15 PM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
       "repo": "stevemurr/datasheet-ingest",
       "repoName": "datasheet-ingest",
       "fullHash": "d642a4c152fc3274e4bedb9dadb136f5ba2bb66a",
@@ -712,32 +738,6 @@
       "url": "https://github.com/stevemurr/git-cognition/commit/32178390386683bcb81174cbecd148bd2fe40014",
       "displayDate": "Apr 2",
       "displayDateTime": "Apr 2, 3:30 PM PT",
-      "relativeTime": "6 days ago"
-    },
-    {
-      "repo": "stevemurr/git-cognition",
-      "repoName": "git-cognition",
-      "fullHash": "a909079f97110a76e3221c97b5b7dd2f99d2e8a1",
-      "shortHash": "a909079",
-      "date": "2026-04-02T22:28:17Z",
-      "message": "docs: add example output screenshot to README",
-      "refs": "",
-      "url": "https://github.com/stevemurr/git-cognition/commit/a909079f97110a76e3221c97b5b7dd2f99d2e8a1",
-      "displayDate": "Apr 2",
-      "displayDateTime": "Apr 2, 3:28 PM PT",
-      "relativeTime": "6 days ago"
-    },
-    {
-      "repo": "stevemurr/git-cognition",
-      "repoName": "git-cognition",
-      "fullHash": "814a0594d96d8ddf0db7af49cf0078dc14eac919",
-      "shortHash": "814a059",
-      "date": "2026-04-02T21:23:31Z",
-      "message": "remove spec.md",
-      "refs": "",
-      "url": "https://github.com/stevemurr/git-cognition/commit/814a0594d96d8ddf0db7af49cf0078dc14eac919",
-      "displayDate": "Apr 2",
-      "displayDateTime": "Apr 2, 2:23 PM PT",
       "relativeTime": "6 days ago"
     }
   ]
