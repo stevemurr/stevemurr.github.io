@@ -3,59 +3,13 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-09T18:37:27.997468+00:00",
+    "generatedAt": "2026-04-10T00:59:31.813951+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-10",
-    "endDate": "2026-04-09",
-    "total": 763,
+    "startDate": "2026-01-11",
+    "endDate": "2026-04-10",
+    "total": 767,
     "max": 48,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2026-01-04",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-05",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-06",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-07",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-08",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-09",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-10",
-            "count": 2,
-            "level": 1,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -636,7 +590,7 @@
           },
           {
             "date": "2026-04-09",
-            "count": 3,
+            "count": 9,
             "level": 1,
             "inRange": true
           },
@@ -644,7 +598,7 @@
             "date": "2026-04-10",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-04-11",
@@ -662,15 +616,15 @@
       },
       {
         "label": "Feb",
-        "column": 4
+        "column": 3
       },
       {
         "label": "Mar",
-        "column": 8
+        "column": 7
       },
       {
         "label": "Apr",
-        "column": 12
+        "column": 11
       }
     ]
   },
@@ -678,67 +632,67 @@
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
-      "fullHash": "7c5fccafd51182981eeb7436907884682adbbaf2",
-      "shortHash": "7c5fcca",
-      "date": "2026-04-09T15:10:42Z",
-      "message": "Fix OOM crash on large audio files: memory growth + eliminate double-copy",
+      "fullHash": "e8e41670828453b94c9508e166b1e5288aeca5c4",
+      "shortHash": "e8e4167",
+      "date": "2026-04-09T22:13:52Z",
+      "message": "Update hero image",
       "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/7c5fccafd51182981eeb7436907884682adbbaf2",
+      "url": "https://github.com/stevemurr/browser-daw/commit/e8e41670828453b94c9508e166b1e5288aeca5c4",
       "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 8:10 AM PT",
+      "displayDateTime": "Apr 9, 3:13 PM PT",
       "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
-      "fullHash": "b65852bdf6268d4e95ce4651e316fc33f0d839b6",
-      "shortHash": "b65852b",
-      "date": "2026-04-09T07:10:17Z",
-      "message": "Add mix export: offline render to 16-bit stereo WAV download",
+      "fullHash": "0ee1e73033c7c16de34dfd199a3d50e8e8095486",
+      "shortHash": "0ee1e73",
+      "date": "2026-04-09T21:38:30Z",
+      "message": "fix: eliminate audio pops on EQ parameter changes and playhead seeks",
       "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/b65852bdf6268d4e95ce4651e316fc33f0d839b6",
+      "url": "https://github.com/stevemurr/browser-daw/commit/0ee1e73033c7c16de34dfd199a3d50e8e8095486",
       "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 12:10 AM PT",
-      "relativeTime": "11 hours ago"
+      "displayDateTime": "Apr 9, 2:38 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
-      "fullHash": "a33ad89566af03307bab0a8387aca1e3066817c4",
-      "shortHash": "a33ad89",
-      "date": "2026-04-09T06:58:56Z",
-      "message": "docs: add README with hero image and project overview",
+      "fullHash": "96907a15671bcf51ac28bbda9cb52a945f1ed663",
+      "shortHash": "96907a1",
+      "date": "2026-04-09T20:43:01Z",
+      "message": "feat: Dimension D-style quadrature chorus with Size+Mix UI",
       "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/a33ad89566af03307bab0a8387aca1e3066817c4",
-      "displayDate": "Apr 8",
-      "displayDateTime": "Apr 8, 11:58 PM PT",
-      "relativeTime": "12 hours ago"
+      "url": "https://github.com/stevemurr/browser-daw/commit/96907a15671bcf51ac28bbda9cb52a945f1ed663",
+      "displayDate": "Apr 9",
+      "displayDateTime": "Apr 9, 1:43 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
-      "fullHash": "0dd1cd35c3d79ec74b12359d7fddfead04f8c82a",
-      "shortHash": "0dd1cd3",
-      "date": "2026-04-09T06:56:08Z",
-      "message": "feat: full DSP plugin suite with visual UI and two-column overlay",
+      "fullHash": "2edb3c92abc0ee68891cc215e05d39ff96cd730d",
+      "shortHash": "2edb3c9",
+      "date": "2026-04-09T20:30:47Z",
+      "message": "fix: replace stale dbPromise references with getDb() in SessionStore",
       "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/0dd1cd35c3d79ec74b12359d7fddfead04f8c82a",
-      "displayDate": "Apr 8",
-      "displayDateTime": "Apr 8, 11:56 PM PT",
-      "relativeTime": "12 hours ago"
+      "url": "https://github.com/stevemurr/browser-daw/commit/2edb3c92abc0ee68891cc215e05d39ff96cd730d",
+      "displayDate": "Apr 9",
+      "displayDateTime": "Apr 9, 1:30 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
-      "fullHash": "a71a2892855bf1e28ec56a05e430df63b8f3743b",
-      "shortHash": "a71a289",
-      "date": "2026-04-09T05:26:33Z",
-      "message": "fix: strip PCM buffers from React props to eliminate 1.5-2s drag freeze",
+      "fullHash": "61f31c3bd90dbd35e06fe50f1864be68f3462316",
+      "shortHash": "61f31c3",
+      "date": "2026-04-09T20:28:27Z",
+      "message": "feat: session persistence with selector dropdown",
       "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/a71a2892855bf1e28ec56a05e430df63b8f3743b",
-      "displayDate": "Apr 8",
-      "displayDateTime": "Apr 8, 10:26 PM PT",
-      "relativeTime": "13 hours ago"
+      "url": "https://github.com/stevemurr/browser-daw/commit/61f31c3bd90dbd35e06fe50f1864be68f3462316",
+      "displayDate": "Apr 9",
+      "displayDateTime": "Apr 9, 1:28 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
