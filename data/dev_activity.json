@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-11T00:56:20.464124+00:00",
+    "generatedAt": "2026-04-11T06:40:08.077082+00:00",
     "windowDays": 90,
     "startDate": "2026-01-12",
     "endDate": "2026-04-11",
-    "total": 765,
+    "total": 768,
     "max": 48,
     "weeks": [
       {
@@ -596,14 +596,14 @@
           },
           {
             "date": "2026-04-10",
-            "count": 3,
+            "count": 5,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-04-11",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           }
         ]
@@ -630,6 +630,19 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/jupyter-redux",
+      "repoName": "jupyter-redux",
+      "fullHash": "c343a1b80f4bd2ff4e5bd592b3e73c7094146fa9",
+      "shortHash": "c343a1b",
+      "date": "2026-04-11T06:23:09Z",
+      "message": "Initial project setup with container notebook environment specs",
+      "refs": "",
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/c343a1b80f4bd2ff4e5bd592b3e73c7094146fa9",
+      "displayDate": "Apr 10",
+      "displayDateTime": "Apr 10, 11:23 PM PT",
+      "relativeTime": "17 minutes ago"
+    },
+    {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
       "fullHash": "9a418e42883ac917a605aed5d7144e92a0180e41",
@@ -640,7 +653,20 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/9a418e42883ac917a605aed5d7144e92a0180e41",
       "displayDate": "Apr 10",
       "displayDateTime": "Apr 10, 5:30 PM PT",
-      "relativeTime": "26 minutes ago"
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/jupyter-redux",
+      "repoName": "jupyter-redux",
+      "fullHash": "c843705118691b0f813eb2ac0356dd509c18b8d1",
+      "shortHash": "c843705",
+      "date": "2026-04-11T00:18:56Z",
+      "message": "Initial commit from Specify template",
+      "refs": "",
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/c843705118691b0f813eb2ac0356dd509c18b8d1",
+      "displayDate": "Apr 10",
+      "displayDateTime": "Apr 10, 5:18 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -653,7 +679,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/991dd6f276653a086fdfad3f408013e4a58fcb5e",
       "displayDate": "Apr 10",
       "displayDateTime": "Apr 10, 1:58 PM PT",
-      "relativeTime": "4 hours ago"
+      "relativeTime": "10 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -666,33 +692,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/34a01e4647e11d54f1ebab9cc950c0fa65dd3cb0",
       "displayDate": "Apr 10",
       "displayDateTime": "Apr 10, 12:29 AM PT",
-      "relativeTime": "17 hours ago"
-    },
-    {
-      "repo": "stevemurr/browser-daw",
-      "repoName": "browser-daw",
-      "fullHash": "e8e41670828453b94c9508e166b1e5288aeca5c4",
-      "shortHash": "e8e4167",
-      "date": "2026-04-09T22:13:52Z",
-      "message": "Update hero image",
-      "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/e8e41670828453b94c9508e166b1e5288aeca5c4",
-      "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 3:13 PM PT",
-      "relativeTime": "1 day ago"
-    },
-    {
-      "repo": "stevemurr/browser-daw",
-      "repoName": "browser-daw",
-      "fullHash": "0ee1e73033c7c16de34dfd199a3d50e8e8095486",
-      "shortHash": "0ee1e73",
-      "date": "2026-04-09T21:38:30Z",
-      "message": "fix: eliminate audio pops on EQ parameter changes and playhead seeks",
-      "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/0ee1e73033c7c16de34dfd199a3d50e8e8095486",
-      "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 2:38 PM PT",
-      "relativeTime": "1 day ago"
+      "relativeTime": "23 hours ago"
     }
   ]
 }
