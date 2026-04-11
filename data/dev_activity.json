@@ -3,20 +3,20 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-10T18:34:26.689081+00:00",
+    "generatedAt": "2026-04-11T00:56:20.464124+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-11",
-    "endDate": "2026-04-10",
-    "total": 768,
+    "startDate": "2026-01-12",
+    "endDate": "2026-04-11",
+    "total": 765,
     "max": 48,
     "weeks": [
       {
         "days": [
           {
             "date": "2026-01-11",
-            "count": 5,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-01-12",
@@ -596,7 +596,7 @@
           },
           {
             "date": "2026-04-10",
-            "count": 1,
+            "count": 3,
             "level": 1,
             "inRange": true
           },
@@ -604,7 +604,7 @@
             "date": "2026-04-11",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           }
         ]
       }
@@ -632,6 +632,32 @@
     {
       "repo": "stevemurr/browser-daw",
       "repoName": "browser-daw",
+      "fullHash": "9a418e42883ac917a605aed5d7144e92a0180e41",
+      "shortHash": "9a418e4",
+      "date": "2026-04-11T00:30:06Z",
+      "message": "feat: remove master volume controls and round region borders",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/9a418e42883ac917a605aed5d7144e92a0180e41",
+      "displayDate": "Apr 10",
+      "displayDateTime": "Apr 10, 5:30 PM PT",
+      "relativeTime": "26 minutes ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
+      "fullHash": "991dd6f276653a086fdfad3f408013e4a58fcb5e",
+      "shortHash": "991dd6f",
+      "date": "2026-04-10T20:58:53Z",
+      "message": "feat: musical time (BPM picker + bar ruler) and 2D gain/pan XY pad",
+      "refs": "",
+      "url": "https://github.com/stevemurr/browser-daw/commit/991dd6f276653a086fdfad3f408013e4a58fcb5e",
+      "displayDate": "Apr 10",
+      "displayDateTime": "Apr 10, 1:58 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/browser-daw",
+      "repoName": "browser-daw",
       "fullHash": "34a01e4647e11d54f1ebab9cc950c0fa65dd3cb0",
       "shortHash": "34a01e4",
       "date": "2026-04-10T07:29:07Z",
@@ -640,7 +666,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/34a01e4647e11d54f1ebab9cc950c0fa65dd3cb0",
       "displayDate": "Apr 10",
       "displayDateTime": "Apr 10, 12:29 AM PT",
-      "relativeTime": "11 hours ago"
+      "relativeTime": "17 hours ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -653,7 +679,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/e8e41670828453b94c9508e166b1e5288aeca5c4",
       "displayDate": "Apr 9",
       "displayDateTime": "Apr 9, 3:13 PM PT",
-      "relativeTime": "20 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/browser-daw",
@@ -666,33 +692,7 @@
       "url": "https://github.com/stevemurr/browser-daw/commit/0ee1e73033c7c16de34dfd199a3d50e8e8095486",
       "displayDate": "Apr 9",
       "displayDateTime": "Apr 9, 2:38 PM PT",
-      "relativeTime": "21 hours ago"
-    },
-    {
-      "repo": "stevemurr/browser-daw",
-      "repoName": "browser-daw",
-      "fullHash": "96907a15671bcf51ac28bbda9cb52a945f1ed663",
-      "shortHash": "96907a1",
-      "date": "2026-04-09T20:43:01Z",
-      "message": "feat: Dimension D-style quadrature chorus with Size+Mix UI",
-      "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/96907a15671bcf51ac28bbda9cb52a945f1ed663",
-      "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 1:43 PM PT",
-      "relativeTime": "22 hours ago"
-    },
-    {
-      "repo": "stevemurr/browser-daw",
-      "repoName": "browser-daw",
-      "fullHash": "2edb3c92abc0ee68891cc215e05d39ff96cd730d",
-      "shortHash": "2edb3c9",
-      "date": "2026-04-09T20:30:47Z",
-      "message": "fix: replace stale dbPromise references with getDb() in SessionStore",
-      "refs": "",
-      "url": "https://github.com/stevemurr/browser-daw/commit/2edb3c92abc0ee68891cc215e05d39ff96cd730d",
-      "displayDate": "Apr 9",
-      "displayDateTime": "Apr 9, 1:30 PM PT",
-      "relativeTime": "22 hours ago"
+      "relativeTime": "1 day ago"
     }
   ]
 }
