@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-04-12T01:03:30.836209+00:00",
+    "generatedAt": "2026-04-12T06:49:03.496667+00:00",
     "windowDays": 90,
     "startDate": "2026-01-13",
     "endDate": "2026-04-12",
-    "total": 793,
+    "total": 798,
     "max": 48,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-04-11",
-            "count": 35,
-            "level": 3,
+            "count": 40,
+            "level": 4,
             "inRange": true
           }
         ]
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "3748b46acee99870409fe3668f3d9c50d12665a4",
-      "shortHash": "3748b46",
-      "date": "2026-04-12T00:26:33Z",
-      "message": "Auto-detect CUDA for DAC cache encoding",
+      "fullHash": "af4134340d544034df3fbbd3e2305f469ab59a61",
+      "shortHash": "af41343",
+      "date": "2026-04-12T05:49:44Z",
+      "message": "Deepen VAE to 3 residual blocks per compression stage",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/3748b46acee99870409fe3668f3d9c50d12665a4",
+      "url": "https://github.com/stevemurr/drum-generator/commit/af4134340d544034df3fbbd3e2305f469ab59a61",
       "displayDate": "Apr 11",
-      "displayDateTime": "Apr 11, 5:26 PM PT",
-      "relativeTime": "37 minutes ago"
+      "displayDateTime": "Apr 11, 10:49 PM PT",
+      "relativeTime": "59 minutes ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "87b33fdf2db72534139695f3cdd5dea9832ad91d",
-      "shortHash": "87b33fd",
-      "date": "2026-04-12T00:18:30Z",
-      "message": "Use tqdm progress bar for DAC cache encoding",
+      "fullHash": "4c5b0c272a3d6d603d09977a4f89bfe43b18a75f",
+      "shortHash": "4c5b0c2",
+      "date": "2026-04-12T05:46:46Z",
+      "message": "Parameterize VAE KL weight and warmup in config",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/87b33fdf2db72534139695f3cdd5dea9832ad91d",
+      "url": "https://github.com/stevemurr/drum-generator/commit/4c5b0c272a3d6d603d09977a4f89bfe43b18a75f",
       "displayDate": "Apr 11",
-      "displayDateTime": "Apr 11, 5:18 PM PT",
-      "relativeTime": "45 minutes ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "43d63db37b4931a0eb0f6cb73a99dc2db61906ca",
-      "shortHash": "43d63db",
-      "date": "2026-04-12T00:17:12Z",
-      "message": "Update tutorial for DAC caching and corrected dimensions",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/43d63db37b4931a0eb0f6cb73a99dc2db61906ca",
-      "displayDate": "Apr 11",
-      "displayDateTime": "Apr 11, 5:17 PM PT",
-      "relativeTime": "46 minutes ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "e6ef2ab7e3f9c1e471e9fc81f1183cc3a05cda06",
-      "shortHash": "e6ef2ab",
-      "date": "2026-04-12T00:11:55Z",
-      "message": "Fix DAC dimensions and add DAC latent caching",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/e6ef2ab7e3f9c1e471e9fc81f1183cc3a05cda06",
-      "displayDate": "Apr 11",
-      "displayDateTime": "Apr 11, 5:11 PM PT",
-      "relativeTime": "51 minutes ago"
-    },
-    {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "605775e95df583f14b64d8d808bd73669d5661c0",
-      "shortHash": "605775e",
-      "date": "2026-04-11T23:34:30Z",
-      "message": "Fix monitor: extract epoch from metrics, size canvas on draw",
-      "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/605775e95df583f14b64d8d808bd73669d5661c0",
-      "displayDate": "Apr 11",
-      "displayDateTime": "Apr 11, 4:34 PM PT",
+      "displayDateTime": "Apr 11, 10:46 PM PT",
       "relativeTime": "1 hour ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "d3ceb072b4e15279fdf46050aeb5b542d3dd0597",
+      "shortHash": "d3ceb07",
+      "date": "2026-04-12T01:53:32Z",
+      "message": "Pipeline cache building: prefetch + async disk writes",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/d3ceb072b4e15279fdf46050aeb5b542d3dd0597",
+      "displayDate": "Apr 11",
+      "displayDateTime": "Apr 11, 6:53 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "4c3466f6efb4702cf201622d2d78b016d71de88b",
+      "shortHash": "4c3466f",
+      "date": "2026-04-12T01:52:00Z",
+      "message": "Move CLAP model to GPU for faster embedding computation",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/4c3466f6efb4702cf201622d2d78b016d71de88b",
+      "displayDate": "Apr 11",
+      "displayDateTime": "Apr 11, 6:52 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "19aa58ed948c98d2f4da6cc7ec3fc3c5020cfc20",
+      "shortHash": "19aa58e",
+      "date": "2026-04-12T01:22:38Z",
+      "message": "Fix codec.py to auto-detect CUDA and handle device moves",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/19aa58ed948c98d2f4da6cc7ec3fc3c5020cfc20",
+      "displayDate": "Apr 11",
+      "displayDateTime": "Apr 11, 6:22 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
