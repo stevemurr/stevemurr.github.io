@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-14T01:03:53.862257+00:00",
+    "generatedAt": "2026-04-14T06:55:53.689275+00:00",
     "windowDays": 90,
     "startDate": "2026-01-15",
     "endDate": "2026-04-14",
-    "total": 809,
+    "total": 814,
     "max": 48,
     "weeks": [
       {
@@ -618,8 +618,8 @@
           },
           {
             "date": "2026-04-13",
-            "count": 9,
-            "level": 1,
+            "count": 14,
+            "level": 2,
             "inRange": true
           },
           {
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "4cd1c0f03a82884e7468a4b09b96ef6ac3c08af2",
-      "shortHash": "4cd1c0f",
-      "date": "2026-04-14T00:40:42Z",
-      "message": "DAC inference optimizations: weight-norm fusion, bf16, torch.compile",
+      "repo": "stevemurr/jupyter-redux",
+      "repoName": "jupyter-redux",
+      "fullHash": "d6256a62a8426cbe7f7ad0bc3c98f09a22e3be0c",
+      "shortHash": "d6256a6",
+      "date": "2026-04-14T06:13:19Z",
+      "message": "Rewrite README around Environment model",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/4cd1c0f03a82884e7468a4b09b96ef6ac3c08af2",
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/d6256a62a8426cbe7f7ad0bc3c98f09a22e3be0c",
       "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 5:40 PM PT",
-      "relativeTime": "23 minutes ago"
+      "displayDateTime": "Apr 13, 11:13 PM PT",
+      "relativeTime": "42 minutes ago"
+    },
+    {
+      "repo": "stevemurr/jupyter-redux",
+      "repoName": "jupyter-redux",
+      "fullHash": "558b38bf0fc453acfb1320e159ff50859ce1a51f",
+      "shortHash": "558b38b",
+      "date": "2026-04-14T06:04:07Z",
+      "message": "Fix cell content loss on refresh from shared debounce timer",
+      "refs": "",
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/558b38bf0fc453acfb1320e159ff50859ce1a51f",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 11:04 PM PT",
+      "relativeTime": "51 minutes ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "d9b8b0e3bd921104162fb2fb99fe2f84a0e9e9bf",
-      "shortHash": "d9b8b0e",
-      "date": "2026-04-14T00:32:31Z",
-      "message": "Add phase loss and mel-scale STFT loss options to VAE training",
+      "fullHash": "93724d17446e2be448dbbebc85d52b8ee925840c",
+      "shortHash": "93724d1",
+      "date": "2026-04-14T03:03:36Z",
+      "message": "Add --resume-ckpt to resume training from saved checkpoints",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/d9b8b0e3bd921104162fb2fb99fe2f84a0e9e9bf",
+      "url": "https://github.com/stevemurr/drum-generator/commit/93724d17446e2be448dbbebc85d52b8ee925840c",
       "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 5:32 PM PT",
-      "relativeTime": "31 minutes ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "ec8ca320c2628fa4578894fd09c7ca506dacceb0",
-      "shortHash": "ec8ca32",
-      "date": "2026-04-13T23:03:45Z",
-      "message": "Add --cudnn-benchmark {auto,on,off} CLI flag",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/ec8ca320c2628fa4578894fd09c7ca506dacceb0",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 4:03 PM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "b29a54b811d445a4a220b8490d05c82c52f4b8ee",
-      "shortHash": "b29a54b",
-      "date": "2026-04-13T22:16:32Z",
-      "message": "Add VAE experiment CLI flags and auraloss multi-res STFT loss",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/b29a54b811d445a4a220b8490d05c82c52f4b8ee",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 3:16 PM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "8f62ac17ce05e1bc9c1ecebc11bdcf989f1495b7",
-      "shortHash": "8f62ac1",
-      "date": "2026-04-13T21:23:44Z",
-      "message": "Add --batch-size, --vae-epochs, --dit-epochs flags to train.py",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/8f62ac17ce05e1bc9c1ecebc11bdcf989f1495b7",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 2:23 PM PT",
+      "displayDateTime": "Apr 13, 8:03 PM PT",
       "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "f5116c88c183127905130bcec60fdaba73072eda",
+      "shortHash": "f5116c8",
+      "date": "2026-04-14T02:46:05Z",
+      "message": "Log wall-clock per epoch in VAE and DiT training summaries",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/f5116c88c183127905130bcec60fdaba73072eda",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 7:46 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "40af5a54f195c0e47305ba7f4ff1735a131f544e",
+      "shortHash": "40af5a5",
+      "date": "2026-04-14T02:13:41Z",
+      "message": "Optional precomputed target waveforms in MemmapDACDataset",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/40af5a54f195c0e47305ba7f4ff1735a131f544e",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 7:13 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
