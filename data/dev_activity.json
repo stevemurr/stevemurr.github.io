@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-13T18:44:40.173385+00:00",
+    "generatedAt": "2026-04-14T01:03:53.862257+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-14",
-    "endDate": "2026-04-13",
-    "total": 804,
+    "startDate": "2026-01-15",
+    "endDate": "2026-04-14",
+    "total": 809,
     "max": 48,
     "weeks": [
       {
@@ -32,9 +32,9 @@
           },
           {
             "date": "2026-01-14",
-            "count": 2,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-01-15",
@@ -618,7 +618,7 @@
           },
           {
             "date": "2026-04-13",
-            "count": 2,
+            "count": 9,
             "level": 1,
             "inRange": true
           },
@@ -626,7 +626,7 @@
             "date": "2026-04-14",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-04-15",
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "93a1fabc4d007df45a3d15ce3202f61698303969",
-      "shortHash": "93a1fab",
-      "date": "2026-04-13T05:07:18Z",
-      "message": "Add `apt install` cell magic with bare-syntax detection",
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "4cd1c0f03a82884e7468a4b09b96ef6ac3c08af2",
+      "shortHash": "4cd1c0f",
+      "date": "2026-04-14T00:40:42Z",
+      "message": "DAC inference optimizations: weight-norm fusion, bf16, torch.compile",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/93a1fabc4d007df45a3d15ce3202f61698303969",
-      "displayDate": "Apr 12",
-      "displayDateTime": "Apr 12, 10:07 PM PT",
-      "relativeTime": "14 hours ago"
-    },
-    {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "6b9b0595a8918ad52ae02b159740d4ee9cb08787",
-      "shortHash": "6b9b059",
-      "date": "2026-04-13T04:27:31Z",
-      "message": "Sidebar overhaul, shared mounts, host metrics, stop flow, misc",
-      "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/6b9b0595a8918ad52ae02b159740d4ee9cb08787",
-      "displayDate": "Apr 12",
-      "displayDateTime": "Apr 12, 9:27 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/4cd1c0f03a82884e7468a4b09b96ef6ac3c08af2",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 5:40 PM PT",
+      "relativeTime": "23 minutes ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "2c2362e2dab5d408c296dbbd4503da2920acbb41",
-      "shortHash": "2c2362e",
-      "date": "2026-04-12T18:05:08Z",
-      "message": "Fix zip upload in listen.py",
+      "fullHash": "d9b8b0e3bd921104162fb2fb99fe2f84a0e9e9bf",
+      "shortHash": "d9b8b0e",
+      "date": "2026-04-14T00:32:31Z",
+      "message": "Add phase loss and mel-scale STFT loss options to VAE training",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/2c2362e2dab5d408c296dbbd4503da2920acbb41",
-      "displayDate": "Apr 12",
-      "displayDateTime": "Apr 12, 11:05 AM PT",
-      "relativeTime": "1 day ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/d9b8b0e3bd921104162fb2fb99fe2f84a0e9e9bf",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 5:32 PM PT",
+      "relativeTime": "31 minutes ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "1b8130c274d6887fd14a7615a8534d7fed98d58c",
-      "shortHash": "1b8130c",
-      "date": "2026-04-12T18:00:15Z",
-      "message": "Add file upload to listen.py (drag-and-drop + zip extraction)",
+      "fullHash": "ec8ca320c2628fa4578894fd09c7ca506dacceb0",
+      "shortHash": "ec8ca32",
+      "date": "2026-04-13T23:03:45Z",
+      "message": "Add --cudnn-benchmark {auto,on,off} CLI flag",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/1b8130c274d6887fd14a7615a8534d7fed98d58c",
-      "displayDate": "Apr 12",
-      "displayDateTime": "Apr 12, 11:00 AM PT",
-      "relativeTime": "1 day ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/ec8ca320c2628fa4578894fd09c7ca506dacceb0",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 4:03 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "0e190cbdf554ab587ded61541dff162a2a2bc806",
-      "shortHash": "0e190cb",
-      "date": "2026-04-12T17:46:01Z",
-      "message": "Move helper scripts to scripts/ directory",
+      "fullHash": "b29a54b811d445a4a220b8490d05c82c52f4b8ee",
+      "shortHash": "b29a54b",
+      "date": "2026-04-13T22:16:32Z",
+      "message": "Add VAE experiment CLI flags and auraloss multi-res STFT loss",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/0e190cbdf554ab587ded61541dff162a2a2bc806",
-      "displayDate": "Apr 12",
-      "displayDateTime": "Apr 12, 10:46 AM PT",
-      "relativeTime": "1 day ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/b29a54b811d445a4a220b8490d05c82c52f4b8ee",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 3:16 PM PT",
+      "relativeTime": "3 hours ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "8f62ac17ce05e1bc9c1ecebc11bdcf989f1495b7",
+      "shortHash": "8f62ac1",
+      "date": "2026-04-13T21:23:44Z",
+      "message": "Add --batch-size, --vae-epochs, --dit-epochs flags to train.py",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/8f62ac17ce05e1bc9c1ecebc11bdcf989f1495b7",
+      "displayDate": "Apr 13",
+      "displayDateTime": "Apr 13, 2:23 PM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
