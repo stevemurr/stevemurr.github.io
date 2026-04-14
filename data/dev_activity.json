@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-14T12:41:03.699759+00:00",
+    "generatedAt": "2026-04-14T18:43:28.942685+00:00",
     "windowDays": 90,
     "startDate": "2026-01-15",
     "endDate": "2026-04-14",
-    "total": 814,
+    "total": 819,
     "max": 48,
     "weeks": [
       {
@@ -624,8 +624,8 @@
           },
           {
             "date": "2026-04-14",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           },
           {
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "0257175206b6dee56643881e2d4ff2999a1c41f7",
+      "shortHash": "0257175",
+      "date": "2026-04-14T18:37:46Z",
+      "message": "Add per-bin weighted MRSTFT and lowpass L1 loss terms",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/0257175206b6dee56643881e2d4ff2999a1c41f7",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 11:37 AM PT",
+      "relativeTime": "5 minutes ago"
+    },
+    {
       "repo": "stevemurr/jupyter-redux",
       "repoName": "jupyter-redux",
-      "fullHash": "d6256a62a8426cbe7f7ad0bc3c98f09a22e3be0c",
-      "shortHash": "d6256a6",
-      "date": "2026-04-14T06:13:19Z",
-      "message": "Rewrite README around Environment model",
+      "fullHash": "a0cc60cc9c9b742cc9c64255dc57af317ec2e43e",
+      "shortHash": "a0cc60c",
+      "date": "2026-04-14T17:14:29Z",
+      "message": "Fix cell loss when adding cells during execution",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/d6256a62a8426cbe7f7ad0bc3c98f09a22e3be0c",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 11:13 PM PT",
-      "relativeTime": "6 hours ago"
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/a0cc60cc9c9b742cc9c64255dc57af317ec2e43e",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 10:14 AM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/jupyter-redux",
       "repoName": "jupyter-redux",
-      "fullHash": "558b38bf0fc453acfb1320e159ff50859ce1a51f",
-      "shortHash": "558b38b",
-      "date": "2026-04-14T06:04:07Z",
-      "message": "Fix cell content loss on refresh from shared debounce timer",
+      "fullHash": "3568672ed4c49734dac539a7492caad46ebb2f62",
+      "shortHash": "3568672",
+      "date": "2026-04-14T17:03:56Z",
+      "message": "Auto-detect training metrics and render live charts",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/558b38bf0fc453acfb1320e159ff50859ce1a51f",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 11:04 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/jupyter-redux/commit/3568672ed4c49734dac539a7492caad46ebb2f62",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 10:03 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "93724d17446e2be448dbbebc85d52b8ee925840c",
-      "shortHash": "93724d1",
-      "date": "2026-04-14T03:03:36Z",
-      "message": "Add --resume-ckpt to resume training from saved checkpoints",
+      "fullHash": "80c5d6268cb29a3cd033a3e20a29b6c1069d4e7a",
+      "shortHash": "80c5d62",
+      "date": "2026-04-14T15:51:45Z",
+      "message": "Add 4096-size FFT tier to VAE MRSTFT losses",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/93724d17446e2be448dbbebc85d52b8ee925840c",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 8:03 PM PT",
-      "relativeTime": "10 hours ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/80c5d6268cb29a3cd033a3e20a29b6c1069d4e7a",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 8:51 AM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "f5116c88c183127905130bcec60fdaba73072eda",
-      "shortHash": "f5116c8",
-      "date": "2026-04-14T02:46:05Z",
-      "message": "Log wall-clock per epoch in VAE and DiT training summaries",
+      "fullHash": "0356124f5253d003056135b413ee5236423caa94",
+      "shortHash": "0356124",
+      "date": "2026-04-14T15:39:30Z",
+      "message": "Drop RNG state from checkpoints",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/f5116c88c183127905130bcec60fdaba73072eda",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 7:46 PM PT",
-      "relativeTime": "10 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "40af5a54f195c0e47305ba7f4ff1735a131f544e",
-      "shortHash": "40af5a5",
-      "date": "2026-04-14T02:13:41Z",
-      "message": "Optional precomputed target waveforms in MemmapDACDataset",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/40af5a54f195c0e47305ba7f4ff1735a131f544e",
-      "displayDate": "Apr 13",
-      "displayDateTime": "Apr 13, 7:13 PM PT",
-      "relativeTime": "10 hours ago"
+      "url": "https://github.com/stevemurr/drum-generator/commit/0356124f5253d003056135b413ee5236423caa94",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 8:39 AM PT",
+      "relativeTime": "3 hours ago"
     }
   ]
 }
