@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-14T18:43:28.942685+00:00",
+    "generatedAt": "2026-04-15T01:04:21.543107+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-15",
-    "endDate": "2026-04-14",
-    "total": 819,
+    "startDate": "2026-01-16",
+    "endDate": "2026-04-15",
+    "total": 821,
     "max": 48,
     "weeks": [
       {
@@ -38,9 +38,9 @@
           },
           {
             "date": "2026-01-15",
-            "count": 4,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-01-16",
@@ -624,7 +624,7 @@
           },
           {
             "date": "2026-04-14",
-            "count": 5,
+            "count": 11,
             "level": 1,
             "inRange": true
           },
@@ -632,7 +632,7 @@
             "date": "2026-04-15",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-04-16",
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
-      "fullHash": "0257175206b6dee56643881e2d4ff2999a1c41f7",
-      "shortHash": "0257175",
-      "date": "2026-04-14T18:37:46Z",
-      "message": "Add per-bin weighted MRSTFT and lowpass L1 loss terms",
+      "fullHash": "b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
+      "shortHash": "b3aa372",
+      "date": "2026-04-15T00:38:52Z",
+      "message": "Expose --dit-dim / --dit-heads / --dit-layers CLI flags",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/0257175206b6dee56643881e2d4ff2999a1c41f7",
+      "url": "https://github.com/stevemurr/drum-generator/commit/b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
       "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 11:37 AM PT",
-      "relativeTime": "5 minutes ago"
+      "displayDateTime": "Apr 14, 5:38 PM PT",
+      "relativeTime": "25 minutes ago"
     },
     {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "a0cc60cc9c9b742cc9c64255dc57af317ec2e43e",
-      "shortHash": "a0cc60c",
-      "date": "2026-04-14T17:14:29Z",
-      "message": "Fix cell loss when adding cells during execution",
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "a3c73ef053e852cca564e9c498d7c86cb05e4bfc",
+      "shortHash": "a3c73ef",
+      "date": "2026-04-15T00:38:10Z",
+      "message": "Add crest-factor and attack-time metrics to recon_eval",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/a0cc60cc9c9b742cc9c64255dc57af317ec2e43e",
+      "url": "https://github.com/stevemurr/drum-generator/commit/a3c73ef053e852cca564e9c498d7c86cb05e4bfc",
       "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 10:14 AM PT",
+      "displayDateTime": "Apr 14, 5:38 PM PT",
+      "relativeTime": "26 minutes ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "26c3d4bc98e20eb9ae3f0aa33e2ab926a02b8862",
+      "shortHash": "26c3d4b",
+      "date": "2026-04-15T00:26:24Z",
+      "message": "Add gen_eval.py for distributional DiT generation diagnostics",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/26c3d4bc98e20eb9ae3f0aa33e2ab926a02b8862",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 5:26 PM PT",
+      "relativeTime": "38 minutes ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "12eca6058c5e5a339ce23bc207bfd2cd05b1a799",
+      "shortHash": "12eca60",
+      "date": "2026-04-14T23:40:55Z",
+      "message": "Add --dit-eta-min flag symmetric to --vae-eta-min",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/12eca6058c5e5a339ce23bc207bfd2cd05b1a799",
+      "displayDate": "Apr 14",
+      "displayDateTime": "Apr 14, 4:40 PM PT",
       "relativeTime": "1 hour ago"
     },
     {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "3568672ed4c49734dac539a7492caad46ebb2f62",
-      "shortHash": "3568672",
-      "date": "2026-04-14T17:03:56Z",
-      "message": "Auto-detect training metrics and render live charts",
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "19ea9c608ba044a30ee7c54cfe3ebaecdd29a58b",
+      "shortHash": "19ea9c6",
+      "date": "2026-04-14T23:33:22Z",
+      "message": "Add --vae-ckpt flag to load a VAE from an arbitrary path for DiT training",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/3568672ed4c49734dac539a7492caad46ebb2f62",
+      "url": "https://github.com/stevemurr/drum-generator/commit/19ea9c608ba044a30ee7c54cfe3ebaecdd29a58b",
       "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 10:03 AM PT",
+      "displayDateTime": "Apr 14, 4:33 PM PT",
       "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "80c5d6268cb29a3cd033a3e20a29b6c1069d4e7a",
-      "shortHash": "80c5d62",
-      "date": "2026-04-14T15:51:45Z",
-      "message": "Add 4096-size FFT tier to VAE MRSTFT losses",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/80c5d6268cb29a3cd033a3e20a29b6c1069d4e7a",
-      "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 8:51 AM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "0356124f5253d003056135b413ee5236423caa94",
-      "shortHash": "0356124",
-      "date": "2026-04-14T15:39:30Z",
-      "message": "Drop RNG state from checkpoints",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/0356124f5253d003056135b413ee5236423caa94",
-      "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 8:39 AM PT",
-      "relativeTime": "3 hours ago"
     }
   ]
 }
