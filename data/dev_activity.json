@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-15T18:42:32.168206+00:00",
+    "generatedAt": "2026-04-16T01:05:44.774451+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-16",
-    "endDate": "2026-04-15",
-    "total": 821,
+    "startDate": "2026-01-17",
+    "endDate": "2026-04-16",
+    "total": 819,
     "max": 48,
     "weeks": [
       {
@@ -44,9 +44,9 @@
           },
           {
             "date": "2026-01-16",
-            "count": 3,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-01-17",
@@ -630,15 +630,15 @@
           },
           {
             "date": "2026-04-15",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-04-16",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-04-17",
@@ -678,6 +678,19 @@
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
+      "fullHash": "ac0326e1192d22abae38c6a038a052136bbd7456",
+      "shortHash": "ac0326e",
+      "date": "2026-04-16T00:51:45Z",
+      "message": "Add onset-weighted mel and temporal derivative aux losses for DiT",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/ac0326e1192d22abae38c6a038a052136bbd7456",
+      "displayDate": "Apr 15",
+      "displayDateTime": "Apr 15, 5:51 PM PT",
+      "relativeTime": "14 minutes ago"
+    },
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
       "fullHash": "b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
       "shortHash": "b3aa372",
       "date": "2026-04-15T00:38:52Z",
@@ -686,7 +699,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
       "displayDate": "Apr 14",
       "displayDateTime": "Apr 14, 5:38 PM PT",
-      "relativeTime": "18 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/drum-generator",
@@ -699,7 +712,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/a3c73ef053e852cca564e9c498d7c86cb05e4bfc",
       "displayDate": "Apr 14",
       "displayDateTime": "Apr 14, 5:38 PM PT",
-      "relativeTime": "18 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/drum-generator",
@@ -712,7 +725,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/26c3d4bc98e20eb9ae3f0aa33e2ab926a02b8862",
       "displayDate": "Apr 14",
       "displayDateTime": "Apr 14, 5:26 PM PT",
-      "relativeTime": "18 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/drum-generator",
@@ -725,20 +738,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/12eca6058c5e5a339ce23bc207bfd2cd05b1a799",
       "displayDate": "Apr 14",
       "displayDateTime": "Apr 14, 4:40 PM PT",
-      "relativeTime": "19 hours ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "19ea9c608ba044a30ee7c54cfe3ebaecdd29a58b",
-      "shortHash": "19ea9c6",
-      "date": "2026-04-14T23:33:22Z",
-      "message": "Add --vae-ckpt flag to load a VAE from an arbitrary path for DiT training",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/19ea9c608ba044a30ee7c54cfe3ebaecdd29a58b",
-      "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 4:33 PM PT",
-      "relativeTime": "19 hours ago"
+      "relativeTime": "1 day ago"
     }
   ]
 }
