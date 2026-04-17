@@ -3,59 +3,13 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-04-16T18:42:38.989044+00:00",
+    "generatedAt": "2026-04-17T01:03:58.562505+00:00",
     "windowDays": 90,
-    "startDate": "2026-01-17",
-    "endDate": "2026-04-16",
+    "startDate": "2026-01-18",
+    "endDate": "2026-04-17",
     "total": 821,
     "max": 48,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2026-01-11",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-12",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-13",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-14",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-15",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-16",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-01-17",
-            "count": 1,
-            "level": 1,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -636,15 +590,15 @@
           },
           {
             "date": "2026-04-16",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-04-17",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-04-18",
@@ -662,19 +616,32 @@
       },
       {
         "label": "Feb",
-        "column": 3
+        "column": 2
       },
       {
         "label": "Mar",
-        "column": 7
+        "column": 6
       },
       {
         "label": "Apr",
-        "column": 11
+        "column": 10
       }
     ]
   },
   "recentCommits": [
+    {
+      "repo": "stevemurr/drum-generator",
+      "repoName": "drum-generator",
+      "fullHash": "19f3386f90b4cb47f8424df15934f5896577742e",
+      "shortHash": "19f3386",
+      "date": "2026-04-16T22:59:39Z",
+      "message": "Allow truncated decode in adversarial path via --dit-aux-decode-frames",
+      "refs": "",
+      "url": "https://github.com/stevemurr/drum-generator/commit/19f3386f90b4cb47f8424df15934f5896577742e",
+      "displayDate": "Apr 16",
+      "displayDateTime": "Apr 16, 3:59 PM PT",
+      "relativeTime": "2 hours ago"
+    },
     {
       "repo": "stevemurr/drum-generator",
       "repoName": "drum-generator",
@@ -686,7 +653,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/d96025ad0add92b8d678c2446205f2ad42c0cc4a",
       "displayDate": "Apr 15",
       "displayDateTime": "Apr 15, 10:50 PM PT",
-      "relativeTime": "13 hours ago"
+      "relativeTime": "19 hours ago"
     },
     {
       "repo": "stevemurr/jupyter-redux",
@@ -699,7 +666,7 @@
       "url": "https://github.com/stevemurr/jupyter-redux/commit/6c927fb6b0dcd98b42a785f6d3e5665225fea114",
       "displayDate": "Apr 15",
       "displayDateTime": "Apr 15, 6:27 PM PT",
-      "relativeTime": "17 hours ago"
+      "relativeTime": "24 hours ago"
     },
     {
       "repo": "stevemurr/drum-generator",
@@ -712,7 +679,7 @@
       "url": "https://github.com/stevemurr/drum-generator/commit/ac0326e1192d22abae38c6a038a052136bbd7456",
       "displayDate": "Apr 15",
       "displayDateTime": "Apr 15, 5:51 PM PT",
-      "relativeTime": "18 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/drum-generator",
@@ -723,19 +690,6 @@
       "message": "Expose --dit-dim / --dit-heads / --dit-layers CLI flags",
       "refs": "",
       "url": "https://github.com/stevemurr/drum-generator/commit/b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
-      "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 5:38 PM PT",
-      "relativeTime": "2 days ago"
-    },
-    {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "a3c73ef053e852cca564e9c498d7c86cb05e4bfc",
-      "shortHash": "a3c73ef",
-      "date": "2026-04-15T00:38:10Z",
-      "message": "Add crest-factor and attack-time metrics to recon_eval",
-      "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/a3c73ef053e852cca564e9c498d7c86cb05e4bfc",
       "displayDate": "Apr 14",
       "displayDateTime": "Apr 14, 5:38 PM PT",
       "relativeTime": "2 days ago"
