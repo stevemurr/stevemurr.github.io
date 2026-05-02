@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 59,
   "contributions": {
-    "generatedAt": "2026-05-02T12:35:32.578110+00:00",
+    "generatedAt": "2026-05-02T18:34:46.227753+00:00",
     "windowDays": 90,
     "startDate": "2026-02-02",
     "endDate": "2026-05-02",
-    "total": 797,
+    "total": 803,
     "max": 48,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-05-02",
-            "count": 0,
-            "level": 0,
+            "count": 6,
+            "level": 1,
             "inRange": true
           }
         ]
@@ -632,67 +632,67 @@
     {
       "repo": "stevemurr/neural-mastering",
       "repoName": "neural-mastering",
-      "fullHash": "a1f9393444af995a3fb0b678f7305efe42a0e24b",
-      "shortHash": "a1f9393",
-      "date": "2026-05-02T04:07:19Z",
-      "message": "Fix SpectralMaskEq OLA latency: n_fft not n_fft-hop for minimum-phase",
+      "fullHash": "235522de66aa220381ceec9cc1f4894b4a35cd98",
+      "shortHash": "235522d",
+      "date": "2026-05-02T16:06:06Z",
+      "message": "Formalize bench suite: scenario \u00d7 buffer matrix runner + fixture",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mastering/commit/a1f9393444af995a3fb0b678f7305efe42a0e24b",
-      "displayDate": "May 1",
-      "displayDateTime": "May 1, 9:07 PM PT",
-      "relativeTime": "8 hours ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/235522de66aa220381ceec9cc1f4894b4a35cd98",
+      "displayDate": "May 2",
+      "displayDateTime": "May 2, 9:06 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/neural-mastering",
       "repoName": "neural-mastering",
-      "fullHash": "94856275a9985ac27ff2d4c74f61bff82d59f2b2",
-      "shortHash": "9485627",
-      "date": "2026-05-02T03:32:41Z",
-      "message": "Replace drums auto-EQ bundle with SpectralMaskEQ (n_fft=4096, 64 bands)",
+      "fullHash": "0f3133a659784cad38d996128cc26e56c33ae9c3",
+      "shortHash": "0f3133a",
+      "date": "2026-05-02T15:58:06Z",
+      "message": "Add tone_bench: headless CLAP host for offline plugin profiling",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mastering/commit/94856275a9985ac27ff2d4c74f61bff82d59f2b2",
-      "displayDate": "May 1",
-      "displayDateTime": "May 1, 8:32 PM PT",
-      "relativeTime": "9 hours ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/0f3133a659784cad38d996128cc26e56c33ae9c3",
+      "displayDate": "May 2",
+      "displayDateTime": "May 2, 8:58 AM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/neural-mastering",
       "repoName": "neural-mastering",
-      "fullHash": "d8edcc319c0f27b6ff446bbab7a5f46a0ce79945",
-      "shortHash": "d8edcc3",
-      "date": "2026-05-02T03:15:56Z",
-      "message": "Replace SSL bus comp bundle with gain-augmented retrain",
+      "fullHash": "1e3a4280e172ba816d7f63a7dc3ff03307e68d25",
+      "shortHash": "1e3a428",
+      "date": "2026-05-02T15:22:17Z",
+      "message": "Remove EQ0..EQ4 manual band-offset controls",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mastering/commit/d8edcc319c0f27b6ff446bbab7a5f46a0ce79945",
-      "displayDate": "May 1",
-      "displayDateTime": "May 1, 8:15 PM PT",
-      "relativeTime": "9 hours ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/1e3a4280e172ba816d7f63a7dc3ff03307e68d25",
+      "displayDate": "May 2",
+      "displayDateTime": "May 2, 8:22 AM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/neural-mastering",
       "repoName": "neural-mastering",
-      "fullHash": "a13e93c34a81423c33e5f85bcf43780f5c1fafd2",
-      "shortHash": "a13e93c",
-      "date": "2026-05-02T01:47:42Z",
-      "message": "Remove Compressor and Spatial D stages; add EQ Boost knob; UI + default polish",
+      "fullHash": "cd517007759393bb3b99a6ef700db7dcec553ad9",
+      "shortHash": "cd51700",
+      "date": "2026-05-02T15:19:38Z",
+      "message": "Remove parametric_eq_5band auto-EQ dispatch path",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mastering/commit/a13e93c34a81423c33e5f85bcf43780f5c1fafd2",
-      "displayDate": "May 1",
-      "displayDateTime": "May 1, 6:47 PM PT",
-      "relativeTime": "11 hours ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/cd517007759393bb3b99a6ef700db7dcec553ad9",
+      "displayDate": "May 2",
+      "displayDateTime": "May 2, 8:19 AM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/neural-mastering",
       "repoName": "neural-mastering",
-      "fullHash": "1a8c163933062819c662993ddf9cf0334a470944",
-      "shortHash": "1a8c163",
-      "date": "2026-05-01T23:54:49Z",
-      "message": "Replace full_mix bundle with n_fft=4096 / hop=2048 / 64-band SpectralMaskEQ",
+      "fullHash": "f66f40911b163a06383c26575ef686db6274f749",
+      "shortHash": "f66f409",
+      "date": "2026-05-02T14:51:47Z",
+      "message": "Replace bass auto-EQ bundle with SpectralMaskEQ (n_fft=4096, 64 bands)",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mastering/commit/1a8c163933062819c662993ddf9cf0334a470944",
-      "displayDate": "May 1",
-      "displayDateTime": "May 1, 4:54 PM PT",
-      "relativeTime": "13 hours ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/f66f40911b163a06383c26575ef686db6274f749",
+      "displayDate": "May 2",
+      "displayDateTime": "May 2, 7:51 AM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
