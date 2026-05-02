@@ -3,20 +3,20 @@
   "username": "stevemurr",
   "repoCount": 59,
   "contributions": {
-    "generatedAt": "2026-05-01T18:40:45.731145+00:00",
+    "generatedAt": "2026-05-02T01:07:00.331686+00:00",
     "windowDays": 90,
-    "startDate": "2026-02-01",
-    "endDate": "2026-05-01",
-    "total": 780,
+    "startDate": "2026-02-02",
+    "endDate": "2026-05-02",
+    "total": 793,
     "max": 48,
     "weeks": [
       {
         "days": [
           {
             "date": "2026-02-01",
-            "count": 3,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-02-02",
@@ -596,15 +596,15 @@
           },
           {
             "date": "2026-05-01",
-            "count": 0,
-            "level": 0,
+            "count": 16,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-05-02",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           }
         ]
       }
@@ -630,69 +630,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "19f3386f90b4cb47f8424df15934f5896577742e",
-      "shortHash": "19f3386",
-      "date": "2026-04-16T22:59:39Z",
-      "message": "Allow truncated decode in adversarial path via --dit-aux-decode-frames",
+      "repo": "stevemurr/neural-mastering",
+      "repoName": "neural-mastering",
+      "fullHash": "1a8c163933062819c662993ddf9cf0334a470944",
+      "shortHash": "1a8c163",
+      "date": "2026-05-01T23:54:49Z",
+      "message": "Replace full_mix bundle with n_fft=4096 / hop=2048 / 64-band SpectralMaskEQ",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/19f3386f90b4cb47f8424df15934f5896577742e",
-      "displayDate": "Apr 16",
-      "displayDateTime": "Apr 16, 3:59 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/1a8c163933062819c662993ddf9cf0334a470944",
+      "displayDate": "May 1",
+      "displayDateTime": "May 1, 4:54 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "d96025ad0add92b8d678c2446205f2ad42c0cc4a",
-      "shortHash": "d96025a",
-      "date": "2026-04-16T05:50:43Z",
-      "message": "Add MPD/MSD adversarial training for DiT",
+      "repo": "stevemurr/neural-mastering",
+      "repoName": "neural-mastering",
+      "fullHash": "80443f736408ec54a1f3f5f6bd9eccd70d3296ff",
+      "shortHash": "80443f7",
+      "date": "2026-05-01T23:32:07Z",
+      "message": "Ship fully-trained SSL bus comp + queue n_fft=4096 EQ config",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/d96025ad0add92b8d678c2446205f2ad42c0cc4a",
-      "displayDate": "Apr 15",
-      "displayDateTime": "Apr 15, 10:50 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/80443f736408ec54a1f3f5f6bd9eccd70d3296ff",
+      "displayDate": "May 1",
+      "displayDateTime": "May 1, 4:32 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/jupyter-redux",
-      "repoName": "jupyter-redux",
-      "fullHash": "6c927fb6b0dcd98b42a785f6d3e5665225fea114",
-      "shortHash": "6c927fb",
-      "date": "2026-04-16T01:27:39Z",
-      "message": "Add right sidebar, build toolchain, cell formatting, uv sync, and paste normalization",
+      "repo": "stevemurr/neural-mastering",
+      "repoName": "neural-mastering",
+      "fullHash": "034135e46468cc5cc302510d1e19f4b90697e54d",
+      "shortHash": "034135e",
+      "date": "2026-05-01T23:10:09Z",
+      "message": "Fix BUS COMP hop-rate flutter (real cause: ORT reading past output tensor)",
       "refs": "",
-      "url": "https://github.com/stevemurr/jupyter-redux/commit/6c927fb6b0dcd98b42a785f6d3e5665225fea114",
-      "displayDate": "Apr 15",
-      "displayDateTime": "Apr 15, 6:27 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/034135e46468cc5cc302510d1e19f4b90697e54d",
+      "displayDate": "May 1",
+      "displayDateTime": "May 1, 4:10 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "ac0326e1192d22abae38c6a038a052136bbd7456",
-      "shortHash": "ac0326e",
-      "date": "2026-04-16T00:51:45Z",
-      "message": "Add onset-weighted mel and temporal derivative aux losses for DiT",
+      "repo": "stevemurr/neural-mastering",
+      "repoName": "neural-mastering",
+      "fullHash": "be6249478160bcef223554d2467a714ba2aee05f",
+      "shortHash": "be62494",
+      "date": "2026-05-01T22:48:12Z",
+      "message": "Fix BUS COMP hop-rate flutter (delay dry to time-align with wet blend)",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/ac0326e1192d22abae38c6a038a052136bbd7456",
-      "displayDate": "Apr 15",
-      "displayDateTime": "Apr 15, 5:51 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/be6249478160bcef223554d2467a714ba2aee05f",
+      "displayDate": "May 1",
+      "displayDateTime": "May 1, 3:48 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/drum-generator",
-      "repoName": "drum-generator",
-      "fullHash": "b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
-      "shortHash": "b3aa372",
-      "date": "2026-04-15T00:38:52Z",
-      "message": "Expose --dit-dim / --dit-heads / --dit-layers CLI flags",
+      "repo": "stevemurr/neural-mastering",
+      "repoName": "neural-mastering",
+      "fullHash": "b922a261a8c5ae4326b32416e6b7ce2441a5238d",
+      "shortHash": "b922a26",
+      "date": "2026-05-01T22:43:16Z",
+      "message": "BUS COMP: drop kSslHop to 128 to isolate flutter cause",
       "refs": "",
-      "url": "https://github.com/stevemurr/drum-generator/commit/b3aa37292cb76f1a43bd3b48ebb2a5e0e70c23d3",
-      "displayDate": "Apr 14",
-      "displayDateTime": "Apr 14, 5:38 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/neural-mastering/commit/b922a261a8c5ae4326b32416e6b7ce2441a5238d",
+      "displayDate": "May 1",
+      "displayDateTime": "May 1, 3:43 PM PT",
+      "relativeTime": "2 hours ago"
     }
   ]
 }
