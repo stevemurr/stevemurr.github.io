@@ -3,10 +3,10 @@
   "username": "stevemurr",
   "repoCount": 59,
   "contributions": {
-    "generatedAt": "2026-05-05T18:48:50.222150+00:00",
+    "generatedAt": "2026-05-06T01:06:49.577595+00:00",
     "windowDays": 90,
-    "startDate": "2026-02-05",
-    "endDate": "2026-05-05",
+    "startDate": "2026-02-06",
+    "endDate": "2026-05-06",
     "total": 800,
     "max": 48,
     "weeks": [
@@ -40,7 +40,7 @@
             "date": "2026-02-05",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-02-06",
@@ -632,7 +632,7 @@
             "date": "2026-05-06",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-05-07",
