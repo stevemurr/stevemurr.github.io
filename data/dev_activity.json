@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-05-15T01:13:54.202361+00:00",
+    "generatedAt": "2026-05-15T07:27:10.157822+00:00",
     "windowDays": 90,
     "startDate": "2026-02-15",
     "endDate": "2026-05-15",
-    "total": 783,
+    "total": 784,
     "max": 48,
     "weeks": [
       {
@@ -590,7 +590,7 @@
           },
           {
             "date": "2026-05-14",
-            "count": 5,
+            "count": 6,
             "level": 1,
             "inRange": true
           },
@@ -632,6 +632,19 @@
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
+      "fullHash": "7234597216cd1c416437734dc6ce95e5fcea5594",
+      "shortHash": "7234597",
+      "date": "2026-05-15T02:20:35Z",
+      "message": "training: log predicted per-track params as TB markdown (round 14)",
+      "refs": "",
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/7234597216cd1c416437734dc6ce95e5fcea5594",
+      "displayDate": "May 14",
+      "displayDateTime": "May 14, 7:20 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/neural-mixing-console",
+      "repoName": "neural-mixing-console",
       "fullHash": "875831b5d4ce3ebb7ad06c4254e266752c404770",
       "shortHash": "875831b",
       "date": "2026-05-15T00:34:39Z",
@@ -640,7 +653,7 @@
       "url": "https://github.com/stevemurr/neural-mixing-console/commit/875831b5d4ce3ebb7ad06c4254e266752c404770",
       "displayDate": "May 14",
       "displayDateTime": "May 14, 5:34 PM PT",
-      "relativeTime": "39 minutes ago"
+      "relativeTime": "7 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
@@ -653,7 +666,7 @@
       "url": "https://github.com/stevemurr/neural-mixing-console/commit/0a15f4cc36ddf5ff6dcf9cd100f09db61a9dc65e",
       "displayDate": "May 14",
       "displayDateTime": "May 14, 3:44 PM PT",
-      "relativeTime": "2 hours ago"
+      "relativeTime": "9 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
@@ -666,7 +679,7 @@
       "url": "https://github.com/stevemurr/neural-mixing-console/commit/35a62b2c6b69755c91341d6e3288bf63e17e4d0e",
       "displayDate": "May 14",
       "displayDateTime": "May 14, 3:25 PM PT",
-      "relativeTime": "3 hours ago"
+      "relativeTime": "9 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
@@ -679,20 +692,7 @@
       "url": "https://github.com/stevemurr/neural-mixing-console/commit/7f4d6887981198d2d7c5cac4182ab5094e5d68c2",
       "displayDate": "May 14",
       "displayDateTime": "May 14, 2:12 PM PT",
-      "relativeTime": "4 hours ago"
-    },
-    {
-      "repo": "stevemurr/neural-mixing-console",
-      "repoName": "neural-mixing-console",
-      "fullHash": "2028074dcee61c041cd56f13e450c716da3bada0",
-      "shortHash": "2028074",
-      "date": "2026-05-14T20:47:09Z",
-      "message": "training: stereo_side_time_l1 \u2014 fix the mono fixed point gradient trap",
-      "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/2028074dcee61c041cd56f13e450c716da3bada0",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 1:47 PM PT",
-      "relativeTime": "4 hours ago"
+      "relativeTime": "10 hours ago"
     }
   ]
 }
