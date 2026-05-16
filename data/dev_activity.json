@@ -3,20 +3,20 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-05-15T18:51:25.834009+00:00",
+    "generatedAt": "2026-05-16T01:09:35.396099+00:00",
     "windowDays": 90,
-    "startDate": "2026-02-15",
-    "endDate": "2026-05-15",
-    "total": 784,
+    "startDate": "2026-02-16",
+    "endDate": "2026-05-16",
+    "total": 787,
     "max": 48,
     "weeks": [
       {
         "days": [
           {
             "date": "2026-02-15",
-            "count": 2,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-02-16",
@@ -596,15 +596,15 @@
           },
           {
             "date": "2026-05-15",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-05-16",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           }
         ]
       }
@@ -632,67 +632,67 @@
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
-      "fullHash": "7234597216cd1c416437734dc6ce95e5fcea5594",
-      "shortHash": "7234597",
-      "date": "2026-05-15T02:20:35Z",
-      "message": "training: log predicted per-track params as TB markdown (round 14)",
+      "fullHash": "f0893762d30b914da2852ffcefe2d5f8d6eefd81",
+      "shortHash": "f089376",
+      "date": "2026-05-15T19:48:03Z",
+      "message": "training: phase 4a \u2014 grafx label loader + Huber/recon losses",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/7234597216cd1c416437734dc6ce95e5fcea5594",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 7:20 PM PT",
-      "relativeTime": "17 hours ago"
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/f0893762d30b914da2852ffcefe2d5f8d6eefd81",
+      "displayDate": "May 15",
+      "displayDateTime": "May 15, 12:48 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
-      "fullHash": "875831b5d4ce3ebb7ad06c4254e266752c404770",
-      "shortHash": "875831b",
-      "date": "2026-05-15T00:34:39Z",
-      "message": "training: three LSQ teachers \u2014 pan, gain, and EQ-shape (round 13)",
+      "fullHash": "c6c98abc88de7683c1d27240baca4b4d33b22020",
+      "shortHash": "c6c98ab",
+      "date": "2026-05-15T19:34:10Z",
+      "message": "scripts/stage_cambridge_for_grafx_prune: phase 3 \u2014 bulk staging",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/875831b5d4ce3ebb7ad06c4254e266752c404770",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 5:34 PM PT",
-      "relativeTime": "18 hours ago"
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/c6c98abc88de7683c1d27240baca4b4d33b22020",
+      "displayDate": "May 15",
+      "displayDateTime": "May 15, 12:34 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
-      "fullHash": "0a15f4cc36ddf5ff6dcf9cd100f09db61a9dc65e",
-      "shortHash": "0a15f4c",
-      "date": "2026-05-14T22:44:23Z",
-      "message": "training: per-track pan target via per-channel LSQ teacher",
+      "fullHash": "ce3da2eb2ab1f244fc3084ce2d868405a8dbd9f1",
+      "shortHash": "ce3da2e",
+      "date": "2026-05-15T19:31:12Z",
+      "message": "scripts/label_grafx_prune: phase 3 \u2014 per-session labeling pipeline",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/0a15f4cc36ddf5ff6dcf9cd100f09db61a9dc65e",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 3:44 PM PT",
-      "relativeTime": "20 hours ago"
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/ce3da2eb2ab1f244fc3084ce2d868405a8dbd9f1",
+      "displayDate": "May 15",
+      "displayDateTime": "May 15, 12:31 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
-      "fullHash": "35a62b2c6b69755c91341d6e3288bf63e17e4d0e",
-      "shortHash": "35a62b2",
-      "date": "2026-05-14T22:25:00Z",
-      "message": "realtime: V1+ implementation plan",
+      "fullHash": "03dd9ea75b1a9c24556ab5aef5bdf108c687538a",
+      "shortHash": "03dd9ea",
+      "date": "2026-05-15T19:16:55Z",
+      "message": "models/encoders_grafx: phase 2 \u2014 schema-driven encoder for the grafx console",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/35a62b2c6b69755c91341d6e3288bf63e17e4d0e",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 3:25 PM PT",
-      "relativeTime": "20 hours ago"
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/03dd9ea75b1a9c24556ab5aef5bdf108c687538a",
+      "displayDate": "May 15",
+      "displayDateTime": "May 15, 12:16 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/neural-mixing-console",
       "repoName": "neural-mixing-console",
-      "fullHash": "7f4d6887981198d2d7c5cac4182ab5094e5d68c2",
-      "shortHash": "7f4d688",
-      "date": "2026-05-14T21:12:11Z",
-      "message": "realtime: V0 \u2014 stems passthrough playback engine",
+      "fullHash": "8566b285477616ecdfd10a88a9bc48c1f1a0bb8c",
+      "shortHash": "8566b28",
+      "date": "2026-05-15T19:09:20Z",
+      "message": "models/grafx_console: phase 1 \u2014 grafx-based two-level mixing console",
       "refs": "",
-      "url": "https://github.com/stevemurr/neural-mixing-console/commit/7f4d6887981198d2d7c5cac4182ab5094e5d68c2",
-      "displayDate": "May 14",
-      "displayDateTime": "May 14, 2:12 PM PT",
-      "relativeTime": "22 hours ago"
+      "url": "https://github.com/stevemurr/neural-mixing-console/commit/8566b285477616ecdfd10a88a9bc48c1f1a0bb8c",
+      "displayDate": "May 15",
+      "displayDateTime": "May 15, 12:09 PM PT",
+      "relativeTime": "6 hours ago"
     }
   ]
 }
