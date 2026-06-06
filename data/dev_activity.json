@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-06-06T12:46:36.924919+00:00",
+    "generatedAt": "2026-06-06T18:44:25.618045+00:00",
     "windowDays": 90,
     "startDate": "2026-03-09",
     "endDate": "2026-06-06",
-    "total": 492,
+    "total": 497,
     "max": 40,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-06-06",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           }
         ]
@@ -632,67 +632,67 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "937f40d5188c01e8ab270b4462f214b485ba0cb8",
-      "shortHash": "937f40d",
-      "date": "2026-06-06T05:54:09Z",
-      "message": "docs: tutorial-style guide for every DSP module; drop unused Dimension D",
+      "fullHash": "140edd8a108b3f8627de4599f7ef37cdf59f7857",
+      "shortHash": "140edd8",
+      "date": "2026-06-06T17:51:30Z",
+      "message": "feat(ui): limiter gain-reduction + bus-comp crunch visualizations",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/937f40d5188c01e8ab270b4462f214b485ba0cb8",
-      "displayDate": "Jun 5",
-      "displayDateTime": "Jun 5, 10:54 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/140edd8a108b3f8627de4599f7ef37cdf59f7857",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 10:51 AM PT",
+      "relativeTime": "52 minutes ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "bea2e106ae9de24ffe81d8daf262740b3b1b7a0d",
-      "shortHash": "bea2e10",
-      "date": "2026-06-05T22:26:03Z",
-      "message": "feat: internal Bypass \u2014 audition the raw input, latency-aligned",
+      "fullHash": "248ebb12e0086597968ecb42bae6fd36a7eb4d02",
+      "shortHash": "248ebb1",
+      "date": "2026-06-06T17:51:30Z",
+      "message": "docs: research on limiter adaptive controls and bus-comp crunch visualization",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/bea2e106ae9de24ffe81d8daf262740b3b1b7a0d",
-      "displayDate": "Jun 5",
-      "displayDateTime": "Jun 5, 3:26 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/248ebb12e0086597968ecb42bae6fd36a7eb4d02",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 10:51 AM PT",
+      "relativeTime": "52 minutes ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "75d7da253a31e98a2e978e0028ac313d6f22550c",
-      "shortHash": "75d7da2",
-      "date": "2026-06-05T22:21:59Z",
-      "message": "feat(auto-gain): feed-forward the limiter Drive (no loudness bump on knob moves)",
+      "fullHash": "3e5428b74b4211d1bcb8ac068900b70239fff3a5",
+      "shortHash": "3e5428b",
+      "date": "2026-06-06T17:12:56Z",
+      "message": "feat: mastering reverb stage, exciter on/off toggle, default chain tuning",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/75d7da253a31e98a2e978e0028ac313d6f22550c",
-      "displayDate": "Jun 5",
-      "displayDateTime": "Jun 5, 3:21 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/3e5428b74b4211d1bcb8ac068900b70239fff3a5",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 10:12 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "6d0fdc7ec43701aa9c940e2db5dc64d68352590e",
-      "shortHash": "6d0fdc7",
-      "date": "2026-06-05T21:46:16Z",
-      "message": "fix(auto-gain): OUT meter shows the real master; gain is monitoring-only",
+      "fullHash": "5b33afcf733ce639fdc6769c32469a4d930b47d7",
+      "shortHash": "5b33afc",
+      "date": "2026-06-06T07:14:08Z",
+      "message": "feat: Aphex-style aural exciter stage + bus-comp Input trim",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/6d0fdc7ec43701aa9c940e2db5dc64d68352590e",
-      "displayDate": "Jun 5",
-      "displayDateTime": "Jun 5, 2:46 PM PT",
-      "relativeTime": "15 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/5b33afcf733ce639fdc6769c32469a4d930b47d7",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 12:14 AM PT",
+      "relativeTime": "11 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "930e43508af1077ebe0e8c21824ea7caa2157727",
-      "shortHash": "930e435",
-      "date": "2026-06-05T21:40:07Z",
-      "message": "feat: Auto Gain (level-matched bypass) toggle",
+      "fullHash": "23175c29a6e2ba45d03c83eecb934ad667df7f8c",
+      "shortHash": "23175c2",
+      "date": "2026-06-06T07:13:53Z",
+      "message": "docs: research reports on frequency-buildup suppression and harmonic excitation",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/930e43508af1077ebe0e8c21824ea7caa2157727",
-      "displayDate": "Jun 5",
-      "displayDateTime": "Jun 5, 2:40 PM PT",
-      "relativeTime": "15 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/23175c29a6e2ba45d03c83eecb934ad667df7f8c",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 12:13 AM PT",
+      "relativeTime": "12 hours ago"
     }
   ]
 }
