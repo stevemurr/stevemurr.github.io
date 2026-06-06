@@ -3,20 +3,20 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-06-05T18:57:09.292803+00:00",
+    "generatedAt": "2026-06-06T01:17:58.104490+00:00",
     "windowDays": 90,
-    "startDate": "2026-03-08",
-    "endDate": "2026-06-05",
-    "total": 519,
-    "max": 46,
+    "startDate": "2026-03-09",
+    "endDate": "2026-06-06",
+    "total": 491,
+    "max": 40,
     "weeks": [
       {
         "days": [
           {
             "date": "2026-03-08",
-            "count": 46,
-            "level": 4,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-03-09",
@@ -33,7 +33,7 @@
           {
             "date": "2026-03-11",
             "count": 34,
-            "level": 3,
+            "level": 4,
             "inRange": true
           },
           {
@@ -67,7 +67,7 @@
           {
             "date": "2026-03-16",
             "count": 10,
-            "level": 1,
+            "level": 2,
             "inRange": true
           },
           {
@@ -257,7 +257,7 @@
           {
             "date": "2026-04-14",
             "count": 11,
-            "level": 1,
+            "level": 2,
             "inRange": true
           },
           {
@@ -367,7 +367,7 @@
           {
             "date": "2026-05-01",
             "count": 20,
-            "level": 2,
+            "level": 3,
             "inRange": true
           },
           {
@@ -590,21 +590,21 @@
           },
           {
             "date": "2026-06-04",
-            "count": 0,
-            "level": 0,
+            "count": 2,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-06-05",
-            "count": 0,
-            "level": 0,
+            "count": 16,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-06-06",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           }
         ]
       }
@@ -630,69 +630,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "165324d246d0fb38639b57f88533b785ae1a88a7",
-      "shortHash": "165324d",
-      "date": "2026-05-26T23:07:16Z",
-      "message": "fix: redesign NowPlayingStrip as two disconnected floating cards",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "bea2e106ae9de24ffe81d8daf262740b3b1b7a0d",
+      "shortHash": "bea2e10",
+      "date": "2026-06-05T22:26:03Z",
+      "message": "feat: internal Bypass \u2014 audition the raw input, latency-aligned",
       "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/165324d246d0fb38639b57f88533b785ae1a88a7",
-      "displayDate": "May 26",
-      "displayDateTime": "May 26, 4:07 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/axon/commit/bea2e106ae9de24ffe81d8daf262740b3b1b7a0d",
+      "displayDate": "Jun 5",
+      "displayDateTime": "Jun 5, 3:26 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "9d5b6371a2c48d11acfeed0cf1d95b3e36dbb703",
-      "shortHash": "9d5b637",
-      "date": "2026-05-26T22:51:06Z",
-      "message": "feat: Now Playing strip, icon header, duration display, active channel viz",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "75d7da253a31e98a2e978e0028ac313d6f22550c",
+      "shortHash": "75d7da2",
+      "date": "2026-06-05T22:21:59Z",
+      "message": "feat(auto-gain): feed-forward the limiter Drive (no loudness bump on knob moves)",
       "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/9d5b6371a2c48d11acfeed0cf1d95b3e36dbb703",
-      "displayDate": "May 26",
-      "displayDateTime": "May 26, 3:51 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/axon/commit/75d7da253a31e98a2e978e0028ac313d6f22550c",
+      "displayDate": "Jun 5",
+      "displayDateTime": "Jun 5, 3:21 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "ed52f4367e434a379530dfcd95ffc6c68ef7bebc",
-      "shortHash": "ed52f43",
-      "date": "2026-05-26T22:25:25Z",
-      "message": "fix: use opaque background for selected channel sidebar cell",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "6d0fdc7ec43701aa9c940e2db5dc64d68352590e",
+      "shortHash": "6d0fdc7",
+      "date": "2026-06-05T21:46:16Z",
+      "message": "fix(auto-gain): OUT meter shows the real master; gain is monitoring-only",
       "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/ed52f4367e434a379530dfcd95ffc6c68ef7bebc",
-      "displayDate": "May 26",
-      "displayDateTime": "May 26, 3:25 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/axon/commit/6d0fdc7ec43701aa9c940e2db5dc64d68352590e",
+      "displayDate": "Jun 5",
+      "displayDateTime": "Jun 5, 2:46 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "0d289419b4c4364f95462d637211005feec2088c",
-      "shortHash": "0d28941",
-      "date": "2026-05-26T21:35:10Z",
-      "message": "fix: raise sidebar z-index above program blocks and tooltips",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "930e43508af1077ebe0e8c21824ea7caa2157727",
+      "shortHash": "930e435",
+      "date": "2026-06-05T21:40:07Z",
+      "message": "feat: Auto Gain (level-matched bypass) toggle",
       "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/0d289419b4c4364f95462d637211005feec2088c",
-      "displayDate": "May 26",
-      "displayDateTime": "May 26, 2:35 PM PT",
-      "relativeTime": "1 week ago"
+      "url": "https://github.com/stevemurr/axon/commit/930e43508af1077ebe0e8c21824ea7caa2157727",
+      "displayDate": "Jun 5",
+      "displayDateTime": "Jun 5, 2:40 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "ffbd369e2eadab7810c56eacfb95f15a5681fd11",
-      "shortHash": "ffbd369",
-      "date": "2026-05-26T04:47:05Z",
-      "message": "fix: replace native title tooltip with custom CSS tooltip on program blocks",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "91a10050b8d6dcb4e24191b4788ce6690d1b7a6d",
+      "shortHash": "91a1005",
+      "date": "2026-06-05T21:27:26Z",
+      "message": "refactor: fully remove Input/Output Levelers from the plugin",
       "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/ffbd369e2eadab7810c56eacfb95f15a5681fd11",
-      "displayDate": "May 25",
-      "displayDateTime": "May 25, 9:47 PM PT",
-      "relativeTime": "2 weeks ago"
+      "url": "https://github.com/stevemurr/axon/commit/91a10050b8d6dcb4e24191b4788ce6690d1b7a6d",
+      "displayDate": "Jun 5",
+      "displayDateTime": "Jun 5, 2:27 PM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
