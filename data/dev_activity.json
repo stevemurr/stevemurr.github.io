@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-06-07T01:26:21.133438+00:00",
+    "generatedAt": "2026-06-07T07:41:39.836085+00:00",
     "windowDays": 90,
     "startDate": "2026-03-10",
     "endDate": "2026-06-07",
-    "total": 491,
+    "total": 509,
     "max": 40,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-06-06",
-            "count": 11,
-            "level": 2,
+            "count": 29,
+            "level": 3,
             "inRange": true
           }
         ]
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "9d0b90dfe85aa0efb548b7c91ba9970900b7ead0",
-      "shortHash": "9d0b90d",
-      "date": "2026-06-07T01:13:52Z",
-      "message": "Merge pull request #1 from stevemurr/fix/dsp-bug-hunt-input-guards",
+      "fullHash": "cd4718360329cd0577d15e128fc36c37e082196f",
+      "shortHash": "cd47183",
+      "date": "2026-06-07T02:30:53Z",
+      "message": "docs(saturator/meter/ort): findings \u2014 saturator aliasing; meter ok; ORT alloc smell",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/9d0b90dfe85aa0efb548b7c91ba9970900b7ead0",
+      "url": "https://github.com/stevemurr/axon/commit/cd4718360329cd0577d15e128fc36c37e082196f",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 6:13 PM PT",
-      "relativeTime": "12 minutes ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "693552bfbafd6319d9e3a7faaa678b8e815b7f27",
-      "shortHash": "693552b",
-      "date": "2026-06-07T01:12:33Z",
-      "message": "fix(dsp): input-validation guards + RT-safety fixes across the chain",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/693552bfbafd6319d9e3a7faaa678b8e815b7f27",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 6:12 PM PT",
-      "relativeTime": "14 minutes ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "d8f9c4c8d0b3a171419498736b17803968472964",
-      "shortHash": "d8f9c4c",
-      "date": "2026-06-06T20:28:27Z",
-      "message": "docs(readme): update the chain to current stages; Saturator out of default chain",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/d8f9c4c8d0b3a171419498736b17803968472964",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 1:28 PM PT",
+      "displayDateTime": "Jun 6, 7:30 PM PT",
       "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "d1942d16bb3b80fd39e5b27e99a47cd48a1fbb7e",
-      "shortHash": "d1942d1",
-      "date": "2026-06-06T19:40:08Z",
-      "message": "feat: stereo widener stage, exciter comb-transfer overlay, remove saturator from chain",
+      "fullHash": "ff121121cc46633450f3e983a6aa771500c1afbc",
+      "shortHash": "ff12112",
+      "date": "2026-06-07T02:30:53Z",
+      "message": "perf(true-peak): branch-wrap the lookahead delay; add test to the suite",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/d1942d16bb3b80fd39e5b27e99a47cd48a1fbb7e",
+      "url": "https://github.com/stevemurr/axon/commit/ff121121cc46633450f3e983a6aa771500c1afbc",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 12:40 PM PT",
-      "relativeTime": "6 hours ago"
+      "displayDateTime": "Jun 6, 7:30 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "4367cc4c81f08fbf6bad3db54865374b0a297d56",
-      "shortHash": "4367cc4",
-      "date": "2026-06-06T18:51:14Z",
-      "message": "feat: bus-comp distortion + exciter wet-spectrum meters, default chain, exciter init fix",
+      "fullHash": "ebf0d05b6fe8b6cba0ec66643b4c2edb50a56ff2",
+      "shortHash": "ebf0d05",
+      "date": "2026-06-07T02:30:53Z",
+      "message": "docs(mel-limiter): perf findings \u2014 idiv->branch is bit-identical but un-nullable",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/4367cc4c81f08fbf6bad3db54865374b0a297d56",
+      "url": "https://github.com/stevemurr/axon/commit/ebf0d05b6fe8b6cba0ec66643b4c2edb50a56ff2",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 11:51 AM PT",
-      "relativeTime": "7 hours ago"
+      "displayDateTime": "Jun 6, 7:30 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "4f29a4037f5b87e2dbb506102384c2a7c825c52d",
+      "shortHash": "4f29a40",
+      "date": "2026-06-07T02:30:53Z",
+      "message": "docs(bus-comp): perf findings \u2014 forward is model-bound; ~28% wasted compute",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/4f29a4037f5b87e2dbb506102384c2a7c825c52d",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 7:30 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "7bfb75b250844177ce18402ecba351beba4088de",
+      "shortHash": "7bfb75b",
+      "date": "2026-06-07T02:30:53Z",
+      "message": "bench(widener): add micro-bench; module audited, NO CHANGE",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/7bfb75b250844177ce18402ecba351beba4088de",
+      "displayDate": "Jun 6",
+      "displayDateTime": "Jun 6, 7:30 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
