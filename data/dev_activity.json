@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-06-06T18:44:25.618045+00:00",
+    "generatedAt": "2026-06-07T01:26:21.133438+00:00",
     "windowDays": 90,
-    "startDate": "2026-03-09",
-    "endDate": "2026-06-06",
-    "total": 497,
+    "startDate": "2026-03-10",
+    "endDate": "2026-06-07",
+    "total": 491,
     "max": 40,
     "weeks": [
       {
@@ -20,9 +20,9 @@
           },
           {
             "date": "2026-03-09",
-            "count": 12,
-            "level": 2,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-03-10",
@@ -602,9 +602,55 @@
           },
           {
             "date": "2026-06-06",
-            "count": 5,
-            "level": 1,
+            "count": 11,
+            "level": 2,
             "inRange": true
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "date": "2026-06-07",
+            "count": 0,
+            "level": 0,
+            "inRange": true
+          },
+          {
+            "date": "2026-06-08",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-06-09",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-06-10",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-06-11",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-06-12",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-06-13",
+            "count": 0,
+            "level": 0,
+            "inRange": false
           }
         ]
       }
@@ -632,67 +678,67 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "140edd8a108b3f8627de4599f7ef37cdf59f7857",
-      "shortHash": "140edd8",
-      "date": "2026-06-06T17:51:30Z",
-      "message": "feat(ui): limiter gain-reduction + bus-comp crunch visualizations",
+      "fullHash": "9d0b90dfe85aa0efb548b7c91ba9970900b7ead0",
+      "shortHash": "9d0b90d",
+      "date": "2026-06-07T01:13:52Z",
+      "message": "Merge pull request #1 from stevemurr/fix/dsp-bug-hunt-input-guards",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/140edd8a108b3f8627de4599f7ef37cdf59f7857",
+      "url": "https://github.com/stevemurr/axon/commit/9d0b90dfe85aa0efb548b7c91ba9970900b7ead0",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 10:51 AM PT",
-      "relativeTime": "52 minutes ago"
+      "displayDateTime": "Jun 6, 6:13 PM PT",
+      "relativeTime": "12 minutes ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "248ebb12e0086597968ecb42bae6fd36a7eb4d02",
-      "shortHash": "248ebb1",
-      "date": "2026-06-06T17:51:30Z",
-      "message": "docs: research on limiter adaptive controls and bus-comp crunch visualization",
+      "fullHash": "693552bfbafd6319d9e3a7faaa678b8e815b7f27",
+      "shortHash": "693552b",
+      "date": "2026-06-07T01:12:33Z",
+      "message": "fix(dsp): input-validation guards + RT-safety fixes across the chain",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/248ebb12e0086597968ecb42bae6fd36a7eb4d02",
+      "url": "https://github.com/stevemurr/axon/commit/693552bfbafd6319d9e3a7faaa678b8e815b7f27",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 10:51 AM PT",
-      "relativeTime": "52 minutes ago"
+      "displayDateTime": "Jun 6, 6:12 PM PT",
+      "relativeTime": "14 minutes ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "3e5428b74b4211d1bcb8ac068900b70239fff3a5",
-      "shortHash": "3e5428b",
-      "date": "2026-06-06T17:12:56Z",
-      "message": "feat: mastering reverb stage, exciter on/off toggle, default chain tuning",
+      "fullHash": "d8f9c4c8d0b3a171419498736b17803968472964",
+      "shortHash": "d8f9c4c",
+      "date": "2026-06-06T20:28:27Z",
+      "message": "docs(readme): update the chain to current stages; Saturator out of default chain",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/3e5428b74b4211d1bcb8ac068900b70239fff3a5",
+      "url": "https://github.com/stevemurr/axon/commit/d8f9c4c8d0b3a171419498736b17803968472964",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 10:12 AM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jun 6, 1:28 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "5b33afcf733ce639fdc6769c32469a4d930b47d7",
-      "shortHash": "5b33afc",
-      "date": "2026-06-06T07:14:08Z",
-      "message": "feat: Aphex-style aural exciter stage + bus-comp Input trim",
+      "fullHash": "d1942d16bb3b80fd39e5b27e99a47cd48a1fbb7e",
+      "shortHash": "d1942d1",
+      "date": "2026-06-06T19:40:08Z",
+      "message": "feat: stereo widener stage, exciter comb-transfer overlay, remove saturator from chain",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/5b33afcf733ce639fdc6769c32469a4d930b47d7",
+      "url": "https://github.com/stevemurr/axon/commit/d1942d16bb3b80fd39e5b27e99a47cd48a1fbb7e",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 12:14 AM PT",
-      "relativeTime": "11 hours ago"
+      "displayDateTime": "Jun 6, 12:40 PM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "23175c29a6e2ba45d03c83eecb934ad667df7f8c",
-      "shortHash": "23175c2",
-      "date": "2026-06-06T07:13:53Z",
-      "message": "docs: research reports on frequency-buildup suppression and harmonic excitation",
+      "fullHash": "4367cc4c81f08fbf6bad3db54865374b0a297d56",
+      "shortHash": "4367cc4",
+      "date": "2026-06-06T18:51:14Z",
+      "message": "feat: bus-comp distortion + exciter wet-spectrum meters, default chain, exciter init fix",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/23175c29a6e2ba45d03c83eecb934ad667df7f8c",
+      "url": "https://github.com/stevemurr/axon/commit/4367cc4c81f08fbf6bad3db54865374b0a297d56",
       "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 12:13 AM PT",
-      "relativeTime": "12 hours ago"
+      "displayDateTime": "Jun 6, 11:51 AM PT",
+      "relativeTime": "7 hours ago"
     }
   ]
 }
