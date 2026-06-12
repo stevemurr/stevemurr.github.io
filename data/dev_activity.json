@@ -3,59 +3,13 @@
   "username": "stevemurr",
   "repoCount": 60,
   "contributions": {
-    "generatedAt": "2026-06-11T19:16:32.141795+00:00",
+    "generatedAt": "2026-06-12T01:28:41.086120+00:00",
     "windowDays": 90,
-    "startDate": "2026-03-14",
-    "endDate": "2026-06-11",
-    "total": 413,
+    "startDate": "2026-03-15",
+    "endDate": "2026-06-12",
+    "total": 405,
     "max": 40,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2026-03-08",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-09",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-10",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-11",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-12",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-13",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-03-14",
-            "count": 8,
-            "level": 1,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -644,7 +598,7 @@
             "date": "2026-06-12",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-06-13",
@@ -662,15 +616,15 @@
       },
       {
         "label": "Apr",
-        "column": 3
+        "column": 2
       },
       {
         "label": "May",
-        "column": 7
+        "column": 6
       },
       {
         "label": "Jun",
-        "column": 12
+        "column": 11
       }
     ]
   },
