@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 60,
+  "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-06-30T18:56:53.885241+00:00",
+    "generatedAt": "2026-07-01T01:24:51.139021+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-02",
-    "endDate": "2026-06-30",
-    "total": 224,
+    "startDate": "2026-04-03",
+    "endDate": "2026-07-01",
+    "total": 217,
     "max": 40,
     "weeks": [
       {
@@ -38,9 +38,9 @@
           },
           {
             "date": "2026-04-02",
-            "count": 9,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-03",
@@ -624,15 +624,15 @@
           },
           {
             "date": "2026-06-30",
-            "count": 0,
-            "level": 0,
+            "count": 2,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-01",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-02",
@@ -667,10 +667,27 @@
       {
         "label": "Jun",
         "column": 9
+      },
+      {
+        "label": "Jul",
+        "column": 13
       }
     ]
   },
   "recentCommits": [
+    {
+      "repo": "stevemurr/macos-screen-dimmer",
+      "repoName": "macos-screen-dimmer",
+      "fullHash": "5bad75af118adc98577e2424a6dbb7272604bf58",
+      "shortHash": "5bad75a",
+      "date": "2026-06-30T22:06:04Z",
+      "message": "Initial commit: screendim \u2014 persistent software dimming for macOS",
+      "refs": "",
+      "url": "https://github.com/stevemurr/macos-screen-dimmer/commit/5bad75af118adc98577e2424a6dbb7272604bf58",
+      "displayDate": "Jun 30",
+      "displayDateTime": "Jun 30, 3:06 PM PT",
+      "relativeTime": "3 hours ago"
+    },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
@@ -719,19 +736,6 @@
       "message": "docs(mel-limiter): perf findings \u2014 idiv->branch is bit-identical but un-nullable",
       "refs": "",
       "url": "https://github.com/stevemurr/axon/commit/ebf0d05b6fe8b6cba0ec66643b4c2edb50a56ff2",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 7:30 PM PT",
-      "relativeTime": "3 weeks ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "4f29a4037f5b87e2dbb506102384c2a7c825c52d",
-      "shortHash": "4f29a40",
-      "date": "2026-06-07T02:30:53Z",
-      "message": "docs(bus-comp): perf findings \u2014 forward is model-bound; ~28% wasted compute",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/4f29a4037f5b87e2dbb506102384c2a7c825c52d",
       "displayDate": "Jun 6",
       "displayDateTime": "Jun 6, 7:30 PM PT",
       "relativeTime": "3 weeks ago"
