@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-07-04T01:00:15.547654+00:00",
+    "generatedAt": "2026-07-04T07:17:15.030082+00:00",
     "windowDays": 90,
     "startDate": "2026-04-06",
     "endDate": "2026-07-04",
-    "total": 214,
+    "total": 219,
     "max": 40,
     "weeks": [
       {
@@ -596,8 +596,8 @@
           },
           {
             "date": "2026-07-03",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           },
           {
@@ -630,69 +630,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/macos-screen-dimmer",
-      "repoName": "macos-screen-dimmer",
-      "fullHash": "5bad75af118adc98577e2424a6dbb7272604bf58",
-      "shortHash": "5bad75a",
-      "date": "2026-06-30T22:06:04Z",
-      "message": "Initial commit: screendim \u2014 persistent software dimming for macOS",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "a92641244b9c74edcdfb9ed942cb8b736a52868c",
+      "shortHash": "a926412",
+      "date": "2026-07-04T03:59:36Z",
+      "message": "docs(ssl-eq): macOS build & finish handoff for the Mac agent",
       "refs": "",
-      "url": "https://github.com/stevemurr/macos-screen-dimmer/commit/5bad75af118adc98577e2424a6dbb7272604bf58",
-      "displayDate": "Jun 30",
-      "displayDateTime": "Jun 30, 3:06 PM PT",
-      "relativeTime": "3 days ago"
+      "url": "https://github.com/stevemurr/axon/commit/a92641244b9c74edcdfb9ed942cb8b736a52868c",
+      "displayDate": "Jul 3",
+      "displayDateTime": "Jul 3, 8:59 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "1b7772ccb723935ff54c88f4902cc429d52f0f44",
-      "shortHash": "1b7772c",
-      "date": "2026-06-07T18:17:31Z",
-      "message": "docs(bus-comp): add sample-rate caveat \u2014 fixed-sample-count model, no SR guard",
+      "fullHash": "d67128c8f89360803d1b1d01902bfc9344364361",
+      "shortHash": "d67128c",
+      "date": "2026-07-04T03:51:03Z",
+      "message": "feat(ssl-eq): 10-band engine + auto-EQ coupling plumbing (static solve)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/1b7772ccb723935ff54c88f4902cc429d52f0f44",
-      "displayDate": "Jun 7",
-      "displayDateTime": "Jun 7, 11:17 AM PT",
-      "relativeTime": "4 weeks ago"
+      "url": "https://github.com/stevemurr/axon/commit/d67128c8f89360803d1b1d01902bfc9344364361",
+      "displayDate": "Jul 3",
+      "displayDateTime": "Jul 3, 8:51 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "cd4718360329cd0577d15e128fc36c37e082196f",
-      "shortHash": "cd47183",
-      "date": "2026-06-07T02:30:53Z",
-      "message": "docs(saturator/meter/ort): findings \u2014 saturator aliasing; meter ok; ORT alloc smell",
+      "fullHash": "fbd2204fc6fee4749e167a557e4b448e62630258",
+      "shortHash": "fbd2204",
+      "date": "2026-07-03T23:39:22Z",
+      "message": "feat(ssl-eq): 10-band variant + artifact evaluation vs 4-band baseline",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/cd4718360329cd0577d15e128fc36c37e082196f",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 7:30 PM PT",
-      "relativeTime": "4 weeks ago"
+      "url": "https://github.com/stevemurr/axon/commit/fbd2204fc6fee4749e167a557e4b448e62630258",
+      "displayDate": "Jul 3",
+      "displayDateTime": "Jul 3, 4:39 PM PT",
+      "relativeTime": "8 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "ff121121cc46633450f3e983a6aa771500c1afbc",
-      "shortHash": "ff12112",
-      "date": "2026-06-07T02:30:53Z",
-      "message": "perf(true-peak): branch-wrap the lookahead delay; add test to the suite",
+      "fullHash": "bcc2ed1c75fe30c17d924fff95bc18bb95a2cddb",
+      "shortHash": "bcc2ed1",
+      "date": "2026-07-03T20:27:01Z",
+      "message": "feat(ssl-eq): perceptual eval + HMF x3 range fix",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/ff121121cc46633450f3e983a6aa771500c1afbc",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 7:30 PM PT",
-      "relativeTime": "4 weeks ago"
+      "url": "https://github.com/stevemurr/axon/commit/bcc2ed1c75fe30c17d924fff95bc18bb95a2cddb",
+      "displayDate": "Jul 3",
+      "displayDateTime": "Jul 3, 1:27 PM PT",
+      "relativeTime": "11 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "ebf0d05b6fe8b6cba0ec66643b4c2edb50a56ff2",
-      "shortHash": "ebf0d05",
-      "date": "2026-06-07T02:30:53Z",
-      "message": "docs(mel-limiter): perf findings \u2014 idiv->branch is bit-identical but un-nullable",
+      "fullHash": "8be9eaecc73f3813a26618613419c5e4f0e571dd",
+      "shortHash": "8be9eae",
+      "date": "2026-07-03T20:19:41Z",
+      "message": "feat(ssl-eq): SSL 9000 J channel EQ \u2014 analytic biquad model, grey-box, plugin stage",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/ebf0d05b6fe8b6cba0ec66643b4c2edb50a56ff2",
-      "displayDate": "Jun 6",
-      "displayDateTime": "Jun 6, 7:30 PM PT",
-      "relativeTime": "4 weeks ago"
+      "url": "https://github.com/stevemurr/axon/commit/8be9eaecc73f3813a26618613419c5e4f0e571dd",
+      "displayDate": "Jul 3",
+      "displayDateTime": "Jul 3, 1:19 PM PT",
+      "relativeTime": "11 hours ago"
     }
   ]
 }
