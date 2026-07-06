@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-07-05T18:39:55.773493+00:00",
+    "generatedAt": "2026-07-06T01:06:46.009549+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-07",
-    "endDate": "2026-07-05",
-    "total": 219,
+    "startDate": "2026-04-08",
+    "endDate": "2026-07-06",
+    "total": 249,
     "max": 40,
     "weeks": [
       {
@@ -28,7 +28,7 @@
             "date": "2026-04-07",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-08",
@@ -418,8 +418,8 @@
           },
           {
             "date": "2026-06-06",
-            "count": 29,
-            "level": 3,
+            "count": 37,
+            "level": 4,
             "inRange": true
           }
         ]
@@ -428,14 +428,14 @@
         "days": [
           {
             "date": "2026-06-07",
-            "count": 5,
-            "level": 1,
+            "count": 16,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-06-08",
-            "count": 0,
-            "level": 0,
+            "count": 8,
+            "level": 1,
             "inRange": true
           },
           {
@@ -596,7 +596,7 @@
           },
           {
             "date": "2026-07-03",
-            "count": 5,
+            "count": 4,
             "level": 1,
             "inRange": true
           },
@@ -612,15 +612,15 @@
         "days": [
           {
             "date": "2026-07-05",
-            "count": 0,
-            "level": 0,
+            "count": 4,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-06",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-07",
@@ -678,66 +678,66 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "a92641244b9c74edcdfb9ed942cb8b736a52868c",
-      "shortHash": "a926412",
-      "date": "2026-07-04T03:59:36Z",
-      "message": "docs(ssl-eq): macOS build & finish handoff for the Mac agent",
+      "fullHash": "f8f235c9031cbe2c2392e36691085cef781d533c",
+      "shortHash": "f8f235c",
+      "date": "2026-07-05T23:44:35Z",
+      "message": "docs(readme): rewrite README for the current chain; remove SSL branding",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/a92641244b9c74edcdfb9ed942cb8b736a52868c",
-      "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 8:59 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/axon/commit/f8f235c9031cbe2c2392e36691085cef781d533c",
+      "displayDate": "Jul 5",
+      "displayDateTime": "Jul 5, 4:44 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "d67128c8f89360803d1b1d01902bfc9344364361",
-      "shortHash": "d67128c",
-      "date": "2026-07-04T03:51:03Z",
-      "message": "feat(ssl-eq): 10-band engine + auto-EQ coupling plumbing (static solve)",
+      "fullHash": "de69dab120399a38a04311b043b6cb2be32ba32d",
+      "shortHash": "de69dab",
+      "date": "2026-07-05T23:10:17Z",
+      "message": "feat(eq): rename SSL EQ stage to \"EQ\" in the GUI; default Auto-EQ renderer to IIR",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/d67128c8f89360803d1b1d01902bfc9344364361",
-      "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 8:51 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/axon/commit/de69dab120399a38a04311b043b6cb2be32ba32d",
+      "displayDate": "Jul 5",
+      "displayDateTime": "Jul 5, 4:10 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "fbd2204fc6fee4749e167a557e4b448e62630258",
-      "shortHash": "fbd2204",
-      "date": "2026-07-03T23:39:22Z",
-      "message": "feat(ssl-eq): 10-band variant + artifact evaluation vs 4-band baseline",
+      "fullHash": "6265fc338b87e1f83e53353aecd94fca0603645c",
+      "shortHash": "6265fc3",
+      "date": "2026-07-05T22:07:29Z",
+      "message": "feat(ssl-eq): musical calibration (writes visible knobs) + Reset button",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/fbd2204fc6fee4749e167a557e4b448e62630258",
-      "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 4:39 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/axon/commit/6265fc338b87e1f83e53353aecd94fca0603645c",
+      "displayDate": "Jul 5",
+      "displayDateTime": "Jul 5, 3:07 PM PT",
+      "relativeTime": "3 hours ago"
+    },
+    {
+      "repo": "stevemurr/macos-screen-dimmer",
+      "repoName": "macos-screen-dimmer",
+      "fullHash": "ad99e6dd69851e00da860d06e19469fe584c99ca",
+      "shortHash": "ad99e6d",
+      "date": "2026-07-05T21:37:14Z",
+      "message": "Add fixed-level preset apps to gen-apps; bump to 0.2.0",
+      "refs": "",
+      "url": "https://github.com/stevemurr/macos-screen-dimmer/commit/ad99e6dd69851e00da860d06e19469fe584c99ca",
+      "displayDate": "Jul 5",
+      "displayDateTime": "Jul 5, 2:37 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "bcc2ed1c75fe30c17d924fff95bc18bb95a2cddb",
-      "shortHash": "bcc2ed1",
-      "date": "2026-07-03T20:27:01Z",
-      "message": "feat(ssl-eq): perceptual eval + HMF x3 range fix",
+      "fullHash": "158b6c822e108f7b0b4d901713e8e81cda1a1454",
+      "shortHash": "158b6c8",
+      "date": "2026-07-04T06:27:03Z",
+      "message": "fix(ssl-eq): harden coupling seqlock ordering + add contract/integration tests",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/bcc2ed1c75fe30c17d924fff95bc18bb95a2cddb",
+      "url": "https://github.com/stevemurr/axon/commit/158b6c822e108f7b0b4d901713e8e81cda1a1454",
       "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 1:27 PM PT",
-      "relativeTime": "2 days ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "8be9eaecc73f3813a26618613419c5e4f0e571dd",
-      "shortHash": "8be9eae",
-      "date": "2026-07-03T20:19:41Z",
-      "message": "feat(ssl-eq): SSL 9000 J channel EQ \u2014 analytic biquad model, grey-box, plugin stage",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/8be9eaecc73f3813a26618613419c5e4f0e571dd",
-      "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 1:19 PM PT",
+      "displayDateTime": "Jul 3, 11:27 PM PT",
       "relativeTime": "2 days ago"
     }
   ]
