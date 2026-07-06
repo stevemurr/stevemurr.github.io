@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-07-06T13:33:03.410540+00:00",
+    "generatedAt": "2026-07-06T18:56:14.146791+00:00",
     "windowDays": 90,
     "startDate": "2026-04-08",
     "endDate": "2026-07-06",
-    "total": 249,
+    "total": 254,
     "max": 40,
     "weeks": [
       {
@@ -618,8 +618,8 @@
           },
           {
             "date": "2026-07-06",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           },
           {
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "f8f235c9031cbe2c2392e36691085cef781d533c",
-      "shortHash": "f8f235c",
-      "date": "2026-07-05T23:44:35Z",
-      "message": "docs(readme): rewrite README for the current chain; remove SSL branding",
+      "fullHash": "158975e47feeab3aa8e31654c4ae451d74233430",
+      "shortHash": "158975e",
+      "date": "2026-07-06T16:35:46Z",
+      "message": "build: harden the install path \u2014 a bad build can no longer ship",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/f8f235c9031cbe2c2392e36691085cef781d533c",
-      "displayDate": "Jul 5",
-      "displayDateTime": "Jul 5, 4:44 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/158975e47feeab3aa8e31654c4ae451d74233430",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "de69dab120399a38a04311b043b6cb2be32ba32d",
-      "shortHash": "de69dab",
-      "date": "2026-07-05T23:10:17Z",
-      "message": "feat(eq): rename SSL EQ stage to \"EQ\" in the GUI; default Auto-EQ renderer to IIR",
+      "fullHash": "84e135b9e4d1f703e605f22658e9d75f7efb0b33",
+      "shortHash": "84e135b",
+      "date": "2026-07-06T16:35:46Z",
+      "message": "feat(auto-eq): adaptive wobble fixes, batched LSTM, Freeze toggle, display decimation",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/de69dab120399a38a04311b043b6cb2be32ba32d",
-      "displayDate": "Jul 5",
-      "displayDateTime": "Jul 5, 4:10 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/84e135b9e4d1f703e605f22658e9d75f7efb0b33",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "6265fc338b87e1f83e53353aecd94fca0603645c",
-      "shortHash": "6265fc3",
-      "date": "2026-07-05T22:07:29Z",
-      "message": "feat(ssl-eq): musical calibration (writes visible knobs) + Reset button",
+      "fullHash": "28f27bdbd3d5be7bd2f0f2aa8af96b69c4542344",
+      "shortHash": "28f27bd",
+      "date": "2026-07-06T16:35:21Z",
+      "message": "perf(mel-limiter): vectorize + sparsify solve_gains_ \u2014 module 3x faster",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/6265fc338b87e1f83e53353aecd94fca0603645c",
-      "displayDate": "Jul 5",
-      "displayDateTime": "Jul 5, 3:07 PM PT",
-      "relativeTime": "15 hours ago"
-    },
-    {
-      "repo": "stevemurr/macos-screen-dimmer",
-      "repoName": "macos-screen-dimmer",
-      "fullHash": "ad99e6dd69851e00da860d06e19469fe584c99ca",
-      "shortHash": "ad99e6d",
-      "date": "2026-07-05T21:37:14Z",
-      "message": "Add fixed-level preset apps to gen-apps; bump to 0.2.0",
-      "refs": "",
-      "url": "https://github.com/stevemurr/macos-screen-dimmer/commit/ad99e6dd69851e00da860d06e19469fe584c99ca",
-      "displayDate": "Jul 5",
-      "displayDateTime": "Jul 5, 2:37 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/28f27bdbd3d5be7bd2f0f2aa8af96b69c4542344",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "158b6c822e108f7b0b4d901713e8e81cda1a1454",
-      "shortHash": "158b6c8",
-      "date": "2026-07-04T06:27:03Z",
-      "message": "fix(ssl-eq): harden coupling seqlock ordering + add contract/integration tests",
+      "fullHash": "634f980fffbf33d509234d68820673622675c6ac",
+      "shortHash": "634f980",
+      "date": "2026-07-06T16:35:21Z",
+      "message": "perf(ssl-comp): resize TCN to trace_len=1655 \u2014 byte-identical, forward -20.5%",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/158b6c822e108f7b0b4d901713e8e81cda1a1454",
-      "displayDate": "Jul 3",
-      "displayDateTime": "Jul 3, 11:27 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/axon/commit/634f980fffbf33d509234d68820673622675c6ac",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "relativeTime": "2 hours ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "a420850006ffbe8efbfa4e0a79f9158597b7bae6",
+      "shortHash": "a420850",
+      "date": "2026-07-06T16:35:01Z",
+      "message": "feat(bench): per-stage CPU timing instrumentation + ranked reporting",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/a420850006ffbe8efbfa4e0a79f9158597b7bae6",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "relativeTime": "2 hours ago"
     }
   ]
 }
