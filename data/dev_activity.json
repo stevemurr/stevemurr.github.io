@@ -3,12 +3,12 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-07-06T18:56:14.146791+00:00",
+    "generatedAt": "2026-07-07T01:04:46.896503+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-08",
-    "endDate": "2026-07-06",
-    "total": 254,
-    "max": 40,
+    "startDate": "2026-04-09",
+    "endDate": "2026-07-07",
+    "total": 291,
+    "max": 47,
     "weeks": [
       {
         "days": [
@@ -32,9 +32,9 @@
           },
           {
             "date": "2026-04-08",
-            "count": 5,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-09",
@@ -73,7 +73,7 @@
           {
             "date": "2026-04-14",
             "count": 11,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -183,7 +183,7 @@
           {
             "date": "2026-05-01",
             "count": 20,
-            "level": 3,
+            "level": 2,
             "inRange": true
           },
           {
@@ -618,15 +618,15 @@
           },
           {
             "date": "2026-07-06",
-            "count": 5,
-            "level": 1,
+            "count": 47,
+            "level": 4,
             "inRange": true
           },
           {
             "date": "2026-07-07",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-08",
@@ -678,66 +678,66 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "158975e47feeab3aa8e31654c4ae451d74233430",
-      "shortHash": "158975e",
-      "date": "2026-07-06T16:35:46Z",
-      "message": "build: harden the install path \u2014 a bad build can no longer ship",
+      "fullHash": "f663e181e6dfa7af779636a12b8ce6dac216bbf1",
+      "shortHash": "f663e18",
+      "date": "2026-07-07T00:21:12Z",
+      "message": "fix(ssl_comp): stagger L/R hop phases to halve the per-block CPU spike (#22)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/158975e47feeab3aa8e31654c4ae451d74233430",
+      "url": "https://github.com/stevemurr/axon/commit/f663e181e6dfa7af779636a12b8ce6dac216bbf1",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "displayDateTime": "Jul 6, 5:21 PM PT",
+      "relativeTime": "43 minutes ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "8ff7629ce7319e21992296ddab684167e9fe8338",
+      "shortHash": "8ff7629",
+      "date": "2026-07-06T23:10:19Z",
+      "message": "feat(release): tag-triggered 3-platform releases + \"axon release\" bump command",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/8ff7629ce7319e21992296ddab684167e9fe8338",
+      "displayDate": "Jul 6",
+      "displayDateTime": "Jul 6, 4:10 PM PT",
       "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "84e135b9e4d1f703e605f22658e9d75f7efb0b33",
-      "shortHash": "84e135b",
-      "date": "2026-07-06T16:35:46Z",
-      "message": "feat(auto-eq): adaptive wobble fixes, batched LSTM, Freeze toggle, display decimation",
+      "fullHash": "f0e04488465645f769724e90aefcfefc19de9e1d",
+      "shortHash": "f0e0448",
+      "date": "2026-07-06T23:06:36Z",
+      "message": "Merge feat/xplat (phases 2-3 + gate): Windows headless + Linux/Windows GUIs",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/84e135b9e4d1f703e605f22658e9d75f7efb0b33",
+      "url": "https://github.com/stevemurr/axon/commit/f0e04488465645f769724e90aefcfefc19de9e1d",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "displayDateTime": "Jul 6, 4:06 PM PT",
       "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "28f27bdbd3d5be7bd2f0f2aa8af96b69c4542344",
-      "shortHash": "28f27bd",
-      "date": "2026-07-06T16:35:21Z",
-      "message": "perf(mel-limiter): vectorize + sparsify solve_gains_ \u2014 module 3x faster",
+      "fullHash": "93aa1cb01e647dc0e7b3bc1ce5440076d9ab04e7",
+      "shortHash": "93aa1cb",
+      "date": "2026-07-06T23:01:31Z",
+      "message": "docs(xplat): implementation summary + final-gate ledger in the scoping doc",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/28f27bdbd3d5be7bd2f0f2aa8af96b69c4542344",
+      "url": "https://github.com/stevemurr/axon/commit/93aa1cb01e647dc0e7b3bc1ce5440076d9ab04e7",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "displayDateTime": "Jul 6, 4:01 PM PT",
       "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "634f980fffbf33d509234d68820673622675c6ac",
-      "shortHash": "634f980",
-      "date": "2026-07-06T16:35:21Z",
-      "message": "perf(ssl-comp): resize TCN to trace_len=1655 \u2014 byte-identical, forward -20.5%",
+      "fullHash": "48786708a4478db8b6fb8e774cdb7cb27511b69a",
+      "shortHash": "4878670",
+      "date": "2026-07-06T22:58:01Z",
+      "message": "chore(xplat): merge origin/main into feat/xplat (post phases 0-1 merge)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/634f980fffbf33d509234d68820673622675c6ac",
+      "url": "https://github.com/stevemurr/axon/commit/48786708a4478db8b6fb8e774cdb7cb27511b69a",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 9:35 AM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "a420850006ffbe8efbfa4e0a79f9158597b7bae6",
-      "shortHash": "a420850",
-      "date": "2026-07-06T16:35:01Z",
-      "message": "feat(bench): per-stage CPU timing instrumentation + ranked reporting",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/a420850006ffbe8efbfa4e0a79f9158597b7bae6",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 9:35 AM PT",
+      "displayDateTime": "Jul 6, 3:58 PM PT",
       "relativeTime": "2 hours ago"
     }
   ]
