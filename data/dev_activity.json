@@ -3,12 +3,12 @@
   "username": "stevemurr",
   "repoCount": 61,
   "contributions": {
-    "generatedAt": "2026-07-07T01:04:46.896503+00:00",
+    "generatedAt": "2026-07-07T07:28:25.440608+00:00",
     "windowDays": 90,
     "startDate": "2026-04-09",
     "endDate": "2026-07-07",
-    "total": 291,
-    "max": 47,
+    "total": 302,
+    "max": 58,
     "weeks": [
       {
         "days": [
@@ -51,7 +51,7 @@
           {
             "date": "2026-04-11",
             "count": 40,
-            "level": 4,
+            "level": 3,
             "inRange": true
           }
         ]
@@ -67,7 +67,7 @@
           {
             "date": "2026-04-13",
             "count": 14,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -419,7 +419,7 @@
           {
             "date": "2026-06-06",
             "count": 37,
-            "level": 4,
+            "level": 3,
             "inRange": true
           }
         ]
@@ -618,7 +618,7 @@
           },
           {
             "date": "2026-07-06",
-            "count": 47,
+            "count": 58,
             "level": 4,
             "inRange": true
           },
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "f663e181e6dfa7af779636a12b8ce6dac216bbf1",
-      "shortHash": "f663e18",
-      "date": "2026-07-07T00:21:12Z",
-      "message": "fix(ssl_comp): stagger L/R hop phases to halve the per-block CPU spike (#22)",
+      "fullHash": "32da3d983006e50848c79736e64482055956979c",
+      "shortHash": "32da3d9",
+      "date": "2026-07-07T03:22:34Z",
+      "message": "ci: make the Windows clap-validator step non-blocking (tracked by #26)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/f663e181e6dfa7af779636a12b8ce6dac216bbf1",
+      "url": "https://github.com/stevemurr/axon/commit/32da3d983006e50848c79736e64482055956979c",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 5:21 PM PT",
-      "relativeTime": "43 minutes ago"
+      "displayDateTime": "Jul 6, 8:22 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "8ff7629ce7319e21992296ddab684167e9fe8338",
-      "shortHash": "8ff7629",
-      "date": "2026-07-06T23:10:19Z",
-      "message": "feat(release): tag-triggered 3-platform releases + \"axon release\" bump command",
+      "fullHash": "db6ddac633ff46d51c57866178927b33eea3cde0",
+      "shortHash": "db6ddac",
+      "date": "2026-07-07T03:21:32Z",
+      "message": "fix(auto-eq): reject batch-1 controller exports at activate, not on the audio thread (#24)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/8ff7629ce7319e21992296ddab684167e9fe8338",
+      "url": "https://github.com/stevemurr/axon/commit/db6ddac633ff46d51c57866178927b33eea3cde0",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 4:10 PM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jul 6, 8:21 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "f0e04488465645f769724e90aefcfefc19de9e1d",
-      "shortHash": "f0e0448",
-      "date": "2026-07-06T23:06:36Z",
-      "message": "Merge feat/xplat (phases 2-3 + gate): Windows headless + Linux/Windows GUIs",
+      "fullHash": "5d398849d1c5b303c7fe9531b065dcfaa17347ef",
+      "shortHash": "5d39884",
+      "date": "2026-07-07T03:14:27Z",
+      "message": "Merge ci/clap-validator-gui-smoke: blocking clap-validator + GUI-off gate (#23)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/f0e04488465645f769724e90aefcfefc19de9e1d",
+      "url": "https://github.com/stevemurr/axon/commit/5d398849d1c5b303c7fe9531b065dcfaa17347ef",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 4:06 PM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jul 6, 8:14 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "93aa1cb01e647dc0e7b3bc1ce5440076d9ab04e7",
-      "shortHash": "93aa1cb",
-      "date": "2026-07-06T23:01:31Z",
-      "message": "docs(xplat): implementation summary + final-gate ledger in the scoping doc",
+      "fullHash": "83e7a432fce673f20083459f248e8b31cde03bf3",
+      "shortHash": "83e7a43",
+      "date": "2026-07-07T03:14:27Z",
+      "message": "fix(clap): honor partial state writes + apply params in flush() (conformance)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/93aa1cb01e647dc0e7b3bc1ce5440076d9ab04e7",
+      "url": "https://github.com/stevemurr/axon/commit/83e7a432fce673f20083459f248e8b31cde03bf3",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 4:01 PM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jul 6, 8:14 PM PT",
+      "relativeTime": "4 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "48786708a4478db8b6fb8e774cdb7cb27511b69a",
-      "shortHash": "4878670",
-      "date": "2026-07-06T22:58:01Z",
-      "message": "chore(xplat): merge origin/main into feat/xplat (post phases 0-1 merge)",
+      "fullHash": "0d4693d783aadbbc959beb6e85bfcb3f43977889",
+      "shortHash": "0d4693d",
+      "date": "2026-07-07T03:06:53Z",
+      "message": "feat(mel-limiter): raise default Drive 2\u21925 dB so ballistics knobs bite (#17)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/48786708a4478db8b6fb8e774cdb7cb27511b69a",
+      "url": "https://github.com/stevemurr/axon/commit/0d4693d783aadbbc959beb6e85bfcb3f43977889",
       "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 3:58 PM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jul 6, 8:06 PM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
