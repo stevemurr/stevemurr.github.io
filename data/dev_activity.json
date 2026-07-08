@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 62,
+  "repoCount": 63,
   "contributions": {
-    "generatedAt": "2026-07-08T00:54:59.400465+00:00",
+    "generatedAt": "2026-07-08T07:08:57.997078+00:00",
     "windowDays": 90,
     "startDate": "2026-04-10",
     "endDate": "2026-07-08",
-    "total": 300,
+    "total": 307,
     "max": 58,
     "weeks": [
       {
@@ -590,8 +590,8 @@
           },
           {
             "date": "2026-07-02",
-            "count": 0,
-            "level": 0,
+            "count": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -624,14 +624,14 @@
           },
           {
             "date": "2026-07-07",
-            "count": 7,
+            "count": 11,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-08",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
@@ -676,6 +676,58 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/eqds",
+      "repoName": "eqds",
+      "fullHash": "513e8b3170bd517c14089b90d8a30c28694763f2",
+      "shortHash": "513e8b3",
+      "date": "2026-07-08T04:24:33Z",
+      "message": "docs: polished, uv-first README",
+      "refs": "",
+      "url": "https://github.com/stevemurr/eqds/commit/513e8b3170bd517c14089b90d8a30c28694763f2",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 9:24 PM PT",
+      "relativeTime": "3 hours ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "49a3101de6ef1c5b210efcdc2a5bbd888dea7737",
+      "shortHash": "49a3101",
+      "date": "2026-07-08T03:00:09Z",
+      "message": "feat(gui): design system + channel-strip UI; EQ/Auto-Assist default on",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/49a3101de6ef1c5b210efcdc2a5bbd888dea7737",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 8:00 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/eqds",
+      "repoName": "eqds",
+      "fullHash": "5f4c494c1afd650d0282deeff4eebf9df0d8bb7c",
+      "shortHash": "5f4c494",
+      "date": "2026-07-08T02:59:58Z",
+      "message": "Generalize eqds into a device-agnostic EQ-dataset toolkit + cleanup",
+      "refs": "",
+      "url": "https://github.com/stevemurr/eqds/commit/5f4c494c1afd650d0282deeff4eebf9df0d8bb7c",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 7:59 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "84e1a08c7e854a1060ef7bf38c9237a8f034ddce",
+      "shortHash": "84e1a08",
+      "date": "2026-07-08T01:14:48Z",
+      "message": "Lower and enlarge key icons; smaller bottom caption",
+      "refs": "",
+      "url": "https://github.com/stevemurr/streamdock/commit/84e1a08c7e854a1060ef7bf38c9237a8f034ddce",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 6:14 PM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
       "repo": "stevemurr/streamdock",
       "repoName": "streamdock",
       "fullHash": "1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
@@ -686,59 +738,7 @@
       "url": "https://github.com/stevemurr/streamdock/commit/1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
       "displayDate": "Jul 7",
       "displayDateTime": "Jul 7, 4:22 PM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "413698cda844619adbc3a72db91a7b85cc563c83",
-      "shortHash": "413698c",
-      "date": "2026-07-07T23:19:20Z",
-      "message": "Add professional key rendering: gradients, typography, vector icons",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/413698cda844619adbc3a72db91a7b85cc563c83",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 4:19 PM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "3769f7266252cb6f3457f66b6eedb08663cf6d33",
-      "shortHash": "3769f72",
-      "date": "2026-07-07T23:07:31Z",
-      "message": "Add LaunchAgent commands (install/uninstall/status)",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/3769f7266252cb6f3457f66b6eedb08663cf6d33",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 4:07 PM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "ca73cffcf62e031d0e760d904aee0ecfe8c04b06",
-      "shortHash": "ca73cff",
-      "date": "2026-07-07T22:43:34Z",
-      "message": "Add control loop (streamdock run) and correct layout to 15 keys",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/ca73cffcf62e031d0e760d904aee0ecfe8c04b06",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 3:43 PM PT",
-      "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "bec76a717290f0b3b1f1272c3a0974087208f504",
-      "shortHash": "bec76a7",
-      "date": "2026-07-07T20:16:12Z",
-      "message": "Initial commit: streamdock driver + CLI for HOTSPOTEK/MiraBox Stream Dock",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/bec76a717290f0b3b1f1272c3a0974087208f504",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 1:16 PM PT",
-      "relativeTime": "5 hours ago"
+      "relativeTime": "8 hours ago"
     }
   ]
 }
