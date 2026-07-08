@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 61,
+  "repoCount": 62,
   "contributions": {
-    "generatedAt": "2026-07-07T18:58:05.288524+00:00",
+    "generatedAt": "2026-07-08T00:54:59.400465+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-09",
-    "endDate": "2026-07-07",
-    "total": 302,
+    "startDate": "2026-04-10",
+    "endDate": "2026-07-08",
+    "total": 300,
     "max": 58,
     "weeks": [
       {
@@ -38,9 +38,9 @@
           },
           {
             "date": "2026-04-09",
-            "count": 9,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-10",
@@ -624,15 +624,15 @@
           },
           {
             "date": "2026-07-07",
-            "count": 0,
-            "level": 0,
+            "count": 7,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-08",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-09",
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "32da3d983006e50848c79736e64482055956979c",
-      "shortHash": "32da3d9",
-      "date": "2026-07-07T03:22:34Z",
-      "message": "ci: make the Windows clap-validator step non-blocking (tracked by #26)",
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
+      "shortHash": "1a91e55",
+      "date": "2026-07-07T23:22:26Z",
+      "message": "Center icon+label as a group on key faces",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/32da3d983006e50848c79736e64482055956979c",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 8:22 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 4:22 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "db6ddac633ff46d51c57866178927b33eea3cde0",
-      "shortHash": "db6ddac",
-      "date": "2026-07-07T03:21:32Z",
-      "message": "fix(auto-eq): reject batch-1 controller exports at activate, not on the audio thread (#24)",
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "413698cda844619adbc3a72db91a7b85cc563c83",
+      "shortHash": "413698c",
+      "date": "2026-07-07T23:19:20Z",
+      "message": "Add professional key rendering: gradients, typography, vector icons",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/db6ddac633ff46d51c57866178927b33eea3cde0",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 8:21 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/413698cda844619adbc3a72db91a7b85cc563c83",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 4:19 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "5d398849d1c5b303c7fe9531b065dcfaa17347ef",
-      "shortHash": "5d39884",
-      "date": "2026-07-07T03:14:27Z",
-      "message": "Merge ci/clap-validator-gui-smoke: blocking clap-validator + GUI-off gate (#23)",
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "3769f7266252cb6f3457f66b6eedb08663cf6d33",
+      "shortHash": "3769f72",
+      "date": "2026-07-07T23:07:31Z",
+      "message": "Add LaunchAgent commands (install/uninstall/status)",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/5d398849d1c5b303c7fe9531b065dcfaa17347ef",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 8:14 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/3769f7266252cb6f3457f66b6eedb08663cf6d33",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 4:07 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "83e7a432fce673f20083459f248e8b31cde03bf3",
-      "shortHash": "83e7a43",
-      "date": "2026-07-07T03:14:27Z",
-      "message": "fix(clap): honor partial state writes + apply params in flush() (conformance)",
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "ca73cffcf62e031d0e760d904aee0ecfe8c04b06",
+      "shortHash": "ca73cff",
+      "date": "2026-07-07T22:43:34Z",
+      "message": "Add control loop (streamdock run) and correct layout to 15 keys",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/83e7a432fce673f20083459f248e8b31cde03bf3",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 8:14 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/ca73cffcf62e031d0e760d904aee0ecfe8c04b06",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 3:43 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "0d4693d783aadbbc959beb6e85bfcb3f43977889",
-      "shortHash": "0d4693d",
-      "date": "2026-07-07T03:06:53Z",
-      "message": "feat(mel-limiter): raise default Drive 2\u21925 dB so ballistics knobs bite (#17)",
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "bec76a717290f0b3b1f1272c3a0974087208f504",
+      "shortHash": "bec76a7",
+      "date": "2026-07-07T20:16:12Z",
+      "message": "Initial commit: streamdock driver + CLI for HOTSPOTEK/MiraBox Stream Dock",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/0d4693d783aadbbc959beb6e85bfcb3f43977889",
-      "displayDate": "Jul 6",
-      "displayDateTime": "Jul 6, 8:06 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/bec76a717290f0b3b1f1272c3a0974087208f504",
+      "displayDate": "Jul 7",
+      "displayDateTime": "Jul 7, 1:16 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
