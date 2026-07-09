@@ -3,10 +3,10 @@
   "username": "stevemurr",
   "repoCount": 63,
   "contributions": {
-    "generatedAt": "2026-07-08T18:48:20.388447+00:00",
+    "generatedAt": "2026-07-09T01:00:49.202475+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-10",
-    "endDate": "2026-07-08",
+    "startDate": "2026-04-11",
+    "endDate": "2026-07-09",
     "total": 308,
     "max": 58,
     "weeks": [
@@ -44,9 +44,9 @@
           },
           {
             "date": "2026-04-10",
-            "count": 5,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-11",
@@ -630,7 +630,7 @@
           },
           {
             "date": "2026-07-08",
-            "count": 2,
+            "count": 7,
             "level": 1,
             "inRange": true
           },
@@ -638,7 +638,7 @@
             "date": "2026-07-09",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-10",
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/eqds",
-      "repoName": "eqds",
-      "fullHash": "513e8b3170bd517c14089b90d8a30c28694763f2",
-      "shortHash": "513e8b3",
-      "date": "2026-07-08T04:24:33Z",
-      "message": "docs: polished, uv-first README",
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "9e2d15f49636ae37ea1298c2bf21b85a31f76751",
+      "shortHash": "9e2d15f",
+      "date": "2026-07-08T22:47:52Z",
+      "message": "fix(clap): persist GUI parameter changes (report to host + sync state)",
       "refs": "",
-      "url": "https://github.com/stevemurr/eqds/commit/513e8b3170bd517c14089b90d8a30c28694763f2",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 9:24 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/9e2d15f49636ae37ea1298c2bf21b85a31f76751",
+      "displayDate": "Jul 8",
+      "displayDateTime": "Jul 8, 3:47 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
-      "fullHash": "49a3101de6ef1c5b210efcdc2a5bbd888dea7737",
-      "shortHash": "49a3101",
-      "date": "2026-07-08T03:00:09Z",
-      "message": "feat(gui): design system + channel-strip UI; EQ/Auto-Assist default on",
+      "fullHash": "8f0f1f23d5c559ceedf6a9bc977cf914cef4185e",
+      "shortHash": "8f0f1f2",
+      "date": "2026-07-08T21:47:21Z",
+      "message": "docs(future): conclude #25 offload-inference not-implemented",
       "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/49a3101de6ef1c5b210efcdc2a5bbd888dea7737",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 8:00 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/axon/commit/8f0f1f23d5c559ceedf6a9bc977cf914cef4185e",
+      "displayDate": "Jul 8",
+      "displayDateTime": "Jul 8, 2:47 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/eqds",
-      "repoName": "eqds",
-      "fullHash": "5f4c494c1afd650d0282deeff4eebf9df0d8bb7c",
-      "shortHash": "5f4c494",
-      "date": "2026-07-08T02:59:58Z",
-      "message": "Generalize eqds into a device-agnostic EQ-dataset toolkit + cleanup",
+      "repo": "stevemurr/daw-here",
+      "repoName": "daw-here",
+      "fullHash": "3b63367c37afe664c631650b5d0bf81b1a334ec4",
+      "shortHash": "3b63367",
+      "date": "2026-07-08T18:55:04Z",
+      "message": "Polish README and add interface screenshot",
       "refs": "",
-      "url": "https://github.com/stevemurr/eqds/commit/5f4c494c1afd650d0282deeff4eebf9df0d8bb7c",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 7:59 PM PT",
-      "relativeTime": "16 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "84e1a08c7e854a1060ef7bf38c9237a8f034ddce",
-      "shortHash": "84e1a08",
-      "date": "2026-07-08T01:14:48Z",
-      "message": "Lower and enlarge key icons; smaller bottom caption",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/84e1a08c7e854a1060ef7bf38c9237a8f034ddce",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 6:14 PM PT",
-      "relativeTime": "18 hours ago"
+      "url": "https://github.com/stevemurr/daw-here/commit/3b63367c37afe664c631650b5d0bf81b1a334ec4",
+      "displayDate": "Jul 8",
+      "displayDateTime": "Jul 8, 11:55 AM PT",
+      "relativeTime": "6 hours ago"
     },
     {
       "repo": "stevemurr/streamdock",
       "repoName": "streamdock",
-      "fullHash": "1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
-      "shortHash": "1a91e55",
-      "date": "2026-07-07T23:22:26Z",
-      "message": "Center icon+label as a group on key faces",
+      "fullHash": "8da4c6ade1818e2cf31ebff3a38be622057a467d",
+      "shortHash": "8da4c6a",
+      "date": "2026-07-08T18:54:30Z",
+      "message": "Add menu bar indicator, sleep key, and display-fit calibration (+tests)",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/1a91e556903d965c3e7d46a56a61bd7fa31e7c35",
-      "displayDate": "Jul 7",
-      "displayDateTime": "Jul 7, 4:22 PM PT",
-      "relativeTime": "19 hours ago"
+      "url": "https://github.com/stevemurr/streamdock/commit/8da4c6ade1818e2cf31ebff3a38be622057a467d",
+      "displayDate": "Jul 8",
+      "displayDateTime": "Jul 8, 11:54 AM PT",
+      "relativeTime": "6 hours ago"
+    },
+    {
+      "repo": "stevemurr/axon",
+      "repoName": "axon",
+      "fullHash": "14f0df87205986bde5045cfc369a747865b0e021",
+      "shortHash": "14f0df8",
+      "date": "2026-07-08T18:51:58Z",
+      "message": "refactor(dsp): delete the dormant Saturator stage + bundle (#21)",
+      "refs": "",
+      "url": "https://github.com/stevemurr/axon/commit/14f0df87205986bde5045cfc369a747865b0e021",
+      "displayDate": "Jul 8",
+      "displayDateTime": "Jul 8, 11:51 AM PT",
+      "relativeTime": "6 hours ago"
     }
   ]
 }
