@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 63,
   "contributions": {
-    "generatedAt": "2026-07-11T18:35:11.590997+00:00",
+    "generatedAt": "2026-07-12T00:58:14.665546+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-13",
-    "endDate": "2026-07-11",
-    "total": 276,
+    "startDate": "2026-04-14",
+    "endDate": "2026-07-12",
+    "total": 267,
     "max": 58,
     "weeks": [
       {
@@ -20,9 +20,9 @@
           },
           {
             "date": "2026-04-13",
-            "count": 14,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-14",
@@ -602,9 +602,55 @@
           },
           {
             "date": "2026-07-11",
+            "count": 4,
+            "level": 1,
+            "inRange": true
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "date": "2026-07-12",
+            "count": 1,
+            "level": 1,
+            "inRange": true
+          },
+          {
+            "date": "2026-07-13",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
+          },
+          {
+            "date": "2026-07-14",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-15",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-16",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-17",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-18",
+            "count": 0,
+            "level": 0,
+            "inRange": false
           }
         ]
       }
@@ -632,6 +678,45 @@
     {
       "repo": "stevemurr/streamdock",
       "repoName": "streamdock",
+      "fullHash": "37d8911c55e3f7cb23f190b88efca7b1c3a7ca21",
+      "shortHash": "37d8911",
+      "date": "2026-07-12T00:24:43Z",
+      "message": "Refresh Swift app screenshot",
+      "refs": "",
+      "url": "https://github.com/stevemurr/streamdock/commit/37d8911c55e3f7cb23f190b88efca7b1c3a7ca21",
+      "displayDate": "Jul 11",
+      "displayDateTime": "Jul 11, 5:24 PM PT",
+      "relativeTime": "33 minutes ago"
+    },
+    {
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "72cede0689a9cbf2dbbb0b6d78c529e30ac88359",
+      "shortHash": "72cede0",
+      "date": "2026-07-12T00:16:53Z",
+      "message": "Move deck controls into app settings",
+      "refs": "",
+      "url": "https://github.com/stevemurr/streamdock/commit/72cede0689a9cbf2dbbb0b6d78c529e30ac88359",
+      "displayDate": "Jul 11",
+      "displayDateTime": "Jul 11, 5:16 PM PT",
+      "relativeTime": "41 minutes ago"
+    },
+    {
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "6abbac9e11072099cae6675b6daa9e0d4e6a3c12",
+      "shortHash": "6abbac9",
+      "date": "2026-07-12T00:13:45Z",
+      "message": "Fix macOS app icon and prioritize Swift quick start",
+      "refs": "",
+      "url": "https://github.com/stevemurr/streamdock/commit/6abbac9e11072099cae6675b6daa9e0d4e6a3c12",
+      "displayDate": "Jul 11",
+      "displayDateTime": "Jul 11, 5:13 PM PT",
+      "relativeTime": "44 minutes ago"
+    },
+    {
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
       "fullHash": "bf8f17913fed4813441a7c39c509c541fb5e2afd",
       "shortHash": "bf8f179",
       "date": "2026-07-11T02:21:11Z",
@@ -640,7 +725,7 @@
       "url": "https://github.com/stevemurr/streamdock/commit/bf8f17913fed4813441a7c39c509c541fb5e2afd",
       "displayDate": "Jul 10",
       "displayDateTime": "Jul 10, 7:21 PM PT",
-      "relativeTime": "16 hours ago"
+      "relativeTime": "23 hours ago"
     },
     {
       "repo": "stevemurr/streamdock",
@@ -653,46 +738,7 @@
       "url": "https://github.com/stevemurr/streamdock/commit/d6ea7946cc925a5692f712be7c40d50d7007427c",
       "displayDate": "Jul 10",
       "displayDateTime": "Jul 10, 7:17 PM PT",
-      "relativeTime": "16 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "12ed81cd19a8d4b55d0cdb826eb6ae06fe9b7204",
-      "shortHash": "12ed81c",
-      "date": "2026-07-11T02:17:04Z",
-      "message": "Add deck settings, idle screen-off, app icon, and a hermetic XCUI suite",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/12ed81cd19a8d4b55d0cdb826eb6ae06fe9b7204",
-      "displayDate": "Jul 10",
-      "displayDateTime": "Jul 10, 7:17 PM PT",
-      "relativeTime": "16 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "14129595d5f5ed441d81048a6b9ca6dd40b1627b",
-      "shortHash": "1412959",
-      "date": "2026-07-10T23:33:20Z",
-      "message": "Fix hex color field label rendering in the inspector",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/14129595d5f5ed441d81048a6b9ca6dd40b1627b",
-      "displayDate": "Jul 10",
-      "displayDateTime": "Jul 10, 4:33 PM PT",
-      "relativeTime": "19 hours ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "ce33dd769c9435711a154a6fd7721b0d6939b0d5",
-      "shortHash": "ce33dd7",
-      "date": "2026-07-10T23:19:57Z",
-      "message": "Merge key references and macro control channel",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/ce33dd769c9435711a154a6fd7721b0d6939b0d5",
-      "displayDate": "Jul 10",
-      "displayDateTime": "Jul 10, 4:19 PM PT",
-      "relativeTime": "19 hours ago"
+      "relativeTime": "23 hours ago"
     }
   ]
 }
