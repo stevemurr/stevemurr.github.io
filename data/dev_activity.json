@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 63,
   "contributions": {
-    "generatedAt": "2026-07-12T18:35:20.908514+00:00",
+    "generatedAt": "2026-07-13T00:57:26.297608+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-14",
-    "endDate": "2026-07-12",
-    "total": 267,
+    "startDate": "2026-04-15",
+    "endDate": "2026-07-13",
+    "total": 281,
     "max": 58,
     "weeks": [
       {
@@ -26,9 +26,9 @@
           },
           {
             "date": "2026-04-14",
-            "count": 11,
-            "level": 1,
-            "inRange": true
+            "count": 0,
+            "level": 0,
+            "inRange": false
           },
           {
             "date": "2026-04-15",
@@ -602,7 +602,7 @@
           },
           {
             "date": "2026-07-11",
-            "count": 4,
+            "count": 11,
             "level": 1,
             "inRange": true
           }
@@ -612,15 +612,15 @@
         "days": [
           {
             "date": "2026-07-12",
-            "count": 1,
-            "level": 1,
+            "count": 19,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-13",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-14",
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "37d8911c55e3f7cb23f190b88efca7b1c3a7ca21",
-      "shortHash": "37d8911",
-      "date": "2026-07-12T00:24:43Z",
-      "message": "Refresh Swift app screenshot",
+      "repo": "stevemurr/youtube-teevee",
+      "repoName": "youtube-teevee",
+      "fullHash": "e0e5d4f08f5505a924cd214666a99bbdd0469262",
+      "shortHash": "e0e5d4f",
+      "date": "2026-07-12T21:27:48Z",
+      "message": "fix(app): single-window scene, atomic legacy import, isolated fixtures",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/37d8911c55e3f7cb23f190b88efca7b1c3a7ca21",
-      "displayDate": "Jul 11",
-      "displayDateTime": "Jul 11, 5:24 PM PT",
-      "relativeTime": "18 hours ago"
+      "url": "https://github.com/stevemurr/youtube-teevee/commit/e0e5d4f08f5505a924cd214666a99bbdd0469262",
+      "displayDate": "Jul 12",
+      "displayDateTime": "Jul 12, 2:27 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "72cede0689a9cbf2dbbb0b6d78c529e30ac88359",
-      "shortHash": "72cede0",
-      "date": "2026-07-12T00:16:53Z",
-      "message": "Move deck controls into app settings",
+      "repo": "stevemurr/youtube-teevee",
+      "repoName": "youtube-teevee",
+      "fullHash": "4e656fef69335b29b44e51d061f8c4ffced88bcb",
+      "shortHash": "4e656fe",
+      "date": "2026-07-12T21:27:48Z",
+      "message": "fix(guide): cold-launch centering, phantom sidebar clicks, hour-anchored scroll memory",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/72cede0689a9cbf2dbbb0b6d78c529e30ac88359",
-      "displayDate": "Jul 11",
-      "displayDateTime": "Jul 11, 5:16 PM PT",
-      "relativeTime": "18 hours ago"
+      "url": "https://github.com/stevemurr/youtube-teevee/commit/4e656fef69335b29b44e51d061f8c4ffced88bcb",
+      "displayDate": "Jul 12",
+      "displayDateTime": "Jul 12, 2:27 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "6abbac9e11072099cae6675b6daa9e0d4e6a3c12",
-      "shortHash": "6abbac9",
-      "date": "2026-07-12T00:13:45Z",
-      "message": "Fix macOS app icon and prioritize Swift quick start",
+      "repo": "stevemurr/youtube-teevee",
+      "repoName": "youtube-teevee",
+      "fullHash": "8b1d2a699ee1663c5f8e3f0c643454256efe7e84",
+      "shortHash": "8b1d2a6",
+      "date": "2026-07-12T21:27:30Z",
+      "message": "fix(refresh): honest dates, surfaced failures, safe cookies, live first run",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/6abbac9e11072099cae6675b6daa9e0d4e6a3c12",
-      "displayDate": "Jul 11",
-      "displayDateTime": "Jul 11, 5:13 PM PT",
-      "relativeTime": "18 hours ago"
+      "url": "https://github.com/stevemurr/youtube-teevee/commit/8b1d2a699ee1663c5f8e3f0c643454256efe7e84",
+      "displayDate": "Jul 12",
+      "displayDateTime": "Jul 12, 2:27 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "bf8f17913fed4813441a7c39c509c541fb5e2afd",
-      "shortHash": "bf8f179",
-      "date": "2026-07-11T02:21:11Z",
-      "message": "Polish the README: hero screenshot, badges, and a highlights section",
+      "repo": "stevemurr/youtube-teevee",
+      "repoName": "youtube-teevee",
+      "fullHash": "4f6ab445cddf6aac909e3114960f1147aed1f504",
+      "shortHash": "4f6ab44",
+      "date": "2026-07-12T21:27:30Z",
+      "message": "fix(player): make the transition/swap state machine slot-aware and event-correlated",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/bf8f17913fed4813441a7c39c509c541fb5e2afd",
-      "displayDate": "Jul 10",
-      "displayDateTime": "Jul 10, 7:21 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/youtube-teevee/commit/4f6ab445cddf6aac909e3114960f1147aed1f504",
+      "displayDate": "Jul 12",
+      "displayDateTime": "Jul 12, 2:27 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "d6ea7946cc925a5692f712be7c40d50d7007427c",
-      "shortHash": "d6ea794",
-      "date": "2026-07-11T02:17:50Z",
-      "message": "Map the 3 bottom hardware buttons to paging (prev / first / next)",
+      "repo": "stevemurr/youtube-teevee",
+      "repoName": "youtube-teevee",
+      "fullHash": "bc74588dfcd18c41deee442d2b874ad3bae06130",
+      "shortHash": "bc74588",
+      "date": "2026-07-12T18:48:25Z",
+      "message": "perf(guide): chunk-window program-block creation",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/d6ea7946cc925a5692f712be7c40d50d7007427c",
-      "displayDate": "Jul 10",
-      "displayDateTime": "Jul 10, 7:17 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/youtube-teevee/commit/bc74588dfcd18c41deee442d2b874ad3bae06130",
+      "displayDate": "Jul 12",
+      "displayDateTime": "Jul 12, 11:48 AM PT",
+      "relativeTime": "6 hours ago"
     }
   ]
 }
