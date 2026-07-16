@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 63,
   "contributions": {
-    "generatedAt": "2026-07-16T12:50:10.994471+00:00",
+    "generatedAt": "2026-07-16T18:41:14.230895+00:00",
     "windowDays": 90,
     "startDate": "2026-04-18",
     "endDate": "2026-07-16",
-    "total": 284,
+    "total": 291,
     "max": 58,
     "weeks": [
       {
@@ -636,7 +636,7 @@
           },
           {
             "date": "2026-07-16",
-            "count": 1,
+            "count": 8,
             "level": 1,
             "inRange": true
           },
@@ -675,6 +675,19 @@
     ]
   },
   "recentCommits": [
+    {
+      "repo": "stevemurr/streamdock",
+      "repoName": "streamdock",
+      "fullHash": "e8336a772c81343aa121a3b2c9c18770c1b89fbc",
+      "shortHash": "e8336a7",
+      "date": "2026-07-16T17:00:29Z",
+      "message": "Add local web control interface",
+      "refs": "",
+      "url": "https://github.com/stevemurr/streamdock/commit/e8336a772c81343aa121a3b2c9c18770c1b89fbc",
+      "displayDate": "Jul 16",
+      "displayDateTime": "Jul 16, 10:00 AM PT",
+      "relativeTime": "2 hours ago"
+    },
     {
       "repo": "stevemurr/axon",
       "repoName": "axon",
@@ -725,19 +738,6 @@
       "url": "https://github.com/stevemurr/streamdock/commit/98d5f24e55aa69618d8909fb43d652f81b497ab0",
       "displayDate": "Jul 12",
       "displayDateTime": "Jul 12, 6:22 PM PT",
-      "relativeTime": "3 days ago"
-    },
-    {
-      "repo": "stevemurr/youtube-teevee",
-      "repoName": "youtube-teevee",
-      "fullHash": "e0e5d4f08f5505a924cd214666a99bbdd0469262",
-      "shortHash": "e0e5d4f",
-      "date": "2026-07-12T21:27:48Z",
-      "message": "fix(app): single-window scene, atomic legacy import, isolated fixtures",
-      "refs": "",
-      "url": "https://github.com/stevemurr/youtube-teevee/commit/e0e5d4f08f5505a924cd214666a99bbdd0469262",
-      "displayDate": "Jul 12",
-      "displayDateTime": "Jul 12, 2:27 PM PT",
       "relativeTime": "4 days ago"
     }
   ]
