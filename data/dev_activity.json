@@ -1,61 +1,15 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 63,
+  "repoCount": 64,
   "contributions": {
-    "generatedAt": "2026-07-16T18:41:14.230895+00:00",
+    "generatedAt": "2026-07-17T00:54:30.896410+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-18",
-    "endDate": "2026-07-16",
-    "total": 291,
+    "startDate": "2026-04-19",
+    "endDate": "2026-07-17",
+    "total": 301,
     "max": 58,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2026-04-12",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-13",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-14",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-15",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-16",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-17",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-18",
-            "count": 0,
-            "level": 0,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -636,15 +590,15 @@
           },
           {
             "date": "2026-07-16",
-            "count": 8,
-            "level": 1,
+            "count": 18,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-17",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-18",
@@ -662,83 +616,83 @@
       },
       {
         "label": "May",
-        "column": 2
+        "column": 1
       },
       {
         "label": "Jun",
-        "column": 7
+        "column": 6
       },
       {
         "label": "Jul",
-        "column": 11
+        "column": 10
       }
     ]
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "e8336a772c81343aa121a3b2c9c18770c1b89fbc",
-      "shortHash": "e8336a7",
-      "date": "2026-07-16T17:00:29Z",
-      "message": "Add local web control interface",
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "f2d9d7be048de48cc35f6c235278c88fb7833802",
+      "shortHash": "f2d9d7b",
+      "date": "2026-07-17T00:41:14Z",
+      "message": "docs: record perf pass findings, measurements, and what's left",
       "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/e8336a772c81343aa121a3b2c9c18770c1b89fbc",
+      "url": "https://github.com/stevemurr/windex/commit/f2d9d7be048de48cc35f6c235278c88fb7833802",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 10:00 AM PT",
+      "displayDateTime": "Jul 16, 5:41 PM PT",
+      "relativeTime": "13 minutes ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "499ba7110d9ad43fb949212639265ecee53241da",
+      "shortHash": "499ba71",
+      "date": "2026-07-17T00:40:57Z",
+      "message": "Perf: fix ledger probe plan, cut stats scan load, reuse hot objects",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/499ba7110d9ad43fb949212639265ecee53241da",
+      "displayDate": "Jul 16",
+      "displayDateTime": "Jul 16, 5:40 PM PT",
+      "relativeTime": "13 minutes ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "eb69a519274df17b355776caca465b23567a3486",
+      "shortHash": "eb69a51",
+      "date": "2026-07-17T00:14:15Z",
+      "message": "Store tuning finish + gh discover rate-limit fixes",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/eb69a519274df17b355776caca465b23567a3486",
+      "displayDate": "Jul 16",
+      "displayDateTime": "Jul 16, 5:14 PM PT",
+      "relativeTime": "40 minutes ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "68b620e4da8e7166e91475701afda9e07927989b",
+      "shortHash": "68b620e",
+      "date": "2026-07-16T23:46:34Z",
+      "message": "merge hacker news source branch",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/68b620e4da8e7166e91475701afda9e07927989b",
+      "displayDate": "Jul 16",
+      "displayDateTime": "Jul 16, 4:46 PM PT",
+      "relativeTime": "1 hour ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "b81a43335b36494b3bace49985ed8c64fe57cbbc",
+      "shortHash": "b81a433",
+      "date": "2026-07-16T23:08:58Z",
+      "message": "merge composition chart branch",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/b81a43335b36494b3bace49985ed8c64fe57cbbc",
+      "displayDate": "Jul 16",
+      "displayDateTime": "Jul 16, 4:08 PM PT",
       "relativeTime": "2 hours ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "5c185d81dead7e306f49d958b00281ee3e6a8509",
-      "shortHash": "5c185d8",
-      "date": "2026-07-14T16:25:49Z",
-      "message": "chore(agents): add next-idea workflow skill",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/5c185d81dead7e306f49d958b00281ee3e6a8509",
-      "displayDate": "Jul 14",
-      "displayDateTime": "Jul 14, 9:25 AM PT",
-      "relativeTime": "2 days ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "0f224f4925d872920fc5ec3ef08f9e277aa58675",
-      "shortHash": "0f224f4",
-      "date": "2026-07-14T07:08:54Z",
-      "message": "docs(readme): refresh UI screenshots",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/0f224f4925d872920fc5ec3ef08f9e277aa58675",
-      "displayDate": "Jul 14",
-      "displayDateTime": "Jul 14, 12:08 AM PT",
-      "relativeTime": "2 days ago"
-    },
-    {
-      "repo": "stevemurr/axon",
-      "repoName": "axon",
-      "fullHash": "f507d48195c235b4dd22bbec97c865d2b67daa0a",
-      "shortHash": "f507d48",
-      "date": "2026-07-13T22:48:53Z",
-      "message": "Add operable module help overlay",
-      "refs": "",
-      "url": "https://github.com/stevemurr/axon/commit/f507d48195c235b4dd22bbec97c865d2b67daa0a",
-      "displayDate": "Jul 13",
-      "displayDateTime": "Jul 13, 3:48 PM PT",
-      "relativeTime": "3 days ago"
-    },
-    {
-      "repo": "stevemurr/streamdock",
-      "repoName": "streamdock",
-      "fullHash": "98d5f24e55aa69618d8909fb43d652f81b497ab0",
-      "shortHash": "98d5f24",
-      "date": "2026-07-13T01:22:36Z",
-      "message": "Add stateful actions and caffeinate toggle",
-      "refs": "",
-      "url": "https://github.com/stevemurr/streamdock/commit/98d5f24e55aa69618d8909fb43d652f81b497ab0",
-      "displayDate": "Jul 12",
-      "displayDateTime": "Jul 12, 6:22 PM PT",
-      "relativeTime": "4 days ago"
     }
   ]
 }
