@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 64,
   "contributions": {
-    "generatedAt": "2026-07-17T12:42:02.639372+00:00",
+    "generatedAt": "2026-07-17T18:37:51.622517+00:00",
     "windowDays": 90,
     "startDate": "2026-04-19",
     "endDate": "2026-07-17",
-    "total": 337,
+    "total": 346,
     "max": 58,
     "weeks": [
       {
@@ -596,8 +596,8 @@
           },
           {
             "date": "2026-07-17",
-            "count": 9,
-            "level": 1,
+            "count": 18,
+            "level": 2,
             "inRange": true
           },
           {
@@ -630,6 +630,45 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "7231a5b9348b6741d69be733dc14d96872e157b3",
+      "shortHash": "7231a5b",
+      "date": "2026-07-17T18:01:32Z",
+      "message": "embed: drop full budget 16 -> 12 (16 was past the server's knee)",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/7231a5b9348b6741d69be733dc14d96872e157b3",
+      "displayDate": "Jul 17",
+      "displayDateTime": "Jul 17, 11:01 AM PT",
+      "relativeTime": "36 minutes ago"
+    },
+    {
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "b428cc349e09270e3b05c3723fdaa608a21f4f7a",
+      "shortHash": "b428cc3",
+      "date": "2026-07-17T17:24:39Z",
+      "message": "Add data-protection keychain option so sandboxed apps can store grants",
+      "refs": "",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/b428cc349e09270e3b05c3723fdaa608a21f4f7a",
+      "displayDate": "Jul 17",
+      "displayDateTime": "Jul 17, 10:24 AM PT",
+      "relativeTime": "1 hour ago"
+    },
+    {
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "556c7fb449044ad874f6bad4ac71cf1957da21e2",
+      "shortHash": "556c7fb",
+      "date": "2026-07-17T16:28:55Z",
+      "message": "Redesign README with a hero banner, badges, and structured sections",
+      "refs": "",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/556c7fb449044ad874f6bad4ac71cf1957da21e2",
+      "displayDate": "Jul 17",
+      "displayDateTime": "Jul 17, 9:28 AM PT",
+      "relativeTime": "2 hours ago"
+    },
+    {
       "repo": "stevemurr/local-mcp-kit",
       "repoName": "local-mcp-kit",
       "fullHash": "f5bb74f39b106f31d86870282a9d488b9219ce01",
@@ -640,7 +679,7 @@
       "url": "https://github.com/stevemurr/local-mcp-kit/commit/f5bb74f39b106f31d86870282a9d488b9219ce01",
       "displayDate": "Jul 17",
       "displayDateTime": "Jul 17, 3:20 AM PT",
-      "relativeTime": "2 hours ago"
+      "relativeTime": "8 hours ago"
     },
     {
       "repo": "stevemurr/local-mcp-kit",
@@ -653,46 +692,7 @@
       "url": "https://github.com/stevemurr/local-mcp-kit/commit/d31b2295a872187e660a9c51ed9db33e29b0598f",
       "displayDate": "Jul 17",
       "displayDateTime": "Jul 17, 3:08 AM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/local-mcp-kit",
-      "repoName": "local-mcp-kit",
-      "fullHash": "c6051e1369d46027ee800a213372b82fcac79502",
-      "shortHash": "c6051e1",
-      "date": "2026-07-17T09:56:14Z",
-      "message": "Run each test target in its own bounded CI step",
-      "refs": "",
-      "url": "https://github.com/stevemurr/local-mcp-kit/commit/c6051e1369d46027ee800a213372b82fcac79502",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 2:56 AM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/local-mcp-kit",
-      "repoName": "local-mcp-kit",
-      "fullHash": "6f2923b24b8ec1d31e436d05bc19f1ea4cd019ac",
-      "shortHash": "6f2923b",
-      "date": "2026-07-17T09:23:05Z",
-      "message": "CI-gate the subscriber-cancellation join",
-      "refs": "",
-      "url": "https://github.com/stevemurr/local-mcp-kit/commit/6f2923b24b8ec1d31e436d05bc19f1ea4cd019ac",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 2:23 AM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/local-mcp-kit",
-      "repoName": "local-mcp-kit",
-      "fullHash": "51a1e1f20a5f8deb1e05c243c968fbd087bbf5f7",
-      "shortHash": "51a1e1f",
-      "date": "2026-07-17T08:50:17Z",
-      "message": "Split CI: prove the Swift 6.0 floor by building, test on the default toolchain",
-      "refs": "",
-      "url": "https://github.com/stevemurr/local-mcp-kit/commit/51a1e1f20a5f8deb1e05c243c968fbd087bbf5f7",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 1:50 AM PT",
-      "relativeTime": "4 hours ago"
+      "relativeTime": "8 hours ago"
     }
   ]
 }
