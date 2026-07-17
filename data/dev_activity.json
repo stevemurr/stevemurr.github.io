@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 64,
   "contributions": {
-    "generatedAt": "2026-07-17T00:54:30.896410+00:00",
+    "generatedAt": "2026-07-17T07:03:46.682356+00:00",
     "windowDays": 90,
     "startDate": "2026-04-19",
     "endDate": "2026-07-17",
-    "total": 301,
+    "total": 329,
     "max": 58,
     "weeks": [
       {
@@ -590,14 +590,14 @@
           },
           {
             "date": "2026-07-16",
-            "count": 18,
-            "level": 2,
+            "count": 45,
+            "level": 4,
             "inRange": true
           },
           {
             "date": "2026-07-17",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
@@ -630,69 +630,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "f2d9d7be048de48cc35f6c235278c88fb7833802",
-      "shortHash": "f2d9d7b",
-      "date": "2026-07-17T00:41:14Z",
-      "message": "docs: record perf pass findings, measurements, and what's left",
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "8a3bafe2d95b3bd37c560a559222d0b0c533bb60",
+      "shortHash": "8a3bafe",
+      "date": "2026-07-17T06:53:00Z",
+      "message": "Annotate a mock parser closure result for Swift 6.0 type inference",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/f2d9d7be048de48cc35f6c235278c88fb7833802",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/8a3bafe2d95b3bd37c560a559222d0b0c533bb60",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 5:41 PM PT",
-      "relativeTime": "13 minutes ago"
+      "displayDateTime": "Jul 16, 11:53 PM PT",
+      "relativeTime": "10 minutes ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "499ba7110d9ad43fb949212639265ecee53241da",
-      "shortHash": "499ba71",
-      "date": "2026-07-17T00:40:57Z",
-      "message": "Perf: fix ledger probe plan, cut stats scan load, reuse hot objects",
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "642c9bd53039ea2bf78f0d3f5e03710eb1187c59",
+      "shortHash": "642c9bd",
+      "date": "2026-07-17T06:49:18Z",
+      "message": "Hoist throwing fixtures out of #expect operands for Swift 6.0 swift-testing",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/499ba7110d9ad43fb949212639265ecee53241da",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/642c9bd53039ea2bf78f0d3f5e03710eb1187c59",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 5:40 PM PT",
-      "relativeTime": "13 minutes ago"
+      "displayDateTime": "Jul 16, 11:49 PM PT",
+      "relativeTime": "14 minutes ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "eb69a519274df17b355776caca465b23567a3486",
-      "shortHash": "eb69a51",
-      "date": "2026-07-17T00:14:15Z",
-      "message": "Store tuning finish + gh discover rate-limit fixes",
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "90d9224effc163e2797cf4e2f1692ccc473f2152",
+      "shortHash": "90d9224",
+      "date": "2026-07-17T06:44:14Z",
+      "message": "Gate the SwiftUI demo app on compiler 6.1 to dodge a Swift 6.0 IRGen crash",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/eb69a519274df17b355776caca465b23567a3486",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/90d9224effc163e2797cf4e2f1692ccc473f2152",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 5:14 PM PT",
-      "relativeTime": "40 minutes ago"
+      "displayDateTime": "Jul 16, 11:44 PM PT",
+      "relativeTime": "19 minutes ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "68b620e4da8e7166e91475701afda9e07927989b",
-      "shortHash": "68b620e",
-      "date": "2026-07-16T23:46:34Z",
-      "message": "merge hacker news source branch",
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "63dde835ebdfcbfba4a76e61c1fe45c37b6b0af2",
+      "shortHash": "63dde83",
+      "date": "2026-07-17T06:35:45Z",
+      "message": "Work around Swift 6.0 IRGen crash in the example root view",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/68b620e4da8e7166e91475701afda9e07927989b",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/63dde835ebdfcbfba4a76e61c1fe45c37b6b0af2",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 4:46 PM PT",
-      "relativeTime": "1 hour ago"
+      "displayDateTime": "Jul 16, 11:35 PM PT",
+      "relativeTime": "28 minutes ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "b81a43335b36494b3bace49985ed8c64fe57cbbc",
-      "shortHash": "b81a433",
-      "date": "2026-07-16T23:08:58Z",
-      "message": "merge composition chart branch",
+      "repo": "stevemurr/local-mcp-kit",
+      "repoName": "local-mcp-kit",
+      "fullHash": "592482f6d791a2cfbf78a04ecb050d8eac0ce271",
+      "shortHash": "592482f",
+      "date": "2026-07-17T06:31:43Z",
+      "message": "Fix remaining Swift 6.0 closure self-capture in the listener operation box",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/b81a43335b36494b3bace49985ed8c64fe57cbbc",
+      "url": "https://github.com/stevemurr/local-mcp-kit/commit/592482f6d791a2cfbf78a04ecb050d8eac0ce271",
       "displayDate": "Jul 16",
-      "displayDateTime": "Jul 16, 4:08 PM PT",
-      "relativeTime": "2 hours ago"
+      "displayDateTime": "Jul 16, 11:31 PM PT",
+      "relativeTime": "32 minutes ago"
     }
   ]
 }
