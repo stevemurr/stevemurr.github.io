@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 64,
   "contributions": {
-    "generatedAt": "2026-07-19T18:36:12.139185+00:00",
+    "generatedAt": "2026-07-20T00:57:33.421621+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-21",
-    "endDate": "2026-07-19",
-    "total": 436,
+    "startDate": "2026-04-22",
+    "endDate": "2026-07-20",
+    "total": 457,
     "max": 62,
     "weeks": [
       {
@@ -28,7 +28,7 @@
             "date": "2026-04-21",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-22",
@@ -596,7 +596,7 @@
           },
           {
             "date": "2026-07-17",
-            "count": 29,
+            "count": 30,
             "level": 2,
             "inRange": true
           },
@@ -612,15 +612,15 @@
         "days": [
           {
             "date": "2026-07-19",
-            "count": 0,
-            "level": 0,
+            "count": 20,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-20",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-21",
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "c63bc519755c3410c7e69ffd66f160fe19cc5f5a",
-      "shortHash": "c63bc51",
-      "date": "2026-07-17T20:13:48Z",
-      "message": "gh hydrate: also retry 504 from the GraphQL endpoint",
+      "fullHash": "0ea2a044ec9a9ddb4307ce7d903fce2e5726f2e7",
+      "shortHash": "0ea2a04",
+      "date": "2026-07-19T23:54:42Z",
+      "message": "embed: name the underlying error in the retries-exhausted message",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/c63bc519755c3410c7e69ffd66f160fe19cc5f5a",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 1:13 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/0ea2a044ec9a9ddb4307ce7d903fce2e5726f2e7",
+      "displayDate": "Jul 19",
+      "displayDateTime": "Jul 19, 4:54 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "7b8ed264726343fc91afc1ae58088cabf10db2a1",
-      "shortHash": "7b8ed26",
-      "date": "2026-07-17T20:10:35Z",
-      "message": "embed: tiered gateway keys \u2014 bulk for indexing, interactive for queries",
+      "fullHash": "cdddd6360cd73a74beb097ae57cb0e289f608905",
+      "shortHash": "cdddd63",
+      "date": "2026-07-19T20:08:51Z",
+      "message": "search: own the qdrant query timeout in one place (5s default 500'd cold searches)",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/7b8ed264726343fc91afc1ae58088cabf10db2a1",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 1:10 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/cdddd6360cd73a74beb097ae57cb0e289f608905",
+      "displayDate": "Jul 19",
+      "displayDateTime": "Jul 19, 1:08 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "e3df5ca5f66af78dd06af14ccd4f89dd8ec94b29",
-      "shortHash": "e3df5ca",
-      "date": "2026-07-17T20:10:28Z",
-      "message": "db: survive transient postgres drops in one-connection jobs",
+      "fullHash": "b316e53af05c8170d8d74105f7c7c0071ed9ace8",
+      "shortHash": "b316e53",
+      "date": "2026-07-19T20:00:50Z",
+      "message": "perf: orjson on the JSON hot paths",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/e3df5ca5f66af78dd06af14ccd4f89dd8ec94b29",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 1:10 PM PT",
-      "relativeTime": "2 days ago"
-    },
-    {
-      "repo": "stevemurr/local-mcp-kit",
-      "repoName": "local-mcp-kit",
-      "fullHash": "a94a1923db95c9e1b6a4d381db956717e6cba01a",
-      "shortHash": "a94a192",
-      "date": "2026-07-17T19:16:25Z",
-      "message": "Enforce consumer-level deadlines uniformly across the public API",
-      "refs": "",
-      "url": "https://github.com/stevemurr/local-mcp-kit/commit/a94a1923db95c9e1b6a4d381db956717e6cba01a",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 12:16 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/b316e53af05c8170d8d74105f7c7c0071ed9ace8",
+      "displayDate": "Jul 19",
+      "displayDateTime": "Jul 19, 1:00 PM PT",
+      "relativeTime": "5 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "7231a5b9348b6741d69be733dc14d96872e157b3",
-      "shortHash": "7231a5b",
-      "date": "2026-07-17T18:01:32Z",
-      "message": "embed: drop full budget 16 -> 12 (16 was past the server's knee)",
+      "fullHash": "3c2a8104d9f562bbec9a431e982673c8202a58b8",
+      "shortHash": "3c2a810",
+      "date": "2026-07-19T20:00:50Z",
+      "message": "ops: dashboard, alerts, and scrape config for the user's Prometheus/Grafana",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/7231a5b9348b6741d69be733dc14d96872e157b3",
-      "displayDate": "Jul 17",
-      "displayDateTime": "Jul 17, 11:01 AM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/3c2a8104d9f562bbec9a431e982673c8202a58b8",
+      "displayDate": "Jul 19",
+      "displayDateTime": "Jul 19, 1:00 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "f1d0125a4d210448e5a11a88116d028c3c85f28e",
+      "shortHash": "f1d0125",
+      "date": "2026-07-19T20:00:50Z",
+      "message": "api: Prometheus /metrics exporter \u2014 v2 contract + RED instrumentation",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/f1d0125a4d210448e5a11a88116d028c3c85f28e",
+      "displayDate": "Jul 19",
+      "displayDateTime": "Jul 19, 1:00 PM PT",
+      "relativeTime": "5 hours ago"
     }
   ]
 }
