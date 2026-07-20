@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 64,
+  "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-20T00:57:33.421621+00:00",
+    "generatedAt": "2026-07-20T07:22:58.017257+00:00",
     "windowDays": 90,
     "startDate": "2026-04-22",
     "endDate": "2026-07-20",
-    "total": 457,
+    "total": 468,
     "max": 62,
     "weeks": [
       {
@@ -612,14 +612,14 @@
         "days": [
           {
             "date": "2026-07-19",
-            "count": 20,
+            "count": 30,
             "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-20",
-            "count": 0,
-            "level": 0,
+            "count": 1,
+            "level": 1,
             "inRange": true
           },
           {
@@ -676,69 +676,69 @@
   },
   "recentCommits": [
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "0ea2a044ec9a9ddb4307ce7d903fce2e5726f2e7",
-      "shortHash": "0ea2a04",
-      "date": "2026-07-19T23:54:42Z",
-      "message": "embed: name the underlying error in the retries-exhausted message",
+      "repo": "stevemurr/skills",
+      "repoName": "skills",
+      "fullHash": "9a394076044c2944878cf2ebda939ec5b7e06936",
+      "shortHash": "9a39407",
+      "date": "2026-07-20T04:17:33Z",
+      "message": "add professional README with structure, skills index, and philosophy",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/0ea2a044ec9a9ddb4307ce7d903fce2e5726f2e7",
+      "url": "https://github.com/stevemurr/skills/commit/9a394076044c2944878cf2ebda939ec5b7e06936",
       "displayDate": "Jul 19",
-      "displayDateTime": "Jul 19, 4:54 PM PT",
-      "relativeTime": "1 hour ago"
+      "displayDateTime": "Jul 19, 9:17 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "cdddd6360cd73a74beb097ae57cb0e289f608905",
-      "shortHash": "cdddd63",
-      "date": "2026-07-19T20:08:51Z",
-      "message": "search: own the qdrant query timeout in one place (5s default 500'd cold searches)",
+      "repo": "stevemurr/skills",
+      "repoName": "skills",
+      "fullHash": "f646a9b10d5339ed150c0531bfcdd44290d75b12",
+      "shortHash": "f646a9b",
+      "date": "2026-07-20T04:15:01Z",
+      "message": "restructure: move each skill into its own folder (SKILL.md + tests.md)",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/cdddd6360cd73a74beb097ae57cb0e289f608905",
+      "url": "https://github.com/stevemurr/skills/commit/f646a9b10d5339ed150c0531bfcdd44290d75b12",
       "displayDate": "Jul 19",
-      "displayDateTime": "Jul 19, 1:08 PM PT",
-      "relativeTime": "5 hours ago"
+      "displayDateTime": "Jul 19, 9:15 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "b316e53af05c8170d8d74105f7c7c0071ed9ace8",
-      "shortHash": "b316e53",
-      "date": "2026-07-19T20:00:50Z",
-      "message": "perf: orjson on the JSON hot paths",
+      "repo": "stevemurr/skills",
+      "repoName": "skills",
+      "fullHash": "61ae38b03dabb3b07399a78640a002370906fe18",
+      "shortHash": "61ae38b",
+      "date": "2026-07-20T04:04:59Z",
+      "message": "Merge new-skills: add 7 engineering skills (code-review, debugging, refactoring, architecture, documentation, error-handling)",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/b316e53af05c8170d8d74105f7c7c0071ed9ace8",
+      "url": "https://github.com/stevemurr/skills/commit/61ae38b03dabb3b07399a78640a002370906fe18",
       "displayDate": "Jul 19",
-      "displayDateTime": "Jul 19, 1:00 PM PT",
-      "relativeTime": "5 hours ago"
+      "displayDateTime": "Jul 19, 9:04 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "3c2a8104d9f562bbec9a431e982673c8202a58b8",
-      "shortHash": "3c2a810",
-      "date": "2026-07-19T20:00:50Z",
-      "message": "ops: dashboard, alerts, and scrape config for the user's Prometheus/Grafana",
+      "repo": "stevemurr/skills",
+      "repoName": "skills",
+      "fullHash": "b780e7c748436a0d6b46a14bb71525c7a035c9c6",
+      "shortHash": "b780e7c",
+      "date": "2026-07-20T04:02:46Z",
+      "message": "add 7 engineering skills: code-review, debugging, refactoring, architecture, documentation, error-handling",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/3c2a8104d9f562bbec9a431e982673c8202a58b8",
+      "url": "https://github.com/stevemurr/skills/commit/b780e7c748436a0d6b46a14bb71525c7a035c9c6",
       "displayDate": "Jul 19",
-      "displayDateTime": "Jul 19, 1:00 PM PT",
-      "relativeTime": "5 hours ago"
+      "displayDateTime": "Jul 19, 9:02 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "f1d0125a4d210448e5a11a88116d028c3c85f28e",
-      "shortHash": "f1d0125",
-      "date": "2026-07-19T20:00:50Z",
-      "message": "api: Prometheus /metrics exporter \u2014 v2 contract + RED instrumentation",
+      "repo": "stevemurr/skills",
+      "repoName": "skills",
+      "fullHash": "f0b8488e1aada342e70be92f215340405191be83",
+      "shortHash": "f0b8488",
+      "date": "2026-07-20T03:51:23Z",
+      "message": "add engineering subfolder",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/f1d0125a4d210448e5a11a88116d028c3c85f28e",
+      "url": "https://github.com/stevemurr/skills/commit/f0b8488e1aada342e70be92f215340405191be83",
       "displayDate": "Jul 19",
-      "displayDateTime": "Jul 19, 1:00 PM PT",
-      "relativeTime": "5 hours ago"
+      "displayDateTime": "Jul 19, 8:51 PM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
