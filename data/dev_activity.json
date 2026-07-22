@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-22T00:53:13.178428+00:00",
+    "generatedAt": "2026-07-22T07:11:36.155671+00:00",
     "windowDays": 90,
     "startDate": "2026-04-24",
     "endDate": "2026-07-22",
-    "total": 491,
+    "total": 498,
     "max": 62,
     "weeks": [
       {
@@ -624,7 +624,7 @@
           },
           {
             "date": "2026-07-21",
-            "count": 4,
+            "count": 11,
             "level": 1,
             "inRange": true
           },
@@ -676,6 +676,45 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "b9fa8b5f7538c2952a1280c7725614d3a461a7b9",
+      "shortHash": "b9fa8b5",
+      "date": "2026-07-22T05:16:41Z",
+      "message": "build: add .containerignore so image builds don't tar the 5.4G .venv",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/b9fa8b5f7538c2952a1280c7725614d3a461a7b9",
+      "displayDate": "Jul 21",
+      "displayDateTime": "Jul 21, 10:16 PM PT",
+      "relativeTime": "2 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "e4e91412fb917d7b60a7dfae5764b8c47baeb796",
+      "shortHash": "e4e9141",
+      "date": "2026-07-22T04:42:22Z",
+      "message": "fix: resolve all 43 bug-bash findings + 2 ultrareview nits",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/e4e91412fb917d7b60a7dfae5764b8c47baeb796",
+      "displayDate": "Jul 21",
+      "displayDateTime": "Jul 21, 9:42 PM PT",
+      "relativeTime": "2 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "e74611764172ad810de58269db3b5a055fa7e59d",
+      "shortHash": "e746117",
+      "date": "2026-07-22T02:22:34Z",
+      "message": "feat: observability overhaul (Grafana dashboard + alerts) + accurate README",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/e74611764172ad810de58269db3b5a055fa7e59d",
+      "displayDate": "Jul 21",
+      "displayDateTime": "Jul 21, 7:22 PM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
       "repo": "stevemurr/dindex",
       "repoName": "dindex",
       "fullHash": "2cf7c9b98450d92c29a0d1c4010f0b5413510556",
@@ -699,45 +738,6 @@
       "url": "https://github.com/stevemurr/yagpt/commit/5c02b8db5d21fcbabaa4c971fb0871f827c10727",
       "displayDate": "Jul 20",
       "displayDateTime": "Jul 20, 5:39 PM PT",
-      "relativeTime": "1 day ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "30d7dd2c6452ab108e71a8ee01afb0f064cebb26",
-      "shortHash": "30d7dd2",
-      "date": "2026-07-20T19:38:08Z",
-      "message": "refactor: drop the dead render functions from the console",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/30d7dd2c6452ab108e71a8ee01afb0f064cebb26",
-      "displayDate": "Jul 20",
-      "displayDateTime": "Jul 20, 12:38 PM PT",
-      "relativeTime": "1 day ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "b30e3e0f55ac0be6c84f0c561c21638f913e6ff7",
-      "shortHash": "b30e3e0",
-      "date": "2026-07-20T19:31:58Z",
-      "message": "feat: bottom activity dock \u2014 watch running/crashed actions + tail logs",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/b30e3e0f55ac0be6c84f0c561c21638f913e6ff7",
-      "displayDate": "Jul 20",
-      "displayDateTime": "Jul 20, 12:31 PM PT",
-      "relativeTime": "1 day ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "9fdf92338685430cfb29dbb00ae111e0e426f8f3",
-      "shortHash": "9fdf923",
-      "date": "2026-07-20T19:10:03Z",
-      "message": "feat: lean control console \u2014 freshness table + scheduled jobs, strip metrics/logs",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/9fdf92338685430cfb29dbb00ae111e0e426f8f3",
-      "displayDate": "Jul 20",
-      "displayDateTime": "Jul 20, 12:10 PM PT",
       "relativeTime": "1 day ago"
     }
   ]
