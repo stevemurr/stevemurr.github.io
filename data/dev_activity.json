@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-22T18:41:43.318906+00:00",
+    "generatedAt": "2026-07-23T00:55:18.749287+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-24",
-    "endDate": "2026-07-22",
-    "total": 505,
+    "startDate": "2026-04-25",
+    "endDate": "2026-07-23",
+    "total": 525,
     "max": 62,
     "weeks": [
       {
@@ -46,7 +46,7 @@
             "date": "2026-04-24",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-25",
@@ -624,21 +624,21 @@
           },
           {
             "date": "2026-07-21",
-            "count": 11,
+            "count": 12,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-22",
-            "count": 6,
-            "level": 1,
+            "count": 25,
+            "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-23",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-24",
@@ -678,67 +678,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "b9fa8b5f7538c2952a1280c7725614d3a461a7b9",
-      "shortHash": "b9fa8b5",
-      "date": "2026-07-22T05:16:41Z",
-      "message": "build: add .containerignore so image builds don't tar the 5.4G .venv",
+      "fullHash": "77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
+      "shortHash": "77ae3d9",
+      "date": "2026-07-22T23:53:18Z",
+      "message": "embed: raise full-profile budget 6\u21928 (GPU saturation knee); drop stale 429-cap note",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/b9fa8b5f7538c2952a1280c7725614d3a461a7b9",
-      "displayDate": "Jul 21",
-      "displayDateTime": "Jul 21, 10:16 PM PT",
-      "relativeTime": "13 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 4:53 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "e4e91412fb917d7b60a7dfae5764b8c47baeb796",
-      "shortHash": "e4e9141",
-      "date": "2026-07-22T04:42:22Z",
-      "message": "fix: resolve all 43 bug-bash findings + 2 ultrareview nits",
+      "fullHash": "55372937d015f057b06ef2536ea0090e32e7580f",
+      "shortHash": "5537293",
+      "date": "2026-07-22T22:31:57Z",
+      "message": "deploy: add windex-loop-custom service (aggregate custom-source embed loop)",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/e4e91412fb917d7b60a7dfae5764b8c47baeb796",
-      "displayDate": "Jul 21",
-      "displayDateTime": "Jul 21, 9:42 PM PT",
-      "relativeTime": "14 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/55372937d015f057b06ef2536ea0090e32e7580f",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 3:31 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "e74611764172ad810de58269db3b5a055fa7e59d",
-      "shortHash": "e746117",
-      "date": "2026-07-22T02:22:34Z",
-      "message": "feat: observability overhaul (Grafana dashboard + alerts) + accurate README",
+      "fullHash": "57724bd2c847add71810d9b9422e0d1187579963",
+      "shortHash": "57724bd",
+      "date": "2026-07-22T22:17:04Z",
+      "message": "docs: custom-sources handoff \u2014 contract, ops, E2E for the box agent",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/e74611764172ad810de58269db3b5a055fa7e59d",
-      "displayDate": "Jul 21",
-      "displayDateTime": "Jul 21, 7:22 PM PT",
-      "relativeTime": "16 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/57724bd2c847add71810d9b9422e0d1187579963",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 3:17 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/dindex",
-      "repoName": "dindex",
-      "fullHash": "2cf7c9b98450d92c29a0d1c4010f0b5413510556",
-      "shortHash": "2cf7c9b",
-      "date": "2026-07-21T00:39:18Z",
-      "message": "checkpoint: archive working state before removing local clone",
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "8461f0bd3d81b04d5010c0a69f1b4faec1bf7370",
+      "shortHash": "8461f0b",
+      "date": "2026-07-22T22:10:32Z",
+      "message": "feat: custom sources W4 \u2014 search over registered custom sources",
       "refs": "",
-      "url": "https://github.com/stevemurr/dindex/commit/2cf7c9b98450d92c29a0d1c4010f0b5413510556",
-      "displayDate": "Jul 20",
-      "displayDateTime": "Jul 20, 5:39 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/8461f0bd3d81b04d5010c0a69f1b4faec1bf7370",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 3:10 PM PT",
+      "relativeTime": "3 hours ago"
     },
     {
-      "repo": "stevemurr/yagpt",
-      "repoName": "yagpt",
-      "fullHash": "5c02b8db5d21fcbabaa4c971fb0871f827c10727",
-      "shortHash": "5c02b8d",
-      "date": "2026-07-21T00:39:16Z",
-      "message": "checkpoint: archive working state before removing local clone",
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "3672eabe11b72de713f8c68ee8e90c5f6225c440",
+      "shortHash": "3672eab",
+      "date": "2026-07-22T22:06:31Z",
+      "message": "feat: custom sources W3 \u2014 generic embed loop",
       "refs": "",
-      "url": "https://github.com/stevemurr/yagpt/commit/5c02b8db5d21fcbabaa4c971fb0871f827c10727",
-      "displayDate": "Jul 20",
-      "displayDateTime": "Jul 20, 5:39 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/3672eabe11b72de713f8c68ee8e90c5f6225c440",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 3:06 PM PT",
+      "relativeTime": "3 hours ago"
     }
   ]
 }
