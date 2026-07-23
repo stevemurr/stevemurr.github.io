@@ -1,13 +1,13 @@
 {
   "source": "github",
   "username": "stevemurr",
-  "repoCount": 65,
+  "repoCount": 66,
   "contributions": {
-    "generatedAt": "2026-07-23T00:55:18.749287+00:00",
+    "generatedAt": "2026-07-23T07:09:52.091413+00:00",
     "windowDays": 90,
     "startDate": "2026-04-25",
     "endDate": "2026-07-23",
-    "total": 525,
+    "total": 527,
     "max": 62,
     "weeks": [
       {
@@ -624,13 +624,13 @@
           },
           {
             "date": "2026-07-21",
-            "count": 12,
+            "count": 11,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-22",
-            "count": 25,
+            "count": 28,
             "level": 2,
             "inRange": true
           },
@@ -678,6 +678,19 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
+      "fullHash": "0a83f09ef10838b71fb883f5f27acd5c00e025ff",
+      "shortHash": "0a83f09",
+      "date": "2026-07-23T03:39:01Z",
+      "message": "docs: embedding-quality evaluation playbook (experiments + failure-mode taxonomy)",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/0a83f09ef10838b71fb883f5f27acd5c00e025ff",
+      "displayDate": "Jul 22",
+      "displayDateTime": "Jul 22, 8:39 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
       "fullHash": "77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
       "shortHash": "77ae3d9",
       "date": "2026-07-22T23:53:18Z",
@@ -686,7 +699,7 @@
       "url": "https://github.com/stevemurr/windex/commit/77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 4:53 PM PT",
-      "relativeTime": "1 hour ago"
+      "relativeTime": "7 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -699,7 +712,7 @@
       "url": "https://github.com/stevemurr/windex/commit/55372937d015f057b06ef2536ea0090e32e7580f",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 3:31 PM PT",
-      "relativeTime": "2 hours ago"
+      "relativeTime": "9 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -712,7 +725,7 @@
       "url": "https://github.com/stevemurr/windex/commit/57724bd2c847add71810d9b9422e0d1187579963",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 3:17 PM PT",
-      "relativeTime": "3 hours ago"
+      "relativeTime": "9 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -725,20 +738,7 @@
       "url": "https://github.com/stevemurr/windex/commit/8461f0bd3d81b04d5010c0a69f1b4faec1bf7370",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 3:10 PM PT",
-      "relativeTime": "3 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "3672eabe11b72de713f8c68ee8e90c5f6225c440",
-      "shortHash": "3672eab",
-      "date": "2026-07-22T22:06:31Z",
-      "message": "feat: custom sources W3 \u2014 generic embed loop",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/3672eabe11b72de713f8c68ee8e90c5f6225c440",
-      "displayDate": "Jul 22",
-      "displayDateTime": "Jul 22, 3:06 PM PT",
-      "relativeTime": "3 hours ago"
+      "relativeTime": "9 hours ago"
     }
   ]
 }
