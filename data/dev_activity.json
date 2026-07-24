@@ -3,59 +3,13 @@
   "username": "stevemurr",
   "repoCount": 66,
   "contributions": {
-    "generatedAt": "2026-07-23T18:43:10.017455+00:00",
+    "generatedAt": "2026-07-24T00:52:19.284410+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-25",
-    "endDate": "2026-07-23",
-    "total": 527,
+    "startDate": "2026-04-26",
+    "endDate": "2026-07-24",
+    "total": 532,
     "max": 62,
     "weeks": [
-      {
-        "days": [
-          {
-            "date": "2026-04-19",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-20",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-21",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-22",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-23",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-24",
-            "count": 0,
-            "level": 0,
-            "inRange": false
-          },
-          {
-            "date": "2026-04-25",
-            "count": 0,
-            "level": 0,
-            "inRange": true
-          }
-        ]
-      },
       {
         "days": [
           {
@@ -636,15 +590,15 @@
           },
           {
             "date": "2026-07-23",
-            "count": 0,
-            "level": 0,
+            "count": 5,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-24",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-25",
@@ -657,24 +611,33 @@
     ],
     "monthLabels": [
       {
-        "label": "Apr",
+        "label": "May",
         "column": 0
       },
       {
-        "label": "May",
-        "column": 1
-      },
-      {
         "label": "Jun",
-        "column": 6
+        "column": 5
       },
       {
         "label": "Jul",
-        "column": 10
+        "column": 9
       }
     ]
   },
   "recentCommits": [
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "06646f03c8a18df5c749cff6bcaf8c6fda5f865d",
+      "shortHash": "06646f0",
+      "date": "2026-07-23T20:16:19Z",
+      "message": "metrics: add windex_embeds_per_minute live throughput gauge",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/06646f03c8a18df5c749cff6bcaf8c6fda5f865d",
+      "displayDate": "Jul 23",
+      "displayDateTime": "Jul 23, 1:16 PM PT",
+      "relativeTime": "5 hours ago"
+    },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
@@ -686,7 +649,7 @@
       "url": "https://github.com/stevemurr/windex/commit/ca6c12ecba39f893bd684969020e6b273aeddbdd",
       "displayDate": "Jul 23",
       "displayDateTime": "Jul 23, 10:31 AM PT",
-      "relativeTime": "1 hour ago"
+      "relativeTime": "7 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -699,7 +662,7 @@
       "url": "https://github.com/stevemurr/windex/commit/0a83f09ef10838b71fb883f5f27acd5c00e025ff",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 8:39 PM PT",
-      "relativeTime": "15 hours ago"
+      "relativeTime": "21 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -712,7 +675,7 @@
       "url": "https://github.com/stevemurr/windex/commit/77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 4:53 PM PT",
-      "relativeTime": "19 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -725,20 +688,7 @@
       "url": "https://github.com/stevemurr/windex/commit/55372937d015f057b06ef2536ea0090e32e7580f",
       "displayDate": "Jul 22",
       "displayDateTime": "Jul 22, 3:31 PM PT",
-      "relativeTime": "20 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "57724bd2c847add71810d9b9422e0d1187579963",
-      "shortHash": "57724bd",
-      "date": "2026-07-22T22:17:04Z",
-      "message": "docs: custom-sources handoff \u2014 contract, ops, E2E for the box agent",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/57724bd2c847add71810d9b9422e0d1187579963",
-      "displayDate": "Jul 22",
-      "displayDateTime": "Jul 22, 3:17 PM PT",
-      "relativeTime": "20 hours ago"
+      "relativeTime": "1 day ago"
     }
   ]
 }
