@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-24T18:48:02.425349+00:00",
+    "generatedAt": "2026-07-25T00:55:36.798750+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-26",
-    "endDate": "2026-07-24",
-    "total": 531,
+    "startDate": "2026-04-27",
+    "endDate": "2026-07-25",
+    "total": 545,
     "max": 62,
     "weeks": [
       {
@@ -16,7 +16,7 @@
             "date": "2026-04-26",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-27",
@@ -596,15 +596,15 @@
           },
           {
             "date": "2026-07-24",
-            "count": 0,
-            "level": 0,
+            "count": 14,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-25",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           }
         ]
       }
@@ -628,67 +628,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "06646f03c8a18df5c749cff6bcaf8c6fda5f865d",
-      "shortHash": "06646f0",
-      "date": "2026-07-23T20:16:19Z",
-      "message": "metrics: add windex_embeds_per_minute live throughput gauge",
+      "fullHash": "2499b0b7d0a43dc708aef0e2a8b9dad1ba394331",
+      "shortHash": "2499b0b",
+      "date": "2026-07-25T00:30:09Z",
+      "message": "fix: the three hazards the parallel agents surfaced",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/06646f03c8a18df5c749cff6bcaf8c6fda5f865d",
-      "displayDate": "Jul 23",
-      "displayDateTime": "Jul 23, 1:16 PM PT",
-      "relativeTime": "23 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/2499b0b7d0a43dc708aef0e2a8b9dad1ba394331",
+      "displayDate": "Jul 24",
+      "displayDateTime": "Jul 24, 5:30 PM PT",
+      "relativeTime": "25 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "ca6c12ecba39f893bd684969020e6b273aeddbdd",
-      "shortHash": "ca6c12e",
-      "date": "2026-07-23T17:31:55Z",
-      "message": "embed: raise bulk client timeout 120s -> 150s, below the gateway's 180s deadline",
+      "fullHash": "e4d19f22e3e07eede67525e2c70fc5982ab016c8",
+      "shortHash": "e4d19f2",
+      "date": "2026-07-25T00:15:53Z",
+      "message": "merge: worker pool (Phase 8) and trigger scheduler (Phase 9)",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/ca6c12ecba39f893bd684969020e6b273aeddbdd",
-      "displayDate": "Jul 23",
-      "displayDateTime": "Jul 23, 10:31 AM PT",
-      "relativeTime": "1 day ago"
+      "url": "https://github.com/stevemurr/windex/commit/e4d19f22e3e07eede67525e2c70fc5982ab016c8",
+      "displayDate": "Jul 24",
+      "displayDateTime": "Jul 24, 5:15 PM PT",
+      "relativeTime": "39 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "0a83f09ef10838b71fb883f5f27acd5c00e025ff",
-      "shortHash": "0a83f09",
-      "date": "2026-07-23T03:39:01Z",
-      "message": "docs: embedding-quality evaluation playbook (experiments + failure-mode taxonomy)",
+      "fullHash": "b60e83b6476041ca5221650474c13d478b388646",
+      "shortHash": "b60e83b",
+      "date": "2026-07-25T00:08:42Z",
+      "message": "Merge branch 'worktree-agent-a52f4e4be700dec7d'",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/0a83f09ef10838b71fb883f5f27acd5c00e025ff",
-      "displayDate": "Jul 22",
-      "displayDateTime": "Jul 22, 8:39 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/b60e83b6476041ca5221650474c13d478b388646",
+      "displayDate": "Jul 24",
+      "displayDateTime": "Jul 24, 5:08 PM PT",
+      "relativeTime": "46 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
-      "shortHash": "77ae3d9",
-      "date": "2026-07-22T23:53:18Z",
-      "message": "embed: raise full-profile budget 6\u21928 (GPU saturation knee); drop stale 429-cap note",
+      "fullHash": "c986546ae430e0ce6f37ac5942b6ff2f384f6c8e",
+      "shortHash": "c986546",
+      "date": "2026-07-25T00:08:29Z",
+      "message": "api: response schemas for the control plane",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/77ae3d939e84c7a6f29cfbbc2f56e60103b78ae8",
-      "displayDate": "Jul 22",
-      "displayDateTime": "Jul 22, 4:53 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/c986546ae430e0ce6f37ac5942b6ff2f384f6c8e",
+      "displayDate": "Jul 24",
+      "displayDateTime": "Jul 24, 5:08 PM PT",
+      "relativeTime": "47 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "55372937d015f057b06ef2536ea0090e32e7580f",
-      "shortHash": "5537293",
-      "date": "2026-07-22T22:31:57Z",
-      "message": "deploy: add windex-loop-custom service (aggregate custom-source embed loop)",
+      "fullHash": "f0f4f22080441d27ab90f0641af8be956d0126de",
+      "shortHash": "f0f4f22",
+      "date": "2026-07-25T00:07:11Z",
+      "message": "worker: the pool \u2014 claim/lease/slice, fair share, slots, memory ceiling",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/55372937d015f057b06ef2536ea0090e32e7580f",
-      "displayDate": "Jul 22",
-      "displayDateTime": "Jul 22, 3:31 PM PT",
-      "relativeTime": "2 days ago"
+      "url": "https://github.com/stevemurr/windex/commit/f0f4f22080441d27ab90f0641af8be956d0126de",
+      "displayDate": "Jul 24",
+      "displayDateTime": "Jul 24, 5:07 PM PT",
+      "relativeTime": "48 minutes ago"
     }
   ]
 }
