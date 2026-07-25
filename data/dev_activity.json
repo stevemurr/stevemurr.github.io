@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-25T07:04:05.811179+00:00",
+    "generatedAt": "2026-07-25T18:36:06.298689+00:00",
     "windowDays": 90,
     "startDate": "2026-04-27",
     "endDate": "2026-07-25",
-    "total": 555,
+    "total": 577,
     "max": 62,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-07-25",
-            "count": 0,
-            "level": 0,
+            "count": 22,
+            "level": 2,
             "inRange": true
           }
         ]
@@ -628,67 +628,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "85b38937985a958c9b14838ff5841c6984cabed0",
-      "shortHash": "85b3893",
-      "date": "2026-07-25T06:17:25Z",
-      "message": "fix(macos): make actor assertions Swift 6.0 compatible",
+      "fullHash": "b5120563dea671a806d796e41fc8f09fa920b432",
+      "shortHash": "b512056",
+      "date": "2026-07-25T17:18:35Z",
+      "message": "docs: record clean 4b model comparison",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/85b38937985a958c9b14838ff5841c6984cabed0",
-      "displayDate": "Jul 24",
-      "displayDateTime": "Jul 24, 11:17 PM PT",
-      "relativeTime": "46 minutes ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "6e6010422bc9982c91190fc6f7fa2c1ff5e1a1b7",
-      "shortHash": "6e60104",
-      "date": "2026-07-25T06:14:51Z",
-      "message": "feat: complete recipe operations and macOS client",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/6e6010422bc9982c91190fc6f7fa2c1ff5e1a1b7",
-      "displayDate": "Jul 24",
-      "displayDateTime": "Jul 24, 11:14 PM PT",
-      "relativeTime": "49 minutes ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "8923812f89966cf62d9e395a6f1bd33d249442cc",
-      "shortHash": "8923812",
-      "date": "2026-07-25T05:34:10Z",
-      "message": "recipe: execute durable discover and catalog slices",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/8923812f89966cf62d9e395a6f1bd33d249442cc",
-      "displayDate": "Jul 24",
-      "displayDateTime": "Jul 24, 10:34 PM PT",
+      "url": "https://github.com/stevemurr/windex/commit/b5120563dea671a806d796e41fc8f09fa920b432",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 10:18 AM PT",
       "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "367e040a67b6ef907c2eb1e782b76efdaa06acd2",
-      "shortHash": "367e040",
-      "date": "2026-07-25T05:33:54Z",
-      "message": "eval: bank deterministic docs-hf 8B baseline",
+      "fullHash": "e7cf234160a434a11513051d442724e8ab97d23b",
+      "shortHash": "e7cf234",
+      "date": "2026-07-25T15:18:59Z",
+      "message": "worker: checkpoint completed fetch units",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/367e040a67b6ef907c2eb1e782b76efdaa06acd2",
-      "displayDate": "Jul 24",
-      "displayDateTime": "Jul 24, 10:33 PM PT",
-      "relativeTime": "1 hour ago"
+      "url": "https://github.com/stevemurr/windex/commit/e7cf234160a434a11513051d442724e8ab97d23b",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 8:18 AM PT",
+      "relativeTime": "3 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "a0037f8a87b40dcfe50297ddab6583c1ed7b1b85",
-      "shortHash": "a0037f8",
-      "date": "2026-07-25T05:11:50Z",
-      "message": "fix(macos): declare local network usage",
+      "fullHash": "8e038b11f15571a45e64f1b10a1f7f9651225a1e",
+      "shortHash": "8e038b1",
+      "date": "2026-07-25T15:00:34Z",
+      "message": "recipes: skip empty Hugging Face root crawls",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/a0037f8a87b40dcfe50297ddab6583c1ed7b1b85",
-      "displayDate": "Jul 24",
-      "displayDateTime": "Jul 24, 10:11 PM PT",
-      "relativeTime": "2 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/8e038b11f15571a45e64f1b10a1f7f9651225a1e",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 8:00 AM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "a5807579bd82ef6eb7aec34276594c5f3cdbaa48",
+      "shortHash": "a580757",
+      "date": "2026-07-25T14:57:15Z",
+      "message": "recipes: freeze default values in run params",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/a5807579bd82ef6eb7aec34276594c5f3cdbaa48",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 7:57 AM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "0bf0bac6dea7826aac4d463fa4a3e9cfc182a425",
+      "shortHash": "0bf0bac",
+      "date": "2026-07-25T14:50:09Z",
+      "message": "recipes: persist crawl frontiers across yields",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/0bf0bac6dea7826aac4d463fa4a3e9cfc182a425",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 7:50 AM PT",
+      "relativeTime": "4 hours ago"
     }
   ]
 }
