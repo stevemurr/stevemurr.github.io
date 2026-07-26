@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-26T00:59:14.168493+00:00",
+    "generatedAt": "2026-07-26T07:11:18.445375+00:00",
     "windowDays": 90,
     "startDate": "2026-04-28",
     "endDate": "2026-07-26",
-    "total": 579,
+    "total": 601,
     "max": 62,
     "weeks": [
       {
@@ -602,8 +602,8 @@
           },
           {
             "date": "2026-07-25",
-            "count": 24,
-            "level": 2,
+            "count": 46,
+            "level": 3,
             "inRange": true
           }
         ]
@@ -674,67 +674,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "37089f61c3780e500a991ffae0cbe28226f94d99",
-      "shortHash": "37089f6",
-      "date": "2026-07-25T21:28:05Z",
-      "message": "docs: add source pipeline implementation plan",
+      "fullHash": "273c95558f5917047cf989d53b4c958241242960",
+      "shortHash": "273c955",
+      "date": "2026-07-26T05:52:08Z",
+      "message": "fix canonical source unit ordering",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/37089f61c3780e500a991ffae0cbe28226f94d99",
+      "url": "https://github.com/stevemurr/windex/commit/273c95558f5917047cf989d53b4c958241242960",
       "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 2:28 PM PT",
-      "relativeTime": "4 hours ago"
+      "displayDateTime": "Jul 25, 10:52 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "f71f0c0bae60be70b8b427e5d40c90dfe80164d0",
-      "shortHash": "f71f0c0",
-      "date": "2026-07-25T20:29:48Z",
-      "message": "feat(macos): adopt Windex app icon and signing team",
+      "fullHash": "50dca087d315cc69a05b8e242bec8a57694ae95b",
+      "shortHash": "50dca08",
+      "date": "2026-07-26T05:44:51Z",
+      "message": "align index ownership with canonical schema",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/f71f0c0bae60be70b8b427e5d40c90dfe80164d0",
+      "url": "https://github.com/stevemurr/windex/commit/50dca087d315cc69a05b8e242bec8a57694ae95b",
       "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 1:29 PM PT",
-      "relativeTime": "4 hours ago"
+      "displayDateTime": "Jul 25, 10:44 PM PT",
+      "relativeTime": "1 hour ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "b5120563dea671a806d796e41fc8f09fa920b432",
-      "shortHash": "b512056",
-      "date": "2026-07-25T17:18:35Z",
-      "message": "docs: record clean 4b model comparison",
+      "fullHash": "c80f0a1b6e651b577c48345a3a5b2ba76929663e",
+      "shortHash": "c80f0a1",
+      "date": "2026-07-26T05:39:59Z",
+      "message": "fix searchable run gateway precondition",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/b5120563dea671a806d796e41fc8f09fa920b432",
+      "url": "https://github.com/stevemurr/windex/commit/c80f0a1b6e651b577c48345a3a5b2ba76929663e",
       "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:18 AM PT",
-      "relativeTime": "8 hours ago"
+      "displayDateTime": "Jul 25, 10:39 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "e7cf234160a434a11513051d442724e8ab97d23b",
-      "shortHash": "e7cf234",
-      "date": "2026-07-25T15:18:59Z",
-      "message": "worker: checkpoint completed fetch units",
+      "fullHash": "ef803f9849e9ecb01c9bddfb312b1d44fa57e71f",
+      "shortHash": "ef803f9",
+      "date": "2026-07-26T05:35:18Z",
+      "message": "fix module sandbox container entrypoint",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/e7cf234160a434a11513051d442724e8ab97d23b",
+      "url": "https://github.com/stevemurr/windex/commit/ef803f9849e9ecb01c9bddfb312b1d44fa57e71f",
       "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 8:18 AM PT",
-      "relativeTime": "10 hours ago"
+      "displayDateTime": "Jul 25, 10:35 PM PT",
+      "relativeTime": "2 hours ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "8e038b11f15571a45e64f1b10a1f7f9651225a1e",
-      "shortHash": "8e038b1",
-      "date": "2026-07-25T15:00:34Z",
-      "message": "recipes: skip empty Hugging Face root crawls",
+      "fullHash": "f8c29c4dcb8ecaeb1a6d20296dd9f8d3503c67e6",
+      "shortHash": "f8c29c4",
+      "date": "2026-07-26T05:33:32Z",
+      "message": "fix canonical operator settings runtime",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/8e038b11f15571a45e64f1b10a1f7f9651225a1e",
+      "url": "https://github.com/stevemurr/windex/commit/f8c29c4dcb8ecaeb1a6d20296dd9f8d3503c67e6",
       "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 8:00 AM PT",
-      "relativeTime": "10 hours ago"
+      "displayDateTime": "Jul 25, 10:33 PM PT",
+      "relativeTime": "2 hours ago"
     }
   ]
 }
