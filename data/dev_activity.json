@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-26T12:40:18.122920+00:00",
+    "generatedAt": "2026-07-26T18:38:12.884138+00:00",
     "windowDays": 90,
     "startDate": "2026-04-28",
     "endDate": "2026-07-26",
-    "total": 601,
+    "total": 619,
     "max": 62,
     "weeks": [
       {
@@ -612,8 +612,8 @@
         "days": [
           {
             "date": "2026-07-26",
-            "count": 0,
-            "level": 0,
+            "count": 18,
+            "level": 2,
             "inRange": true
           },
           {
@@ -674,67 +674,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "273c95558f5917047cf989d53b4c958241242960",
-      "shortHash": "273c955",
-      "date": "2026-07-26T05:52:08Z",
-      "message": "fix canonical source unit ordering",
+      "fullHash": "01be557f58f778d9be7dfd3136aa64798573b3c4",
+      "shortHash": "01be557",
+      "date": "2026-07-26T18:37:31Z",
+      "message": "Permit bounded same-source WARC claims",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/273c95558f5917047cf989d53b4c958241242960",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:52 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/01be557f58f778d9be7dfd3136aa64798573b3c4",
+      "displayDate": "Jul 26",
+      "displayDateTime": "Jul 26, 11:37 AM PT",
+      "relativeTime": "just now"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "50dca087d315cc69a05b8e242bec8a57694ae95b",
-      "shortHash": "50dca08",
-      "date": "2026-07-26T05:44:51Z",
-      "message": "align index ownership with canonical schema",
+      "fullHash": "bb7c53eebed5b9f6699153a613cb2d4e57288553",
+      "shortHash": "bb7c53e",
+      "date": "2026-07-26T18:33:30Z",
+      "message": "Run CCNews extraction on two bounded lanes",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/50dca087d315cc69a05b8e242bec8a57694ae95b",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:44 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/bb7c53eebed5b9f6699153a613cb2d4e57288553",
+      "displayDate": "Jul 26",
+      "displayDateTime": "Jul 26, 11:33 AM PT",
+      "relativeTime": "4 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "c80f0a1b6e651b577c48345a3a5b2ba76929663e",
-      "shortHash": "c80f0a1",
-      "date": "2026-07-26T05:39:59Z",
-      "message": "fix searchable run gateway precondition",
+      "fullHash": "26bdf5b8da7c097c4a0c23a3daf134619bfde4fc",
+      "shortHash": "26bdf5b",
+      "date": "2026-07-26T18:27:29Z",
+      "message": "Fix backend initialization and scheduler shutdown",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/c80f0a1b6e651b577c48345a3a5b2ba76929663e",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:39 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/26bdf5b8da7c097c4a0c23a3daf134619bfde4fc",
+      "displayDate": "Jul 26",
+      "displayDateTime": "Jul 26, 11:27 AM PT",
+      "relativeTime": "10 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "ef803f9849e9ecb01c9bddfb312b1d44fa57e71f",
-      "shortHash": "ef803f9",
-      "date": "2026-07-26T05:35:18Z",
-      "message": "fix module sandbox container entrypoint",
+      "fullHash": "7bd284cd95f197397c74f4d25deb1d502d1e64ff",
+      "shortHash": "7bd284c",
+      "date": "2026-07-26T18:22:51Z",
+      "message": "Avoid pipeline cleanup import cycle",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/ef803f9849e9ecb01c9bddfb312b1d44fa57e71f",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:35 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/7bd284cd95f197397c74f4d25deb1d502d1e64ff",
+      "displayDate": "Jul 26",
+      "displayDateTime": "Jul 26, 11:22 AM PT",
+      "relativeTime": "15 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "f8c29c4dcb8ecaeb1a6d20296dd9f8d3503c67e6",
-      "shortHash": "f8c29c4",
-      "date": "2026-07-26T05:33:32Z",
-      "message": "fix canonical operator settings runtime",
+      "fullHash": "d71f05610da66e98e4525123fa75f391a3c05e0c",
+      "shortHash": "d71f056",
+      "date": "2026-07-26T18:18:04Z",
+      "message": "Increase ingest throughput and clean downloads",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/f8c29c4dcb8ecaeb1a6d20296dd9f8d3503c67e6",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 10:33 PM PT",
-      "relativeTime": "7 hours ago"
+      "url": "https://github.com/stevemurr/windex/commit/d71f05610da66e98e4525123fa75f391a3c05e0c",
+      "displayDate": "Jul 26",
+      "displayDateTime": "Jul 26, 11:18 AM PT",
+      "relativeTime": "20 minutes ago"
     }
   ]
 }
