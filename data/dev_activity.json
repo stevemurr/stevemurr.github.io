@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-25T18:36:06.298689+00:00",
+    "generatedAt": "2026-07-26T00:59:14.168493+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-27",
-    "endDate": "2026-07-25",
-    "total": 577,
+    "startDate": "2026-04-28",
+    "endDate": "2026-07-26",
+    "total": 579,
     "max": 62,
     "weeks": [
       {
@@ -22,7 +22,7 @@
             "date": "2026-04-27",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-28",
@@ -602,9 +602,55 @@
           },
           {
             "date": "2026-07-25",
-            "count": 22,
+            "count": 24,
             "level": 2,
             "inRange": true
+          }
+        ]
+      },
+      {
+        "days": [
+          {
+            "date": "2026-07-26",
+            "count": 0,
+            "level": 0,
+            "inRange": true
+          },
+          {
+            "date": "2026-07-27",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-28",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-29",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-30",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-07-31",
+            "count": 0,
+            "level": 0,
+            "inRange": false
+          },
+          {
+            "date": "2026-08-01",
+            "count": 0,
+            "level": 0,
+            "inRange": false
           }
         ]
       }
@@ -628,6 +674,32 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
+      "fullHash": "37089f61c3780e500a991ffae0cbe28226f94d99",
+      "shortHash": "37089f6",
+      "date": "2026-07-25T21:28:05Z",
+      "message": "docs: add source pipeline implementation plan",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/37089f61c3780e500a991ffae0cbe28226f94d99",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 2:28 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "f71f0c0bae60be70b8b427e5d40c90dfe80164d0",
+      "shortHash": "f71f0c0",
+      "date": "2026-07-25T20:29:48Z",
+      "message": "feat(macos): adopt Windex app icon and signing team",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/f71f0c0bae60be70b8b427e5d40c90dfe80164d0",
+      "displayDate": "Jul 25",
+      "displayDateTime": "Jul 25, 1:29 PM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
       "fullHash": "b5120563dea671a806d796e41fc8f09fa920b432",
       "shortHash": "b512056",
       "date": "2026-07-25T17:18:35Z",
@@ -636,7 +708,7 @@
       "url": "https://github.com/stevemurr/windex/commit/b5120563dea671a806d796e41fc8f09fa920b432",
       "displayDate": "Jul 25",
       "displayDateTime": "Jul 25, 10:18 AM PT",
-      "relativeTime": "1 hour ago"
+      "relativeTime": "8 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -649,7 +721,7 @@
       "url": "https://github.com/stevemurr/windex/commit/e7cf234160a434a11513051d442724e8ab97d23b",
       "displayDate": "Jul 25",
       "displayDateTime": "Jul 25, 8:18 AM PT",
-      "relativeTime": "3 hours ago"
+      "relativeTime": "10 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -662,33 +734,7 @@
       "url": "https://github.com/stevemurr/windex/commit/8e038b11f15571a45e64f1b10a1f7f9651225a1e",
       "displayDate": "Jul 25",
       "displayDateTime": "Jul 25, 8:00 AM PT",
-      "relativeTime": "4 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "a5807579bd82ef6eb7aec34276594c5f3cdbaa48",
-      "shortHash": "a580757",
-      "date": "2026-07-25T14:57:15Z",
-      "message": "recipes: freeze default values in run params",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/a5807579bd82ef6eb7aec34276594c5f3cdbaa48",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 7:57 AM PT",
-      "relativeTime": "4 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "0bf0bac6dea7826aac4d463fa4a3e9cfc182a425",
-      "shortHash": "0bf0bac",
-      "date": "2026-07-25T14:50:09Z",
-      "message": "recipes: persist crawl frontiers across yields",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/0bf0bac6dea7826aac4d463fa4a3e9cfc182a425",
-      "displayDate": "Jul 25",
-      "displayDateTime": "Jul 25, 7:50 AM PT",
-      "relativeTime": "4 hours ago"
+      "relativeTime": "10 hours ago"
     }
   ]
 }
