@@ -3,12 +3,12 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-26T18:38:12.884138+00:00",
+    "generatedAt": "2026-07-27T00:59:30.415805+00:00",
     "windowDays": 90,
-    "startDate": "2026-04-28",
-    "endDate": "2026-07-26",
-    "total": 619,
-    "max": 62,
+    "startDate": "2026-04-29",
+    "endDate": "2026-07-27",
+    "total": 734,
+    "max": 100,
     "weeks": [
       {
         "days": [
@@ -28,7 +28,7 @@
             "date": "2026-04-28",
             "count": 0,
             "level": 0,
-            "inRange": true
+            "inRange": false
           },
           {
             "date": "2026-04-29",
@@ -45,7 +45,7 @@
           {
             "date": "2026-05-01",
             "count": 20,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -275,13 +275,13 @@
           {
             "date": "2026-06-05",
             "count": 17,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
             "date": "2026-06-06",
             "count": 37,
-            "level": 3,
+            "level": 2,
             "inRange": true
           }
         ]
@@ -291,7 +291,7 @@
           {
             "date": "2026-06-07",
             "count": 16,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -481,7 +481,7 @@
           {
             "date": "2026-07-06",
             "count": 58,
-            "level": 4,
+            "level": 3,
             "inRange": true
           },
           {
@@ -521,7 +521,7 @@
           {
             "date": "2026-07-12",
             "count": 38,
-            "level": 3,
+            "level": 2,
             "inRange": true
           },
           {
@@ -533,7 +533,7 @@
           {
             "date": "2026-07-14",
             "count": 17,
-            "level": 2,
+            "level": 1,
             "inRange": true
           },
           {
@@ -545,7 +545,7 @@
           {
             "date": "2026-07-16",
             "count": 62,
-            "level": 4,
+            "level": 3,
             "inRange": true
           },
           {
@@ -567,7 +567,7 @@
           {
             "date": "2026-07-19",
             "count": 33,
-            "level": 3,
+            "level": 2,
             "inRange": true
           },
           {
@@ -584,26 +584,26 @@
           },
           {
             "date": "2026-07-22",
-            "count": 28,
+            "count": 38,
             "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-23",
-            "count": 5,
+            "count": 10,
             "level": 1,
             "inRange": true
           },
           {
             "date": "2026-07-24",
-            "count": 24,
+            "count": 42,
             "level": 2,
             "inRange": true
           },
           {
             "date": "2026-07-25",
             "count": 46,
-            "level": 3,
+            "level": 2,
             "inRange": true
           }
         ]
@@ -612,15 +612,15 @@
         "days": [
           {
             "date": "2026-07-26",
-            "count": 18,
-            "level": 2,
+            "count": 100,
+            "level": 4,
             "inRange": true
           },
           {
             "date": "2026-07-27",
             "count": 0,
             "level": 0,
-            "inRange": false
+            "inRange": true
           },
           {
             "date": "2026-07-28",
@@ -674,67 +674,67 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "01be557f58f778d9be7dfd3136aa64798573b3c4",
-      "shortHash": "01be557",
-      "date": "2026-07-26T18:37:31Z",
-      "message": "Permit bounded same-source WARC claims",
+      "fullHash": "4266f60c99cf25f2bba6d37fca87c1ea03136d57",
+      "shortHash": "4266f60",
+      "date": "2026-07-27T00:36:58Z",
+      "message": "merge: isolate macOS source refresh failures",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/01be557f58f778d9be7dfd3136aa64798573b3c4",
+      "url": "https://github.com/stevemurr/windex/commit/4266f60c99cf25f2bba6d37fca87c1ea03136d57",
       "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 11:37 AM PT",
-      "relativeTime": "just now"
+      "displayDateTime": "Jul 26, 5:36 PM PT",
+      "relativeTime": "22 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "bb7c53eebed5b9f6699153a613cb2d4e57288553",
-      "shortHash": "bb7c53e",
-      "date": "2026-07-26T18:33:30Z",
-      "message": "Run CCNews extraction on two bounded lanes",
+      "fullHash": "5ae848a294be96020f5fdb947930ef9b439e93f5",
+      "shortHash": "5ae848a",
+      "date": "2026-07-27T00:33:15Z",
+      "message": "fix(macos): isolate source refresh failures",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/bb7c53eebed5b9f6699153a613cb2d4e57288553",
+      "url": "https://github.com/stevemurr/windex/commit/5ae848a294be96020f5fdb947930ef9b439e93f5",
       "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 11:33 AM PT",
-      "relativeTime": "4 minutes ago"
+      "displayDateTime": "Jul 26, 5:33 PM PT",
+      "relativeTime": "26 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "26bdf5b8da7c097c4a0c23a3daf134619bfde4fc",
-      "shortHash": "26bdf5b",
-      "date": "2026-07-26T18:27:29Z",
-      "message": "Fix backend initialization and scheduler shutdown",
+      "fullHash": "cf3097ce092b19d7b151773a085604f758e1f605",
+      "shortHash": "cf3097c",
+      "date": "2026-07-27T00:26:52Z",
+      "message": "merge: regenerate macOS health readiness DTOs",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/26bdf5b8da7c097c4a0c23a3daf134619bfde4fc",
+      "url": "https://github.com/stevemurr/windex/commit/cf3097ce092b19d7b151773a085604f758e1f605",
       "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 11:27 AM PT",
-      "relativeTime": "10 minutes ago"
+      "displayDateTime": "Jul 26, 5:26 PM PT",
+      "relativeTime": "32 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "7bd284cd95f197397c74f4d25deb1d502d1e64ff",
-      "shortHash": "7bd284c",
-      "date": "2026-07-26T18:22:51Z",
-      "message": "Avoid pipeline cleanup import cycle",
+      "fullHash": "4f5279204f5bc4ecf412ac3021ca4f9e940c4b47",
+      "shortHash": "4f52792",
+      "date": "2026-07-27T00:26:36Z",
+      "message": "fix(macos): decode health readiness",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/7bd284cd95f197397c74f4d25deb1d502d1e64ff",
+      "url": "https://github.com/stevemurr/windex/commit/4f5279204f5bc4ecf412ac3021ca4f9e940c4b47",
       "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 11:22 AM PT",
-      "relativeTime": "15 minutes ago"
+      "displayDateTime": "Jul 26, 5:26 PM PT",
+      "relativeTime": "32 minutes ago"
     },
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
-      "fullHash": "d71f05610da66e98e4525123fa75f391a3c05e0c",
-      "shortHash": "d71f056",
-      "date": "2026-07-26T18:18:04Z",
-      "message": "Increase ingest throughput and clean downloads",
+      "fullHash": "1d2336b13fc787d9d7b6d59187ab3fae2d538fb7",
+      "shortHash": "1d2336b",
+      "date": "2026-07-27T00:21:11Z",
+      "message": "merge: guarantee reconciliation follow-up passes",
       "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/d71f05610da66e98e4525123fa75f391a3c05e0c",
+      "url": "https://github.com/stevemurr/windex/commit/1d2336b13fc787d9d7b6d59187ab3fae2d538fb7",
       "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 11:18 AM PT",
-      "relativeTime": "20 minutes ago"
+      "displayDateTime": "Jul 26, 5:21 PM PT",
+      "relativeTime": "38 minutes ago"
     }
   ]
 }
