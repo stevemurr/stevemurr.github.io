@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-27T13:20:37.035510+00:00",
+    "generatedAt": "2026-07-27T18:48:47.293568+00:00",
     "windowDays": 90,
     "startDate": "2026-04-29",
     "endDate": "2026-07-27",
-    "total": 744,
+    "total": 752,
     "max": 110,
     "weeks": [
       {
@@ -618,8 +618,8 @@
           },
           {
             "date": "2026-07-27",
-            "count": 0,
-            "level": 0,
+            "count": 8,
+            "level": 1,
             "inRange": true
           },
           {
@@ -674,6 +674,45 @@
     {
       "repo": "stevemurr/windex",
       "repoName": "windex",
+      "fullHash": "4490553a7e7d103589289a17987c555b2174f4ae",
+      "shortHash": "4490553",
+      "date": "2026-07-27T14:25:18Z",
+      "message": "refactor: retire legacy ingestion and split core modules",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/4490553a7e7d103589289a17987c555b2174f4ae",
+      "displayDate": "Jul 27",
+      "displayDateTime": "Jul 27, 7:25 AM PT",
+      "relativeTime": "4 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "21e542f99b101689d12363467cc815a94aa48797",
+      "shortHash": "21e542f",
+      "date": "2026-07-27T14:04:31Z",
+      "message": "refactor: remove dead code and stale deployment config",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/21e542f99b101689d12363467cc815a94aa48797",
+      "displayDate": "Jul 27",
+      "displayDateTime": "Jul 27, 7:04 AM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
+      "fullHash": "12f8ced8cd0fa7ee7cbb969caeb90bde3649e69c",
+      "shortHash": "12f8ced",
+      "date": "2026-07-27T13:41:23Z",
+      "message": "feat: persist Source metadata and surface deployment drift",
+      "refs": "",
+      "url": "https://github.com/stevemurr/windex/commit/12f8ced8cd0fa7ee7cbb969caeb90bde3649e69c",
+      "displayDate": "Jul 27",
+      "displayDateTime": "Jul 27, 6:41 AM PT",
+      "relativeTime": "5 hours ago"
+    },
+    {
+      "repo": "stevemurr/windex",
+      "repoName": "windex",
       "fullHash": "15aea992f226aeb11a8a7c1f2cd8163e6b2c540f",
       "shortHash": "15aea99",
       "date": "2026-07-27T01:10:58Z",
@@ -682,7 +721,7 @@
       "url": "https://github.com/stevemurr/windex/commit/15aea992f226aeb11a8a7c1f2cd8163e6b2c540f",
       "displayDate": "Jul 26",
       "displayDateTime": "Jul 26, 6:10 PM PT",
-      "relativeTime": "12 hours ago"
+      "relativeTime": "18 hours ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -695,46 +734,7 @@
       "url": "https://github.com/stevemurr/windex/commit/f93f97f86df5202f6ade2a3548128dbe8abf8ecb",
       "displayDate": "Jul 26",
       "displayDateTime": "Jul 26, 6:09 PM PT",
-      "relativeTime": "12 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "179909e3f2364edd9ea553567fe5566b92407f91",
-      "shortHash": "179909e",
-      "date": "2026-07-27T01:09:26Z",
-      "message": "fix(macos): isolate pipeline refresh failures",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/179909e3f2364edd9ea553567fe5566b92407f91",
-      "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 6:09 PM PT",
-      "relativeTime": "12 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "4266f60c99cf25f2bba6d37fca87c1ea03136d57",
-      "shortHash": "4266f60",
-      "date": "2026-07-27T00:36:58Z",
-      "message": "merge: isolate macOS source refresh failures",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/4266f60c99cf25f2bba6d37fca87c1ea03136d57",
-      "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 5:36 PM PT",
-      "relativeTime": "13 hours ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "5ae848a294be96020f5fdb947930ef9b439e93f5",
-      "shortHash": "5ae848a",
-      "date": "2026-07-27T00:33:15Z",
-      "message": "fix(macos): isolate source refresh failures",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/5ae848a294be96020f5fdb947930ef9b439e93f5",
-      "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 5:33 PM PT",
-      "relativeTime": "13 hours ago"
+      "relativeTime": "18 hours ago"
     }
   ]
 }
