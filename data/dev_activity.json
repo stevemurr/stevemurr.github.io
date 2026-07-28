@@ -3,11 +3,11 @@
   "username": "stevemurr",
   "repoCount": 65,
   "contributions": {
-    "generatedAt": "2026-07-28T12:56:15.252079+00:00",
+    "generatedAt": "2026-07-28T18:48:02.970886+00:00",
     "windowDays": 90,
     "startDate": "2026-04-30",
     "endDate": "2026-07-28",
-    "total": 773,
+    "total": 775,
     "max": 110,
     "weeks": [
       {
@@ -624,7 +624,7 @@
           },
           {
             "date": "2026-07-28",
-            "count": 6,
+            "count": 8,
             "level": 1,
             "inRange": true
           },
@@ -672,6 +672,19 @@
   },
   "recentCommits": [
     {
+      "repo": "stevemurr/window-management",
+      "repoName": "window-management",
+      "fullHash": "b363cb217426c8aaa8f23869379feb0ff45542a3",
+      "shortHash": "b363cb2",
+      "date": "2026-07-28T17:07:49Z",
+      "message": "Add monitor movement hotkeys",
+      "refs": "",
+      "url": "https://github.com/stevemurr/window-management/commit/b363cb217426c8aaa8f23869379feb0ff45542a3",
+      "displayDate": "Jul 28",
+      "displayDateTime": "Jul 28, 10:07 AM PT",
+      "relativeTime": "2 hours ago"
+    },
+    {
       "repo": "stevemurr/windex",
       "repoName": "windex",
       "fullHash": "4490553a7e7d103589289a17987c555b2174f4ae",
@@ -682,7 +695,7 @@
       "url": "https://github.com/stevemurr/windex/commit/4490553a7e7d103589289a17987c555b2174f4ae",
       "displayDate": "Jul 27",
       "displayDateTime": "Jul 27, 7:25 AM PT",
-      "relativeTime": "23 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -695,7 +708,7 @@
       "url": "https://github.com/stevemurr/windex/commit/21e542f99b101689d12363467cc815a94aa48797",
       "displayDate": "Jul 27",
       "displayDateTime": "Jul 27, 7:04 AM PT",
-      "relativeTime": "23 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -708,7 +721,7 @@
       "url": "https://github.com/stevemurr/windex/commit/12f8ced8cd0fa7ee7cbb969caeb90bde3649e69c",
       "displayDate": "Jul 27",
       "displayDateTime": "Jul 27, 6:41 AM PT",
-      "relativeTime": "23 hours ago"
+      "relativeTime": "1 day ago"
     },
     {
       "repo": "stevemurr/windex",
@@ -721,20 +734,7 @@
       "url": "https://github.com/stevemurr/windex/commit/15aea992f226aeb11a8a7c1f2cd8163e6b2c540f",
       "displayDate": "Jul 26",
       "displayDateTime": "Jul 26, 6:10 PM PT",
-      "relativeTime": "1 day ago"
-    },
-    {
-      "repo": "stevemurr/windex",
-      "repoName": "windex",
-      "fullHash": "f93f97f86df5202f6ade2a3548128dbe8abf8ecb",
-      "shortHash": "f93f97f",
-      "date": "2026-07-27T01:09:54Z",
-      "message": "merge: isolate macOS pipeline refresh failures",
-      "refs": "",
-      "url": "https://github.com/stevemurr/windex/commit/f93f97f86df5202f6ade2a3548128dbe8abf8ecb",
-      "displayDate": "Jul 26",
-      "displayDateTime": "Jul 26, 6:09 PM PT",
-      "relativeTime": "1 day ago"
+      "relativeTime": "2 days ago"
     }
   ]
 }
