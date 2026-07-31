@@ -1,3 +1,7 @@
+{{- /* Backstop for params.enableLLMChat so a new call site cannot resurrect the
+       chat UI while the upstream LiteLLM box is unexposed. Call sites still
+       guard themselves, to avoid emitting an empty wrapper element. */ -}}
+{{- if site.Params.enableLLMChat -}}
 {{- $rootClass := .rootClass | default "resume-runtime__chat-entry" -}}
 {{- $triggerClass := .triggerClass | default "resume-runtime__chat-trigger" -}}
 {{- $siteKey := .siteKey | default "0x4AAAAAACrW14YrtriUnK9x" -}}
@@ -101,3 +105,4 @@
     </section>
   </div>
 </div>
+{{- end -}}

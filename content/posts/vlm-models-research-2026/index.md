@@ -2,6 +2,8 @@
 title: Best VLMs for 128GB on DGX Spark and M4 Mac
 date: '2026-04-02'
 draft: false
+aliases:
+  - /posts/vlm-models-research-2026/vlm-models-research-2026/
 tags:
   - vlm
   - inference

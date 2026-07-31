@@ -18,6 +18,8 @@ hero:
   buttons:
     - name: GitHub
       url: 'https://github.com/stevemurr'
+    - name: Local-First AI Platform
+      url: /mac-ai/
 githubActivity:
   username: stevemurr
   excludeRepos:

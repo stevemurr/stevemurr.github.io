@@ -400,6 +400,13 @@ async function relayUpstreamSSE(upstreamResponse, writer) {
   }
 }
 
+// Mirrors params.enableLLMChat in hugo.toml. Fail-safe: anything other than an
+// explicit opt-in keeps the endpoint closed, so the upstream LiteLLM box is
+// never dialed just because a var went missing.
+function isChatEnabled(env) {
+  return ["true", "1", "yes"].includes(String((env && env.ENABLE_LLM_CHAT) || "").trim().toLowerCase());
+}
+
 function assertRequiredSecrets(env) {
   const required = [
     "CF_ACCESS_CLIENT_ID",
@@ -511,6 +518,14 @@ export async function onRequest(context) {
   if (request.method !== "POST") {
     return errorResponse("Method Not Allowed", {
       status: 405,
+      origin: allowedOrigin,
+      methods: "POST, OPTIONS",
+    });
+  }
+
+  if (!isChatEnabled(env)) {
+    return errorResponse("Chat is currently disabled.", {
+      status: 503,
       origin: allowedOrigin,
       methods: "POST, OPTIONS",
     });

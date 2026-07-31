@@ -6,6 +6,9 @@ compatibility_flags = ["nodejs_compat"]
 
 [vars]
 HUGO_VERSION = "0.147.6"
+# Keep aligned with params.enableLLMChat in hugo.toml. Off while the LiteLLM
+# box behind LITELLM_BASE_URL is not exposed.
+ENABLE_LLM_CHAT = "false"
 LITELLM_BASE_URL = "https://talkie.auto2putt.com"
 LITELLM_MODEL = "nemotron3-nano"
 GRAFANA_BASE_URL = "https://gra.auto2putt.com"

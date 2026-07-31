@@ -78,6 +78,7 @@
     </div>
   </header>
 
+  {{- if site.Params.enableLLMChat }}
   <div class="resume-home__chat reveal reveal--late">
     {{ partial "llm_chat.html" (dict
       "idPrefix" "llm-chat"
@@ -89,6 +90,7 @@
       "welcomeCopy" "Hi. Ask about local inference, side projects, models, infra, or anything else you want to throw at the box."
     ) }}
   </div>
+  {{- end }}
 
   {{- if or (gt (len $recentCommits) 0) $githubUser }}
   <section

@@ -2,6 +2,8 @@
 title: Training ML Models for Instrumental Music Generation
 date: '2026-04-08'
 draft: false
+aliases:
+  - /posts/music-generation/music-generation/
 tags:
   - music
   - machine-learning

@@ -13,6 +13,11 @@ theme = 'ResumeFrame'
 [params]
   showReadingTime = true
 
+  # The chat surfaces ("Ask AI anything" on the landing page, "Chat about this
+  # research" on posts) proxy to a self-hosted LiteLLM box that is no longer
+  # exposed. Flip to true to bring them back; /api/chat honors the same flag.
+  enableLLMChat = false
+
   [params.assets]
     theme_color = "#f6efe6"
     msapplication_TileColor = "#f6efe6"

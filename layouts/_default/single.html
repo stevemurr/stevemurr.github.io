@@ -53,7 +53,7 @@
       <p class="post-hero__summary">{{ $summary }}</p>
       {{- end }}
 
-      {{- if eq .Section "posts" }}
+      {{- if and (eq .Section "posts") site.Params.enableLLMChat }}
       <div class="post-hero__chat">
         {{ partial "llm_chat.html" (dict
           "idPrefix" "article-chat"
