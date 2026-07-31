@@ -18,12 +18,8 @@ theme = 'ResumeFrame'
   # exposed. Flip to true to bring them back; /api/chat honors the same flag.
   enableLLMChat = false
 
-  [params.assets]
-    theme_color = "#f6efe6"
-    msapplication_TileColor = "#f6efe6"
-
   [params.profileMode]
-    title = "Steve Murr"
+    # Read by the theme head partial as the default meta description.
     subtitle = "Software engineer in San Jose building AI-native products, local-first search systems, and developer tooling."
 
 [menu]

@@ -1,5 +1,5 @@
-import { HTTPError, errorResponse, jsonResponse, parseJSONBody } from "../../../cloudflare/lib/http.js";
-import { adminOptionsResponse, getAdminRequestOrigin, requireAdminEmail } from "../../../cloudflare/lib/admin-auth.js";
+import { HTTPError, emptyResponse, errorResponse, jsonResponse, parseJSONBody } from "../../../cloudflare/lib/http.js";
+import { getAdminRequestOrigin, requireAdminEmail } from "../../../cloudflare/lib/admin-auth.js";
 import {
   buildPostDocument,
   buildResumeDocument,
@@ -274,7 +274,7 @@ export async function onRequest(context) {
   try {
     origin = getAdminRequestOrigin(request);
     if (request.method === "OPTIONS") {
-      return adminOptionsResponse(origin, ADMIN_METHODS, "Content-Type");
+      return emptyResponse({ origin, methods: ADMIN_METHODS, allowedHeaders: "Content-Type" });
     }
 
     if (!["GET", "POST", "PUT"].includes(request.method)) {

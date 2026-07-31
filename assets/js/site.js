@@ -1,9 +1,7 @@
 const GITHUB_API_ROOT = "https://api.github.com";
-const LLM_METRICS_API_ROOT = "/api";
 const LLM_CHAT_API_ROOT = "/api";
 const RECENT_COMMIT_PAGE_LIMIT = 100;
 const RECENT_COMMIT_MAX_PAGES = 3;
-const LLM_METRICS_CACHE_TTL_MS = 60 * 1000; // 1 minute
 const LLM_CHAT_MAX_HISTORY_MESSAGES = 8;
 const LLM_CHAT_TURNSTILE_POLL_MS = 250;
 const LLM_CHAT_TURNSTILE_MAX_ATTEMPTS = 24;
@@ -19,7 +17,6 @@ const LLM_CHAT_ARTICLE_TRANSCRIPT_LIMIT = 25000;
 const LLM_CHAT_ARTICLE_CONTEXT_ERROR = "Article chat could not load this page context. Reload and try again.";
 const LLM_CHAT_OPEN_ANIMATION_MS = 260;
 const LLM_CHAT_BACKDROP_ANIMATION_MS = 180;
-const SVG_NS = "http://www.w3.org/2000/svg";
 const LLM_CHAT_STOP_WORDS = new Set([
   "about",
   "after",
@@ -296,27 +293,6 @@ function fetchJSON(url) {
   }).then((response) => {
     if (!response.ok) {
       throw new Error(`GitHub request failed: ${response.status}`);
-    }
-
-    return response.json().then((data) => {
-      setCache(cacheKey, data);
-      return data;
-    });
-  });
-}
-
-function fetchMetricsJSON(url) {
-  const cacheKey = `llm:${url}`;
-  const cached = getCached(cacheKey, LLM_METRICS_CACHE_TTL_MS);
-  if (cached) return Promise.resolve(cached);
-
-  return fetch(url, {
-    headers: {
-      Accept: "application/json",
-    },
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error(`Metrics request failed: ${response.status}`);
     }
 
     return response.json().then((data) => {
@@ -608,12 +584,13 @@ function renderProjectMetrics(card, entry) {
   }
 
   metrics.textContent = "";
-  metrics.hidden = false;
 
   if (!entry) {
     metrics.hidden = true;
     return;
   }
+
+  metrics.hidden = false;
 
   const activitySummary = describeActivity(entry);
   if (activitySummary) {
@@ -632,22 +609,6 @@ function updateProjectCard(card, entry) {
   }
 
   renderProjectMetrics(card, entry);
-}
-
-function markProjectCardUnavailable(card) {
-  const stamp = card.querySelector("[data-project-stamp]");
-  if (stamp) {
-    stamp.textContent = "";
-    stamp.hidden = true;
-  }
-
-  const metrics = card.querySelector("[data-project-metrics]");
-  if (!metrics) {
-    return;
-  }
-
-  metrics.textContent = "";
-  metrics.hidden = true;
 }
 
 const GITHUB_ICON_SVG = '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 0 0 5.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.22 1.87.88 2.33.67.07-.52.28-.88.51-1.08-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.5 7.5 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8 8 0 0 0 16 8c0-4.42-3.58-8-8-8Z"></path></svg>';
@@ -725,421 +686,6 @@ function createProjectCard(entry) {
   appendProjectPosts(article, normalizeRepo(repo.full_name));
 
   return article;
-}
-
-function createSVGElement(tagName, className) {
-  const element = document.createElementNS(SVG_NS, tagName);
-
-  if (className) {
-    element.setAttribute("class", className);
-  }
-
-  return element;
-}
-
-function formatWindowLabel(value) {
-  const raw = String(value || "").trim().toLowerCase();
-  const match = raw.match(/^(\d+)(m|h|d)$/);
-
-  if (!match) {
-    return "recent window";
-  }
-
-  const amount = Number(match[1]);
-  const unitMap = {
-    m: amount === 1 ? "minute" : "minutes",
-    h: amount === 1 ? "hour" : "hours",
-    d: amount === 1 ? "day" : "days",
-  };
-
-  return `${amount} ${unitMap[match[2]]}`;
-}
-
-function formatRateValue(value) {
-  if (!Number.isFinite(value)) {
-    return "—";
-  }
-
-  const abs = Math.abs(value);
-  let maximumFractionDigits = 0;
-
-  if (abs > 0 && abs < 1) {
-    maximumFractionDigits = 2;
-  } else if (abs < 10) {
-    maximumFractionDigits = 1;
-  }
-
-  return new Intl.NumberFormat("en-US", {
-    maximumFractionDigits,
-    minimumFractionDigits: abs > 0 && abs < 1 ? 2 : 0,
-  }).format(value);
-}
-
-function formatRuntimeValue(metricKey, value) {
-  if (metricKey === "lastActivityAt") {
-    if (value === null) {
-      return "Quiet";
-    }
-
-    return value ? formatRelativeTime(value) : "—";
-  }
-
-  const numericValue = Number(value);
-
-  if (!Number.isFinite(numericValue)) {
-    return "—";
-  }
-
-  if (metricKey === "generatedTokens" || metricKey === "promptTokens") {
-    return new Intl.NumberFormat("en-US", {
-      maximumFractionDigits: 0,
-    }).format(Math.round(numericValue));
-  }
-
-  if (metricKey === "activeMinutes") {
-    const roundedMinutes = Math.max(0, Math.round(numericValue));
-    return `${roundedMinutes} ${roundedMinutes === 1 ? "min" : "mins"}`;
-  }
-
-  if (metricKey === "ttftP95Seconds") {
-    if (numericValue < 1) {
-      return `${Math.round(numericValue * 1000)} ms`;
-    }
-
-    return `${formatRateValue(numericValue)} s`;
-  }
-
-  return formatRateValue(numericValue);
-}
-
-function formatLegendValue(graphKey, seriesKey, value) {
-  if (!Number.isFinite(value)) {
-    return null;
-  }
-
-  if (graphKey === "tokenThroughput") {
-    return `${formatRateValue(value)} tok/s peak`;
-  }
-
-  if (graphKey === "concurrentRequests") {
-    return `${formatRateValue(value)} peak`;
-  }
-
-  return formatRateValue(value);
-}
-
-function normalizeSeriesPoints(points) {
-  if (!Array.isArray(points)) {
-    return [];
-  }
-
-  return points
-    .map((point) => {
-      if (!Array.isArray(point) || point.length < 2) {
-        return null;
-      }
-
-      const timestamp = Number(point[0]);
-      const value = Number(point[1]);
-
-      if (!Number.isFinite(timestamp) || !Number.isFinite(value)) {
-        return null;
-      }
-
-      return [timestamp, value];
-    })
-    .filter(Boolean);
-}
-
-function inferSeriesStepSeconds(points) {
-  for (let index = 1; index < points.length; index += 1) {
-    const delta = Number(points[index][0]) - Number(points[index - 1][0]);
-    if (Number.isFinite(delta) && delta > 0) {
-      return delta;
-    }
-  }
-
-  return 60;
-}
-
-function getSeriesPeakValue(points) {
-  let peak = null;
-
-  for (let index = 0; index < points.length; index += 1) {
-    const point = points[index];
-    if (!point || !Number.isFinite(point[1])) {
-      continue;
-    }
-
-    peak = peak === null ? point[1] : Math.max(peak, point[1]);
-  }
-
-  return peak;
-}
-
-function getActiveSeriesPoints(series) {
-  const pointSets = [];
-
-  if (series && series.tokenThroughput) {
-    pointSets.push(normalizeSeriesPoints(series.tokenThroughput.generation));
-    pointSets.push(normalizeSeriesPoints(series.tokenThroughput.prompt));
-  }
-
-  if (series && series.concurrentRequests) {
-    pointSets.push(normalizeSeriesPoints(series.concurrentRequests.running));
-    pointSets.push(normalizeSeriesPoints(series.concurrentRequests.waiting));
-  }
-
-  return pointSets;
-}
-
-function sumSeriesTotals(points) {
-  if (!points.length) {
-    return 0;
-  }
-
-  const stepSeconds = inferSeriesStepSeconds(points);
-
-  return points.reduce((total, point) => total + (Math.max(point[1], 0) * stepSeconds), 0);
-}
-
-function getActiveMinutes(pointSets) {
-  const activeTimestamps = new Set();
-  let stepSeconds = 60;
-
-  pointSets.forEach((points) => {
-    if (points.length > 1) {
-      stepSeconds = inferSeriesStepSeconds(points);
-    }
-
-    points.forEach((point) => {
-      if (point[1] > 0) {
-        activeTimestamps.add(point[0]);
-      }
-    });
-  });
-
-  return Math.round((activeTimestamps.size * stepSeconds) / 60);
-}
-
-function getLastActivityAt(pointSets) {
-  let lastTimestamp = null;
-
-  pointSets.forEach((points) => {
-    points.forEach((point) => {
-      if (point[1] <= 0) {
-        return;
-      }
-
-      lastTimestamp = lastTimestamp === null ? point[0] : Math.max(lastTimestamp, point[0]);
-    });
-  });
-
-  if (lastTimestamp === null) {
-    return null;
-  }
-
-  return new Date(lastTimestamp * 1000).toISOString();
-}
-
-function buildRuntimeWindowSummary(series) {
-  const generationPoints = normalizeSeriesPoints(series && series.tokenThroughput ? series.tokenThroughput.generation : null);
-  const promptPoints = normalizeSeriesPoints(series && series.tokenThroughput ? series.tokenThroughput.prompt : null);
-  const pointSets = getActiveSeriesPoints(series);
-
-  return {
-    generatedTokens: sumSeriesTotals(generationPoints),
-    promptTokens: sumSeriesTotals(promptPoints),
-    activeMinutes: getActiveMinutes(pointSets),
-    lastActivityAt: getLastActivityAt(pointSets),
-  };
-}
-
-function buildLinePath(points, width, height, padding, minValue, maxValue) {
-  if (!points.length) {
-    return "";
-  }
-
-  const innerWidth = width - padding.left - padding.right;
-  const innerHeight = height - padding.top - padding.bottom;
-  const range = Math.max(maxValue - minValue, 0.001);
-
-  return points.map((point, index) => {
-    const ratioX = points.length === 1 ? 0 : index / (points.length - 1);
-    const x = padding.left + (ratioX * innerWidth);
-    const y = padding.top + ((1 - ((point[1] - minValue) / range)) * innerHeight);
-    return `${index === 0 ? "M" : "L"}${x.toFixed(2)},${y.toFixed(2)}`;
-  }).join(" ");
-}
-
-function buildAreaPath(points, width, height, padding, minValue, maxValue) {
-  const linePath = buildLinePath(points, width, height, padding, minValue, maxValue);
-
-  if (!linePath) {
-    return "";
-  }
-
-  const innerWidth = width - padding.left - padding.right;
-  const baselineY = height - padding.bottom;
-  const firstX = padding.left;
-  const lastX = padding.left + (points.length === 1 ? 0 : innerWidth);
-
-  return `${linePath} L${lastX.toFixed(2)},${baselineY.toFixed(2)} L${firstX.toFixed(2)},${baselineY.toFixed(2)} Z`;
-}
-
-function renderChartGrid(gridGroup, width, height, padding) {
-  gridGroup.textContent = "";
-
-  const lineCount = 4;
-  for (let index = 0; index < lineCount; index += 1) {
-    const ratio = lineCount === 1 ? 0 : index / (lineCount - 1);
-    const y = padding.top + (ratio * (height - padding.top - padding.bottom));
-    const line = createSVGElement("line", "resume-runtime__grid-line");
-    line.setAttribute("x1", padding.left);
-    line.setAttribute("x2", width - padding.right);
-    line.setAttribute("y1", y.toFixed(2));
-    line.setAttribute("y2", y.toFixed(2));
-    gridGroup.appendChild(line);
-  }
-}
-
-function setRuntimeStatus(container, message, state) {
-  container.dataset.runtimeState = state;
-
-  const status = container.querySelector("[data-llm-status]");
-  if (status) {
-    status.textContent = message;
-  }
-}
-
-function updateRuntimeCards(container, summary) {
-  const cards = container.querySelectorAll("[data-llm-card]");
-  cards.forEach((card) => {
-    const metricKey = card.dataset.llmCard;
-    const valueNode = card.querySelector("[data-llm-value]");
-    const hasValue = Boolean(summary) && metricKey in summary;
-    const value = hasValue ? summary[metricKey] : undefined;
-
-    if (valueNode) {
-      valueNode.textContent = formatRuntimeValue(metricKey, value);
-    }
-
-    if (hasValue && value !== null && value !== undefined && value !== "") {
-      card.dataset.runtimeValue = String(value);
-    } else {
-      delete card.dataset.runtimeValue;
-    }
-  });
-}
-
-function updateRuntimeLegend(graph, graphKey, pointsBySeries) {
-  const legendItems = graph.querySelectorAll("[data-llm-legend-key]");
-
-  legendItems.forEach((item) => {
-    const seriesKey = item.dataset.llmLegendKey;
-    const points = normalizeSeriesPoints(pointsBySeries && pointsBySeries[seriesKey]);
-    const peakValue = getSeriesPeakValue(points);
-    const label = item.textContent.split(" · ")[0].trim();
-    const formattedValue = formatLegendValue(graphKey, seriesKey, peakValue);
-
-    item.textContent = formattedValue ? `${label} · ${formattedValue}` : label;
-  });
-}
-
-function renderRuntimeGraph(container, graphKey, pointsBySeries) {
-  const graph = container.querySelector(`[data-llm-graph="${graphKey}"]`);
-  if (!graph) {
-    return;
-  }
-
-  const svg = graph.querySelector("svg");
-  const gridGroup = graph.querySelector("[data-llm-grid]");
-  const seriesGroup = graph.querySelector("[data-llm-series]");
-
-  if (!svg || !gridGroup || !seriesGroup) {
-    return;
-  }
-
-  const width = 360;
-  const height = 180;
-  const padding = { top: 12, right: 12, bottom: 18, left: 12 };
-  const seriesOrder = graphKey === "tokenThroughput"
-    ? ["generation", "prompt"]
-    : ["running", "waiting"];
-  const pointSets = seriesOrder.map((seriesKey) => ({
-    seriesKey,
-    points: normalizeSeriesPoints(pointsBySeries && pointsBySeries[seriesKey]),
-  }));
-  const values = pointSets.flatMap((entry) => entry.points.map((point) => point[1]));
-  const maxValue = Math.max(1, ...values, 0);
-
-  renderChartGrid(gridGroup, width, height, padding);
-  seriesGroup.textContent = "";
-
-  pointSets.forEach((entry, index) => {
-    if (!entry.points.length) {
-      return;
-    }
-
-    if (index === 0) {
-      const area = createSVGElement("path", `resume-runtime__area resume-runtime__area--${entry.seriesKey}`);
-      area.setAttribute("d", buildAreaPath(entry.points, width, height, padding, 0, maxValue));
-      seriesGroup.appendChild(area);
-    }
-
-    const path = createSVGElement("path", `resume-runtime__line resume-runtime__line--${entry.seriesKey}`);
-    path.setAttribute("d", buildLinePath(entry.points, width, height, padding, 0, maxValue));
-    seriesGroup.appendChild(path);
-
-    const latestPoint = entry.points[entry.points.length - 1];
-    if (latestPoint) {
-      const ratioX = entry.points.length === 1 ? 0 : (entry.points.length - 1) / (entry.points.length - 1);
-      const x = padding.left + (ratioX * (width - padding.left - padding.right));
-      const y = padding.top + ((1 - (latestPoint[1] / Math.max(maxValue, 0.001))) * (height - padding.top - padding.bottom));
-      const dot = createSVGElement("circle", `resume-runtime__dot resume-runtime__dot--${entry.seriesKey}`);
-      dot.setAttribute("cx", x.toFixed(2));
-      dot.setAttribute("cy", y.toFixed(2));
-      dot.setAttribute("r", "4");
-      seriesGroup.appendChild(dot);
-    }
-  });
-
-  updateRuntimeLegend(graph, graphKey, pointsBySeries);
-}
-
-async function loadLLMMetrics(container) {
-  const modelName = container.dataset.modelName || "nemotron3-nano";
-  const windowValue = container.dataset.metricsWindow || "1h";
-  const dashboardLink = container.querySelector(".resume-runtime__dashboard");
-  const endpoint = `${LLM_METRICS_API_ROOT}/llm/${encodeURIComponent(modelName)}?window=${encodeURIComponent(windowValue)}`;
-
-  setRuntimeStatus(container, `Fetching the latest ${formatWindowLabel(windowValue)} of traces.`, "loading");
-
-  try {
-    const payload = await fetchMetricsJSON(endpoint);
-    const series = payload && payload.series ? payload.series : {};
-    const updatedAt = payload && payload.updatedAt ? payload.updatedAt : new Date().toISOString();
-    const summary = buildRuntimeWindowSummary(series);
-
-    updateRuntimeCards(container, summary);
-    renderRuntimeGraph(container, "tokenThroughput", series.tokenThroughput || {});
-    renderRuntimeGraph(container, "concurrentRequests", series.concurrentRequests || {});
-
-    if (dashboardLink && payload && payload.dashboardUrl) {
-      dashboardLink.href = payload.dashboardUrl;
-    }
-
-    setRuntimeStatus(
-      container,
-      `Updated ${formatRelativeTime(updatedAt)} · showing the last ${formatWindowLabel(windowValue)}.`,
-      "ready",
-    );
-  } catch (_error) {
-    updateRuntimeCards(container, null);
-    renderRuntimeGraph(container, "tokenThroughput", {});
-    renderRuntimeGraph(container, "concurrentRequests", {});
-    setRuntimeStatus(container, "Telemetry temporarily unavailable. Try the full dashboard.", "error");
-  }
 }
 
 function isEditableElement(target) {
@@ -2392,88 +1938,6 @@ function serializeArticleList(node) {
     .join("\n");
 }
 
-function serializeArticleNode(node, blocks, sections) {
-  if (!(node instanceof HTMLElement) || node.hidden) {
-    return;
-  }
-
-  const tagName = node.tagName.toUpperCase();
-  if (tagName === "SCRIPT" || tagName === "STYLE" || tagName === "NOSCRIPT") {
-    return;
-  }
-
-  if (/^H[1-6]$/.test(tagName)) {
-    const text = getArticleChatText(node);
-    if (!text) {
-      return;
-    }
-
-    const anchor = node.id ? `#${node.id}` : "";
-    if (anchor) {
-      sections.push({
-        level: tagName,
-        text,
-        anchor,
-      });
-    }
-    blocks.push(`${tagName}${anchor ? ` ${anchor}` : ""}: ${text}`);
-    return;
-  }
-
-  if (tagName === "P") {
-    const text = getArticleChatText(node);
-    if (text) {
-      blocks.push(text);
-    }
-    return;
-  }
-
-  if (tagName === "UL" || tagName === "OL") {
-    const listText = serializeArticleList(node);
-    if (listText) {
-      blocks.push(listText);
-    }
-    return;
-  }
-
-  if (tagName === "BLOCKQUOTE") {
-    const text = getArticleChatText(node);
-    if (text) {
-      blocks.push(`Blockquote: ${text}`);
-    }
-    return;
-  }
-
-  if (tagName === "PRE") {
-    const code = getArticleCodeText(node);
-    if (!code) {
-      return;
-    }
-
-    const language = getArticleCodeLanguage(node);
-    blocks.push(`Code block${language ? ` (${language})` : ""}:\n${code}`);
-    return;
-  }
-
-  Array.from(node.children).forEach((child) => {
-    serializeArticleNode(child, blocks, sections);
-  });
-}
-
-function buildArticleTranscript(contentNode) {
-  const blocks = [];
-  const sections = [];
-
-  Array.from(contentNode.children).forEach((child) => {
-    serializeArticleNode(child, blocks, sections);
-  });
-
-  return {
-    transcript: blocks.join("\n\n").trim(),
-    sections,
-  };
-}
-
 function truncateChatText(value, maxChars) {
   const text = String(value || "").trim();
   if (!text || text.length <= maxChars) {
@@ -3405,7 +2869,7 @@ async function loadProjectFeed(container) {
     });
   } catch (_error) {
     pinnedCards.forEach((card) => {
-      markProjectCardUnavailable(card);
+      updateProjectCard(card, null);
     });
   }
 }
@@ -3462,11 +2926,6 @@ async function loadRecentCommits(container) {
 
 document.addEventListener("DOMContentLoaded", () => {
   initializePostBackLinks();
-
-  const llmMetricsContainers = document.querySelectorAll("[data-llm-metrics]");
-  llmMetricsContainers.forEach((container) => {
-    loadLLMMetrics(container);
-  });
 
   const llmChatContainers = document.querySelectorAll("[data-llm-chat]");
   llmChatContainers.forEach((container) => {

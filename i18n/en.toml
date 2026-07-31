@@ -1,0 +1,9 @@
+# Pagination labels. Without this table the `i18n` calls in
+# layouts/partials/post_nav_links.html and layouts/_default/list.html render as
+# empty strings, leaving bare « / » arrows.
+
+[prev_page]
+other = "Previous"
+
+[next_page]
+other = "Next"

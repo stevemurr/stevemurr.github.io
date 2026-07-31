@@ -133,10 +133,6 @@ Main production/runtime secrets:
 - `GITHUB_COMMITTER_NAME`
 - `GITHUB_COMMITTER_EMAIL`
 
-Optional local-only secret:
-
-- `GRAFANA_TOKEN`
-
 ## Admin
 
 The repo includes a private `/admin/` surface for post and code-page editing.

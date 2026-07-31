@@ -1,4 +1,4 @@
-import { HTTPError, buildCorsHeaders, errorResponse, parseJSONBody } from "../../cloudflare/lib/http.js";
+import { HTTPError, buildCorsHeaders, emptyResponse, errorResponse, parseJSONBody } from "../../cloudflare/lib/http.js";
 import { getAllowedOrigin } from "../../cloudflare/lib/site-origin.js";
 
 const MAX_MESSAGES = 8;
@@ -506,12 +506,10 @@ export async function onRequest(context) {
   }
 
   if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: buildCorsHeaders(allowedOrigin, {
-        methods: "POST, OPTIONS",
-        allowedHeaders: "Content-Type",
-      }),
+    return emptyResponse({
+      origin: allowedOrigin,
+      methods: "POST, OPTIONS",
+      allowedHeaders: "Content-Type",
     });
   }
 

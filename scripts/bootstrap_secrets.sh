@@ -18,7 +18,6 @@ KNOWN_KEYS=(
   "ADMIN_EMAIL"
   "GITHUB_COMMITTER_NAME"
   "GITHUB_COMMITTER_EMAIL"
-  "GRAFANA_TOKEN"
 )
 CLOUDFLARE_KEYS=(
   "TURNSTILE_SECRET_KEY"
@@ -83,7 +82,6 @@ label_for_key() {
     ADMIN_EMAIL) echo "Admin email" ;;
     GITHUB_COMMITTER_NAME) echo "GitHub committer name" ;;
     GITHUB_COMMITTER_EMAIL) echo "GitHub committer email" ;;
-    GRAFANA_TOKEN) echo "Grafana bearer token" ;;
     *) echo "$1" ;;
   esac
 }
@@ -193,22 +191,6 @@ prompt_text_value() {
   printf -v "${key}" '%s' "${value}"
 }
 
-prompt_optional_secret() {
-  local key="$1"
-  local label="$2"
-  local value="${!key-}"
-
-  if [[ -n "${value}" ]]; then
-    printf 'Using %s from environment.\n' "${key}" >&2
-    printf -v "${key}" '%s' "${value}"
-    return
-  fi
-
-  printf '%s (optional, press enter to skip): ' "${label}" >&2
-  IFS= read -r -s value
-  printf '\n' >&2
-  printf -v "${key}" '%s' "${value}"
-}
 
 resolve_selected_secrets() {
   local key label
@@ -231,9 +213,6 @@ resolve_selected_secrets() {
         ;;
       GITHUB_COMMITTER_EMAIL)
         prompt_text_value "${key}" "${label}" "stevemurr@users.noreply.github.com"
-        ;;
-      GRAFANA_TOKEN)
-        prompt_optional_secret "${key}" "${label}"
         ;;
       *)
         prompt_secret "${key}" "${label}"
@@ -351,10 +330,6 @@ if [[ "${SYNC_CLOUDFLARE}" -eq 1 ]]; then
   if [[ "${synced_count}" -eq 0 && "${SELECTED_KEYS_COUNT}" -gt 0 ]]; then
     printf 'No Cloudflare-managed keys were selected for sync.\n' >&2
   fi
-fi
-
-if [[ "${SYNC_CLOUDFLARE}" -eq 1 && "${SELECTED_KEYS_COUNT}" -gt 0 ]] && contains_key "GRAFANA_TOKEN" "${SELECTED_KEYS[@]}"; then
-  printf 'Skipping GRAFANA_TOKEN Cloudflare sync; it is treated as a local-only secret.\n' >&2
 fi
 
 printf 'Secret bootstrap complete.\n' >&2

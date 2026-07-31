@@ -1,5 +1,5 @@
 import { createRemoteJWKSet, jwtVerify } from "jose";
-import { HTTPError, buildCorsHeaders } from "./http.js";
+import { HTTPError } from "./http.js";
 import { getAllowedOrigin } from "./site-origin.js";
 
 const ACCESS_EMAIL_HEADERS = [
@@ -90,14 +90,4 @@ export async function requireAdminEmail(request, env) {
   }
 
   return authenticatedEmail;
-}
-
-export function adminOptionsResponse(origin, methods = "GET, OPTIONS", allowedHeaders = "Content-Type") {
-  return new Response(null, {
-    status: 204,
-    headers: buildCorsHeaders(origin, {
-      methods,
-      allowedHeaders,
-    }),
-  });
 }

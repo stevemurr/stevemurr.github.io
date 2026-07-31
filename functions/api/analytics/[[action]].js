@@ -56,12 +56,10 @@ export async function onRequest(context) {
   }
 
   if (request.method === "OPTIONS") {
-    return new Response(null, {
-      status: 204,
-      headers: buildCorsHeaders(allowedOrigin, {
-        methods: "GET, OPTIONS",
-        allowedHeaders: "X-API-Key",
-      }),
+    return emptyResponse({
+      origin: allowedOrigin,
+      methods: "GET, OPTIONS",
+      allowedHeaders: "X-API-Key",
     });
   }
 
