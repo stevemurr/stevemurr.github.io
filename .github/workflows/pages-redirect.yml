@@ -1,0 +1,90 @@
+# stevemurr.github.io is no longer a build target — the site is served from
+# Cloudflare Pages at stevemurr.com. GitHub Pages is still enabled on this repo,
+# so without a deployer it kept serving a stale March 2026 artifact forever.
+# This workflow replaces that artifact with a redirect stub.
+name: Deploy Pages redirect stub
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/pages-redirect.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CANONICAL_ORIGIN: https://stevemurr.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Generate redirect stub
+        run: |
+          mkdir -p site
+
+          # Root redirect. Meta refresh + canonical so crawlers consolidate on
+          # stevemurr.com rather than indexing this host.
+          cat > site/index.html <<HTML
+          <!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <title>Steve Murr</title>
+          <link rel="canonical" href="${CANONICAL_ORIGIN}/">
+          <meta http-equiv="refresh" content="0; url=${CANONICAL_ORIGIN}/">
+          <meta name="robots" content="noindex, follow">
+          </head>
+          <body>
+          <p>This site has moved to <a href="${CANONICAL_ORIGIN}/">${CANONICAL_ORIGIN}</a>.</p>
+          </body>
+          </html>
+          HTML
+
+          # GitHub Pages serves 404.html for any unmatched path, which is every
+          # path now that the built site is gone. Forward the original path so
+          # old deep links land on their real destination instead of the root.
+          cat > site/404.html <<HTML
+          <!doctype html>
+          <html lang="en">
+          <head>
+          <meta charset="utf-8">
+          <title>Redirecting…</title>
+          <meta name="robots" content="noindex, follow">
+          <script>
+          location.replace("${CANONICAL_ORIGIN}" + location.pathname + location.search + location.hash);
+          </script>
+          <noscript><meta http-equiv="refresh" content="0; url=${CANONICAL_ORIGIN}/"></noscript>
+          </head>
+          <body>
+          <p>Redirecting to <a href="${CANONICAL_ORIGIN}/">${CANONICAL_ORIGIN}</a>.</p>
+          </body>
+          </html>
+          HTML
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
