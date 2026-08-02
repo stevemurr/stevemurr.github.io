@@ -4,7 +4,14 @@
 {{- $darkThemeChrome := "#0e1722" -}}
 {{- $base := resources.Get "css/base.css" -}}
 {{- $custom := resources.Get "css/extended/custom.css" -}}
-{{- $styles := slice $base $custom | resources.Concat "css/site.css" | minify | fingerprint -}}
+{{- $sheets := slice $base $custom -}}
+{{- /* The chat styles are ~30% of the stylesheet and are useless while the
+       feature is off, so they join the bundle only when it is on. */ -}}
+{{- if site.Params.enableLLMChat -}}
+{{- $chat := resources.Get "css/extended/chat.css" -}}
+{{- if $chat -}}{{ $sheets = $sheets | append $chat }}{{- end -}}
+{{- end -}}
+{{- $styles := $sheets | resources.Concat "css/site.css" | minify | fingerprint -}}
 {{- $script := resources.Get "js/site.js" | minify | fingerprint -}}
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">

@@ -1,7 +1,9 @@
 import matter from "gray-matter";
 
 const POSTS_ROOT = "content/posts";
-const CODE_PAGE_PATH = "content/code.md";
+// The hero/projects front matter lives on the home page itself; content/code.md
+// was a second copy of it that rendered at a duplicate URL.
+const CODE_PAGE_PATH = "content/_index.md";
 const POST_SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 function cloneData(value) {

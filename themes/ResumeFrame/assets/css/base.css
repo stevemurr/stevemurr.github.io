@@ -77,7 +77,7 @@ figure {
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 12px;
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
 }
 
 .breadcrumbs a {
@@ -91,7 +91,7 @@ figure {
 .entry-cover {
   overflow: hidden;
   margin-top: 22px;
-  border-radius: 18px;
+  border-radius: var(--radius);
 }
 
 .entry-cover img {
@@ -102,7 +102,7 @@ figure {
   margin-top: 22px;
   padding: 18px 20px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
   box-shadow: var(--shadow-soft);
 }
@@ -153,7 +153,7 @@ h6:hover .anchor {
   margin-top: 28px;
   padding: 22px 24px;
   border: 1px solid var(--border);
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
   box-shadow: var(--shadow-soft);
 }
@@ -166,6 +166,6 @@ h6:hover .anchor {
   .entry-cover,
   .toc,
   .search-shell {
-    border-radius: 16px;
+    border-radius: var(--radius);
   }
 }

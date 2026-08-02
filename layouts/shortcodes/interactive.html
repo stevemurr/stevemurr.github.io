@@ -6,9 +6,10 @@
   <figcaption class="interactive-embed__title">{{ $title }}</figcaption>
   {{- end }}
   <iframe
+    class="interactive-embed__frame"
+    style="--embed-height: {{ $height }};"
     src="{{ $src }}"
     title="{{ $title | default $src }}"
-    style="width:100%;height:{{ $height }};border:none;border-radius:8px;"
     loading="lazy"
   ></iframe>
 </figure>

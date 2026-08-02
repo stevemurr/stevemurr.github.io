@@ -117,6 +117,7 @@ function appendQueryParam(url, key, value) {
 
 function getPostBackDestination() {
   const from = new URLSearchParams(window.location.search).get("from");
+  // "resume" is the legacy spelling of "code", kept so older shared links still resolve.
   if (from === "resume") {
     return POST_BACK_DESTINATIONS.code;
   }
@@ -632,9 +633,8 @@ function appendProjectPosts(article, repoKey) {
   container.appendChild(createElement(document, "p", "resume-project__section", "Research log"));
   posts.forEach(post => {
     const link = createElement(document, "a", "resume-project__post-link");
-    link.href = appendQueryParam(post.url, "from", "resume");
+    link.href = appendQueryParam(post.url, "from", "code");
     const copy = createElement(document, "span", "resume-project__post-copy");
-    copy.appendChild(createElement(document, "span", "resume-project__post-kicker", "Read research"));
     copy.appendChild(createElement(document, "span", "resume-project__post-title", post.title));
     link.appendChild(copy);
     link.appendChild(createElement(document, "span", "resume-project__post-date", post.date));

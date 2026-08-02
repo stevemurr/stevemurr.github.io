@@ -3,9 +3,42 @@
   --content-gap: 24px;
   --header-height: 72px;
   --main-width: 1040px;
-  --post-width: 760px;
-  --radius: 16px;
+  --measure: 35.5rem;
+
+  /* Type scale. Derived by clustering the sizes the stylesheet already used —
+     each step is the centre of a real cluster, so existing call sites move by a
+     fraction of a pixel rather than being pushed onto an arbitrary ratio. */
+  --text-3xs: 0.625rem;
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.8125rem;
+  --text-md: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.4375rem;
+  --text-3xl: 1.625rem;
+  --text-4xl: 2rem;
+  --text-5xl: 2.5rem;
+
+  /* Fluid display sizes. These replace 21 hand-tuned clamp() expressions; each
+     one already scales across the whole viewport range, so the mobile-only
+     font-size overrides that used to shadow them are no longer needed.
+     --display-xl is sized for the article column, --display-2xl for the
+     full-width home hero. */
+  --display-sm: clamp(1.35rem, 2.4vw, 1.7rem);
+  --display-md: clamp(1.6rem, 3vw, 2.1rem);
+  --display-lg: clamp(2.2rem, 4.6vw, 3rem);
+  --display-xl: clamp(2.4rem, 5.2vw, 3.4rem);
+  --display-2xl: clamp(3rem, 7vw, 5rem);
+
+  /* Radius scale. */
+  --radius-xs: 6px;
   --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
   --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-reading: "Source Serif 4", Georgia, "Times New Roman", serif;
@@ -69,61 +102,6 @@
   --demo-background: linear-gradient(180deg, color-mix(in srgb, var(--entry) 92%, white) 0%, var(--theme) 100%);
   --demo-frame-background: #ffffff;
   --demo-frame-inset: rgba(15, 23, 42, 0.08);
-  --chat-launcher-background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, white), color-mix(in srgb, var(--theme) 78%, white)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-cool) 12%, transparent), transparent 36%);
-  --chat-launcher-background-hover:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 96%, white), color-mix(in srgb, var(--theme) 84%, white)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-cool) 16%, transparent), transparent 36%);
-  --chat-launcher-border: color-mix(in srgb, var(--accent-cool) 12%, var(--border));
-  --chat-launcher-border-hover: color-mix(in srgb, var(--accent-cool) 24%, var(--border));
-  --chat-launcher-text: var(--primary);
-  --chat-launcher-placeholder: color-mix(in srgb, var(--secondary) 90%, var(--primary));
-  --chat-launcher-icon-background: color-mix(in srgb, var(--accent-cool) 12%, white);
-  --chat-launcher-icon-color: color-mix(in srgb, var(--accent-cool) 84%, var(--primary));
-  --chat-launcher-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.54),
-    0 10px 24px rgba(11, 16, 22, 0.08);
-  --chat-launcher-shadow-hover:
-    inset 0 1px 0 rgba(255, 255, 255, 0.62),
-    0 14px 28px rgba(11, 16, 22, 0.12);
-  --chat-backdrop: rgba(14, 22, 31, 0.42);
-  --chat-shell-background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 94%, white), color-mix(in srgb, var(--theme) 82%, white));
-  --chat-shell-overlay:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--accent-cool) 10%, transparent), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 16%);
-  --chat-shell-border: color-mix(in srgb, var(--accent-cool) 10%, var(--border));
-  --chat-shell-shadow:
-    0 28px 80px rgba(5, 11, 16, 0.18),
-    0 2px 0 rgba(255, 255, 255, 0.52) inset;
-  --chat-header-background: color-mix(in srgb, var(--surface-strong) 92%, white);
-  --chat-stream-background: color-mix(in srgb, var(--surface-strong) 96%, white);
-  --chat-section-border: color-mix(in srgb, var(--border) 96%, transparent);
-  --chat-control-background: color-mix(in srgb, var(--surface-strong) 96%, white);
-  --chat-control-background-muted: color-mix(in srgb, var(--theme) 34%, white);
-  --chat-control-border: color-mix(in srgb, var(--border) 96%, transparent);
-  --chat-control-border-strong: color-mix(in srgb, var(--accent-cool) 28%, var(--border));
-  --chat-control-shadow: 0 1px 2px rgba(17, 24, 32, 0.04);
-  --chat-focus-outline: color-mix(in srgb, var(--accent-cool) 58%, white);
-  --chat-focus-glow: 0 0 0 4px color-mix(in srgb, var(--accent-cool) 18%, transparent);
-  --chat-text: var(--primary);
-  --chat-text-muted: var(--secondary);
-  --chat-text-subtle: color-mix(in srgb, var(--secondary) 88%, transparent);
-  --chat-user-message-background: color-mix(in srgb, var(--theme) 42%, white);
-  --chat-user-message-border: color-mix(in srgb, var(--accent-cool) 10%, var(--border));
-  --chat-user-message-shadow: 0 10px 26px rgba(17, 28, 38, 0.05);
-  --chat-code-background: color-mix(in srgb, var(--accent-cool) 6%, var(--code-bg));
-  --chat-code-block-background: color-mix(in srgb, var(--theme) 28%, white);
-  --chat-code-block-border: color-mix(in srgb, var(--border) 96%, transparent);
-  --chat-blockquote-border: color-mix(in srgb, var(--accent-cool) 12%, var(--border));
-  --chat-link: var(--accent-cool);
-  --chat-avatar-background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 94%, black), color-mix(in srgb, var(--accent-cool) 28%, var(--primary)));
-  --chat-avatar-system-background: linear-gradient(135deg, color-mix(in srgb, var(--secondary) 84%, var(--primary)), color-mix(in srgb, var(--secondary) 92%, var(--theme)));
-  --chat-avatar-color: color-mix(in srgb, var(--surface-strong) 96%, white);
-  --chat-send-background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 94%, #31404e), color-mix(in srgb, var(--primary) 94%, black));
-  --chat-send-border: color-mix(in srgb, var(--primary) 82%, black);
-  --chat-send-shadow: 0 12px 28px rgba(12, 20, 28, 0.14);
-  --chat-send-color: color-mix(in srgb, var(--surface-strong) 94%, white);
 }
 
 :root[data-theme="dark"] {
@@ -186,61 +164,6 @@
   --demo-background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 88%, transparent) 0%, color-mix(in srgb, var(--theme) 92%, transparent) 100%);
   --demo-frame-background: #0c1520;
   --demo-frame-inset: rgba(214, 228, 241, 0.1);
-  --chat-launcher-background:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 86%, #101822), color-mix(in srgb, var(--theme) 92%, #09111a)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-cool) 16%, transparent), transparent 34%);
-  --chat-launcher-background-hover:
-    linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 90%, #121b25), color-mix(in srgb, var(--theme) 88%, #0b121a)),
-    radial-gradient(circle at top left, color-mix(in srgb, var(--accent-cool) 20%, transparent), transparent 34%);
-  --chat-launcher-border: color-mix(in srgb, var(--accent-cool) 18%, var(--border));
-  --chat-launcher-border-hover: color-mix(in srgb, var(--accent-cool) 32%, var(--border));
-  --chat-launcher-text: color-mix(in srgb, var(--primary) 96%, white);
-  --chat-launcher-placeholder: color-mix(in srgb, var(--secondary) 82%, var(--primary));
-  --chat-launcher-icon-background: color-mix(in srgb, var(--chip-background) 90%, transparent);
-  --chat-launcher-icon-color: color-mix(in srgb, var(--primary) 96%, white);
-  --chat-launcher-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-    0 10px 24px rgba(0, 0, 0, 0.22);
-  --chat-launcher-shadow-hover:
-    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 14px 28px rgba(0, 0, 0, 0.28);
-  --chat-backdrop: rgba(4, 8, 12, 0.68);
-  --chat-shell-background: linear-gradient(180deg, color-mix(in srgb, var(--surface-strong) 92%, #101821), color-mix(in srgb, var(--theme) 90%, #081018));
-  --chat-shell-overlay:
-    radial-gradient(circle at top right, color-mix(in srgb, var(--accent-cool) 14%, transparent), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.06), transparent 16%);
-  --chat-shell-border: color-mix(in srgb, var(--accent-cool) 14%, var(--border));
-  --chat-shell-shadow:
-    0 28px 80px rgba(0, 0, 0, 0.4),
-    0 2px 0 rgba(255, 255, 255, 0.06) inset;
-  --chat-header-background: color-mix(in srgb, var(--surface-strong) 96%, #0e1722);
-  --chat-stream-background: color-mix(in srgb, var(--theme) 92%, #09111a);
-  --chat-section-border: color-mix(in srgb, var(--border) 92%, transparent);
-  --chat-control-background: color-mix(in srgb, var(--surface-strong) 96%, #0f1720);
-  --chat-control-background-muted: color-mix(in srgb, var(--theme) 82%, var(--surface-strong));
-  --chat-control-border: color-mix(in srgb, var(--border) 96%, transparent);
-  --chat-control-border-strong: color-mix(in srgb, var(--accent-cool) 32%, var(--border));
-  --chat-control-shadow: 0 1px 2px rgba(0, 0, 0, 0.22);
-  --chat-focus-outline: color-mix(in srgb, var(--accent-cool) 64%, white);
-  --chat-focus-glow: 0 0 0 4px color-mix(in srgb, var(--accent-cool) 22%, transparent);
-  --chat-text: var(--primary);
-  --chat-text-muted: var(--secondary);
-  --chat-text-subtle: color-mix(in srgb, var(--secondary) 84%, transparent);
-  --chat-user-message-background: color-mix(in srgb, var(--surface-strong) 82%, var(--theme));
-  --chat-user-message-border: color-mix(in srgb, var(--accent-cool) 14%, var(--border));
-  --chat-user-message-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
-  --chat-code-background: color-mix(in srgb, var(--accent-cool) 8%, var(--code-bg));
-  --chat-code-block-background: color-mix(in srgb, var(--theme) 82%, var(--surface-strong));
-  --chat-code-block-border: color-mix(in srgb, var(--border) 92%, transparent);
-  --chat-blockquote-border: color-mix(in srgb, var(--accent-cool) 18%, var(--border));
-  --chat-link: color-mix(in srgb, var(--accent-cool) 88%, white);
-  --chat-avatar-background: linear-gradient(135deg, color-mix(in srgb, var(--accent-cool) 18%, #0a1118), color-mix(in srgb, var(--primary) 28%, #101821));
-  --chat-avatar-system-background: linear-gradient(135deg, color-mix(in srgb, var(--secondary) 54%, #0f1822), color-mix(in srgb, var(--secondary) 30%, #243342));
-  --chat-avatar-color: color-mix(in srgb, var(--primary) 96%, white);
-  --chat-send-background: linear-gradient(180deg, color-mix(in srgb, var(--accent-cool) 18%, #1a2430), #0f1620);
-  --chat-send-border: color-mix(in srgb, var(--accent-cool) 18%, #1c2632);
-  --chat-send-shadow: 0 12px 28px rgba(0, 0, 0, 0.26);
-  --chat-send-color: #fff;
 }
 
 html {
@@ -250,7 +173,7 @@ html {
 body {
   position: relative;
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: var(--text-base);
   letter-spacing: -0.01em;
   background: var(--theme);
   color: var(--content);
@@ -316,7 +239,7 @@ a {
   max-width: min(1030px, calc(100vw - 40px));
   padding: 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
   box-shadow: var(--shadow-soft);
   line-height: normal;
@@ -335,7 +258,7 @@ a {
 
 .logo a {
   font-family: var(--font-display);
-  font-size: 1.18rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.04em;
@@ -347,7 +270,7 @@ a {
   gap: 4px;
   padding: 3px;
   border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--surface-muted) 92%, transparent);
 }
 
@@ -372,9 +295,9 @@ a {
   position: relative;
   min-height: 34px;
   padding: 0 15px;
-  border-radius: 11px;
+  border-radius: var(--radius-sm);
   color: var(--secondary);
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -419,12 +342,12 @@ a {
   align-items: center;
   justify-content: center;
   padding: 10px 16px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
   background: color-mix(in srgb, var(--accent) 92%, white);
   color: #fffaf4;
   box-shadow: 0 8px 20px rgba(207, 107, 54, 0.16);
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.11em;
   text-transform: uppercase;
@@ -510,7 +433,7 @@ a {
   gap: 8px;
   margin: 0;
   color: var(--secondary);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -549,7 +472,7 @@ a {
 
 .section-heading h2 {
   max-width: 14ch;
-  font-size: clamp(2rem, 4vw, 2.9rem);
+  font-size: var(--display-lg);
 }
 
 .topic-cloud {
@@ -566,7 +489,7 @@ a {
   justify-content: space-between;
   gap: 14px;
   padding: 16px 18px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   text-decoration: none;
   background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
   border: 1px solid color-mix(in srgb, var(--border) 82%, transparent);
@@ -584,14 +507,14 @@ a {
 
 .topic-chip span {
   color: var(--primary);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 700;
   letter-spacing: -0.02em;
 }
 
 .topic-chip strong {
   font-family: var(--font-mono);
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   font-weight: 500;
   color: var(--secondary);
 }
@@ -608,7 +531,7 @@ a {
   align-items: end;
   gap: 10px;
   flex-wrap: wrap;
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-size: var(--display-lg);
 }
 
 .page-header h1 svg {
@@ -623,7 +546,7 @@ a {
   z-index: 1;
   max-width: 38rem;
   margin: 8px 0 0;
-  font-size: 0.98rem;
+  font-size: var(--text-base);
   line-height: 1.72;
   color: var(--content);
 }
@@ -635,11 +558,11 @@ a {
 #searchInput {
   width: 100%;
   border: 1px solid var(--border);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
   padding: 14px 20px;
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--primary);
   box-shadow: var(--shadow-soft);
   transition:
@@ -662,7 +585,7 @@ a {
   background: color-mix(in srgb, var(--surface-strong) 86%, transparent);
   color: var(--primary);
   box-shadow: var(--shadow-soft);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -676,7 +599,7 @@ a {
   position: relative;
   overflow: hidden;
   padding: clamp(30px, 4vw, 50px);
-  border-radius: 36px;
+  border-radius: var(--radius-xl);
   background: var(--post-gradient);
   box-shadow: var(--shadow-strong);
   color: #fffaf4;
@@ -711,7 +634,7 @@ a {
   width: 44px;
   height: 44px;
   padding: 0;
-  border-radius: 14px;
+  border-radius: var(--radius);
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: rgba(255, 250, 244, 0.88);
   text-decoration: none;
@@ -738,17 +661,10 @@ a {
   place-items: center;
   width: 62px;
   height: 62px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   color: rgba(255, 248, 240, 0.82);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.14);
-}
-
-.post-hero__body {
-  display: grid;
-  gap: 16px;
-  margin-top: clamp(30px, 4vw, 52px);
-  max-width: 41rem;
 }
 
 .post-hero__tags {
@@ -761,12 +677,12 @@ a {
   display: inline-flex;
   align-items: center;
   padding: 7px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 250, 244, 0.88);
   text-decoration: none;
-  font-size: 0.7rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -775,7 +691,7 @@ a {
 .post-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 5.2rem);
+  font-size: var(--display-xl);
   font-weight: 700;
   line-height: 0.94;
   letter-spacing: -0.058em;
@@ -787,7 +703,7 @@ a {
   max-width: 37rem;
   margin: 0;
   color: rgba(255, 250, 244, 0.84);
-  font-size: 1.08rem;
+  font-size: var(--text-lg);
   line-height: 1.82;
 }
 
@@ -798,7 +714,7 @@ a {
 
 .post-hero__meta,
 .post-hero__meta span {
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -815,7 +731,7 @@ a {
   padding-top: 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.14);
   font-family: var(--font-display);
-  font-size: clamp(1.35rem, 3vw, 1.9rem);
+  font-size: var(--display-sm);
   line-height: 1.12;
   letter-spacing: -0.04em;
   color: #fff7ef;
@@ -834,8 +750,24 @@ a {
   z-index: 1;
   margin: 0;
   color: var(--content);
-  font-size: 1.04rem;
+  font-size: var(--text-base);
   line-height: 1.92;
+}
+
+/* Reading measure. Prose sits in a fixed column so lines land around 70
+   characters; code, tables, figures, and embeds keep the full card width so
+   screenshots and interactive demos stay legible. The column is set in rem
+   rather than ch so headings (Geist) and body copy (Source Serif) align. */
+.post-content > * {
+  max-width: var(--measure);
+  margin-inline: auto;
+}
+
+.post-content > pre,
+.post-content > table,
+.post-content > figure,
+.post-content > .highlight {
+  max-width: none;
 }
 
 .post-content h1,
@@ -850,28 +782,28 @@ a {
 .post-content h1 {
   margin-top: 2.8em;
   margin-bottom: 0.7em;
-  font-size: 2.5rem;
+  font-size: var(--text-5xl);
   line-height: 0.98;
 }
 
 .post-content h2 {
   margin-top: 2.4em;
   margin-bottom: 0.7em;
-  font-size: 2rem;
+  font-size: var(--text-4xl);
   line-height: 1;
 }
 
 .post-content h3 {
   margin-top: 2em;
   margin-bottom: 0.55em;
-  font-size: 1.55rem;
+  font-size: var(--text-3xl);
   line-height: 1.08;
 }
 
 .post-content h4 {
   margin-top: 1.8em;
   margin-bottom: 0.5em;
-  font-size: 1.2rem;
+  font-size: var(--text-xl);
 }
 
 .post-content p,
@@ -887,7 +819,7 @@ a {
   border-collapse: separate;
   border-spacing: 0;
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   overflow: hidden;
   background: color-mix(in srgb, var(--surface-strong) 94%, white);
 }
@@ -901,7 +833,7 @@ a {
 }
 
 .post-content table th {
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -953,7 +885,7 @@ a {
   margin: 1.9em 0;
   padding: 20px 24px 20px 72px;
   border: 1px solid color-mix(in srgb, var(--accent-cool) 14%, var(--border));
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   background:
     linear-gradient(
       135deg,
@@ -974,11 +906,11 @@ a {
   place-items: center;
   width: 38px;
   height: 38px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--accent-cool) 14%, var(--surface-strong));
   color: var(--accent-cool);
   font-family: var(--font-display);
-  font-size: 1.7rem;
+  font-size: var(--text-3xl);
   font-weight: 700;
   line-height: 1;
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-cool) 18%, transparent);
@@ -987,7 +919,7 @@ a {
 .post-content code {
   margin: 0 3px;
   padding: 4px 7px;
-  border-radius: 8px;
+  border-radius: var(--radius-xs);
   background: var(--code-bg);
   font-family: var(--font-mono);
   font-size: 0.82em;
@@ -996,7 +928,7 @@ a {
 
 .post-content pre {
   border: 1px solid var(--border);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 12px 28px rgba(14, 19, 28, 0.12);
   overflow-x: auto;
   padding: 18px 20px;
@@ -1016,7 +948,7 @@ a {
 }
 
 .highlight pre {
-  border-radius: 20px !important;
+  border-radius: var(--radius-lg) !important;
 }
 
 .post-content hr {
@@ -1038,7 +970,7 @@ a {
 }
 
 .paginav a {
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--border);
   background: color-mix(in srgb, var(--surface-strong) 82%, transparent);
   box-shadow: var(--shadow-soft);
@@ -1057,7 +989,7 @@ a {
   padding-bottom: 12px;
   border-top: none;
   color: var(--secondary);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1078,7 +1010,7 @@ a {
 
 ::-webkit-scrollbar-thumb {
   background: color-mix(in srgb, var(--secondary) 72%, transparent);
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
 }
 
 ::selection {
@@ -1130,7 +1062,7 @@ a {
   margin: 12px 0 14px;
   max-width: 10ch;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6vw, 4.6rem);
+  font-size: var(--display-2xl);
   font-weight: 700;
   line-height: 0.94;
   letter-spacing: -0.055em;
@@ -1141,7 +1073,7 @@ a {
 .resume-hero__lede {
   max-width: 41rem;
   margin: 0;
-  font-size: 1.02rem;
+  font-size: var(--text-base);
   line-height: 1.76;
   color: var(--content);
 }
@@ -1159,7 +1091,7 @@ a {
 }
 .resume-project__meta span{
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1202,7 +1134,7 @@ a {
   margin: 10px 0 0;
   max-width: 17ch;
   font-family: var(--font-display);
-  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  font-size: var(--display-md);
   font-weight: 700;
   line-height: 0.98;
   letter-spacing: -0.045em;
@@ -1243,7 +1175,7 @@ a {
 }
 
 .resume-project__title {
-  font-size: clamp(1.45rem, 2.5vw, 1.9rem);
+  font-size: var(--display-sm);
 }
 
 .resume-project__summary,
@@ -1256,11 +1188,11 @@ a {
 .resume-project__summary {
   margin-top: 8px;
   color: var(--primary);
-  font-size: 0.98rem;
+  font-size: var(--text-base);
 }
 
 .resume-project__impact {
-  font-size: 0.94rem;
+  font-size: var(--text-md);
 }
 
 .resume-project__meta {
@@ -1284,10 +1216,10 @@ a {
   display: inline-flex;
   align-items: center;
   padding: 6px 9px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--tertiary);
   color: var(--secondary);
-  font-size: 0.67rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1301,7 +1233,7 @@ a {
 
 .resume-project__links a{
   color: var(--primary);
-  font-size: 0.76rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1353,11 +1285,11 @@ a {
   .nav {
     margin-top: 10px;
     padding: 9px 12px;
-    border-radius: 24px;
+    border-radius: var(--radius-xl);
   }
 
   .logo a {
-    font-size: 0.98rem;
+    font-size: var(--text-base);
   }
 
   #menu {
@@ -1367,19 +1299,19 @@ a {
   #menu a span {
     min-height: 38px;
     padding: 0 12px;
-    font-size: 0.68rem;
+    font-size: var(--text-2xs);
   }
   .home-section,
   .page-header,
   .post-shell,
   .post-footer,
   .post-hero{
-    border-radius: 26px;
+    border-radius: var(--radius-xl);
   }
 
   .resume-hero,
   .resume-panel {
-    border-radius: 24px;
+    border-radius: var(--radius-xl);
   }
   .home-section,
   .page-header,
@@ -1419,19 +1351,19 @@ a {
   }
 
   .post-title {
-    font-size: clamp(2.6rem, 15vw, 4rem);
+    font-size: var(--display-xl);
   }
 
   .post-content {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .post-content h2 {
-    font-size: 1.8rem;
+    font-size: var(--text-3xl);
   }
 
   .post-content h3 {
-    font-size: 1.4rem;
+    font-size: var(--text-2xl);
   }}
 
 @media (max-width: 540px) {
@@ -1445,7 +1377,7 @@ a {
     gap: 8px;
     margin-top: 8px;
     padding: 8px 10px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
   }
 
   .logo {
@@ -1459,7 +1391,7 @@ a {
     width: 38px;
     height: 38px;
     overflow: hidden;
-    border-radius: 999px;
+    border-radius: var(--radius-pill);
     background: var(--primary);
     color: transparent;
     box-shadow: 0 8px 20px rgba(20, 28, 39, 0.14);
@@ -1470,7 +1402,7 @@ a {
     content: "SM";
     color: var(--surface-strong);
     font-family: var(--font-body);
-    font-size: 0.66rem;
+    font-size: var(--text-2xs);
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -1496,7 +1428,7 @@ a {
   #menu a span {
     min-height: 32px;
     padding: 0 11px;
-    font-size: 0.58rem;
+    font-size: var(--text-3xs);
     letter-spacing: 0.14em;
     white-space: nowrap;
   }
@@ -1537,22 +1469,22 @@ a {
 
   .page-header h1 {
     gap: 8px;
-    font-size: clamp(2rem, 13vw, 2.8rem);
+    font-size: var(--display-lg);
   }
 
   .page-header__intro,
   .post-description{
-    font-size: 0.95rem;
+    font-size: var(--text-md);
     line-height: 1.62;
   }
 
   .resume-hero__title {
     max-width: none;
-    font-size: clamp(2.5rem, 14vw, 3.5rem);
+    font-size: var(--display-2xl);
   }
 
   .resume-hero__lede {
-    font-size: 0.95rem;
+    font-size: var(--text-md);
     line-height: 1.64;
   }
 
@@ -1576,17 +1508,17 @@ a {
   }
 
   .resume-project__title {
-    font-size: 1.35rem;
+    font-size: var(--text-2xl);
   }
 
   .resume-project__summary,
   .resume-project__impact{
-    font-size: 0.92rem;
+    font-size: var(--text-md);
     line-height: 1.56;
   }
 
   .resume-project__links a{
-    font-size: 0.68rem;
+    font-size: var(--text-2xs);
   }
 
   .button {
@@ -1600,7 +1532,7 @@ a {
 
   .post-hero {
     padding: 22px 18px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
   }
 
   .post-hero__rail {
@@ -1610,13 +1542,13 @@ a {
   .post-hero__back {
     width: 34px;
     height: 34px;
-    border-radius: 10px;
+    border-radius: var(--radius-sm);
   }
 
   .post-hero__icon {
     width: 40px;
     height: 40px;
-    border-radius: 12px;
+    border-radius: var(--radius-sm);
   }
 
   .post-hero__icon svg {
@@ -1630,11 +1562,11 @@ a {
   }
 
   .post-title {
-    font-size: clamp(2.15rem, 11vw, 3rem);
+    font-size: var(--display-xl);
   }
 
   .post-hero__summary {
-    font-size: 0.92rem;
+    font-size: var(--text-md);
     line-height: 1.56;
   }
 
@@ -1642,7 +1574,7 @@ a {
     max-width: none;
     margin-top: 14px;
     padding-top: 14px;
-    font-size: 1.02rem;
+    font-size: var(--text-base);
   }
 
   .post-shell {
@@ -1650,21 +1582,21 @@ a {
   }
 
   .post-content {
-    font-size: 1.02rem;
+    font-size: var(--text-base);
     line-height: 1.66;
   }
 
   .post-content h2 {
-    font-size: 1.72rem;
+    font-size: var(--text-3xl);
   }
 
   .post-content h3 {
-    font-size: 1.4rem;
+    font-size: var(--text-2xl);
   }
 
   #searchInput {
     padding: 13px 16px;
-    font-size: 0.95rem;
+    font-size: var(--text-md);
   }}
 
 @media (max-width: 390px) {
@@ -1679,7 +1611,7 @@ a {
   }
 
   .logo a::before {
-    font-size: 0.6rem;
+    font-size: var(--text-3xs);
     letter-spacing: 0.06em;
   }
 
@@ -1690,7 +1622,7 @@ a {
   #menu a span {
     min-height: 32px;
     padding: 0 9px;
-    font-size: 0.54rem;
+    font-size: var(--text-3xs);
     letter-spacing: 0.12em;
   }}
 
@@ -1745,7 +1677,7 @@ body::after {
   max-width: 100%;
   margin: 12px auto 0;
   padding: 10px 18px;
-  border-radius: 16px;
+  border-radius: var(--radius);
   border-top: 0;
   background: var(--nav-background);
   box-shadow: var(--shadow-soft);
@@ -1766,7 +1698,7 @@ body:not(.list) .nav {
 }
 
 .logo a {
-  font-size: 1.12rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   letter-spacing: -0.035em;
   text-decoration: none;
@@ -1791,7 +1723,7 @@ body:not(.list) .nav {
   border-radius: 0;
   border-bottom: 2px solid transparent;
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.18em;
   box-shadow: none;
@@ -1805,7 +1737,7 @@ body:not(.list) .nav {
 }
 
 .button {
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--primary);
   border-color: transparent;
   box-shadow: none;
@@ -1826,7 +1758,7 @@ body:not(.list) .nav {
 .post-shell,
 .post-footer,
 .resume-panel {
-  border-radius: 18px;
+  border-radius: var(--radius);
   border: 1px solid var(--border);
   background: var(--panel-background);
   box-shadow: none;
@@ -1849,7 +1781,7 @@ body:not(.list) .nav {
 }
 
 .page-header h1 {
-  font-size: clamp(3rem, 7vw, 4.8rem);
+  font-size: var(--display-lg);
 }
 
 .resume-home {
@@ -1863,7 +1795,7 @@ body:not(.list) .nav {
 .resume-hero {
   grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
   padding: 30px 32px;
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   border: 0;
   background: var(--hero-gradient);
   box-shadow: var(--hero-shadow);
@@ -1897,7 +1829,7 @@ body:not(.list) .nav {
   width: min(100%, 420px);
   padding: 14px 16px 12px;
   border: 1px solid var(--heatmap-panel-border);
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   background: var(--heatmap-panel-background);
   box-shadow: var(--heatmap-shadow);
   opacity: 0.9;
@@ -1911,7 +1843,7 @@ body:not(.list) .nav {
   grid-template-columns: repeat(var(--heatmap-columns), minmax(0, 1fr));
   column-gap: 5px;
   color: var(--hero-text-subtle);
-  font-size: 0.62rem;
+  font-size: var(--text-3xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1969,7 +1901,7 @@ body:not(.list) .nav {
   justify-content: space-between;
   gap: 12px;
   color: var(--hero-text-subtle);
-  font-size: 0.62rem;
+  font-size: var(--text-3xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -1984,7 +1916,7 @@ body:not(.list) .nav {
   margin: 0;
   color: var(--hero-text-strong);
   max-width: none;
-  font-size: clamp(3.3rem, 7vw, 5.4rem);
+  font-size: var(--display-2xl);
   letter-spacing: -0.045em;
 }
 
@@ -2020,12 +1952,6 @@ body:not(.list) .nav {
   grid-template-columns: 1fr;
   gap: 22px;
   align-items: start;
-}
-
-.resume-home__chat,
-.resume-home__chat-entry {
-  display: grid;
-  gap: 0;
 }
 
 .resume-home__projects {
@@ -2085,7 +2011,7 @@ body:not(.list) .nav {
 .resume-runtime__status {
   margin: 0;
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -2101,758 +2027,6 @@ body:not(.list) .nav {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
-}
-
-body.has-llm-chat-open {
-  overflow: hidden;
-}
-
-.resume-runtime__chat-entry {
-  display: grid;
-  gap: 0;
-  margin-bottom: 18px;
-}
-
-.resume-runtime__chat-entry--article {
-  width: fit-content;
-  max-width: 100%;
-  margin-bottom: 0;
-}
-
-.resume-runtime__chat-trigger {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  min-height: 50px;
-  padding: 0 16px;
-  border: 1px solid var(--chat-launcher-border);
-  border-radius: 18px;
-  background: var(--chat-launcher-background);
-  color: var(--chat-launcher-text);
-  text-align: left;
-  box-shadow: var(--chat-launcher-shadow);
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    background 180ms ease;
-}
-
-.resume-runtime__chat-trigger:hover {
-  border-color: var(--chat-launcher-border-hover);
-  background: var(--chat-launcher-background-hover);
-  box-shadow: var(--chat-launcher-shadow-hover);
-  transform: translateY(-1px);
-}
-
-.resume-runtime__chat-trigger--article {
-  width: auto;
-  max-width: 100%;
-  padding: 0 18px;
-  border-color: var(--hero-surface-border);
-  background: color-mix(in srgb, var(--hero-surface) 92%, transparent);
-  color: var(--hero-text-strong);
-  box-shadow:
-    inset 0 1px 0 var(--hero-surface-border),
-    0 18px 44px rgba(7, 16, 32, 0.18);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.resume-runtime__chat-trigger--article:hover {
-  border-color: var(--hero-surface-border-strong);
-  background: color-mix(in srgb, var(--hero-surface) 98%, transparent);
-  box-shadow:
-    inset 0 1px 0 var(--hero-surface-border),
-    0 22px 48px rgba(7, 16, 32, 0.24);
-}
-
-.resume-runtime__chat-trigger:focus-visible,
-.resume-runtime__chat-close:focus-visible,
-.resume-runtime__chat-retry:focus-visible,
-.resume-runtime__chat-stop:focus-visible,
-.resume-runtime__chat-send:focus-visible {
-  outline: 2px solid var(--chat-focus-outline);
-  outline-offset: 3px;
-}
-
-.resume-runtime__chat-trigger-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  flex: 0 0 20px;
-  border-radius: 999px;
-  background: var(--chat-launcher-icon-background);
-  color: var(--chat-launcher-icon-color);
-  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--chat-avatar-color) 16%, transparent);
-}
-
-.resume-runtime__chat-trigger-placeholder {
-  min-width: 0;
-  color: var(--chat-launcher-placeholder);
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
-}
-
-.resume-runtime__chat-trigger--article .resume-runtime__chat-trigger-placeholder {
-  color: var(--hero-text-strong);
-}
-
-.resume-runtime__chat-trigger--article .resume-runtime__chat-trigger-icon {
-  background: color-mix(in srgb, var(--accent) 24%, var(--hero-surface));
-  color: var(--hero-text-strong);
-  box-shadow: inset 0 1px 0 var(--hero-surface-border);
-}
-
-.resume-runtime__chat-trigger-hint {
-  display: inline-flex;
-  align-items: center;
-  min-height: 30px;
-  padding: 6px 10px;
-  border: 1px solid color-mix(in srgb, var(--line-subtle) 96%, transparent);
-  border-radius: 999px;
-  background: var(--chip-background);
-  color: var(--secondary);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.resume-runtime__chat-note {
-  margin: 0;
-  color: var(--secondary);
-  font-size: 0.76rem;
-  line-height: 1.55;
-}
-
-.resume-runtime__chat-overlay[hidden] {
-  display: none;
-}
-
-.resume-runtime__chat-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 900;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-}
-
-.resume-runtime__chat-backdrop {
-  position: absolute;
-  inset: 0;
-  border: 0;
-  background: var(--chat-backdrop);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.resume-runtime__chat-shell {
-  position: relative;
-  z-index: 1;
-  isolation: isolate;
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto auto;
-  gap: 0;
-  width: min(100%, 980px);
-  max-height: min(88vh, 860px);
-  border: 1px solid var(--chat-shell-border);
-  border-radius: 30px;
-  background: var(--chat-shell-background);
-  box-shadow: var(--chat-shell-shadow);
-  overflow: hidden;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-.resume-runtime__chat-shell::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: var(--chat-shell-overlay);
-}
-
-.resume-runtime__chat-shell > * {
-  position: relative;
-  z-index: 1;
-}
-
-.resume-runtime__chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 64px;
-  padding: 18px 22px 14px;
-  border-bottom: 1px solid var(--chat-section-border);
-  background: var(--chat-header-background);
-}
-
-.resume-runtime__chat-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.resume-runtime__chat-model {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 38px;
-  padding: 0 14px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 14px;
-  background: var(--chat-control-background);
-  color: var(--chat-text);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-  box-shadow: var(--chat-control-shadow);
-}
-
-.resume-runtime__chat-model::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  opacity: 0.48;
-  transform: rotate(45deg) translateY(-1px);
-}
-
-.resume-runtime__chat-meta {
-  color: var(--chat-text-muted);
-  font-size: 0.78rem;
-  line-height: 1.45;
-  white-space: nowrap;
-}
-
-.resume-runtime__chat-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 999px;
-  background: var(--chat-control-background);
-  color: var(--chat-text-muted);
-  box-shadow: var(--chat-control-shadow);
-}
-
-.resume-runtime__chat-close:hover {
-  color: var(--chat-text);
-  border-color: var(--chat-control-border-strong);
-  background: var(--chat-control-background-muted);
-}
-
-.resume-runtime__chat-thinking {
-  display: grid;
-  gap: 8px;
-  margin-left: 46px;
-  width: min(100%, 640px);
-}
-
-.resume-runtime__chat-thinking-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  width: 100%;
-  min-height: 44px;
-  padding: 0 14px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 14px;
-  background: var(--chat-control-background);
-  color: var(--chat-text);
-  box-shadow: var(--chat-control-shadow);
-  text-align: left;
-}
-
-.resume-runtime__chat-thinking-panel {
-  padding: 14px 16px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 14px;
-  background: var(--chat-control-background-muted);
-}
-
-.resume-runtime__chat-thinking-head {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 0;
-  color: var(--chat-text-muted);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-}
-
-.resume-runtime__chat-thinking-pulse {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent-cool) 88%, var(--primary)), color-mix(in srgb, var(--accent-cool) 52%, white));
-  box-shadow: 0 0 0 0 color-mix(in srgb, var(--accent-cool) 24%, transparent);
-}
-
-.resume-runtime__chat-thinking[data-state="live"] .resume-runtime__chat-thinking-pulse {
-  animation: chat-thinking-pulse 1.4s ease-out infinite;
-}
-
-.resume-runtime__chat-thinking[data-state="done"] .resume-runtime__chat-thinking-pulse {
-  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 86%, var(--primary)), color-mix(in srgb, var(--accent-cool) 34%, var(--accent)));
-}
-
-.resume-runtime__chat-thinking-label {
-  white-space: nowrap;
-}
-
-.resume-runtime__chat-thinking-chevron {
-  width: 10px;
-  height: 10px;
-  flex: 0 0 10px;
-  border-right: 1.5px solid currentColor;
-  border-bottom: 1.5px solid currentColor;
-  color: var(--chat-text-subtle);
-  transform: rotate(45deg);
-  transition: transform 160ms ease;
-}
-
-.resume-runtime__chat-thinking-toggle[aria-expanded="true"] .resume-runtime__chat-thinking-chevron {
-  transform: rotate(225deg) translate(-1px, -1px);
-}
-
-.resume-runtime__chat-thinking-copy {
-  margin: 0;
-  color: var(--chat-text-muted);
-  font-size: 0.95rem;
-  line-height: 1.62;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-}
-
-.resume-runtime__chat-stream {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  min-height: 360px;
-  padding: 24px 28px 18px;
-  background: var(--chat-stream-background);
-  overflow: auto;
-  overscroll-behavior: contain;
-}
-
-.resume-runtime__chat-message {
-  display: grid;
-  gap: 10px;
-  width: min(100%, 760px);
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-}
-
-.resume-runtime__chat-message--assistant,
-.resume-runtime__chat-message--system {
-  margin-right: auto;
-  padding-right: min(10%, 40px);
-}
-
-.resume-runtime__chat-message--user {
-  margin-left: auto;
-  width: auto;
-  max-width: min(100%, 640px);
-  padding: 14px 18px;
-  border: 1px solid var(--chat-user-message-border);
-  border-radius: 22px;
-  background: var(--chat-user-message-background);
-  box-shadow: var(--chat-user-message-shadow);
-}
-
-.resume-runtime__chat-message--system {
-  width: 100%;
-}
-
-.resume-runtime__chat-message--welcome {
-  max-width: min(100%, 680px);
-}
-
-.resume-runtime__chat-message--pending {
-  opacity: 0.74;
-}
-
-.resume-runtime__chat-message--error {
-  color: var(--accent-strong);
-}
-
-.resume-runtime__chat-message-role {
-  margin: 0;
-  color: var(--chat-text);
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.resume-runtime__chat-message--user .resume-runtime__chat-message-role {
-  display: none;
-}
-
-.resume-runtime__chat-message-head {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.resume-runtime__chat-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 34px;
-  border-radius: 999px;
-  background: var(--chat-avatar-background);
-  color: var(--chat-avatar-color);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.resume-runtime__chat-message--system .resume-runtime__chat-avatar {
-  background: var(--chat-avatar-system-background);
-}
-
-.resume-runtime__chat-meta-stack {
-  display: grid;
-  gap: 2px;
-}
-
-.resume-runtime__chat-message-stamp {
-  margin: 0;
-  color: var(--chat-text-subtle);
-  font-size: 0.8rem;
-  line-height: 1.4;
-}
-
-.resume-runtime__chat-message-copy {
-  margin: 0;
-  color: var(--chat-text);
-  font-size: 1rem;
-  line-height: 1.7;
-  overflow-wrap: anywhere;
-}
-
-.resume-runtime__chat-message-copy > :first-child {
-  margin-top: 0;
-}
-
-.resume-runtime__chat-message-copy > :last-child {
-  margin-bottom: 0;
-}
-
-.resume-runtime__chat-message-copy p,
-.resume-runtime__chat-message-copy ul,
-.resume-runtime__chat-message-copy ol,
-.resume-runtime__chat-message-copy pre,
-.resume-runtime__chat-message-copy blockquote,
-.resume-runtime__chat-message-copy h1,
-.resume-runtime__chat-message-copy h2,
-.resume-runtime__chat-message-copy h3,
-.resume-runtime__chat-message-copy h4 {
-  margin: 0 0 0.95em;
-}
-
-.resume-runtime__chat-message-copy h1,
-.resume-runtime__chat-message-copy h2,
-.resume-runtime__chat-message-copy h3,
-.resume-runtime__chat-message-copy h4 {
-  color: var(--chat-text);
-  line-height: 1.28;
-  letter-spacing: -0.02em;
-}
-
-.resume-runtime__chat-message-copy h1 {
-  font-size: 1.4rem;
-}
-
-.resume-runtime__chat-message-copy h2 {
-  font-size: 1.28rem;
-}
-
-.resume-runtime__chat-message-copy h3 {
-  font-size: 1.14rem;
-}
-
-.resume-runtime__chat-message-copy h4 {
-  font-size: 1.04rem;
-}
-
-.resume-runtime__chat-message-copy ul,
-.resume-runtime__chat-message-copy ol {
-  padding-left: 1.3em;
-}
-
-.resume-runtime__chat-message-copy li + li {
-  margin-top: 0.42em;
-}
-
-.resume-runtime__chat-message-copy code {
-  padding: 0.12em 0.4em;
-  border-radius: 8px;
-  background: var(--chat-code-background);
-  color: var(--chat-text);
-  font-family: var(--font-mono);
-  font-size: 0.9em;
-}
-
-.resume-runtime__chat-message-copy pre {
-  overflow: auto;
-  padding: 14px 16px;
-  border: 1px solid var(--chat-code-block-border);
-  border-radius: 16px;
-  background: var(--chat-code-block-background);
-}
-
-.resume-runtime__chat-message-copy pre code {
-  padding: 0;
-  background: transparent;
-  font-size: 0.92rem;
-  line-height: 1.65;
-}
-
-.resume-runtime__chat-message-copy a {
-  color: var(--chat-link);
-  text-decoration: underline;
-  text-decoration-thickness: 0.08em;
-  text-underline-offset: 0.14em;
-}
-
-.resume-runtime__chat-message-copy blockquote {
-  padding-left: 14px;
-  border-left: 3px solid var(--chat-blockquote-border);
-  color: var(--chat-text-muted);
-}
-
-.resume-runtime__chat-message--assistant .resume-runtime__chat-message-copy,
-.resume-runtime__chat-message--system .resume-runtime__chat-message-copy,
-.resume-runtime__chat-message--assistant .resume-runtime__chat-message-tools,
-.resume-runtime__chat-message--system .resume-runtime__chat-message-tools {
-  margin-left: 46px;
-}
-
-.resume-runtime__chat-message--user .resume-runtime__chat-message-copy {
-  color: var(--chat-text);
-  white-space: pre-wrap;
-}
-
-.resume-runtime__chat-message-tools {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 2px;
-}
-
-.resume-runtime__chat-tool {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 32px;
-  padding: 0 12px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 999px;
-  background: var(--chat-control-background);
-  color: var(--chat-text-muted);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  box-shadow: var(--chat-control-shadow);
-}
-
-.resume-runtime__chat-tool:hover {
-  color: var(--chat-text);
-  border-color: var(--chat-control-border-strong);
-  background: var(--chat-control-background-muted);
-}
-
-.resume-runtime__chat-feedback-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  min-height: 20px;
-  padding: 4px 24px 0;
-  background: var(--chat-header-background);
-}
-
-.resume-runtime__chat-feedback {
-  margin: 0;
-  color: var(--chat-text-subtle);
-  font-size: 0.8rem;
-  line-height: 1.45;
-}
-
-.resume-runtime__chat-feedback[data-tone="error"] {
-  color: var(--accent-strong);
-}
-
-.resume-runtime__chat-feedback[data-tone="muted"] {
-  color: var(--chat-text-muted);
-}
-
-.resume-runtime__chat-retry {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 8px 12px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 999px;
-  background: var(--chat-control-background);
-  color: var(--chat-text);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  box-shadow: var(--chat-control-shadow);
-}
-
-.resume-runtime__chat-form {
-  display: grid;
-  gap: 10px;
-  padding: 12px 16px 14px;
-  border-top: 1px solid var(--chat-section-border);
-  background: var(--chat-header-background);
-}
-
-.resume-runtime__chat-compose {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: 10px;
-  padding: 8px 10px 8px 14px;
-  border: 1px solid var(--chat-control-border);
-  border-radius: 24px;
-  background: var(--chat-control-background);
-  box-shadow: inset 0 1px 2px color-mix(in srgb, var(--chat-text) 10%, transparent);
-}
-
-.resume-runtime__chat-input {
-  width: 100%;
-  min-height: 24px;
-  max-height: 168px;
-  padding: 7px 4px;
-  border: 0;
-  border-radius: 0;
-  background: transparent;
-  color: var(--chat-text);
-  font: inherit;
-  line-height: 1.5;
-  resize: none;
-  overflow-y: hidden;
-  box-shadow: none;
-}
-
-.resume-runtime__chat-input::placeholder {
-  color: var(--chat-text-subtle);
-}
-
-.resume-runtime__chat-input:focus-visible {
-  outline: 0;
-}
-
-.resume-runtime__chat-input:disabled {
-  opacity: 0.72;
-}
-
-.resume-runtime__chat-compose:focus-within {
-  border-color: var(--chat-control-border-strong);
-  box-shadow:
-    inset 0 1px 2px color-mix(in srgb, var(--chat-text) 10%, transparent),
-    var(--chat-focus-glow);
-}
-
-.resume-runtime__chat-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  min-height: 0;
-}
-
-.resume-runtime__chat-turnstile {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 6px;
-  min-height: 24px;
-  max-width: 320px;
-  padding: 0;
-}
-
-.resume-runtime__chat-turnstile-status {
-  margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.35;
-  color: var(--chat-text-muted);
-}
-
-.resume-runtime__chat-turnstile-status[data-tone="error"] {
-  color: var(--chat-feedback-error);
-}
-
-.resume-runtime__chat-buttons {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
-.resume-runtime__chat-stop,
-.resume-runtime__chat-send {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 84px;
-  min-height: 38px;
-  padding: 8px 14px;
-  border-radius: 999px;
-  font-size: 0.74rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.resume-runtime__chat-stop {
-  border: 1px solid var(--chat-control-border);
-  background: var(--chat-control-background);
-  color: var(--chat-text-muted);
-  box-shadow: var(--chat-control-shadow);
-}
-
-.resume-runtime__chat-send {
-  border: 1px solid var(--chat-send-border);
-  background: var(--chat-send-background);
-  color: var(--chat-send-color);
-  box-shadow: var(--chat-send-shadow);
-}
-
-.resume-runtime__chat-send:disabled {
-  cursor: not-allowed;
-  opacity: 0.54;
-  box-shadow: none;
 }
 
 .resume-runtime[data-runtime-state="error"] .resume-runtime__status {
@@ -2876,23 +2050,6 @@ body.has-llm-chat-open {
 
   100% {
     transform: translateX(100%);
-  }
-}
-
-@keyframes chat-thinking-pulse {
-  0% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(95, 166, 177, 0.24);
-  }
-
-  70% {
-    transform: scale(1);
-    box-shadow: 0 0 0 10px rgba(95, 166, 177, 0);
-  }
-
-  100% {
-    transform: scale(0.95);
-    box-shadow: 0 0 0 0 rgba(95, 166, 177, 0);
   }
 }
 
@@ -2944,7 +2101,7 @@ body.has-llm-chat-open {
   left: 4px;
   width: 9px;
   height: 9px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: linear-gradient(135deg, var(--accent), #f1d28f);
   box-shadow: 0 0 0 4px rgba(244, 157, 98, 0.12);
 }
@@ -2962,7 +2119,7 @@ body.has-llm-chat-open {
   align-items: center;
   min-width: 0;
   color: var(--commit-meta);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -2973,7 +2130,7 @@ body.has-llm-chat-open {
   align-items: center;
   min-height: 24px;
   padding: 4px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--commit-chip-background);
   color: var(--commit-chip-text);
 }
@@ -2983,11 +2140,11 @@ body.has-llm-chat-open {
   align-items: center;
   min-height: 24px;
   padding: 4px 8px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--commit-hash-background);
   color: var(--commit-hash-text);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-weight: 500;
 }
 
@@ -3001,7 +2158,7 @@ body.has-llm-chat-open {
 
 .resume-commit__message {
   color: var(--hero-text-strong);
-  font-size: 1rem;
+  font-size: var(--text-base);
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.36;
@@ -3010,7 +2167,7 @@ body.has-llm-chat-open {
 .resume-commit__when {
   padding-top: 4px;
   color: var(--commit-meta);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -3032,7 +2189,7 @@ body.has-llm-chat-open {
   gap: 16px;
   padding: 20px 20px 18px 24px;
   border: 1px solid var(--line-strong);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: var(--card-background);
 }
 
@@ -3043,7 +2200,7 @@ body.has-llm-chat-open {
   top: 14px;
   bottom: 14px;
   width: 4px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: linear-gradient(180deg, var(--accent), var(--accent-cool));
 }
 
@@ -3091,7 +2248,7 @@ body.has-llm-chat-open {
 .resume-panel__header h2 {
   max-width: 22ch;
   font-family: var(--font-body);
-  font-size: clamp(1.45rem, 2.2vw, 1.95rem);
+  font-size: var(--display-md);
   font-weight: 600;
   line-height: 1.12;
 }
@@ -3099,14 +2256,14 @@ body.has-llm-chat-open {
 .resume-project__title {
   margin: 0;
   flex: 1 1 220px;
-  font-size: clamp(1.7rem, 2.35vw, 2.1rem);
+  font-size: var(--display-sm);
   line-height: 1.04;
 }
 
 .resume-project__summary {
   margin: 0;
   max-width: 54rem;
-  font-size: 1rem;
+  font-size: var(--text-base);
   line-height: 1.56;
 }
 
@@ -3118,32 +2275,23 @@ body.has-llm-chat-open {
   border-top: 1px solid var(--border);
 }
 
+/* Research entries read as rows in a list, not as cards. The project card is
+   already a card and the panel around it is another; a third nested card per
+   entry made the section all borders and no content. */
 .resume-project__post-link {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  align-items: center;
+  align-items: baseline;
   gap: 14px;
-  padding: 12px 14px;
-  border: 1px solid color-mix(in srgb, var(--accent-cool) 14%, var(--border));
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--surface-strong) 72%, transparent);
+  padding: 9px 0;
+  border-top: 1px solid var(--line-subtle);
   color: var(--primary);
   text-decoration: none;
-  box-shadow: 0 10px 22px rgba(12, 20, 31, 0.04);
-  transition:
-    transform 0.18s ease,
-    border-color 0.18s ease,
-    background 0.18s ease,
-    box-shadow 0.18s ease,
-    color 0.18s ease;
+  transition: color 0.18s ease;
 }
 
-.resume-project__post-link:hover {
-  color: var(--primary);
-  border-color: color-mix(in srgb, var(--accent) 22%, var(--accent-cool) 18%);
-  background: color-mix(in srgb, var(--surface-strong) 88%, transparent);
-  box-shadow: 0 14px 28px rgba(12, 20, 31, 0.08);
-  transform: translateY(-1px);
+.resume-project__post-link:first-child {
+  border-top: 0;
 }
 
 .resume-project__post-copy {
@@ -3152,16 +2300,8 @@ body.has-llm-chat-open {
   min-width: 0;
 }
 
-.resume-project__post-kicker {
-  color: var(--secondary);
-  font-size: 0.62rem;
-  font-weight: 800;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
 .resume-project__post-title {
-  font-size: 0.96rem;
+  font-size: var(--text-md);
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 1.3;
@@ -3169,11 +2309,10 @@ body.has-llm-chat-open {
 
 .resume-project__post-date {
   color: var(--secondary);
-  font-size: 0.78rem;
+  font-size: var(--text-xs);
   white-space: nowrap;
 }
 
-.resume-project__post-link:hover .resume-project__post-kicker,
 .resume-project__post-link:hover .resume-project__post-title,
 .resume-project__post-link:hover .resume-project__post-date {
   color: var(--accent-strong);
@@ -3182,7 +2321,7 @@ body.has-llm-chat-open {
 .resume-project__stamp,
 .resume-project__section {
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3211,10 +2350,10 @@ body.has-llm-chat-open {
   align-items: center;
   min-height: 26px;
   padding: 5px 10px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--chip-background);
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -3254,7 +2393,7 @@ body.has-llm-chat-open {
 
 .resume-project__article-date {
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3344,8 +2483,8 @@ body.has-llm-chat-open {
   margin: 0;
   color: var(--primary);
   font-family: var(--font-body);
-  font-size: 1.08rem;
-  font-weight: 650;
+  font-size: var(--text-lg);
+  font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.25;
 }
@@ -3362,11 +2501,11 @@ body.has-llm-chat-open {
   align-items: center;
   min-height: 28px;
   padding: 6px 11px;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: var(--chip-background);
   color: var(--secondary);
   font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: var(--text-xs);
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1;
@@ -3375,7 +2514,7 @@ body.has-llm-chat-open {
 
 .article-index__date {
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 800;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -3393,7 +2532,7 @@ body.has-llm-chat-open {
 
 .post-strip {
   border: 1px solid var(--border);
-  border-radius: 18px;
+  border-radius: var(--radius);
   background: var(--panel-background);
   box-shadow: none;
   overflow: hidden;
@@ -3418,7 +2557,7 @@ body.has-llm-chat-open {
 .post-strip__read,
 .post-strip__tags span {
   color: var(--secondary);
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -3434,7 +2573,7 @@ body.has-llm-chat-open {
 .post-strip__body h2 {
   margin: 0 0 8px;
   font-family: var(--font-body);
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-size: var(--display-sm);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
@@ -3444,7 +2583,7 @@ body.has-llm-chat-open {
 .post-strip__body p {
   max-width: 52rem;
   margin: 0;
-  font-size: 0.98rem;
+  font-size: var(--text-base);
   line-height: 1.66;
   color: var(--content);
 }
@@ -3454,7 +2593,7 @@ body.has-llm-chat-open {
   place-items: center;
   width: 52px;
   height: 52px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: linear-gradient(135deg, var(--accent), var(--accent-cool));
   color: var(--hero-text-strong);
 }
@@ -3482,7 +2621,7 @@ body.has-llm-chat-open {
 
 .post-hero {
   border: 0;
-  border-radius: 24px;
+  border-radius: var(--radius-xl);
   padding: 30px 32px;
   background: var(--hero-gradient);
   box-shadow: var(--hero-shadow);
@@ -3510,7 +2649,7 @@ body.has-llm-chat-open {
 .post-hero__back {
   width: 40px;
   height: 40px;
-  border-radius: 12px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--hero-surface-border);
   background: var(--hero-surface);
   color: var(--hero-text);
@@ -3527,7 +2666,7 @@ body.has-llm-chat-open {
 .post-hero__icon {
   width: 46px;
   height: 46px;
-  border-radius: 14px;
+  border-radius: var(--radius);
   background: var(--post-gradient);
   border: 1px solid var(--hero-surface-border-strong);
   box-shadow: inset 0 1px 0 var(--hero-surface-border);
@@ -3539,16 +2678,21 @@ body.has-llm-chat-open {
   height: 22px;
 }
 
+/* Share the article's reading column so the hero title and the prose below it
+   sit on the same left and right edges. Display type gets a little more room
+   than body copy, so the column is widened rather than matched exactly. */
 .post-hero__body {
+  display: grid;
   gap: 14px;
   margin-top: 22px;
-  max-width: 40rem;
+  width: min(100%, calc(var(--measure) + 4rem));
+  margin-inline: auto;
 }
 
 .post-title {
   color: var(--hero-text-strong);
   font-family: var(--font-body);
-  font-size: clamp(2.7rem, 6vw, 4.4rem);
+  font-size: var(--display-xl);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 0.94;
@@ -3558,13 +2702,8 @@ body.has-llm-chat-open {
   color: var(--hero-text);
   font-family: var(--font-body);
   max-width: 34rem;
-  font-size: 1rem;
+  font-size: var(--text-base);
   line-height: 1.66;
-}
-
-.post-hero__chat {
-  margin-top: 6px;
-  max-width: min(100%, 32rem);
 }
 
 .post-hero__meta,
@@ -3590,7 +2729,7 @@ body.has-llm-chat-open {
   font-family: var(--font-body);
   font-weight: 700;
   letter-spacing: -0.03em;
-  font-size: clamp(1.1rem, 2.3vw, 1.45rem);
+  font-size: var(--display-sm);
   line-height: 1.18;
 }
 
@@ -3605,7 +2744,7 @@ body.has-llm-chat-open {
 
 .post-content {
   font-family: var(--font-reading);
-  font-size: 1.08rem;
+  font-size: var(--text-lg);
   line-height: 1.7;
   letter-spacing: 0;
   font-feature-settings: "liga" 1, "kern" 1;
@@ -3630,28 +2769,28 @@ body.has-llm-chat-open {
 .post-content h1 {
   margin-top: 1.25em;
   margin-bottom: 0.42em;
-  font-size: 2.4rem;
+  font-size: var(--text-5xl);
   line-height: 0.98;
 }
 
 .post-content h2 {
   margin-top: 1.38em;
   margin-bottom: 0.42em;
-  font-size: 2.05rem;
+  font-size: var(--text-4xl);
   line-height: 1.02;
 }
 
 .post-content h3 {
   margin-top: 1.18em;
   margin-bottom: 0.38em;
-  font-size: 1.56rem;
+  font-size: var(--text-3xl);
   line-height: 1.08;
 }
 
 .post-content h4 {
   margin-top: 1.05em;
   margin-bottom: 0.34em;
-  font-size: 1.22rem;
+  font-size: var(--text-xl);
   line-height: 1.14;
 }
 
@@ -3683,7 +2822,7 @@ body.has-llm-chat-open {
   font-family: var(--font-body);
   font-style: normal;
   font-weight: 600;
-  font-size: clamp(1.02rem, 0.95rem + 0.45vw, 1.16rem);
+  font-size: var(--text-lg);
   letter-spacing: -0.026em;
   line-height: 1.55;
   text-wrap: balance;
@@ -3713,7 +2852,7 @@ body.has-llm-chat-open {
 .post-content figure > figcaption,
 .post-content figure > figcaption > p {
   color: var(--secondary);
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   line-height: 1.55;
 }
 
@@ -3727,7 +2866,7 @@ body.has-llm-chat-open {
 
 .post-content code {
   padding: 0.22em 0.45em;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   font-size: 0.86em;
   font-weight: 500;
 }
@@ -3737,7 +2876,7 @@ body.has-llm-chat-open {
 }
 
 .post-content pre code {
-  font-size: 0.92rem;
+  font-size: var(--text-md);
   line-height: 1.72;
 }
 
@@ -3749,7 +2888,7 @@ body.has-llm-chat-open {
 
 .footer {
   padding-top: 20px;
-  font-size: 0.68rem;
+  font-size: var(--text-2xs);
   letter-spacing: 0.16em;
 }
 
@@ -3781,31 +2920,6 @@ body.has-llm-chat-open {
     border-top: 1px solid var(--hero-rule);
   }
 
-  .resume-runtime__chat-shell {
-    width: min(100%, 100%);
-    max-height: min(88vh, 720px);
-  }
-
-  .resume-runtime__chat-message {
-    width: 100%;
-  }
-
-  .resume-runtime__chat-stream {
-    padding: 22px 20px 16px;
-  }
-
-  .resume-runtime__chat-feedback-row {
-    padding: 6px 20px 0;
-  }
-
-  .resume-runtime__chat-form {
-    padding: 16px 20px 20px;
-  }
-
-  .resume-runtime__chat-actions {
-    align-items: stretch;
-  }
-
   .post-strip__link {
     gap: 12px;
   }
@@ -3817,7 +2931,8 @@ body.has-llm-chat-open {
 
   .article-index__link {
     padding: 18px 22px;
-  }}
+  }
+}
 
 @media (max-width: 540px) {
   .nav {
@@ -3825,7 +2940,7 @@ body.has-llm-chat-open {
     gap: 10px;
     margin: 8px auto 0;
     padding: 8px 12px;
-    border-radius: 16px;
+    border-radius: var(--radius);
   }
 
   .logo a {
@@ -3842,15 +2957,15 @@ body.has-llm-chat-open {
 
   #menu a span {
     padding: 8px 8px 6px;
-    font-size: 0.58rem;
+    font-size: var(--text-3xs);
   }
 
   .resume-panel__header h2 {
-    font-size: 1.3rem;
+    font-size: var(--text-xl);
   }
 
   .resume-project__title {
-    font-size: 1.5rem;
+    font-size: var(--text-2xl);
   }
 
   .resume-project__header {
@@ -3905,111 +3020,6 @@ body.has-llm-chat-open {
     justify-self: start;
   }
 
-  .resume-runtime__chat-trigger {
-    min-height: 48px;
-    padding: 0 14px;
-  }
-
-  .post-hero__chat {
-    max-width: none;
-  }
-
-  .resume-runtime__chat-entry--article {
-    width: 100%;
-  }
-
-  .resume-runtime__chat-trigger--article {
-    width: 100%;
-  }
-
-  .resume-runtime__chat-overlay {
-    padding: 0;
-  }
-
-  .resume-runtime__chat-shell {
-    width: 100%;
-    min-height: 100dvh;
-    max-height: 100dvh;
-    padding: 0;
-    border-radius: 0;
-  }
-
-  .resume-runtime__chat-header {
-    min-height: 60px;
-    padding: 14px 16px 12px;
-  }
-
-  .resume-runtime__chat-stream {
-    padding: 18px 16px 12px;
-  }
-
-  .resume-runtime__chat-stream {
-    min-height: 0;
-  }
-
-  .resume-runtime__chat-message {
-    width: 100%;
-  }
-
-  .resume-runtime__chat-message--assistant .resume-runtime__chat-message-copy,
-  .resume-runtime__chat-message--system .resume-runtime__chat-message-copy,
-  .resume-runtime__chat-message--assistant .resume-runtime__chat-message-tools,
-  .resume-runtime__chat-message--system .resume-runtime__chat-message-tools {
-    margin-left: 0;
-  }
-
-  .resume-runtime__chat-thinking {
-    margin-left: 0;
-    max-width: 100%;
-  }
-
-  .resume-runtime__chat-feedback-row {
-    padding: 4px 14px 0;
-  }
-
-  .resume-runtime__chat-form {
-    padding: 10px 14px 12px;
-  }
-
-  .resume-runtime__chat-compose {
-    gap: 8px;
-    padding: 8px 8px 8px 12px;
-  }
-
-  .resume-runtime__chat-input {
-    min-height: 24px;
-    max-height: 156px;
-    padding: 6px 2px;
-  }
-
-  .resume-runtime__chat-feedback-row,
-  .resume-runtime__chat-actions,
-  .resume-runtime__chat-compose {
-    width: 100%;
-  }
-
-  .resume-runtime__chat-feedback-row,
-  .resume-runtime__chat-actions {
-    align-items: stretch;
-    flex-direction: column;
-  }
-
-  .resume-runtime__chat-turnstile {
-    margin-left: 0;
-  }
-
-  .resume-runtime__chat-buttons {
-    gap: 6px;
-    margin-left: auto;
-  }
-
-  .resume-runtime__chat-stop,
-  .resume-runtime__chat-send {
-    min-width: 76px;
-    min-height: 36px;
-    padding: 8px 12px;
-  }
-
   .resume-commit {
     grid-template-columns: 20px minmax(0, 1fr);
   }
@@ -4028,7 +3038,7 @@ body.has-llm-chat-open {
   .post-footer,
   .resume-panel,
   .post-strip {
-    border-radius: 16px;
+    border-radius: var(--radius);
   }
 
   .resume-hero {
@@ -4053,7 +3063,7 @@ body.has-llm-chat-open {
 
   .resume-heatmap__months,
   .resume-heatmap__caption {
-    font-size: 0.58rem;
+    font-size: var(--text-3xs);
   }
 
   .resume-heatmap__cell {
@@ -4064,7 +3074,7 @@ body.has-llm-chat-open {
   .resume-hero__title,
   .post-title,
   .page-header h1 {
-    font-size: clamp(2.5rem, 15vw, 3.4rem);
+    font-size: var(--display-lg);
   }
 
   .post-hero {
@@ -4072,14 +3082,14 @@ body.has-llm-chat-open {
   }
 
   .post-title {
-    font-size: clamp(2rem, 12vw, 2.8rem);
+    font-size: var(--display-xl);
     text-wrap: balance;
   }
 
   .post-hero__pullquote {
     margin-top: 14px;
     padding-top: 14px;
-    font-size: 0.98rem;
+    font-size: var(--text-base);
   }
 
   .resume-panel,
@@ -4101,24 +3111,24 @@ body.has-llm-chat-open {
   }
 
   .post-strip__body h2 {
-    font-size: 1.35rem;
+    font-size: var(--text-2xl);
   }
 
   .article-index__title {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
 
   .post-strip__body p,
   .resume-hero__lede,
   .resume-project__summary,
   .resume-project__impact {
-    font-size: 0.92rem;
+    font-size: var(--text-md);
     line-height: 1.56;
   }
 
   .post-content blockquote {
     padding: 18px 18px 18px 60px;
-    border-radius: 20px;
+    border-radius: var(--radius-lg);
   }
 
   .post-content blockquote::before {
@@ -4126,54 +3136,43 @@ body.has-llm-chat-open {
     left: 16px;
     width: 34px;
     height: 34px;
-    font-size: 1.55rem;
-  }}
+    font-size: var(--text-3xl);
+  }
+}
 
-.demo-embed {
-  margin: 2rem 0;
+/* These styles used to live on .demo-embed, which nothing emitted, while the
+   live shortcode emitted .interactive-embed and got no styling at all. */
+.interactive-embed {
+  margin: 2.4rem 0;
   padding: 14px;
-  border-radius: 18px;
+  border-radius: var(--radius);
   border: 1px solid color-mix(in srgb, var(--border) 78%, transparent);
   background: var(--demo-background);
   box-shadow: 0 22px 50px -38px rgba(15, 23, 42, 0.55);
 }
 
-.demo-embed__chrome {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+.interactive-embed__title {
   margin-bottom: 12px;
-}
-
-.demo-embed__label {
-  font-size: 0.72rem;
+  color: var(--secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--secondary);
 }
 
-.demo-embed__open {
-  font-size: 0.9rem;
-  font-weight: 600;
-}
-
-.demo-embed__frame {
+.interactive-embed__frame {
   display: block;
   width: 100%;
+  height: var(--embed-height, 600px);
   border: 0;
-  border-radius: 14px;
+  border-radius: var(--radius-sm);
   background: var(--demo-frame-background);
   box-shadow: inset 0 0 0 1px var(--demo-frame-inset);
 }
 
 @media (max-width: 700px) {
-  .demo-embed {
+  .interactive-embed {
     padding: 10px;
   }
-
-  .demo-embed__chrome {
-    align-items: flex-start;
-    flex-direction: column;
-  }}
+}

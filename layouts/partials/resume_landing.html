@@ -184,7 +184,6 @@
             {{- range $relatedPosts }}
             <a class="resume-project__post-link" href="{{ printf "%s?from=code" .RelPermalink }}">
               <span class="resume-project__post-copy">
-                <span class="resume-project__post-kicker">Read research</span>
                 <span class="resume-project__post-title">{{ .Title }}</span>
               </span>
               <span class="resume-project__post-date">{{ .Date.Format "Jan 2, 2006" }}</span>

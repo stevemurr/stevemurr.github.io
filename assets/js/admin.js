@@ -109,19 +109,10 @@ if (root) {
 
   function createEmptyResume() {
     return {
-      path: "content/code.md",
+      path: "content/_index.md",
       sha: "",
       frontmatter: {
-        title: "Code",
-        layout: "resume",
-        summary: "",
-        cardGradient: "",
-        cardIcon: "",
-        eyebrow: "",
-        backLabel: "Home",
-        backUrl: "/",
-        hideMeta: true,
-        showToc: false,
+        title: "Steve Murr",
         hero: {
           title: "",
           buttons: [],

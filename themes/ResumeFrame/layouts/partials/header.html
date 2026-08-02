@@ -40,10 +40,9 @@
       {{- $currentURL := .RelPermalink | absLangURL -}}
       {{- range site.Menus.main }}
       {{- $targetURL := .URL | absLangURL -}}
-      {{- $isResumePage := and (eq .Identifier "code") (eq $.Layout "resume") -}}
       <li>
         <a href="{{ $targetURL }}" title="{{ .Title | default .Name }}">
-          <span{{ if or (eq $targetURL $currentURL) $isResumePage }} class="active"{{ end }}>{{ .Name }}</span>
+          <span{{ if eq $targetURL $currentURL }} class="active"{{ end }}>{{ .Name }}</span>
         </a>
       </li>
       {{- end }}
