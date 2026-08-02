@@ -26,15 +26,15 @@ params:
 projects:
   - stevemurr/git-cognition
 ---
-# Scope and Framing
+## Scope and Framing
 
 This review covers differential privacy (DP) as applied to visible reasoning traces — chain-of-thought outputs, scratchpad contents, and agent trajectories — not to model weights or gradient-level protections during pretraining. The question it addresses: **given that reasoning traces can leak sensitive information from their conditioning context, what is the state of the art for bounding that leakage formally or empirically?**
 
 As of March 2026, there is no single settled method. The literature has fractured into three adjacent problems: formal DP on emitted text conditioned on private data, DP for training and alignment on private trace logs, and direct reasoning-trace leakage mitigation that is mostly empirical rather than formally private. The direct trace papers establish that the problem is real: reasoning traces frequently contain sensitive user data, additional reasoning budget amplifies leakage, and answer-only evaluation misses leakage that persists in chain-of-thought trajectories [(Staab et al., 2026)](https://arxiv.org/html/2506.15674v1).
 
-# Formal DP on Released Traces
+## Formal DP on Released Traces
 
-## Private Decoding
+### Private Decoding
 
 The closest frontier for formal DP on the released trace itself is **private decoding** — privatizing next-token prediction using a public-model baseline.
 
@@ -44,7 +44,7 @@ The closest frontier for formal DP on the released trace itself is **private dec
 
 **DP-Fusion** is particularly relevant to reasoning traces because it explicitly bounds how much marked sensitive context tokens can influence generated tokens — a direct mechanism for controlling leakage from private context into CoT steps.
 
-## Selective Privacy Spending for RAG and Agentic Reasoning
+### Selective Privacy Spending for RAG and Agentic Reasoning
 
 For retrieval-augmented and agentic settings, the clearest design pattern is **selective privacy spending**: paying privacy cost only on tokens that actually require sensitive information.
 
@@ -52,7 +52,7 @@ For retrieval-augmented and agentic settings, the clearest design pattern is **s
 
 **PEARL** (ICLR 2026) extends this by allocating privacy budget adaptively across tokens and sentences using confidence-gap signals. The selective-allocation principle is the sharpest current algorithmic direction for long private traces, because it avoids the catastrophic budget depletion that results from applying uniform per-token DP to thousands of reasoning steps.
 
-# Training on Private Reasoning Traces
+## Training on Private Reasoning Traces
 
 When the problem is training or aligning models on private reasoning-trace logs rather than releasing traces at inference time, the more mature toolkit is **user-level DP plus private synthetic data**.
 
@@ -64,7 +64,7 @@ On alignment specifically, **Improved Algorithms for Differentially Private Lang
 
 For constructing synthetic trace corpora under DP, **Aug-PE**, **DP-RFT**, and **EPSVec** represent the strongest recent text-generation directions.
 
-# Direct Trace-Level Defenses
+## Direct Trace-Level Defenses
 
 The papers most directly about reasoning traces are mostly **not formal-DP**. They address the problem empirically and expose its severity.
 
@@ -76,7 +76,7 @@ The papers most directly about reasoning traces are mostly **not formal-DP**. Th
 
 On unlearning, **R2MU**, **R-TOFU**, and **STaR** all reinforce the same lesson: answer-level forgetting is insufficient. Evaluation and intervention must target the trace itself.
 
-# The Faithfulness Obstacle
+## The Faithfulness Obstacle
 
 The deepest obstacle to DP on reasoning traces is **faithfulness** — the gap between the visible trace and the model's actual computation.
 
@@ -84,17 +84,17 @@ The deepest obstacle to DP on reasoning traces is **faithfulness** — the gap b
 
 The implication is stark: even perfect DP on the exposed trace protects the text released, not necessarily the model's actual latent reasoning or all downstream leakage paths. A formal guarantee on the visible trace is necessary but not sufficient for full privacy of the underlying computation.
 
-# Composition and Long-Trace Hardness
+## Composition and Long-Trace Hardness
 
 From a DP standpoint, long CoTs are intrinsically difficult because privacy composes across token steps. A March 2026 theory paper [(Zhang et al., 2026)](https://arxiv.org/html/2603.17902v1) formalizes token-level and message-level DP for LLM agents and ties privacy loss to message length and temperature. Separately, a 2025 evaluation found that stronger DP text generation can make outputs substantially shorter, less grammatical, and less diverse.
 
 This helps explain why full private CoT release is not a solved problem: the privacy budget required for a useful thousand-token trace at meaningful epsilon is prohibitive under current composition theorems, and the utility degradation from tighter budgets directly undermines the purpose of extended reasoning.
 
-# Architectural Alternatives
+## Architectural Alternatives
 
 Outside pure DP, split architectures offer a pragmatic alternative. **PPMI** [(Li et al., 2026)](https://arxiv.org/abs/2506.17336) performs generic chain-of-thought reasoning remotely while keeping private retrieval local or over encrypted indexes. This avoids the composition problem entirely for the private data by never exposing it to the reasoning model, at the cost of limiting what the model can reason about.
 
-# Summary
+## Summary
 
 | Problem                        | Current Frontier                                                    | Maturity                                                  |
 | ------------------------------ | ------------------------------------------------------------------- | --------------------------------------------------------- |
@@ -107,7 +107,7 @@ The missing breakthrough is an end-to-end method that provides useful, faithful,
 
 ***
 
-## References
+### References
 
 1. Staab et al. (2026). "Leaky Thoughts: Privacy Risks in Reasoning Traces." *arXiv.* [2506.15674](https://arxiv.org/html/2506.15674v1)
 2. Wu et al. (2024). "InvisibleInk: Private Long-Form Text Generation." *arXiv.* [2403.15638](https://arxiv.org/abs/2403.15638)

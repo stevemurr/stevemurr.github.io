@@ -11,7 +11,7 @@ params:
   cardIcon: "gamepad"
 ---
 
-# The Basic Idea
+## The Basic Idea
 
 Tic Tac Toe ...  
 It's a game of wits...   
@@ -23,11 +23,11 @@ It's a game of of cunning...
 
 Tic Tac Toe is pretty lame when you think about it. 
 
-## ***But why is it lame?***
+### ***But why is it lame?***
 
 Lame quotient is in the eye of the beholder but I'm going to go with the theory of complexity and novelty. The skill ceiling to tic tac toe is just really fucking low. Play it a few times and you develop a near perfect algorithm for optimal play. Optimal play leads to draws though. 
 
-## ***Is a draw fun though?*** 
+### ***Is a draw fun though?*** 
 
 It depends on factors like if you suffer from narcicissm and dopamine seeking tendencies. 
 
@@ -37,13 +37,13 @@ If you're tuned for delayed gratification and a draw is simply the ending to a g
 
 Is it possible to satisfy both the massochistic narcicists and the emotionally intelligent panzies?
 
-## ***I think you totally can***
+### ***I think you totally can***
 
 You do this by admitting to yourself that you are operating from a place of fear. Once you operate from a place of love you will finally admit the truth --
 
 ![Not Afraid](im-not-afraid-anymore-donnie-darko.gif)
 
-### ***A DRAW IS A feature AND NOT A bug***
+#### ***A DRAW IS A feature AND NOT A bug***
 
 I can hear you now. 
 
@@ -55,11 +55,11 @@ To that I say --
 
 We do that by making the game harder. We make the game harder via 1) **Complications** and 2) **Spatial Mixups**.
 
-# Complications
+## Complications
 
 Complications change how the game plays by mutating the rules. For example --
 
-### CROSSFIRE
+#### CROSSFIRE
 
 When you place a mark, it blasts in all four cardinal directions and converts every opponent mark in its path until it hits a wall or the edge of the board. One well-placed move can flip an entire row and column.
 
@@ -67,7 +67,7 @@ When you place a mark, it blasts in all four cardinal directions and converts ev
 
 ---
 
-### GRAVITY
+#### GRAVITY
 
 Marks don't just sit where you place them. They fall to the lowest empty cell in the column, like dropping a chip in **Connect Four**. It completely changes how you think about placement because you can't just grab any open spot -- you have to account for where your mark will actually land.
 
@@ -75,7 +75,7 @@ Marks don't just sit where you place them. They fall to the lowest empty cell in
 
 ---
 
-# Spatial Mixups
+## Spatial Mixups
 
 Spatial mixups are different. They don't change the rules -- they rearrange the board. 
 
@@ -83,11 +83,11 @@ When a draw happens and the board grows, a random mixup fires and scrambles exis
 
 The point is that any position you were building toward before the draw? Gone. You have to re-evaluate the entire board and figure out your strategy from scratch. Combined with whatever new complication just got added, it keeps things from ever feeling stale.
 
-# Inspirations
+## Inspirations
 
 The first inspiration came sometime in 2014. This is gonna sound really boring but I was reading the `numpy` docs. I had fun playing around with all the ways you could transform matrices. For example --
 
-### Transpose
+#### Transpose
 
 Transpose flips a matrix along its diagonal. This of it like:
 - Rows become columns
@@ -112,7 +112,7 @@ print(matrix.T)
 
 ```
 
-### Flip
+#### Flip
 
 Flip is like mirroring your matrix. You can do an `original` flip, `horizontal` flip or a `vertical` flip.
 
@@ -136,7 +136,7 @@ print(np.flipud(matrix))
 #  [1 2 3]]
 ```
 
-### Extract Diagonal
+#### Extract Diagonal
 
 Extract diagonal pulls out the *main diagonal* -- the line of elements going from top-left to bottom-right.
 
@@ -159,18 +159,18 @@ print(np.diag([1, 5, 9]))
 #  [0 0 9]]
 ```
 
-## Balatro
+### Balatro
 
 ![Balatro](balatro.png)
 
 Balatro is a cool game. It proved that you can just take an existing game and mechanics and mix it with some roguelite elements and make something fun and new. 
 
 
-## Coding Agents
+### Coding Agents
 
 Making a game is a lot of work. Coding agents are like cocaine for creative people. Don't take my word for it - look at my github activity. 
 
-# Early Thoughts
+## Early Thoughts
 
 I grew up playing video games.   
 I love video games. 

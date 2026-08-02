@@ -11,7 +11,7 @@ params:
   cardIcon: "gamepad"
 ---
 
-# Scaling Ideas
+## Scaling Ideas
 
 Here's the thing about making a game where draws escalate instead of ending -- you end up with a lot of knobs. Twelve complications. Each one changes the rules in a different way. And they *stack*. A draw triggers a new complication on top of whatever's already active.
 

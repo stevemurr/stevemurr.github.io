@@ -4,8 +4,10 @@
     {{ partial "head.html" . }}
   </head>
   {{- $bodyClass := "" -}}
-  {{- if or .IsHome (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") (eq .Layout "resume") -}}
+  {{- if or .IsHome (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") -}}
     {{- $bodyClass = "list" -}}
+  {{- else if and (eq .Kind "page") (ne .Layout "admin") -}}
+    {{- $bodyClass = "single" -}}
   {{- end -}}
   <body{{ if ne $bodyClass "" }} class="{{ $bodyClass }}"{{ end }} id="top">
     {{ partial "header.html" . }}

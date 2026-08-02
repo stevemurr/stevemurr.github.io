@@ -33,7 +33,7 @@ Tone: provocative, concrete, systems-oriented
 
 ![Marriage Composer -- presets, modules, and configurable defaults](composer-landing.png)
 
-# Two People Want to Get Married
+## Two People Want to Get Married
 
 Imagine two people decide to get married.
 
@@ -43,7 +43,7 @@ At no point during this process does anyone hand them a document that says: *"He
 
 They said "I do." What they actually did was accept a terms of service they never read.
 
-## ***What did they actually sign up for?***
+### ***What did they actually sign up for?***
 
 Let's walk through it. Our couple lives in California -- a community property state. This matters a lot because the defaults here are especially aggressive about what becomes shared.
 
@@ -65,7 +65,7 @@ None of this is hidden. It's all in the California Family Code. But nobody reads
 
 ***
 
-# The Product Problem
+## The Product Problem
 
 Here's the thing that bothers me about this.
 
@@ -85,7 +85,7 @@ The question should be "which defaults fit this specific partnership?"
 
 ***
 
-# The Composable Alternative
+## The Composable Alternative
 
 What if instead of one big adversarial document, you had a set of independent choices you could make together? Not a prenup negotiation. A configuration session.
 
@@ -137,7 +137,7 @@ The point isn't that there's one right configuration. The point is that the conf
 
 ***
 
-# The Prototype
+## The Prototype
 
 This isn't just a blog post thought experiment. There's a working prototype that models this.
 
@@ -172,7 +172,7 @@ The insight here is structural: marriage can be represented as a set of independ
 
 ***
 
-# What This Cannot Solve
+## What This Cannot Solve
 
 Let me be clear about the boundaries.
 
@@ -188,7 +188,7 @@ Software can expose the settings, structure the conversation, and compile docume
 
 ***
 
-# What's Next
+## What's Next
 
 Even if you make every choice about income, property, and disputes explicit -- the most important decision you will make is in choosing the right partner.
 

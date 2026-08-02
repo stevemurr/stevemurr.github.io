@@ -20,8 +20,6 @@ params:
   cardIcon: eye
 ---
 
-# Best VLMs for 128GB on DGX Spark and M4 Mac
-
 **Qwen3-VL-32B is the best vision-language model for both platforms.** Released in September 2025, this dense 32B-parameter model outperforms the older Qwen2.5-VL-72B on all 15 comparable benchmarks — including a **+25-point gain on MathVision** and **+14 points on MMMU-Pro** — while requiring less than half the memory. This makes the traditional "biggest model that fits" calculus obsolete: a well-quantized 32B model now dominates a 72B predecessor. The story diverges sharply between platforms, however, because the M4 Max delivers **2× the memory bandwidth** of DGX Spark (546 vs 273 GB/s), making Apple Silicon surprisingly faster for decode-bound VLM inference despite NVIDIA's superior compute throughput.
 
 ---

@@ -20,8 +20,6 @@ params:
   cardIcon: music
 ---
 
-# Training machine learning models for instrumental music generation
-
 **The most practical path to building an instrumental music generation system today is fine-tuning Meta's MusicGen on 500–2,000 curated tracks using AudioCraft's open-source pipeline — a process costing $100–300 in compute and yielding genre-specific results within days.** For those aiming higher, the field has converged on two dominant paradigms: autoregressive transformers operating on neural audio codec tokens (MusicGen, MusicLM) and latent diffusion models (Stable Audio, AudioLDM2), with hybrid architectures combining both emerging as the frontier in 2025–2026. This report provides a complete technical blueprint covering architectures, audio representations, datasets, training pipelines, compute costs, open-source tools, Suno's likely approach, and actionable recommendations for building your own system.
 
 ---

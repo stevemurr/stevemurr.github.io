@@ -12,7 +12,7 @@ params:
   cardIcon: "history"
 ---
 
-# The Eternal Problem
+## The Eternal Problem
 
 Every generation of computing has had to answer the same question: how do programs share information with each other?
 
@@ -22,7 +22,7 @@ This is the history of that gap.
 
 ---
 
-# Act I: The Unix Foundation (1970s--1983)
+## Act I: The Unix Foundation (1970s--1983)
 
 In 1964, Doug McIlroy wrote a memo proposing that programs should be connected like garden hoses --- screw in another segment when you need to massage data in another way. In 1973, Ken Thompson implemented pipes in Unix V3. Legend has it he did it in a single night.
 
@@ -44,7 +44,7 @@ By 1983, the plumbing problem was solved. Processes could send bytes to each oth
 
 ---
 
-# Act II: The RPC Dream (1980s)
+## Act II: The RPC Dream (1980s)
 
 The obvious next step was to make inter-process communication feel like a function call. If `add(2, 3)` works locally, why shouldn't it work across a network?
 
@@ -64,7 +64,7 @@ RPC didn't die --- it evolved. But the dream of making remote calls indistinguis
 
 ---
 
-# Act III: The Distributed Object Era (Late 1980s--1990s)
+## Act III: The Distributed Object Era (Late 1980s--1990s)
 
 The 1990s believed the future was distributed objects. Take RPC, add object orientation, and you'd have a universal architecture for software components that could live anywhere and talk to anything.
 
@@ -82,7 +82,7 @@ The distributed object era died, but its ideas didn't. Interface-based programmi
 
 ---
 
-# Act IV: Apple's Own Path (1991--2011)
+## Act IV: Apple's Own Path (1991--2011)
 
 Apple's IPC story deserves its own post --- [and it has one](/posts/history-ipc-apple-path/). But the short version is one of the most dramatic arcs in this entire history.
 
@@ -96,7 +96,7 @@ Apple went from the most ambitious inter-app communication model any mainstream 
 
 ---
 
-# Act V: The Desktop Bus (2000s)
+## Act V: The Desktop Bus (2000s)
 
 Before two programs can talk, they need to find each other.
 
@@ -114,7 +114,7 @@ Discovery is half the battle. The most sophisticated IPC protocol in the world i
 
 ---
 
-# Act VI: The Web Eats Everything (1998--2015)
+## Act VI: The Web Eats Everything (1998--2015)
 
 The internet solved the firewall problem by tunneling everything over HTTP. IPC became "APIs" and never looked back.
 
@@ -136,7 +136,7 @@ The web turned IPC into APIs. It solved cross-organization communication --- you
 
 ---
 
-# Act VII: Modern App Silos (2008--Present)
+## Act VII: Modern App Silos (2008--Present)
 
 Mobile platforms reinvented IPC and then immediately locked it down.
 
@@ -150,7 +150,7 @@ The theme across all of these: platforms solved *intra-app* IPC but made *inter-
 
 ---
 
-# The Gap: Context, Not Just Bytes
+## The Gap: Context, Not Just Bytes
 
 After fifty years, we can send any data between any two processes. Locally, over a network, across the internet, synchronously, asynchronously, streaming, batched. The plumbing is solved.
 
@@ -173,7 +173,7 @@ So we have a paradox: the transport layer is more capable than ever, and the sem
 
 ---
 
-# Where Fabric Fits
+## Where Fabric Fits
 
 Fabric isn't replacing IPC at the transport layer. Mach ports, Unix sockets, HTTP --- those are fine. They work. The problem was never how to move bytes.
 

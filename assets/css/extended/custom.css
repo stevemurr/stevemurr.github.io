@@ -3,7 +3,12 @@
   --content-gap: 24px;
   --header-height: 72px;
   --main-width: 1040px;
-  --measure: 35.5rem;
+  /* Article pages run wider than index pages: they carry a navigation rail
+     beside the prose, so the extra width becomes content rather than margin. */
+  --main-width-article: 1160px;
+  --measure: 41rem;
+  --rail-width: 13rem;
+  --rail-gap: 3.5rem;
 
   /* Type scale. Derived by clustering the sizes the stylesheet already used —
      each step is the centre of a real cluster, so existing call sites move by a
@@ -20,6 +25,9 @@
   --text-3xl: 1.625rem;
   --text-4xl: 2rem;
   --text-5xl: 2.5rem;
+  /* Long-form reading sizes, separate from the UI scale above. */
+  --text-reading: 1.1875rem;
+  --text-lead: 1.3125rem;
 
   /* Fluid display sizes. These replace 21 hand-tuned clamp() expressions; each
      one already scales across the whole viewport range, so the mobile-only
@@ -407,11 +415,17 @@ a {
 .post-shell,
 .post-footer {
   position: relative;
-  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: calc(var(--radius) + 4px);
   background: color-mix(in srgb, var(--surface-strong) 84%, transparent);
   box-shadow: var(--shadow-soft);
+}
+
+/* Not overflow:hidden — that would make this a scroll container and break
+   position:sticky for the article rail inside. The tint inherits the radius
+   instead, which is all the clipping it needed. */
+.post-footer {
+  overflow: hidden;
 }
 .home-section::before,
 .page-header::before,
@@ -420,6 +434,7 @@ a {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: inherit;
   background:
     radial-gradient(circle at top right, rgba(207, 107, 54, 0.09), transparent 30%),
     radial-gradient(circle at bottom left, rgba(15, 109, 156, 0.08), transparent 26%);
@@ -745,22 +760,129 @@ a {
   color: var(--secondary);
 }
 
+/* Long-form reading size. Larger and tighter than before: 1.92 leading was
+   compensating for a 111-character line that no longer exists. */
 .post-content {
   position: relative;
   z-index: 1;
   margin: 0;
   color: var(--content);
-  font-size: var(--text-base);
-  line-height: 1.92;
+  font-size: var(--text-reading);
+  line-height: 1.68;
 }
 
-/* Reading measure. Prose sits in a fixed column so lines land around 70
-   characters; code, tables, figures, and embeds keep the full card width so
-   screenshots and interactive demos stay legible. The column is set in rem
-   rather than ch so headings (Geist) and body copy (Source Serif) align. */
+/* The opening statement carries more weight than the body that follows. */
+.post-content > p:first-of-type {
+  color: var(--primary);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+/* Article layout.
+
+   A reading measure leaves a wide gutter beside the prose. Rather than centre
+   the column and waste both sides, the article runs as two columns: a sticky
+   rail carrying section navigation and metadata, then the prose. Media spans
+   the whole prose column, which is wider than the measure, so figures, code,
+   and embeds read larger than the body text rather than smaller. */
+body.single .main {
+  max-width: min(var(--main-width-article), calc(100vw - 24px));
+}
+
+.post-shell--railed {
+  display: grid;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+  column-gap: var(--rail-gap);
+  align-items: stretch;
+}
+
+/* The cell must span the full row for the inner block to have anywhere to
+   travel; sticking the grid item itself gives it zero range. */
+.post-rail {
+  min-width: 0;
+}
+
+.post-rail__inner {
+  position: sticky;
+  top: calc(var(--header-height) + 18px);
+}
+
+/* Indent the hero to the prose column so the title, the body copy, and the
+   rail all share one set of edges. */
+.post-single--railed .post-hero__body {
+  width: min(
+    calc(100% - var(--rail-width) - var(--rail-gap)),
+    calc(var(--measure) + 4rem)
+  );
+  margin-inline: calc(var(--rail-width) + var(--rail-gap)) 0;
+}
+
+.post-rail__label,
+.post-rail__meta dt {
+  color: var(--secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-3xs);
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.post-rail__label {
+  margin: 0 0 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.post-rail__list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: rail;
+}
+
+.post-rail__link {
+  display: block;
+  padding: 5px 0 5px 14px;
+  border-left: 2px solid transparent;
+  color: var(--secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.post-rail__link:hover {
+  color: var(--primary);
+  border-left-color: var(--line-strong);
+}
+
+.post-rail__link[aria-current="true"] {
+  color: var(--primary);
+  font-weight: 700;
+  border-left-color: var(--accent);
+}
+
+.post-rail__meta {
+  display: grid;
+  gap: 10px;
+  margin: 22px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--line-subtle);
+}
+
+.post-rail__meta dd {
+  margin: 4px 0 0;
+  color: var(--content);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+}
+
+/* Prose sits at the measure; media fills the column. */
 .post-content > * {
   max-width: var(--measure);
-  margin-inline: auto;
 }
 
 .post-content > pre,
@@ -768,6 +890,58 @@ a {
 .post-content > figure,
 .post-content > .highlight {
   max-width: none;
+}
+
+/* Below the two-column breakpoint the rail becomes a plain block above the
+   prose, and the prose centres again. */
+@media (max-width: 1080px) {
+  .post-shell--railed {
+    display: block;
+  }
+
+  .post-rail {
+    margin-bottom: 26px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line-subtle);
+  }
+
+  .post-rail__inner {
+    position: static;
+  }
+
+  /* A ten-item vertical list ahead of the article is a wall; wrap it inline so
+     it costs three or four lines instead of a screenful. */
+  .post-rail__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+  }
+
+  .post-rail__link {
+    padding: 2px 0;
+    border-left: 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .post-rail__link:hover {
+    border-left-color: transparent;
+    border-bottom-color: var(--line-strong);
+  }
+
+  .post-rail__link[aria-current="true"] {
+    border-left-color: transparent;
+    border-bottom-color: var(--accent);
+  }
+
+  .post-rail__meta {
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 28px;
+  }
+
+  .post-content > * {
+    margin-inline: auto;
+  }
 }
 
 .post-content h1,
@@ -786,24 +960,36 @@ a {
   line-height: 0.98;
 }
 
+/* h2 is the section break. A hairline above it does the work that extra
+   whitespace alone was doing, so sections read as divisions rather than as
+   paragraphs that happen to be bold. */
 .post-content h2 {
-  margin-top: 2.4em;
-  margin-bottom: 0.7em;
+  margin-top: 2.1em;
+  margin-bottom: 0.6em;
+  padding-top: 1.1em;
+  border-top: 1px solid var(--line-subtle);
   font-size: var(--text-4xl);
-  line-height: 1;
+  line-height: 1.05;
+}
+
+.post-content h2:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
 }
 
 .post-content h3 {
-  margin-top: 2em;
-  margin-bottom: 0.55em;
-  font-size: var(--text-3xl);
-  line-height: 1.08;
+  margin-top: 1.9em;
+  margin-bottom: 0.5em;
+  font-size: var(--text-2xl);
+  line-height: 1.16;
 }
 
 .post-content h4 {
-  margin-top: 1.8em;
-  margin-bottom: 0.5em;
-  font-size: var(--text-xl);
+  margin-top: 1.7em;
+  margin-bottom: 0.45em;
+  font-size: var(--text-lg);
+  letter-spacing: -0.02em;
 }
 
 .post-content p,

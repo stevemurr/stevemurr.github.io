@@ -11,13 +11,13 @@ params:
   cardIcon: "terminal"
 ---
 
-# The Problem
+## The Problem
 
 You want to know how many people are reading your blog. Reasonable enough. So you google "add analytics to Hugo site" and every tutorial points you at **Plausible**, **Fathom**, or **Google Analytics**.
 
 Those are fine services. But they all push your data to someone else's server. You're handing your visitor data to a third party so they can... show it back to you in a dashboard.
 
-## ***Cloudflare is OP***
+### ***Cloudflare is OP***
 
 What if the analytics lived entirely inside your own Cloudflare account? No external scripts, no cookies, no monthly fee, no new servers. Just a tiny Worker that increments a counter every time someone loads a page.
 
@@ -25,7 +25,7 @@ That's exactly what we're building.
 
 ---
 
-# How It Works
+## How It Works
 
 The architecture here is almost embarrassingly simple:
 
@@ -51,7 +51,7 @@ That's the whole thing. All the counting lives inside your Cloudflare account.
 
 ---
 
-# Step 1 -- The Worker
+## Step 1 -- The Worker
 
 Log in to Cloudflare, go to **Workers**, and create one. Name it something like `site-metrics`. Paste this:
 
@@ -104,11 +104,11 @@ A couple things worth noting:
 - The response is a 204 No Content -- we don't leak count data back to the browser.
 - Page paths are validated to prevent garbage or malicious keys from being written to KV.
 
-### Add the KV Namespace
+#### Add the KV Namespace
 
 Still in the Worker editor, click **Add binding** -> **KV**. Name the binding `COUNTERS`. Cloudflare will create a KV namespace for you. Done.
 
-### Set Worker Secrets
+#### Set Worker Secrets
 
 The Worker needs two secrets. Set them with Wrangler:
 
@@ -124,7 +124,7 @@ npx wrangler secret put API_KEY
 
 ---
 
-# Step 2 -- Hook It Into Hugo
+## Step 2 -- Hook It Into Hugo
 
 Create a partial called `analytics.html`:
 
@@ -154,7 +154,7 @@ If your visitor has JavaScript disabled, nothing happens. The page still loads f
 
 ---
 
-# Step 3 -- Deploy and Test
+## Step 3 -- Deploy and Test
 
 1. Save the Worker, hit **Deploy**.
 2. Open an incognito window and visit a page on your site.
@@ -168,7 +168,7 @@ It should return a **204 No Content** response. Refresh and check KV in your Clo
 
 ---
 
-# Step 4 -- A Simple Dashboard (Optional)
+## Step 4 -- A Simple Dashboard (Optional)
 
 If you want a page that shows your counts, create `static/stats.html`:
 
@@ -189,7 +189,7 @@ There's a `static/stats.html` dashboard in the repo that calls these endpoints. 
 
 ---
 
-# Security
+## Security
 
 The original version of this Worker had no security at all -- anyone could inflate your counts, write arbitrary KV keys, and read your analytics data from the response. The current version fixes all of that:
 
@@ -200,7 +200,7 @@ The original version of this Worker had no security at all -- anyone could infla
 
 ---
 
-# Things Worth Knowing
+## Things Worth Knowing
 
 **Do I need a paid Cloudflare plan?** No. Free tier gives you 100k KV reads/writes per day. Unless your blog is getting serious traffic, you're fine.
 
@@ -214,6 +214,6 @@ The original version of this Worker had no security at all -- anyone could infla
 
 ---
 
-# Wrap Up
+## Wrap Up
 
 God bless cloudflare.

@@ -2924,8 +2924,73 @@ async function loadRecentCommits(container) {
   }
 }
 
+function initializeArticleRail() {
+  const links = [...document.querySelectorAll("[data-rail-link]")];
+  if (!links.length || typeof IntersectionObserver === "undefined") {
+    return;
+  }
+
+  const byId = new Map();
+  const headings = [];
+  links.forEach((link) => {
+    const id = decodeURIComponent(link.getAttribute("href") || "").replace(/^#/, "");
+    const heading = id && document.getElementById(id);
+    if (!heading) {
+      return;
+    }
+    byId.set(heading, link);
+    headings.push(heading);
+  });
+
+  if (!headings.length) {
+    return;
+  }
+
+  const visible = new Set();
+
+  function setCurrent(heading) {
+    links.forEach((link) => link.removeAttribute("aria-current"));
+    const link = byId.get(heading);
+    if (link) {
+      link.setAttribute("aria-current", "true");
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          visible.add(entry.target);
+        } else {
+          visible.delete(entry.target);
+        }
+      });
+
+      if (visible.size) {
+        // Highlight the topmost section currently on screen.
+        setCurrent([...visible].sort((a, b) => headings.indexOf(a) - headings.indexOf(b))[0]);
+        return;
+      }
+
+      // Between sections: fall back to the last one scrolled past, and treat
+      // the area above the first heading as belonging to the first section.
+      let passed = null;
+      for (const heading of headings) {
+        if (heading.getBoundingClientRect().top < window.innerHeight * 0.3) {
+          passed = heading;
+        }
+      }
+      setCurrent(passed || headings[0]);
+    },
+    { rootMargin: "-12% 0px -70% 0px", threshold: 0 },
+  );
+
+  headings.forEach((heading) => observer.observe(heading));
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initializePostBackLinks();
+  initializeArticleRail();
 
   const llmChatContainers = document.querySelectorAll("[data-llm-chat]");
   llmChatContainers.forEach((container) => {

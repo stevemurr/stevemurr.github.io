@@ -14,7 +14,19 @@
 {{- $showSeriesNav = and ($.Param "ShowPostNavLinks") (gt (len $seriesPage.Pages) 1) }}
 {{- end }}
 
-<article class="post-single post-single--editorial reveal">
+{{- /* Hugo wraps the heading tree in a synthetic level-0 root when the
+       document's top heading is not h1, so descend through it. */ -}}
+{{- $sections := slice }}
+{{- range .Fragments.Headings }}
+{{- if eq .Level 0 }}
+{{- range .Headings }}{{ if eq .Level 2 }}{{ $sections = $sections | append . }}{{ end }}{{ end }}
+{{- else if eq .Level 2 }}
+{{- $sections = $sections | append . }}
+{{- end }}
+{{- end }}
+{{- $railed := ge (len $sections) 3 }}
+
+<article class="post-single post-single--editorial reveal{{ if $railed }} post-single--railed{{ end }}">
   <header class="post-hero" style="--post-gradient: linear-gradient({{ $gradient }});">
     <div class="post-hero__rail">
       {{- if not (.Param "hideBackLink") }}
@@ -76,7 +88,34 @@
   {{- partial "toc.html" . }}
   {{- end }}
 
-  <div class="post-shell">
+  <div class="post-shell{{ if $railed }} post-shell--railed{{ end }}">
+    {{- if $railed }}
+    {{- /* The rail fills the left gutter that the reading measure leaves over.
+           Only worth showing when there is enough structure to navigate. */ -}}
+    <aside class="post-rail" aria-label="Article navigation">
+      <div class="post-rail__inner">
+        <p class="post-rail__label">Contents</p>
+        <nav class="post-rail__nav">
+          <ol class="post-rail__list">
+            {{- range $sections }}
+            <li><a class="post-rail__link" href="#{{ .ID }}" data-rail-link>{{ .Title | plainify }}</a></li>
+            {{- end }}
+          </ol>
+        </nav>
+        {{- if not (.Param "hideMeta") }}
+        <dl class="post-rail__meta">
+          {{- with .Date }}
+          <div><dt>Published</dt><dd><time datetime="{{ .Format "2006-01-02" }}">{{ .Format "Jan 2, 2006" }}</time></dd></div>
+          {{- end }}
+          {{- if and site.Params.showReadingTime .ReadingTime }}
+          <div><dt>Reading</dt><dd>{{ .ReadingTime }} min</dd></div>
+          {{- end }}
+        </dl>
+        {{- end }}
+      </div>
+    </aside>
+    {{- end }}
+
     {{- if .Content }}
     <div class="post-content">
       {{- if not (.Param "disableAnchoredHeadings") }}
