@@ -84,7 +84,9 @@
   {{- $isHidden := (.Param "cover.hiddenInSingle") | default (.Param "cover.hidden") | default false }}
   {{- partial "cover.html" (dict "cxt" . "IsSingle" true "isHidden" $isHidden) }}
 
-  {{- if (.Param "ShowToc") }}
+  {{- /* The rail already lists the sections, so the stacked table of contents
+         is only for pages too short to earn a rail. */ -}}
+  {{- if and (.Param "ShowToc") (not $railed) }}
   {{- partial "toc.html" . }}
   {{- end }}
 

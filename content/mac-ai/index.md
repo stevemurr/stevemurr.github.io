@@ -6,7 +6,6 @@ summary: >-
   surfaces, a metadata-only file producer, an encrypted local MCP transport, and a
   16M-document retrieval index. One Mac holds the state; everything else is a client.
 hideMeta: true
-showToc: true
 backLabel: Code
 backUrl: /
 cardGradient: "135deg, #1c2633, #254963, #0f6d9c"
